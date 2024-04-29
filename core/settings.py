@@ -13,7 +13,7 @@ class CoreSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    SQLALCHEMY_DATABASE_URI: str = "postgresql+asyncpg://postgres:thangcho@127.0.0.1:5432/fastapi-seed"
+    SQLALCHEMY_DATABASE_URI: str = "postgresql+asyncpg://postgres:thangcho@127.0.0.1:5432/aisync"
     SQLALCHEMY_ECHO: bool = False
 
 
@@ -21,7 +21,16 @@ class RedisSettings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"
 
 
-class Settings(CoreSettings, DatabaseSettings, RedisSettings): ...
+class OpenAISettings(BaseSettings):
+    OPENAI_API_KEY: str = "sk-1234567890abcdef1234567890abcdef"
+
+
+class Settings(
+    CoreSettings,
+    DatabaseSettings,
+    RedisSettings,
+    OpenAISettings,
+): ...
 
 
 class DevelopmentSettings(Settings): ...

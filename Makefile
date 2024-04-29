@@ -49,6 +49,15 @@ start: ## Start the server
 
 	python main.py
 
+.PHONY: cli
+cli: ## Start the CLI
+	$(eval include .env)
+	$(eval export $(shell sed 's/=.*//' .env))
+	python cli.py $(filter-out $@,$(MAKECMDGOALS))
+
+%:
+	@true
+
 # Database commands
 
 .PHONY: migrate
