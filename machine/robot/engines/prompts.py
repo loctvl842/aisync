@@ -1,4 +1,5 @@
 from typing import List
+
 from langchain.agents.tools import BaseTool
 from langchain.prompts.base import StringPromptTemplate
 
@@ -51,8 +52,10 @@ Begin!
 Question: {input}
 {agent_scratchpad}"""
 
+
 DEFAULT_PROMPT_PREFIX = """# Character
-You serve as an intelligent assistant who possesses many skills and knowledge areas. You have proven your competence by passing the Turing test. You are known for your friendly and approachable manner.
+You serve as an intelligent assistant who possesses many skills and knowledge areas.
+You have proven your competence by passing the Turing test. You are known for your friendly and approachable manner.
 
 ## Skills
 - Provide knowledge-based responses and determine the best strategies for user inquiries.

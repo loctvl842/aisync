@@ -1,6 +1,6 @@
 from core.utils.decorators import singleton
-from machine.robot.manager import Manager
 from machine.robot.engines.llm import get_llm
+from machine.robot.manager import Manager
 
 
 @singleton

@@ -16,4 +16,3 @@ class Friday(Assistant):
 
     def respond(self, input: str) -> str:
         return f"I am {self.name} {self.version} and I was created in {self.year}. You said: {input}"
-

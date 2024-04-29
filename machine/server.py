@@ -1,4 +1,5 @@
 import logging
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
 from fastapi.middleware import Middleware
@@ -11,6 +12,7 @@ from core.fastapi.middlewares import SQLAlchemyMiddleware
 from core.response import Error
 from core.settings import settings
 from machine.api import router
+from machine.robot.engines.brain import Brain
 
 
 def init_routers(app_: FastAPI) -> None:
@@ -51,6 +53,13 @@ def make_middleware() -> list[Middleware]:
     return middleware
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.robot_brain = Brain()
+    app.state.assistants = {}
+    yield
+
+
 def create_machine() -> FastAPI:
     app_ = FastAPI(
         title="Trading Logic",
@@ -59,6 +68,7 @@ def create_machine() -> FastAPI:
         docs_url=None if settings.ENV == "production" else "/docs",
         redoc_url=None if settings.ENV == "production" else "/redoc",
         middleware=make_middleware(),
+        lifespan=lifespan,
     )
     app_.settings = settings
     logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
