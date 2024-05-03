@@ -20,7 +20,7 @@ class Brain:
         """
         Load LLM & Embedder
         """
-        cfg_cls = get_llm_by_name("LLMChatGoogleGenerativeAI")
+        cfg_cls = get_llm_by_name("LLMGPT4All")
         if cfg_cls is None:
             raise ValueError("LLM not found")
 

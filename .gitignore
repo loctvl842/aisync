@@ -38,3 +38,6 @@ venv.bak/
 # Ignore test files
 *.test
 test_*
+
+# Ignore GPT4All models
+gpt4all
