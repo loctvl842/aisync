@@ -24,12 +24,14 @@ def get_allowed_language_models() -> List[LLMConfig]:
 
     return default_allowed_llms
 
+
 def get_llm_by_name(llm_config_name: str) -> Optional[LLMConfig]:
     llms = get_allowed_language_models()
     for llm in llms:
         if llm.__name__ == llm_config_name:
             return llm
     return None
+
 
 def get_llm_schemas():
     schemas = {}

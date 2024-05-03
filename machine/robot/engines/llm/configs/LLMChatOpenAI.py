@@ -1,4 +1,5 @@
 from typing import Type
+
 from langchain_openai import ChatOpenAI
 
 from .base import LLMConfig
