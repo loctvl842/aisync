@@ -8,8 +8,9 @@ from typing import Any
 from langchain.agents.tools import BaseTool
 
 from core.logger import syslog
-from machine.robot.decorators import SuitAction, SuitHook
-from machine.robot.utils import get_suit_name
+
+from .decorators import SuitAction, SuitHook
+from .utils import get_suit_name
 
 
 class Suit:

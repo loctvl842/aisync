@@ -3,7 +3,7 @@ from typing import List, Optional
 from langchain.chains.llm import LLMChain
 from langchain_core.prompts import PromptTemplate
 
-from machine.robot.engines import prompts
+from . import prompts
 
 
 class ChatChain:

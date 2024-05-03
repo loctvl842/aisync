@@ -3,8 +3,9 @@ import os
 
 from core.logger import syslog
 from core.utils.decorators import singleton
-from machine.robot.suit import Suit
-from machine.robot.utils import get_suits_path
+
+from .suit import Suit
+from .utils import get_suits_path
 
 
 @singleton

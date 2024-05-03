@@ -1,6 +1,8 @@
 from typing import Type
-from .base import LLMConfig
+
 from langchain_community.llms import GPT4All
+
+from .base import LLMConfig
 
 
 class LLMGPT4All(LLMConfig):

@@ -1,7 +1,7 @@
 from .LLMChatGoogleGenerativeAI import LLMChatGoogleGenerativeAI
 from .LLMChatOpenAI import LLMChatOpenAI
-from .LLMGPT4All import LLMGPT4All
 from .LLMGoogleGenerativeAI import LLMGoogleGenerativeAI
+from .LLMGPT4All import LLMGPT4All
 
 __all__ = [
     "LLMChatGoogleGenerativeAI",
