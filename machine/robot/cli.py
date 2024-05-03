@@ -14,6 +14,7 @@ def robot():
 
 def get_ai_options():
     options = []
+    # TODO: Find better ways
     package_path = os.path.join("machine", "robot", "assistants")
     init_by_path = os.path.join(package_path, "__init__.py")
 

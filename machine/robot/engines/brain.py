@@ -1,6 +1,7 @@
 from core.utils.decorators import singleton
-from machine.robot.engines.llm import get_llm
 from machine.robot.manager import Manager
+
+from .llm import get_llm_by_name
 
 
 @singleton
@@ -19,4 +20,9 @@ class Brain:
         """
         Load LLM & Embedder
         """
-        self.llm = get_llm("LLMChatOpenAI")
+        cfg_cls = get_llm_by_name("LLMChatGoogleGenerativeAI")
+        if cfg_cls is None:
+            raise ValueError("LLM not found")
+
+        default_cfg = cfg_cls().model_dump()
+        self.llm = cfg_cls.get_llm(default_cfg)

@@ -34,3 +34,7 @@ venv.bak/
 *.csv
 *.json
 *.db
+
+# Ignore test files
+*.test
+test_*
