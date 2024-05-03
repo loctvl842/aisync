@@ -1,8 +1,5 @@
-from dotenv import find_dotenv, load_dotenv
 from langchain.schema.language_model import BaseLanguageModel
 from langchain_openai import ChatOpenAI
-
-load_dotenv(find_dotenv())
 
 
 class LLMChatOpenAI:

@@ -2,6 +2,7 @@ import importlib
 import os
 
 import click
+from dotenv import find_dotenv, load_dotenv
 
 from .assistants.base import Assistant
 
@@ -31,6 +32,8 @@ def get_ai_options():
 @robot.command()
 @click.option("--name", help="Name of the AI to activate")
 def activate(name):
+    load_dotenv(find_dotenv())
+
     options = get_ai_options()
     ai_class = None
     if name:

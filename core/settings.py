@@ -1,6 +1,7 @@
 import os
 from typing import Literal
 
+from dotenv import find_dotenv, load_dotenv
 from pydantic_settings import BaseSettings
 
 
@@ -25,11 +26,16 @@ class OpenAISettings(BaseSettings):
     OPENAI_API_KEY: str = "sk-proj-1234567890abcdef1234567890abcdef"
 
 
+class GoogleAISettings(BaseSettings):
+    GOOGLE_API_KEY: str = "AIza1234567890abcdef1234567890abcdef"
+
+
 class Settings(
     CoreSettings,
     DatabaseSettings,
     RedisSettings,
     OpenAISettings,
+    GoogleAISettings,
 ): ...
 
 
@@ -41,6 +47,9 @@ class ProductionSettings(Settings):
 
 
 def get_settings() -> Settings:
+    # Some LLMs require environment variables to be set.
+    load_dotenv(find_dotenv())
+
     source = {"_env_file": ".env", "_env_file_encoding": "utf-8"}
     env = os.getenv("ENV", "development")
     setting_types = {
