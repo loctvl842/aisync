@@ -1,7 +1,7 @@
 [project]
-name = "fastapi-seed"
+name = "AISync"
 version = "0.0.1"
-description = "FastAPI Boilerplate"
+description = "AISync is a Backend service for my portfolio"
 authors = ["loctvl842 <loclepnvx@gmail.com>"]
 
 [tool.ruff]

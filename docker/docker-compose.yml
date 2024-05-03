@@ -1,21 +1,21 @@
 services:
   app:
-    image: rockship/fastapi-seed
-    container_name: fastapi-seed-backend
+    image: loctvl842/aisync
+    container_name: aisync
     restart: always
     build:
       context: ..
       dockerfile: docker/Dockerfile
     environment:
       - ENV=development
-      - SQLALCHEMY_DATABASE_URI=postgresql+asyncpg://postgres:thangcho@localhost:5432/fastapi-seed
+      - SQLALCHEMY_DATABASE_URI=postgresql+asyncpg://postgres:thangcho@localhost:5432/aisync
     network_mode: "host"
     volumes:
       - ../:/app
 
   postgres:
     image: postgres
-    container_name: fastapi-seed-postgres
+    container_name: aisync-postgres
     restart: always
     ports:
       - "5432:5432"
@@ -26,7 +26,7 @@ services:
 
   redis:
     image: redis:6.2.7
-    container_name: fastapi-seed-redis
+    container_name: aisync-redis
     restart: always
     ports:
       - "6379:6379"

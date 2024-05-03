@@ -1,4 +1,4 @@
-# fastapi-seed
+# AISync
 
 ## Pre-requisites
 

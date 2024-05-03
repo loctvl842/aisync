@@ -22,7 +22,7 @@ class RedisSettings(BaseSettings):
 
 
 class OpenAISettings(BaseSettings):
-    OPENAI_API_KEY: str = "sk-1234567890abcdef1234567890abcdef"
+    OPENAI_API_KEY: str = "sk-proj-1234567890abcdef1234567890abcdef"
 
 
 class Settings(
