@@ -26,6 +26,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str = "user"):
     else:
         assistant = Jarvis()
         assistants[user_id] = assistant
+        syslog.info(f"User {user_id} activated assistant {assistant.name} {assistant.version}")
 
     await websocket.accept()
     try:

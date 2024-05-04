@@ -1,8 +1,10 @@
 import importlib
 import os
+from typing import List, Tuple, Type
 
 import click
 from dotenv import find_dotenv, load_dotenv
+from core.logger import syslog
 
 from .assistants.base import Assistant
 
@@ -12,7 +14,7 @@ def robot():
     pass
 
 
-def get_ai_options():
+def get_ai_options() -> List[Tuple[str, Type[Assistant]]]:
     options = []
     # TODO: Find better ways
     package_path = os.path.join("machine", "robot", "assistants")
@@ -36,7 +38,7 @@ def activate(name):
     load_dotenv(find_dotenv())
 
     options = get_ai_options()
-    ai_class = None
+    ai_class: Type[Assistant] | None = None
     if name:
         for name_, ai_class_ in options:
             if name == name_:
@@ -47,20 +49,21 @@ def activate(name):
             for index, (name, _) in enumerate(options, start=1):
                 click.echo(f"{index}. {name}")
             exit(1)
-
     else:
         click.echo("Select an AI to activate:")
         for index, (name, _) in enumerate(options, start=1):
             click.echo(f"{index}. {name}")
 
-        choice = click.prompt("Enter the number of the AI to activate", type=int, default=1, show_default=True)
+        choice: int = click.prompt("Enter the number of the AI to activate", type=int, default=1, show_default=True)
 
         if 1 <= choice <= len(options):
-            ai_class = options[choice - 1][1]
+            _, ai_class = options[choice - 1]
         else:
             click.echo("Invalid choice. Please enter a valid number.")
             exit(1)
+
     assistant = ai_class()
+    syslog.info(f"{assistant.name} is online.")
     assistant.start()
 
 

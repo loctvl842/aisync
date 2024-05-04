@@ -49,7 +49,6 @@ class Suit:
         for source_file in source_files:
             file_name = os.path.splitext(source_file)[0]
             module_name = file_name.replace(os.sep, ".")
-            syslog.info(f"Importing module: {module_name}")
             try:
                 suit_module = importlib.import_module(module_name)
                 # find actions

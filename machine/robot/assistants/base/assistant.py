@@ -2,8 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class Assistant(ABC):
-    def __init__(self, name):
-        self.name = name
+    name: str = "Assistant"
+    version: str = "0.1"
+    year: int = 2024
 
     def start(self):
         try:
