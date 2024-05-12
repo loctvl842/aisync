@@ -87,7 +87,9 @@ generate-migration: ## Generate a new migration
 # Code quality commands
 
 .PHONY: check
-check: check-format lint
+check: ## Check and lint the code
+	@make check-format
+	@make lint
 
 .PHONY: check-format
 check-format: ## Check format
