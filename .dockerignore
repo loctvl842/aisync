@@ -27,3 +27,13 @@ docker
 
 # Ignore local LLM
 *.gguf
+
+# Ignore test files
+*.test
+test_*
+
+# Ignore ruff cache
+.ruff_cache
+
+# Ignore docs
+*.md

@@ -13,7 +13,7 @@ async def receive_message(websocket: WebSocket, assistant: Assistant):
     while True:
         user_input = await websocket.receive_text()
         assistant_response = assistant.respond(user_input)
-        await websocket.send_text(f"Message text was: {assistant_response}")
+        await websocket.send_text(assistant_response)
 
 
 @router.websocket("/ws")

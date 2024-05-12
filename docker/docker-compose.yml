@@ -2,7 +2,7 @@ services:
   app:
     image: loctvl842/aisync
     container_name: aisync
-    restart: always
+    restart: no
     build:
       context: ..
       dockerfile: docker/Dockerfile
