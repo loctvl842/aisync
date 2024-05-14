@@ -1,7 +1,8 @@
+import asyncio
 from typing import List, Optional
 
-from langchain.chains.llm import LLMChain
 from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnableSequence
 
 from . import prompts
 
@@ -31,7 +32,7 @@ class ChatChain:
             input_variables=input_variables,
         )
 
-    def _make_chain(self, assistant):
+    def _make_chain(self, assistant) -> RunnableSequence:
         # Prepare prompt
         prompt_prefix = self._suit.execute_hook(
             "build_prompt_prefix", default=prompts.DEFAULT_PROMPT_PREFIX, assistant=assistant
@@ -40,8 +41,8 @@ class ChatChain:
             "build_prompt_suffix", default=prompts.DEFAULT_PROMPT_SUFFIX, assistant=assistant
         )
         prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
-        # TODO: Verbose if dev environment only
-        return LLMChain(prompt=prompt, llm=assistant.llm, verbose=True)
+        chain = prompt | assistant.llm
+        return chain
 
     def execute(self, assistant):
         input = self._format_input(assistant)
@@ -49,7 +50,18 @@ class ChatChain:
         if "tool_output" not in input:
             input["tool_output"] = ""
 
-        res = self._chain.invoke(input)
-        res["output"] = res["text"]
-        del res["text"]
+        res = {}
+        res["output"] = self._chain.invoke(input)
+
         return res
+
+    async def process_stream(self, assistant, queue: asyncio.Queue):
+        input = self._format_input(assistant)
+
+        if "tool_output" not in input:
+            input["tool_output"] = ""
+
+        async for chunk in self._chain.astream(input):
+            chars = list(chunk.content)
+            for c in chars:
+                await queue.put(c)

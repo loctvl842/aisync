@@ -1,3 +1,4 @@
+import asyncio
 import importlib
 import os
 from typing import List, Tuple, Type
@@ -65,7 +66,7 @@ def activate(name):
 
     assistant = ai_class()
     syslog.info(f"{assistant.name} is online.")
-    assistant.start()
+    asyncio.run(assistant.start(streaming=True))
 
 
 if __name__ == "__main__":
