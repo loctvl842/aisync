@@ -51,7 +51,7 @@ class ChatChain:
             input["tool_output"] = ""
 
         res = {}
-        res["output"] = self._chain.invoke(input)
+        res["output"] = self._chain.invoke(input, {"callbacks": assistant.callbacks})
 
         return res
 
@@ -61,7 +61,7 @@ class ChatChain:
         if "tool_output" not in input:
             input["tool_output"] = ""
 
-        async for chunk in self._chain.astream(input):
+        async for chunk in self._chain.astream(input, assistant.config):
             chars = list(chunk.content)
             for c in chars:
                 await queue.put(c)

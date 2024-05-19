@@ -15,6 +15,7 @@ class Jarvis(Assistant):
     year = 2024
 
     def __init__(self, suit="mark_i"):
+        super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)

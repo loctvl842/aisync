@@ -1,6 +1,5 @@
 import asyncio
 import importlib
-import os
 from typing import List, Tuple, Type
 
 import click
@@ -18,13 +17,12 @@ def robot():
 
 def get_ai_options() -> List[Tuple[str, Type[Assistant]]]:
     options = []
-    # TODO: Find better ways
-    package_path = os.path.join("machine", "robot", "assistants")
-    init_by_path = os.path.join(package_path, "__init__.py")
+    package_path = "machine.robot.assistants"
 
-    file_name = os.path.splitext(init_by_path)[0]
-    module_name = file_name.replace(os.sep, ".")
-    module = importlib.import_module(module_name)
+    try:
+        module = importlib.import_module(package_path)
+    except ImportError:
+        raise ImportError(f"Could not import module {package_path}")
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
         if hasattr(attr, "__bases__") and Assistant in attr.__bases__:

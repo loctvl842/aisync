@@ -22,6 +22,12 @@ class RedisSettings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"
 
 
+class LangfuseSettings(BaseSettings):
+    LANGFUSE_PUBLIC_KEY: str = "pk-lf-***"
+    LANGFUSE_SECRET_KEY: str = "sk-lf-***"
+    LANGFUSE_HOST: str = "https://cloud.langfuse.com/"
+
+
 class OpenAISettings(BaseSettings):
     OPENAI_API_KEY: str = "sk-proj-1234567890abcdef1234567890abcdef"
 
@@ -34,6 +40,7 @@ class Settings(
     CoreSettings,
     DatabaseSettings,
     RedisSettings,
+    LangfuseSettings,
     OpenAISettings,
     GoogleAISettings,
 ): ...
