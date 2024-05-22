@@ -1,4 +1,4 @@
-from machine.robot.decorators import hook
+from ...decorators import hook
 
 
 @hook

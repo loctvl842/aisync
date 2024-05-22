@@ -1,9 +1,9 @@
-import asyncio
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
 
+from ..assistants.base.assistant import Assistant
 from . import prompts
 
 
@@ -12,7 +12,7 @@ class ChatChain:
         self._suit = suit
         self._chain = self._make_chain(assistant)
 
-    def _format_input(self, assistant):
+    def _format_input(self, assistant: Assistant):
         return {
             "input": assistant.buffer_memory.get_pending_message(),
             "chat_history": assistant.buffer_memory.format_chat_history(),
@@ -44,24 +44,23 @@ class ChatChain:
         chain = prompt | assistant.llm
         return chain
 
-    def execute(self, assistant):
+    def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
 
         if "tool_output" not in input:
             input["tool_output"] = ""
 
         res = {}
-        res["output"] = self._chain.invoke(input, {"callbacks": assistant.callbacks})
+        ai_response = self._chain.invoke(input, assistant.config)
+        res["output"] = ai_response.content
 
         return res
 
-    async def process_stream(self, assistant, queue: asyncio.Queue):
+    async def stream(self, assistant, handle_chunk: Callable):
         input = self._format_input(assistant)
 
         if "tool_output" not in input:
             input["tool_output"] = ""
 
         async for chunk in self._chain.astream(input, assistant.config):
-            chars = list(chunk.content)
-            for c in chars:
-                await queue.put(c)
+            await handle_chunk(chunk)

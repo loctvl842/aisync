@@ -1,6 +1,6 @@
 from core.utils.decorators import singleton
-from machine.robot.manager import Manager
 
+from ..manager import Manager
 from .llm import get_llm_by_name
 
 
@@ -20,7 +20,7 @@ class Brain:
         """
         Load LLM & Embedder
         """
-        cfg_cls = get_llm_by_name("LLMChatGoogleGenerativeAI")
+        cfg_cls = get_llm_by_name("LLMGoogleVertexAI")
         if cfg_cls is None:
             raise ValueError("LLM not found")
 

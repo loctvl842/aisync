@@ -1,20 +1,15 @@
 import importlib
-import os
 from typing import List, Optional
 
 from .configs.base import LLMConfig
 
 
 def get_allowed_language_models() -> List[LLMConfig]:
-    # TODO: Find better ways
-    package_path = os.path.join("machine", "robot", "engines", "llm", "configs")
-    init_by_path = os.path.join(package_path, "__init__.py")
-
     default_allowed_llms = []
 
-    file_name = os.path.splitext(init_by_path)[0]
-    module_name = file_name.replace(os.sep, ".")
-    module = importlib.import_module(module_name)
+    package_path = "machine.robot.engines.llm.configs"
+
+    module = importlib.import_module(package_path)
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
         if hasattr(attr, "__bases__") and LLMConfig in attr.__bases__:

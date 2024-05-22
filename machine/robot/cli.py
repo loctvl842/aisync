@@ -34,7 +34,11 @@ def get_ai_options() -> List[Tuple[str, Type[Assistant]]]:
 
 @robot.command()
 @click.option("--name", help="Name of the AI to activate")
-def activate(name):
+@click.option("--streaming", help="Stream the conversation with the AI", is_flag=True, default=False)
+def activate(name: str, streaming: bool):
+    """
+    Run command python cli.py activate --name "Jarvis" --streaming
+    """
     load_dotenv(find_dotenv())
 
     options = get_ai_options()
@@ -64,7 +68,7 @@ def activate(name):
 
     assistant = ai_class()
     syslog.info(f"{assistant.name} is online.")
-    asyncio.run(assistant.start(streaming=True))
+    asyncio.run(assistant.start(streaming=streaming))
 
 
 if __name__ == "__main__":

@@ -1,11 +1,10 @@
 import asyncio
 from typing import Callable
 
-from machine.robot.engines.brain import Brain
-from machine.robot.engines.chain import ChatChain
-from machine.robot.engines.memory import BufferMemory
-from machine.robot.manager import Manager
-
+from ..engines.brain import Brain
+from ..engines.chain import ChatChain
+from ..engines.memory import BufferMemory
+from ..manager import Manager
 from .base import Assistant
 
 
@@ -25,7 +24,7 @@ class Jarvis(Assistant):
 
     def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-        res = self._chain.execute(self)
+        res = self._chain.invoke(self)
         output = res["output"]
 
         # Save to chat memory
@@ -34,28 +33,34 @@ class Jarvis(Assistant):
 
         return output
 
-    async def _consume_queue(self, queue: asyncio.Queue, handler: Callable, delay: float = 0.01) -> str:
-        output = ""
-        while True:
-            char = await queue.get()
-            if char is None:
-                break
-            handler(char)
-            output += char
-            await asyncio.sleep(delay)
-        return output
-
     async def streaming(
         self,
         input: str,
-        handler: Callable = lambda word: print(word, end="", flush=True),
-        delay: float = 0.01,
+        handler: Callable = lambda text: print(text, end="", flush=True),
+        delay: float = 0.02,
     ):
         self.buffer_memory.save_pending_message(input)
 
         queue = asyncio.Queue()
-        producer = asyncio.create_task(self._chain.process_stream(self, queue))
-        consumer = asyncio.create_task(self._consume_queue(queue, handler, delay))
+
+        async def proccess_queue(chunk):
+            chars = list(chunk.content)
+            for c in chars:
+                await queue.put(c)
+
+        async def consume_queue(delay: float = 0.01) -> str:
+            output = ""
+            while True:
+                char = await queue.get()
+                if char is None:
+                    break
+                handler(char)
+                output += char
+                await asyncio.sleep(delay)
+            return output
+
+        producer = asyncio.create_task(self._chain.stream(self, handle_chunk=proccess_queue))
+        consumer = asyncio.create_task(consume_queue(delay=delay))
         await producer  # Wait for producer to finish
         await queue.put(None)  # Signal consumer to stop
         output = await consumer  # Wait for consumer to finish
