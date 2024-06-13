@@ -4,9 +4,11 @@ from typing import List, Optional, Sequence
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain.agents.tools import BaseTool
 
-from ..manager import Manager
-import prompts
 from .parser import ActionOutputParser
+from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate
+from ..manager import Manager
+
+
 
 should_log = (os.getenv("ENV") or "production").lower() == "development"
 
@@ -17,19 +19,19 @@ class AgentManager:
     """
 
     def __init__(self) -> None:
-        self.chatbot_suits = Manager().suits["chatbot"]
+        self.chatbot_suits = Manager().suits["mark_i"]
         self.chain = None
 
     def create_prompt(
         self,
         tools: Sequence[BaseTool],
-        format_instructions: str = prompts.FORMAT_INSTRUCTIONS,
+        format_instructions: str = FORMAT_INSTRUCTIONS,
         input_variables: Optional[List[str]] = None,
-    ) -> prompts.ActionPromptTemplate:
+    ) -> ActionPromptTemplate:
         if input_variables is None:
             input_variables = ["input", "intermediate_steps", "chat_history"]
 
-        return prompts.ActionPromptTemplate(
+        return ActionPromptTemplate(
             template=format_instructions,
             input_variables=input_variables,
             tools=tools,
@@ -40,7 +42,7 @@ class AgentManager:
 
         # Prompt
         format_instructions = self.chatbot_suits.execute_hook(
-            "build_format_instructions", default=prompts.FORMAT_INSTRUCTIONS, chatbot=chatbot
+            "build_format_instructions", default=FORMAT_INSTRUCTIONS, chatbot=chatbot
         )
         prompt = self.create_prompt(tools=tools, format_instructions=format_instructions)
 
