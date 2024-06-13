@@ -14,7 +14,7 @@ from ..manager import Manager
 should_log = (os.getenv("ENV") or "production").lower() == "development"
 
 
-set_debug(True)
+# set_debug(True)
 class AgentManager:
     """
     This is a service managed by Beast.

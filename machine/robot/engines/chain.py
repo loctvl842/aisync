@@ -74,6 +74,18 @@ class ChatChain:
     async def stream(self, assistant, handle_chunk: Callable):
         input = self._format_input(assistant)
 
+        #Get tools from all chatbot suits
+        tools = list(self._suit.tools.values())
+
+        if len(tools) > 0:
+            try: 
+                res = assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
+                tool_output = res["output"]
+                input["tool_output"] = f"## Tool Output: `{tool_output}`" if tool_output else ""
+            except Exception as e:
+                syslog.error(f"Error when executing tools: {e}")
+                traceback.print_exc()
+
         if "tool_output" not in input:
             input["tool_output"] = ""
 

@@ -27,10 +27,8 @@ FORMAT_INSTRUCTIONS = """Answer the following question: `{input}`.
 TOOLS:
 ------
 
-You has access to the following tools:
+You have access to the following tools:
 {tools}
-> `none_of_the_above`: none_of_the_above(too_input=None) - Use this tool if none of the above tools help.
-    Input is always None.
 
 To use a tool, you MUST use the following formats:
 
@@ -45,6 +43,8 @@ When you have a final answer to say to the Human, you MUST use the format:
 ```
 Final Answer: [your response here]
 ```
+
+Do NOT repeatedly use a tool if you receive the same observations from it.
 
 Begin!
 ## Previous conversation history:
