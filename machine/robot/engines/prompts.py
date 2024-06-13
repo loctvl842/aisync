@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict, Any
 
 from langchain.agents.tools import BaseTool
 from langchain.prompts.base import StringPromptTemplate
@@ -8,6 +8,7 @@ class ActionPromptTemplate(StringPromptTemplate):
     template: str
     input_variables: list[str]
     tools: List[BaseTool]
+    partial_variables: Dict[str, Any]
 
     def format(self, **kwargs) -> str:
         intermediate_steps = kwargs.pop("intermediate_steps")

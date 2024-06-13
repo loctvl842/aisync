@@ -76,3 +76,7 @@ class Jarvis(Assistant):
     @property
     def llm(self):
         return Brain().llm
+    
+    @property
+    def agent_manager(self):
+        return Brain().agent_manager

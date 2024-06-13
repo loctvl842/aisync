@@ -1,8 +1,9 @@
 import os
 from typing import List, Optional, Sequence
 
-from langchain.agents import AgentExecutor, LLMSingleActionAgent
+from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
+from langchain.globals import set_debug
 
 from .parser import ActionOutputParser
 from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate
@@ -13,6 +14,7 @@ from ..manager import Manager
 should_log = (os.getenv("ENV") or "production").lower() == "development"
 
 
+set_debug(True)
 class AgentManager:
     """
     This is a service managed by Beast.
@@ -30,31 +32,31 @@ class AgentManager:
     ) -> ActionPromptTemplate:
         if input_variables is None:
             input_variables = ["input", "intermediate_steps", "chat_history"]
-
+        
         return ActionPromptTemplate(
             template=format_instructions,
             input_variables=input_variables,
             tools=tools,
+            partial_variables={"agent_scratchpad": []},
+            output_parser=ActionOutputParser(),
         )
 
-    def execute_tools(self, agent_input, tools, chatbot):
+    def execute_tools(self, agent_input, tools, assistant):
         allowed_tools = [tool.name for tool in tools]
 
         # Prompt
         format_instructions = self.chatbot_suits.execute_hook(
-            "build_format_instructions", default=FORMAT_INSTRUCTIONS, chatbot=chatbot
+            "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=assistant
         )
-        prompt = self.create_prompt(tools=tools, format_instructions=format_instructions)
-
-        # Chain
-        chain = prompt | chatbot.llm
-
+        prompt = self.create_prompt(
+            tools=tools, 
+            format_instructions=format_instructions, 
+        )
         # Agent
-        agent = LLMSingleActionAgent(
-            llm_chain=chain,
-            output_parser=ActionOutputParser(),
-            stop=["Observation:"],
-            allowed_tools=allowed_tools,
+        agent = create_tool_calling_agent(
+            llm=assistant.llm, 
+            prompt=prompt,
+            tools=tools,
         )
 
         # Executor
@@ -63,5 +65,5 @@ class AgentManager:
         agent_executor = AgentExecutor.from_agent_and_tools(
             agent=agent, tools=tools, return_intermediate_steps=True, handle_parsing_errors=True, verbose=should_log
         )
-        res = agent_executor(agent_input)
+        res = agent_executor.invoke(agent_input)
         return res
