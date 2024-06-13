@@ -3,7 +3,6 @@ from typing import List, Optional, Sequence
 
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
-from langchain.globals import set_debug
 
 from .parser import ActionOutputParser
 from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate
@@ -14,7 +13,6 @@ from ..manager import Manager
 should_log = (os.getenv("ENV") or "production").lower() == "development"
 
 
-# set_debug(True)
 class AgentManager:
     """
     This is a service managed by Beast.
@@ -65,5 +63,8 @@ class AgentManager:
         agent_executor = AgentExecutor.from_agent_and_tools(
             agent=agent, tools=tools, return_intermediate_steps=True, handle_parsing_errors=True, verbose=should_log
         )
-        res = agent_executor.invoke(agent_input)
+        res = agent_executor.invoke(
+            input=agent_input,
+            config=assistant.config,
+        )
         return res
