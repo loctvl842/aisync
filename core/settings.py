@@ -13,10 +13,11 @@ class CoreSettings(BaseSettings):
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
 
 
-class DatabaseSettings(BaseSettings):
-    SQLALCHEMY_DATABASE_URI: str = "postgresql+asyncpg://postgres:thangcho@127.0.0.1:5432/aisync"
-    SQLALCHEMY_ECHO: bool = False
+class PostgresSettings(BaseSettings):
+    SQLALCHEMY_POSTGRES_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5432/aisync"
 
+class PGVectorSettings(BaseSettings):
+    SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5431/aisync"
 
 class RedisSettings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"
@@ -38,7 +39,8 @@ class GoogleAISettings(BaseSettings):
 
 class Settings(
     CoreSettings,
-    DatabaseSettings,
+    PostgresSettings,
+    PGVectorSettings,
     RedisSettings,
     LangfuseSettings,
     OpenAISettings,
