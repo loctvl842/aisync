@@ -35,15 +35,16 @@ class Brain:
         default_cfg = cfg_cls().model_dump()
         self.llm = cfg_cls.get_llm(default_cfg)
 
-    def load_memory(self):
-        """
-        Load memories
-        """
         cfg_cls = get_embedder_by_name("EmbedderOpenAI")
         if cfg_cls is None:
             raise ValueError("Embedder not found")
         default_cfg = cfg_cls().model_dump()
         self.embedder = cfg_cls.get_embedder(default_cfg)
+
+    def load_memory(self):
+        """
+        Load memories
+        """
 
     def load_agent(self):
         """
