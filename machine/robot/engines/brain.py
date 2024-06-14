@@ -2,6 +2,7 @@ from core.utils.decorators import singleton
 
 from ..manager import Manager
 from .llm import get_llm_by_name
+from .embedder import get_embedder_by_name
 from .agent_manager import AgentManager
 
 
@@ -38,6 +39,11 @@ class Brain:
         """
         Load memories
         """
+        cfg_cls = get_embedder_by_name("EmbedderOpenAI")
+        if cfg_cls is None:
+            raise ValueError("Embedder not found")
+        default_cfg = cfg_cls().model_dump()
+        self.embedder = cfg_cls.get_embedder(default_cfg)
 
     def load_agent(self):
         """
