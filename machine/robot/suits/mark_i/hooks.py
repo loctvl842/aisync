@@ -24,3 +24,11 @@ def embed_output(output: str, assistant):
 
     """
     return assistant.embedder.embed_query(text=output)
+
+@hook
+def fetch_memory(input, assistant):
+    """
+    Fetch memory from long term memory
+
+    """
+    return assistant.long_term_memory.similarity_search(input)

@@ -7,7 +7,7 @@ from numpy.linalg import norm as l2_distance
 from machine.models import ChatInput, ChatOutput
 
 class LongTermMemory():
-  def __init__(self, top_matches: Optional[int] = 4):
+  def __init__(self, top_matches: Optional[int] = 10):
     self._top_matches = top_matches
 
     # TODO: Move engine to a different place
@@ -46,9 +46,9 @@ class LongTermMemory():
       # Result sorted by l2 distance
       ordered_res = sorted(result, key=lambda x: l2_distance(x.embedding - vectorized_input))[:self._top_matches]
       
-      for inter in result:
+      for inter in ordered_res:
         payload = json.loads(inter.payload)
-        res["long_term_memory"] += f'- Input: {payload["input"]}\n- Output: {payload["output"]}\n\n'
+        res["long_term_memory"] += f'Human: {payload["input"]}\nAI: {payload["output"]}\n'
       session.commit()
 
     return res
