@@ -40,8 +40,6 @@ class AgentManager:
         )
 
     def execute_tools(self, agent_input, tools, assistant):
-        allowed_tools = [tool.name for tool in tools]
-
         # Prompt
         format_instructions = self.chatbot_suits.execute_hook(
             "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=assistant

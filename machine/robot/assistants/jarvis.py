@@ -4,7 +4,7 @@ from typing import Callable
 
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
-from ..engines.memory import BufferMemory
+from ..engines.memory import BufferMemory, LongTermMemory
 from ..manager import Manager
 from .base import Assistant
 from machine.models import ChatInput, ChatOutput
@@ -20,20 +20,14 @@ class Jarvis(Assistant):
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
+        self.long_term_memory = LongTermMemory()
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
     
     def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
-        with self._chain._Session() as session:
-            payload = {
-                "input": input,
-                "output": output,
-            }
-            session.add(ChatOutput(payload=json.dumps(payload), embedding=vectorized_output))
-            session.add(ChatInput(payload=json.dumps(payload), embedding=self._chain.vectorized_input))
-            session.commit()
+        self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
 
     def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
