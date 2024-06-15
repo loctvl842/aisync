@@ -6,19 +6,7 @@ import click
 from dotenv import find_dotenv, load_dotenv
 
 from core.logger import syslog
-from core.db import sessions, DBType
-
 from .assistants.base import Assistant
-
-
-# from pgvector.psycopg import register_vector
-# import psycopg
-
-# conn = psycopg.connect(dbname='postgres', autocommit=True)
-
-# conn.execute('CREATE EXTENSION IF NOT EXISTS vector')
-# register_vector(conn)
-
 
 
 @click.group()

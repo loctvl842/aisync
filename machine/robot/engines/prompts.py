@@ -66,6 +66,8 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 
 {tool_output}
 
+{long_term_memory}
+
 ## Previous conversation history:
 
 {chat_history}

@@ -1,4 +1,5 @@
 import asyncio
+import json
 from typing import Callable
 
 from ..engines.brain import Brain
@@ -6,6 +7,7 @@ from ..engines.chain import ChatChain
 from ..engines.memory import BufferMemory
 from ..manager import Manager
 from .base import Assistant
+from machine.models import ChatInput, ChatOutput
 
 
 class Jarvis(Assistant):
@@ -21,6 +23,17 @@ class Jarvis(Assistant):
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
+    
+    def save_to_db(self, input: str, output: str):
+        vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
+        with self._chain._Session() as session:
+            payload = {
+                "input": input,
+                "output": output,
+            }
+            session.add(ChatOutput(payload=json.dumps(payload), embedding=vectorized_output))
+            session.add(ChatInput(payload=json.dumps(payload), embedding=self._chain.vectorized_input))
+            session.commit()
 
     def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
@@ -30,6 +43,9 @@ class Jarvis(Assistant):
         # Save to chat memory
         self.buffer_memory.save_message(sender="Human", message=input)
         self.buffer_memory.save_message(sender="AI", message=output)
+
+        # Save to database
+        self.save_to_db(input, output)
 
         return output
 
@@ -69,6 +85,9 @@ class Jarvis(Assistant):
         self.buffer_memory.save_message(sender="Human", message=input)
         self.buffer_memory.save_message(sender="AI", message=output)
 
+        # Save to database
+        self.save_to_db(input, output)
+
     @property
     def chain(self):
         return self._chain
@@ -80,3 +99,7 @@ class Jarvis(Assistant):
     @property
     def agent_manager(self):
         return Brain().agent_manager
+    
+    @property
+    def embedder(self):
+        return Brain().embedder
