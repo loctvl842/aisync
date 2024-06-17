@@ -46,7 +46,7 @@ class ChatChain:
         chain = prompt | assistant.llm
         return chain
 
-    def invoke(self, assistant: Assistant):
+    async def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
 
         #Get tools from all chatbot suits
@@ -67,7 +67,7 @@ class ChatChain:
         # Embed input
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
         
-        lt_memory = self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
+        lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
         input["long_term_memory"] = lt_memory["long_term_memory"]
 
         res = {}

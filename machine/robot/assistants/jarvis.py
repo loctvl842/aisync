@@ -28,9 +28,9 @@ class Jarvis(Assistant):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
         await self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
 
-    def respond(self, input: str) -> str:
+    async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-        res = self._chain.invoke(self)
+        res = await self._chain.invoke(self)
         output = res["output"]
 
         # Save to chat memory
@@ -38,7 +38,7 @@ class Jarvis(Assistant):
         self.buffer_memory.save_message(sender="AI", message=output)
 
         # Save to database
-        self.save_to_db(input, output)
+        await self.save_to_db(input, output)
 
         return output
 

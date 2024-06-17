@@ -36,7 +36,7 @@ class Assistant(ABC):
                         await self.streaming(user_input)
                         print("\n")
                     else:
-                        assistant_response = self.respond(user_input)
+                        assistant_response = await self.respond(user_input)
                         print("🤖: ", end="", flush=True)
                         print(assistant_response, "\n")
         except KeyboardInterrupt:

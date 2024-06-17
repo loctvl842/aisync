@@ -1,14 +1,13 @@
 import json
-from core.db.session import sessions, DBType
+
+from numpy.linalg import norm as l2_distance
 from sqlalchemy import select
 from typing import Optional, Dict
-from numpy.linalg import norm as l2_distance
+from uuid import uuid4
 
+from core.db.session import sessions, DBType
 from machine.models import ResponseLogs, QueryLogs
 
-
-# TO clean up
-from uuid import uuid4
 
 class LongTermMemory():
   def __init__(self, top_matches: Optional[int] = 10):
@@ -24,10 +23,6 @@ class LongTermMemory():
       session.add(QueryLogs(payload=json.dumps(payload), embedding=vectorized_input))
       session.add(ResponseLogs(payload=json.dumps(payload), embedding=vectorized_output))
       await session.commit()
-
-  def clear_memory(self) -> None:
-    QueryLogs.__table__.drop(self._engine)
-    ResponseLogs.__table__.drop(self._engine)
 
   async def similarity_search(self, vectorized_input) -> Dict[str, str]:
     res = {}
