@@ -1023,6 +1023,27 @@ protobuf = ">=3.19.5,<3.20.0 || >3.20.0,<3.20.1 || >3.20.1,<4.21.1 || >4.21.1,<4
 grpc = ["grpcio (>=1.44.0,<2.0.0.dev0)"]
 
 [[package]]
+name = "gpt4all"
+version = "2.7.0"
+description = "Python bindings for GPT4All"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "gpt4all-2.7.0-py3-none-macosx_10_15_universal2.whl", hash = "sha256:6e3263fbf4817916a09a7c1af36f90104fcb450b33a66bdb163dcd7587f56188"},
+    {file = "gpt4all-2.7.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:35891bb52f9179e82b07f61602b37e7b4cb695d1a9fa458e1fe3c01b4ad6abce"},
+    {file = "gpt4all-2.7.0-py3-none-win_amd64.whl", hash = "sha256:b83275ff9ace9c5237cbee4a776b13f2187de22e7999639cb4e8ef84a171fcea"},
+]
+
+[package.dependencies]
+requests = "*"
+tqdm = "*"
+
+[package.extras]
+all = ["gpt4all[cuda]"]
+cuda = ["nvidia-cublas-cu12", "nvidia-cuda-runtime-cu12"]
+dev = ["black", "gpt4all[all]", "isort", "mkautodoc", "mkdocs-jupyter", "mkdocs-material", "mkdocstrings[python]", "pytest", "setuptools", "twine", "typing-extensions (>=3.10)", "wheel"]
+
+[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -3409,4 +3430,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a0802aad1dad7c26f8f0d230716b0ca19f6ad2ff272e7dca50eb002325fc510c"
+content-hash = "547abdb3675b4e1b08113490a065a908b22a067296ebef4cc2fc1a94bd74f30c"
