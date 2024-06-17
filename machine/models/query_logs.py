@@ -11,4 +11,4 @@ class QueryLogs(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     payload = Column(JSON, nullable=False)
-    embedding = mapped_column(Vector(1024), nullable=False)
+    embedding = mapped_column(Vector(768), nullable=False)
