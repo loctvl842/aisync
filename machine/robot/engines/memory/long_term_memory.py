@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import Dict, Optional
 from uuid import uuid4
 
@@ -19,6 +20,7 @@ class LongTermMemory:
             payload = {
                 "input": input,
                 "output": output,
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
             session.add(QueryLogs(payload=json.dumps(payload), embedding=vectorized_input))
             session.add(ResponseLogs(payload=json.dumps(payload), embedding=vectorized_output))
@@ -44,8 +46,14 @@ class LongTermMemory:
             # Result sorted by l2 distance
             ordered_res = sorted(result, key=lambda x: l2_distance(x.embedding - vectorized_input))[: self._top_matches]
 
+            # Ordered result by time
+            ordered_res = sorted(
+                ordered_res, key=lambda x: datetime.strptime(json.loads(x.payload)["timestamp"], "%Y-%m-%d %H:%M:%S")
+            )
+
             for inter in ordered_res:
                 payload = json.loads(inter.payload)
-                res["long_term_memory"] += f'Human: {payload["input"]}\nAI: {payload["output"]}\n'
+                res["long_term_memory"] += f'At {payload["timestamp"]}:\n'
+                res["long_term_memory"] += f'- Human: {payload["input"]}\n- AI: {payload["output"]}\n\n'
             await session.commit()
         return res
