@@ -1,8 +1,9 @@
 from core.utils.decorators import singleton
 
 from ..manager import Manager
-from .llm import get_llm_by_name
 from .agent_manager import AgentManager
+from .embedder import get_embedder_by_name
+from .llm import get_llm_by_name
 
 
 @singleton
@@ -33,6 +34,12 @@ class Brain:
 
         default_cfg = cfg_cls().model_dump()
         self.llm = cfg_cls.get_llm(default_cfg)
+
+        cfg_cls = get_embedder_by_name("EmbedderOpenAI")
+        if cfg_cls is None:
+            raise ValueError("Embedder not found")
+        default_cfg = cfg_cls().model_dump()
+        self.embedder = cfg_cls.get_embedder(default_cfg)
 
     def load_memory(self):
         """

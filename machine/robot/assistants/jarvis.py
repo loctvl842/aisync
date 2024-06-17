@@ -1,9 +1,10 @@
 import asyncio
+import json
 from typing import Callable
 
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
-from ..engines.memory import BufferMemory
+from ..engines.memory import BufferMemory, LongTermMemory
 from ..manager import Manager
 from .base import Assistant
 
@@ -18,18 +19,26 @@ class Jarvis(Assistant):
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
+        self.long_term_memory = LongTermMemory()
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
 
-    def respond(self, input: str) -> str:
+    async def save_to_db(self, input: str, output: str):
+        vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
+        await self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
+
+    async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-        res = self._chain.invoke(self)
+        res = await self._chain.invoke(self)
         output = res["output"]
 
         # Save to chat memory
         self.buffer_memory.save_message(sender="Human", message=input)
         self.buffer_memory.save_message(sender="AI", message=output)
+
+        # Save to database
+        await self.save_to_db(input, output)
 
         return output
 
@@ -69,6 +78,9 @@ class Jarvis(Assistant):
         self.buffer_memory.save_message(sender="Human", message=input)
         self.buffer_memory.save_message(sender="AI", message=output)
 
+        # Save to database
+        await self.save_to_db(input, output)
+
     @property
     def chain(self):
         return self._chain
@@ -76,7 +88,11 @@ class Jarvis(Assistant):
     @property
     def llm(self):
         return Brain().llm
-    
+
     @property
     def agent_manager(self):
         return Brain().agent_manager
+
+    @property
+    def embedder(self):
+        return Brain().embedder

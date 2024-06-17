@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from langchain.agents.tools import BaseTool
 from langchain.prompts.base import StringPromptTemplate
@@ -65,6 +65,8 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 # Context:
 
 {tool_output}
+
+{long_term_memory}
 
 ## Previous conversation history:
 
