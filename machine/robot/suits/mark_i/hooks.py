@@ -1,12 +1,14 @@
 from ...decorators import hook
 
+
 @hook
 def build_format_instructions(default: str, assistant):
     """
     You can custom your own format instructions here.
-    
+
     """
     return default
+
 
 @hook
 def embed_input(input: str, assistant):
@@ -16,6 +18,7 @@ def embed_input(input: str, assistant):
     """
     return assistant.embedder.embed_query(text=input)
 
+
 @hook
 def embed_output(output: str, assistant):
     """
@@ -23,6 +26,7 @@ def embed_output(output: str, assistant):
 
     """
     return assistant.embedder.embed_query(text=output)
+
 
 @hook
 async def fetch_memory(input, assistant):

@@ -1,5 +1,7 @@
 from typing import Type
+
 from pydantic import BaseModel, ConfigDict
+
 
 class EmbedderConfig(BaseModel):
     _pyclass: Type

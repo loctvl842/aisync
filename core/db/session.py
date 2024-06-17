@@ -37,11 +37,13 @@ class RoutingSession(Session):
     def __init__(self, engines, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.engines = engines
+
     def get_bind(self, mapper=None, clause=None, **kw):
         if self._flushing or isinstance(clause, (Update, Delete, Insert)):
             return self.engines[EngineType.WRITER].sync_engine
         else:
             return self.engines[EngineType.READER].sync_engine
+
 
 class DBSession:
     def __init__(self, database_uri):
@@ -79,9 +81,11 @@ class DBSession:
         finally:
             await self.session.close()
 
+
 """
 All database sessions
 """
+
 
 class DBType(Enum):
     POSTGRES = "postgres"
@@ -98,5 +102,6 @@ set_session_context = sessions[DBType.POSTGRES].set_session_context
 reset_session_context = sessions[DBType.POSTGRES].reset_session_context
 get_session = sessions[DBType.POSTGRES].get_session
 session = sessions[DBType.POSTGRES].session
+
 
 class Base(DeclarativeBase): ...

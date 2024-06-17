@@ -16,10 +16,12 @@ class CoreSettings(BaseSettings):
 class PostgresSettings(BaseSettings):
     SQLALCHEMY_POSTGRES_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5432/aisync"
 
+
 class PGVectorSettings(BaseSettings):
     # SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5431/aisync"
     # Change your PGVECTOR URI here
     SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:12345@localhost:5431/aisync"
+
 
 class RedisSettings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"

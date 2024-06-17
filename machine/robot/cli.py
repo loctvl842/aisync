@@ -6,6 +6,7 @@ import click
 from dotenv import find_dotenv, load_dotenv
 
 from core.logger import syslog
+
 from .assistants.base import Assistant
 
 

@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import Optional, Any
+from typing import Any, Optional
 
 from langchain.agents import tool
+
 from core.logger import syslog
 
 
@@ -13,6 +14,7 @@ def get_today_date(tool_input: Optional[Any] = None):
     Input is always None.
     """
     return datetime.today()
+
 
 @tool
 def none_of_the_above(tool_input: Optional[Any] = None):

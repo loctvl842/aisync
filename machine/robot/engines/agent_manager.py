@@ -4,11 +4,9 @@ from typing import List, Optional, Sequence
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
 
+from ..manager import Manager
 from .parser import ActionOutputParser
 from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate
-from ..manager import Manager
-
-
 
 should_log = (os.getenv("ENV") or "production").lower() == "development"
 
@@ -30,7 +28,7 @@ class AgentManager:
     ) -> ActionPromptTemplate:
         if input_variables is None:
             input_variables = ["input", "intermediate_steps", "chat_history"]
-        
+
         return ActionPromptTemplate(
             template=format_instructions,
             input_variables=input_variables,
@@ -45,12 +43,12 @@ class AgentManager:
             "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=assistant
         )
         prompt = self.create_prompt(
-            tools=tools, 
-            format_instructions=format_instructions, 
+            tools=tools,
+            format_instructions=format_instructions,
         )
         # Agent
         agent = create_tool_calling_agent(
-            llm=assistant.llm, 
+            llm=assistant.llm,
             prompt=prompt,
             tools=tools,
         )

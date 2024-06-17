@@ -23,7 +23,7 @@ class Jarvis(Assistant):
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
-    
+
     async def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
         await self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
@@ -88,11 +88,11 @@ class Jarvis(Assistant):
     @property
     def llm(self):
         return Brain().llm
-    
+
     @property
     def agent_manager(self):
         return Brain().agent_manager
-    
+
     @property
     def embedder(self):
         return Brain().embedder
