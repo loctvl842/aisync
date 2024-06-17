@@ -7,8 +7,8 @@ from sqlalchemy.orm import mapped_column
 from pgvector.sqlalchemy import Vector
 
 
-class ChatOutput(Base):
-    __tablename__ = "chat_output"
+class QueryLogs(Base):
+    __tablename__ = "query_logs"
 
     id = Column(Integer, primary_key=True, autoincrement=True) 
     payload = Column(JSON, nullable=False)

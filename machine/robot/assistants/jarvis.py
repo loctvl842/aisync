@@ -7,7 +7,6 @@ from ..engines.chain import ChatChain
 from ..engines.memory import BufferMemory, LongTermMemory
 from ..manager import Manager
 from .base import Assistant
-from machine.models import ChatInput, ChatOutput
 
 
 class Jarvis(Assistant):
@@ -25,9 +24,9 @@ class Jarvis(Assistant):
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
     
-    def save_to_db(self, input: str, output: str):
+    async def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
-        self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
+        await self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
 
     def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
@@ -80,7 +79,7 @@ class Jarvis(Assistant):
         self.buffer_memory.save_message(sender="AI", message=output)
 
         # Save to database
-        self.save_to_db(input, output)
+        await self.save_to_db(input, output)
 
     @property
     def chain(self):
