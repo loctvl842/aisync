@@ -26,14 +26,14 @@ def upgrade() -> None:
         "query_logs",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("payload", sa.JSON(), nullable=False),
-        sa.Column("embedding", Vector(dim=1024), nullable=False),
+        sa.Column("embedding", Vector(dim=768), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
         "response_logs",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("payload", sa.JSON(), nullable=False),
-        sa.Column("embedding", Vector(dim=1024), nullable=False),
+        sa.Column("embedding", Vector(dim=768), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     # ### end Alembic commands ###
