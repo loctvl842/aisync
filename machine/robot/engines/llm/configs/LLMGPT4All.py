@@ -33,7 +33,7 @@ class CustomizedGPT4All(GPT4All):
         except Exception as e:
             return f"Invalid input. Please try again.\n {e}", False
 
-    def invoke_tool(self, input: Union[str, dict], config: Optional[RunnableConfig] = None) -> Tuple[str, bool]:
+    def invoke_tool(self, input: Union[str, dict], config: Optional[RunnableConfig] = None) -> str:
         """A function that we can use the perform a tool invocation.
 
         Args:
@@ -47,21 +47,18 @@ class CustomizedGPT4All(GPT4All):
             output from the requested tool
         """
         if isinstance(input, str):
-            return (
-                f"Action: Unidentified\nAction Input: Unidentified\nObservation:\
+            return f"Action: Unidentified\nAction Input: Unidentified\nObservation:\
                 \n -The input: ```\n{input}\n```\n was of an invalid dictionary format.\
-                Please try again.\n",
-                False,
-            )
+                Please try again.\n"
         try:
             tool_call_request = input
             name = tool_call_request["name"]
             requested_tool = self.tool_name_to_tool[name]
             res = requested_tool.invoke(tool_call_request["arguments"], config=config)
             syslog.info(res)
-            return f"Action: {name}\nAction Input: {tool_call_request['arguments']}\nFinal Answer: {res}", True
+            return f"Action: {name}\nAction Input: {tool_call_request['arguments']}\nFinal Answer: {res}"
         except Exception as e:
-            return f"Action: Unidentified\nAction Input: Unidentified\nObservation: {e}", False
+            return f"Action: Unidentified\nAction Input: Unidentified\nObservation: {e}"
 
     def add_tools(self, tools):
         self.tool_name_to_tool = {tool.name: tool for tool in tools}
@@ -103,8 +100,7 @@ class CustomizedGPT4All(GPT4All):
             tool_specs = output
 
         # Invoke the tool
-        tool_output, status = self.invoke_tool(tool_specs)
-        return tool_output
+        return self.invoke_tool(tool_specs)
 
 
 class LLMGPT4All(LLMConfig):
