@@ -15,7 +15,7 @@ def build_format_instructions(default: str, assistant):
     You have access to the following tools:
     {tools}
 
-    Given the question, return the name and input of the tool to use. 
+    Given the question, return the name and input of the tool to use.
     You must ALWAYS return a Python dictionary format with 'name' and 'arguments' keys:
 
     ```
@@ -28,16 +28,16 @@ def build_format_instructions(default: str, assistant):
     }}
     ````
 
-    The `arguments` should be a dictionary, with keys corresponding 
+    The `arguments` should be a dictionary, with keys corresponding \
     to the argument names and the values corresponding to the requested values.
 
-    Example output: 
+    Example output:
     ```
      {{
         \"name\": \"get_number\",
         \"arguments\":
         {{
-            
+
         }}
     }}
     ```
