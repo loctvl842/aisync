@@ -17,8 +17,8 @@ class AgentManager:
     """
 
     def __init__(self) -> None:
-        # Temporarily change suit for GPT4All
-        self.chatbot_suits = Manager().suits["mark_ii_4all"]
+        # Change to suit mark_ii_4all if you want to use GPT4All
+        self.chatbot_suits = Manager().suits["mark_i"]
         self.chain = None
 
     def create_prompt(
