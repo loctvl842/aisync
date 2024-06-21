@@ -36,3 +36,14 @@ async def fetch_memory(input, assistant):
     """
     res = await assistant.long_term_memory.similarity_search(input)
     return res
+
+
+@hook
+async def fetch_document_memory(input, assistant):
+    """
+    Fetch document memory
+
+    """
+
+    doc = await assistant.document_memory.similarity_search(input)
+    return assistant.agent_manager.execute_documents(agent_input={"input": input, "document": doc}, assistant=assistant)

@@ -4,7 +4,7 @@ from typing import Callable
 
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
-from ..engines.memory import BufferMemory, LongTermMemory
+from ..engines.memory import BufferMemory, DocumentMemory, LongTermMemory
 from ..manager import Manager
 from .base import Assistant
 
@@ -20,9 +20,15 @@ class Jarvis(Assistant):
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
         self.long_term_memory = LongTermMemory()
+        self.document_memory = DocumentMemory(embedder=self.embedder)
+        self.load_document(self.manager.suits[suit]._path_to_doc)
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
+
+    def load_document(self, file_path):
+        for fp in file_path:
+            self.document_memory.read(fp)
 
     async def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
