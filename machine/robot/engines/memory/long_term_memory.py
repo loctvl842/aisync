@@ -27,6 +27,7 @@ class LongTermMemory:
             await session.commit()
 
     async def similarity_search(self, vectorized_input) -> Dict[str, str]:
+        # TODO: Change to cosine distance
         res = {}
         res["long_term_memory"] = "## Past interaction:\n\n"
         # DB Session for similarity search

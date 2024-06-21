@@ -72,8 +72,11 @@ class ChatChain:
         input["long_term_memory"] = lt_memory["long_term_memory"]
 
         res = {}
-        ai_response = self._chain.invoke(input, assistant.config)
-        res["output"] = ai_response.content
+        ai_response = self._chain.invoke(input, config=assistant.config)
+        if isinstance(ai_response, str):
+            res["output"] = ai_response
+        else:
+            res["output"] = ai_response.content
 
         return res
 
