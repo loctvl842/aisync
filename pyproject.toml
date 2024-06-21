@@ -36,6 +36,8 @@ numpy = "^1.26.4"
 psycopg2 = "^2.9.9"
 langchain-postgres = "^0.0.8"
 gpt4all = "^2.7.0"
+langchain-postgres = "^0.0.8"
+gpt4all = "^2.7.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -3,8 +3,6 @@ import time
 from functools import wraps
 from typing import Awaitable, Callable, TypeVar, Union
 
-from core.logger import syslog
-
 T = TypeVar("T")
 
 
@@ -38,6 +36,8 @@ def stopwatch(
     def decorator(fn: Callable[..., T]) -> Callable[..., Union[T, Awaitable[T]]]:
         @wraps(fn)
         async def wrapper(*args, **kwargs) -> T:
+            from core.logger import syslog
+
             start = time.time_ns()
             if asyncio.iscoroutinefunction(fn):
                 result = await fn(*args, **kwargs)

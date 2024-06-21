@@ -1,5 +1,4 @@
 import asyncio
-import json
 from typing import Callable
 
 from ..engines.brain import Brain
@@ -59,7 +58,8 @@ class Jarvis(Assistant):
         queue = asyncio.Queue()
 
         async def proccess_queue(chunk):
-            chars = list(chunk.content)
+            # Follow output format of GPT4All
+            chars = list(chunk if isinstance(chunk, str) else chunk.content)
             for c in chars:
                 await queue.put(c)
 

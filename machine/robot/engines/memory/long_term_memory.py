@@ -6,7 +6,7 @@ from uuid import uuid4
 from numpy.linalg import norm as l2_distance
 from sqlalchemy import select
 
-from core.db.session import DBType, sessions
+from core.db.session import Dialect, sessions
 from machine.models import QueryLogs, ResponseLogs
 
 
@@ -15,8 +15,8 @@ class LongTermMemory:
         self._top_matches = top_matches
 
     async def save_interaction(self, input: str, output: str, vectorized_input, vectorized_output) -> None:
-        sessions[DBType.PGVECTOR].set_session_context(str(uuid4()))
-        async with sessions[DBType.PGVECTOR].session() as session:
+        sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
+        async with sessions[Dialect.PGVECTOR].session() as session:
             payload = {
                 "input": input,
                 "output": output,
@@ -27,11 +27,12 @@ class LongTermMemory:
             await session.commit()
 
     async def similarity_search(self, vectorized_input) -> Dict[str, str]:
+        # TODO: Change to cosine distance
         res = {}
         res["long_term_memory"] = "## Past interaction:\n\n"
         # DB Session for similarity search
-        sessions[DBType.PGVECTOR].set_session_context(str(uuid4()))
-        async with sessions[DBType.PGVECTOR].session() as session:
+        sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
+        async with sessions[Dialect.PGVECTOR].session() as session:
             # Top self._top_matches similarity search neighbors from input and output tables
             input_match = await session.scalars(
                 select(QueryLogs).order_by(QueryLogs.embedding.l2_distance(vectorized_input)).limit(self._top_matches)
