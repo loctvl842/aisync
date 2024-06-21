@@ -43,6 +43,7 @@ class ChatChain:
         prompt_suffix = self._suit.execute_hook(
             "build_prompt_suffix", default=prompts.DEFAULT_PROMPT_SUFFIX, assistant=assistant
         )
+
         prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
         chain = prompt | assistant.llm
         return chain
@@ -71,9 +72,25 @@ class ChatChain:
         lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
         input["long_term_memory"] = lt_memory["long_term_memory"]
 
+        # fetch document_memory
+        try:
+            document_memory = await self._suit.execute_hook(
+                "fetch_document_memory", input=input["input"], assistant=assistant
+            )
+            input["document_memory"] = f"## Document Knowledge Output: `{document_memory}`"
+        except Exception as e:
+            syslog.error(f"Error when fetching document memory: {e}")
+            traceback.print_exc()
+
+        if "document_memory" not in input:
+            input["document_memory"] = ""
+
         res = {}
-        ai_response = self._chain.invoke(input, assistant.config)
-        res["output"] = ai_response.content
+        ai_response = self._chain.invoke(input, config=assistant.config)
+        if isinstance(ai_response, str):
+            res["output"] = ai_response
+        else:
+            res["output"] = ai_response.content
 
         return res
 
@@ -100,6 +117,19 @@ class ChatChain:
 
         lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
         input["long_term_memory"] = lt_memory["long_term_memory"]
+
+        # fetch document_memory
+        try:
+            document_memory = await self._suit.execute_hook(
+                "fetch_document_memory", input=input["input"], assistant=assistant
+            )
+            input["document_memory"] = f"## Document Knowledge Output: `{document_memory}`"
+        except Exception as e:
+            syslog.error(f"Error when fetching document memory: {e}")
+            traceback.print_exc()
+
+        if "document_memory" not in input:
+            input["document_memory"] = ""
 
         async for chunk in self._chain.astream(input, assistant.config):
             await handle_chunk(chunk)

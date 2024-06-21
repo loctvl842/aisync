@@ -23,6 +23,7 @@ class Suit:
         self._hooks = {}
         self._tools = {}
         self._active = False
+        self._path_to_doc = glob.glob(f"{path_to_suit}/documents/*")
 
     @staticmethod
     def _is_suit_action(member):

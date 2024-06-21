@@ -1,4 +1,5 @@
 from .buffer_memory import BufferMemory
+from .document_memory import DocumentMemory
 from .long_term_memory import LongTermMemory
 
-__all__ = ["BufferMemory", "LongTermMemory"]
+__all__ = ["BufferMemory", "LongTermMemory", "DocumentMemory"]

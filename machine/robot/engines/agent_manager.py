@@ -3,6 +3,7 @@ from typing import List, Optional, Sequence
 
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
+from langchain_core.prompts import PromptTemplate
 
 from ..manager import Manager
 from .parser import ActionOutputParser
@@ -64,3 +65,15 @@ class AgentManager:
             config=assistant.config,
         )
         return res
+
+    def execute_documents(self, agent_input, assistant):
+        prompt = self.chatbot_suits.execute_hook("build_prompt_from_docs", assistant=assistant)
+        prompt = PromptTemplate.from_template(prompt)
+
+        chain = prompt | assistant.llm
+
+        res = chain.invoke(input={"input": agent_input["input"], "document": agent_input["document"]})
+        if isinstance(res, str):
+            return res
+
+        return res.content
