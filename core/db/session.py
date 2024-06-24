@@ -20,14 +20,6 @@ def get_session_context() -> str:
     return session_context.get()
 
 
-def set_session_context(session_id: str) -> Token:
-    return session_context.set(session_id)
-
-
-def reset_session_context(context: Token) -> None:
-    session_context.reset(context)
-
-
 class EngineType(Enum):
     WRITER = "writer"
     READER = "reader"
@@ -87,21 +79,21 @@ All database sessions
 """
 
 
-class DBType(Enum):
+class Dialect(Enum):
     POSTGRES = "postgres"
     PGVECTOR = "pgvector"
 
 
 sessions = {
-    DBType.POSTGRES: DBSession(settings.SQLALCHEMY_POSTGRES_URI),
-    DBType.PGVECTOR: DBSession(settings.SQLALCHEMY_PGVECTOR_URI),
+    Dialect.POSTGRES: DBSession(settings.SQLALCHEMY_POSTGRES_URI),
+    Dialect.PGVECTOR: DBSession(settings.SQLALCHEMY_PGVECTOR_URI),
 }
 
 # TODO: Remove this
-set_session_context = sessions[DBType.POSTGRES].set_session_context
-reset_session_context = sessions[DBType.POSTGRES].reset_session_context
-get_session = sessions[DBType.POSTGRES].get_session
-session = sessions[DBType.POSTGRES].session
+set_session_context = sessions[Dialect.POSTGRES].set_session_context
+reset_session_context = sessions[Dialect.POSTGRES].reset_session_context
+get_session = sessions[Dialect.POSTGRES].get_session
+session = sessions[Dialect.POSTGRES].session
 
 
 class Base(DeclarativeBase): ...

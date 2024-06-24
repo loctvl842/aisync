@@ -33,7 +33,7 @@ def build_format_instructions(default: str, assistant):
 
     Example output:
     ```
-     {{
+    {{
         \"name\": \"get_number\",
         \"arguments\":
         {{
