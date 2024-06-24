@@ -72,7 +72,7 @@ class ChatChain:
         # Embed input
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
 
-        lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
+        lt_memory = await assistant.long_term_memory.similarity_search(vectorized_input=self.vectorized_input)
         input["long_term_memory"] = lt_memory["long_term_memory"]
 
         res = {}
@@ -109,7 +109,7 @@ class ChatChain:
         # Embed input
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
 
-        lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
+        lt_memory = await assistant.long_term_memory.similarity_search(vectorized_input=self.vectorized_input)
         input["long_term_memory"] = lt_memory["long_term_memory"]
 
         async for chunk in self._chain.astream(input, assistant.config):
