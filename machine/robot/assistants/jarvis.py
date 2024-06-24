@@ -13,7 +13,7 @@ class Jarvis(Assistant):
     version = "0.1"
     year = 2024
 
-    def __init__(self, suit="mark_i"):
+    def __init__(self, suit="rockship_chatbot"):
         super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
