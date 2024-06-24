@@ -3,11 +3,13 @@ from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 
 from machine.api.ping import router as ping_router
+from machine.api.robot import router as robot_router
 from machine.api.v1 import router as router_v1
 from machine.api.v2 import router as router_v2
 
 router = APIRouter()
 router.include_router(ping_router)
+router.include_router(robot_router)
 router.include_router(router_v1)
 router.include_router(router_v2)
 templates = Jinja2Templates(directory="templates")
