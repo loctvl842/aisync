@@ -1,295 +1,1763 @@
-Name,Use Case,Price,URL,Platform
-Infield,Infield is a WordPress blog theme with baseball fans in mind. Featuring a vibrant color palette and sporty details that will make your blog stand out from the crowd.,Free,https://wordpress.com/theme/infield?tab_filter=all&tier_filter=free,WordPress
-LowFi,LowFi is a simple blog theme with lo-fi aesthetics. Its narrow column layout is optimized for seamless browsing on mobile devices.,Free,https://wordpress.com/theme/lowfi?tab_filter=all&tier_filter=free,WordPress
-Nook,"Nook is a blog WordPress theme featuring a classic two-column layout with a sidebar. The design is elegant and timeless, with a sense of warmth and familiarity, offering a delightful canvas for your DIY projects, delicious recipes, and creative inspirations.",Free,https://wordpress.com/theme/nook?tab_filter=all&tier_filter=free,WordPress
-Bedrock,"Inspired by the iconic worlds of Minecraft and Minetest, Bedrock is a blog theme that reminds the immersive experience of these games.",Free,https://wordpress.com/theme/bedrock?tab_filter=all&tier_filter=free,WordPress
-Strand,"Strand is a blogging theme for writers who want to publish a newsletter, featuring sticky left column with a prominent subscription form for a hassle-free reader engagement.",Free,https://wordpress.com/theme/strand?tab_filter=all&tier_filter=free,WordPress
-Allez,Allez is the perfect theme site for sports practitioners or fans who want to blog about their sport.,Free,https://wordpress.com/theme/allez?tab_filter=all&tier_filter=free,WordPress
-Assembler,"Assembler is a simple, minimal theme that supports full-site editing and global styles. Use it to build something beautiful.",Free,https://wordpress.com/theme/assembler?tab_filter=all&tier_filter=free,WordPress
-Pomme,Pomme is a simple portfolio theme for painters.,Free,https://wordpress.com/theme/pomme?tab_filter=all&tier_filter=free,WordPress
-Twenty Twenty-Four,"Twenty Twenty-Four is designed to be flexible, versatile, and applicable to any website. Its collection of templates and patterns tailor to different needs, such as presenting a business, blogging and writing or showcasing work. A multitude of possibilities open up with just a few adjustments to color and typography. Twenty Twenty-Four comes with style variations and full page designs to help speed up the site building process, is fully compatible with the site editor, and takes advantage of new design tools introduced in WordPress 6.4.",Free,https://wordpress.com/theme/twentytwentyfour?tab_filter=all&tier_filter=free,WordPress
-Ritratto,"Besides an appreciable headshot, the theme offers large titles, descriptions, and links right away. There is also a grid of posts, and no Post Feature Images are used anytime.",Free,https://wordpress.com/theme/ritratto?tab_filter=all&tier_filter=free,WordPress
-Sunderland,"Sunderland is a simple WordPress event theme designed for announcing upcoming events in a visually captivating way. Sunderland’s character lies in its immersive landing page, with an easily switchable full width background image. Sunderland is the ideal choice for bands, musicians, artists or event organizers who want a sleek and eye-catching website to inform and engage their audience.",Free,https://wordpress.com/theme/sunderland?tab_filter=all&tier_filter=free,WordPress
-Foam,"Foam is a WordPress event theme with a vibrant, straightforward style. Entirely customisable, Foam allows you to present an event in a visually appealing way. Foam features a set of useful event patterns and essential templates.",Free,https://wordpress.com/theme/foam?tab_filter=all&tier_filter=free,WordPress
-Alter,"Alter is a lean theme for bloggers that goes directly to the point, showing text-only posts right above the fold ornamented by a single image to compound the style.",Free,https://wordpress.com/theme/alter?tab_filter=all&tier_filter=free,WordPress
-Creatio 2,"Creatio 2 is a simple, minimal theme that supports full-site editing and global styles. Use it to build something beautiful.",Free,https://wordpress.com/theme/creatio-2?tab_filter=all&tier_filter=free,WordPress
-Luce,"Luce is a simple resume and blog theme with bright personality. Whether you want to start a personal blog or showcase your writing portfolio, Luce is the theme for you.",Free,https://wordpress.com/theme/luce?tab_filter=all&tier_filter=free,WordPress
-Texty,Texty is a text-only blog theme based on Post excerpts rather than Titles and Post Feature Images. It’s a remix of a theme called Issue and it has a bunch of colorful variations.,Free,https://wordpress.com/theme/texty?tab_filter=all&tier_filter=free,WordPress
-Dawson,"Dawson is a WordPress portfolio theme specifically tailored for photography. With a two column layout, the theme is ideal for those looking to build a portfolio website. Additionally, Dawson offers five distinct style variations, providing a wide range of aesthetic options to choose from.",Free,https://wordpress.com/theme/dawson?tab_filter=all&tier_filter=free,WordPress
-Ron,"Ron is a blogging theme designed with a focus on delivering an exceptional reading experience. Its offset post layout and sticky post navigation make it stand out. By intentionally omitting a header, including only a footer, Ron allows readers to dive straight into the content without distractions.",Free,https://wordpress.com/theme/ron?tab_filter=all&tier_filter=free,WordPress
-SND,"SND is a minimal newsletter theme. With prominent subscribe section, and a spot for reader reviews, SND has everything you need to start your newsletter.",Free,https://wordpress.com/theme/snd?tab_filter=all&tier_filter=free,WordPress
-Overlaid,Overlaid is a neat theme that displays large titles and post excerpts that scroll over an image on the Homepage. Its blog post pages are crafted especially for users who want their writings to be simple yet beautiful.,Free,https://wordpress.com/theme/overlaid?tab_filter=all&tier_filter=free,WordPress
-DOS,DOS is a blog theme designed for the nostalgic ones — as a tribute to the folks that invented computing as we know it today. An exciting opportunity to test blogging as if we were back again to the green (or amber) phosphor.,Free,https://wordpress.com/theme/dos?tab_filter=all&tier_filter=free,WordPress
-Mpho,"Mpho is a minimalist single column theme that draws inspiration from short-sized posts and social networks. It prioritizes the post content and author, featuring a header with the author’s bio and profile picture.",Free,https://wordpress.com/theme/mpho?tab_filter=all&tier_filter=free,WordPress
-Reverie,"Reverie is a theme inspired by the work of Mark Rothko. It features four style variations for each season — Spring (default), Summer, Fall, and Winter. Use it to illuminate your prose, poetry, stories, photos, and more.",Free,https://wordpress.com/theme/reverie?tab_filter=all&tier_filter=free,WordPress
-Entry,"Entry is a uniquely styled WordPress block theme designed for journalling. It features a grid layout and blocky layout for posts, with every element contained in squared or rectangular shapes. Its impactful design is sure to make a statement, while its customizable templates offer a range of options for creating a truly unique journaling experience.",Free,https://wordpress.com/theme/entry?tab_filter=all&tier_filter=free,WordPress
-Didone,"Didone draws inspiration from a genre of serif typeface that originated in the 18th century and became the standard style for general-purpose printing. It is bold, straightforward and timeless, designed to bring attention to the content and ideal to those looking to showcase written content elegantly.",Free,https://wordpress.com/theme/didone?tab_filter=all&tier_filter=free,WordPress
-Luminance,Luminance is a captivating blogging theme with a confidently opinionated design and typography. Its unique and somewhat brutalist aesthetic compliments the abundance of post titles with featured images slammed against the canvas.,Free,https://wordpress.com/theme/luminance?tab_filter=all&tier_filter=free,WordPress
-Artly,"Artly is a WordPress theme designed for blogs and magazines. Its modern, offset layout for posts and pages comes in three style variations, allowing you to showcase your content in a visually stunning and functional way. With Artly, you can display your content beautifully and efficiently, all in a package that is easy to use and customize.",Free,https://wordpress.com/theme/artly?tab_filter=all&tier_filter=free,WordPress
-Common,"Common‘s style is anything but ordinary and it speaks for itself. The unique combination of an uppercase monospaced font and aesthetically pleasing demo content creates an excellent foundation for any website. Common is perfect for showcasing photos, articles, or collections of content. With its ever-present sidebar menu, browsing through content is both effortless and enjoyable.",Free,https://wordpress.com/theme/common?tab_filter=all&tier_filter=free,WordPress
-Covr,"Covr is a beautifully crafted theme that boasts a clean and modern design, specifically created to showcase images in an immersive and captivating way. Its full-width home template elegantly displays your portfolio, photography, or personal blog posts, providing an enjoyable browsing experience for your audience. Additionally, Covr’s highly functional single post template allows you to showcase your work or tell your stories in a compelling manner. Whether you’re a photographer, artist, or blogger, Covr is the perfect choice to present your work and make an impact.",Free,https://wordpress.com/theme/covr?tab_filter=all&tier_filter=free,WordPress
-Fewer,"Fewer is perfect for showcasing portfolios and blogs. With a clean and opinionated design, it offers excellent typography and style variations that make it easy to present your work or business. The theme is highly versatile, making it ideal for bloggers and businesses alike, and it offers a range of customizable options that allow you to tailor your site to your specific needs.",Free,https://wordpress.com/theme/fewer?tab_filter=all&tier_filter=free,WordPress
-Nested,Nested is a blog design that displays posts overlapping featured images as a Matryoshka effect.,Free,https://wordpress.com/theme/nested?tab_filter=all&tier_filter=free,WordPress
-Programme,"Programme is a blog theme inspired by the legendary designer Massimo Vignelli and his playbills for the Piccolo Teatro in Milan. This theme is perfect for showcasing programs, calendars, and announcements.",Free,https://wordpress.com/theme/programme?tab_filter=all&tier_filter=free,WordPress
-Fotograma,Fotograma is a portfolio theme for photographers seeking to showcase powerful photography in large sizes. Inter semi-bold is the typeface for this theme. It also comes with a white-style variation.,Free,https://wordpress.com/theme/fotograma?tab_filter=all&tier_filter=free,WordPress
-Bibliophile,"Bibliophile was designed to provide an impeccable reading experience. Its header on the left sidebar adds context, while its posts and content are elegantly displayed on the right. Inspired by printed books and with carefully chosen font sizes, Bibliophile offers a great solution for websites across devices. The layout is user-friendly and allows for seamless navigation, making it an ideal choice for those who enjoy reading on-the-go.",Free,https://wordpress.com/theme/bibliophile?tab_filter=all&tier_filter=free,WordPress
-Poesis,"Poesis pays homage to the literary figures represented in the painting “Six Tuscan Poets” by the Italian Renaissance painter, architect, and art historian Giorgio Vasari and is ideal for poetry or short stories. The theme’s main feature is its split layout, with a full height column containing a sticky header and footer and scrollable content on the other column.",Free,https://wordpress.com/theme/poesis?tab_filter=all&tier_filter=free,WordPress
-Jaida,"Jaida is a WordPress block theme specifically designed to meet the needs of bloggers. This theme features a visually captivating homepage that presents your content in an elegant grid layout, ensuring maximum visibility and engagement. Furthermore, Jaida offers a thoughtfully crafted post template with a sidebar, enabling seamless navigation and enhanced user experience while exploring your blog posts.",Free,https://wordpress.com/theme/jaida?tab_filter=all&tier_filter=free,WordPress
-Sten,"Sten is a minimal blogging theme with a simple, straightforward index template and post templates that contain a sidebar.",Free,https://wordpress.com/theme/sten?tab_filter=all&tier_filter=free,WordPress
-Grammer One,Bring the social media experience to your site and transform it into a repository for your photos and videos. Get Grammer One now.,Free,https://wordpress.com/theme/grammerone?tab_filter=all&tier_filter=free,WordPress
-Issue,"Issue is a magazine theme focused on sizable typography and imagery to grow your blog posts, reviews, artwork, and news.",Free,https://wordpress.com/theme/issue?tab_filter=all&tier_filter=free,WordPress
-Screenplay,Screenplay is a simple blog theme that suits perfectly writers or the general public that would like to have their sites formatted as movie scripts.,Free,https://wordpress.com/theme/screenplay?tab_filter=all&tier_filter=free,WordPress
-Pieria,"Pieria is a theme focused on typography — essentially following a low-level styling approach. Its headings, paragraphs, links, and navigation have the same appearance, with everything sitting quietly into simple columns that split navigation, blog posts, and a content block. A soft design to make your content sparkle.",Free,https://wordpress.com/theme/pieria?tab_filter=all&tier_filter=free,WordPress
-Curriculum,"Curriculum is a blog theme that echoes the structure of a professional profile page, with its original visuals and interesting navigation. It’s suitable for the general public and displays information, experiences, and education.",Free,https://wordpress.com/theme/curriculum?tab_filter=all&tier_filter=free,WordPress
-Bute,Bute is a blog theme that has a full-screen front page.,Free,https://wordpress.com/theme/bute?tab_filter=all&tier_filter=free,WordPress
-Freddie,"Freddie is a theme using a full-screen background image to captivate the viewer with a brief, immersive moment.",Free,https://wordpress.com/theme/freddie?tab_filter=all&tier_filter=free,WordPress
-Negai,"Negai is a bold blogging theme that thrives on unadorned simplicity and minimalistic elegance. With the monochromatic hues, the straightforward and unapologetic aesthetic is as striking as some Brutalist designs on the web.",Free,https://wordpress.com/theme/negai?tab_filter=all&tier_filter=free,WordPress
-Trellick,"Trellick is a raw, brutalist blog theme that strips away the polished veneer of the “samey” web design to show the untamed essence of the digital realm.",Free,https://wordpress.com/theme/trellick?tab_filter=all&tier_filter=free,WordPress
-Tomoni,"Tomoni is a theme that displays a use case of multilingual content in English and Japanese. It’s inspired by wall labels in museums, roadsigns or posters in large immigrant communities that are important to reaching a more international audience.",Free,https://wordpress.com/theme/tomoni?tab_filter=all&tier_filter=free,WordPress
-JinJang,"JinJang is a blog theme with a split, 50:50 layout like Yin Yang. It’s stark and bold and uses larger sizes of system font throughout the theme.",Free,https://wordpress.com/theme/jinjang?tab_filter=all&tier_filter=free,WordPress
-Optimismo,Optimismo is a simple blog theme with a bold aesthetic—inspired by a UK rave party flyer in the late ’80s.,Free,https://wordpress.com/theme/optimismo?tab_filter=all&tier_filter=free,WordPress
-Kigen,"Kigen is a simple portfolio theme for one who quickly wants to showcase their art with a biography text. The design is straightforward. The front page has a gallery at the top, followed by a column block with links to social media and a biography text. The font, Newsreader conveys a classical sense while maintaining an authoritative feel. You’ll discover playfulness from the artist with the border at the bottom. The border is a pattern that is easy to remove or change its colours and add anywhere on the site.",Free,https://wordpress.com/theme/kigen?tab_filter=all&tier_filter=free,WordPress
-BSoJ,BSoJ (Blue Screen of Joy) is a blog theme inspired by the infamous Blue Screen of Death.,Free,https://wordpress.com/theme/bsoj?tab_filter=all&tier_filter=free,WordPress
-Lineup,Lineup is a ’90s D.I.Y. fanzine-inspired theme that lists entries with bold typography and colour that are highly opinionated.,Free,https://wordpress.com/theme/lineup?tab_filter=all&tier_filter=free,WordPress
-Otis,"Otis is a WordPress block theme that is well-suited for personal blogging. It is designed to provide a polished, modern user experience. Its default templates include an opinionated header template with large type, and straightforward single and page templates, which are particularly useful for users who do not want to include images on their site. Otis’ strong design point of view encourages users to follow its design principles. It is focused on simplicity and readability, with a clean and uncluttered layout that allows readers to easily navigate content.",Free,https://wordpress.com/theme/otis?tab_filter=all&tier_filter=free,WordPress
-Loïc,"Loïc is a simple blogging theme ideal for writers. What sets it apart is its attention to detail—aside from the Index templates, the theme replaces the site title with the post or query title in its templates, adding a unique touch to each page. Loïc features five color variations, providing a range of options to effortlessly transform your website’s tone to suit individual preferences.",Free,https://wordpress.com/theme/loic?tab_filter=all&tier_filter=free,WordPress
-Ueno,Ueno is suitable for any kind of blog or website. It has an opinionated default style and two alternative style variations. Ueno was inspired by Japanese kimono patterns and designs attributed to Ueno Seikō.,Free,https://wordpress.com/theme/ueno?tab_filter=all&tier_filter=free,WordPress
-George Lois,"A theme in homage to George Lois, visionary American Art Director, and author. We will all miss your big ideas. Rest in Peace, George. From the Creative People of Automattic.",Free,https://wordpress.com/theme/george-lois?tab_filter=all&tier_filter=free,WordPress
-Storia,"Storia is a stunning visual story theme designed to showcase your creative work and engage your audience. With featured images and a minimalist design, this theme allows your visual content to take center stage and tell a compelling story.",Free,https://wordpress.com/theme/storia?tab_filter=all&tier_filter=free,WordPress
-Poema,"Poema pays tribute to the revered Portuguese writer and poet Fernando Pessoa and his various pseudonyms. Its minimalist design features a black-and-white color scheme, complemented by an elegant serif font. Poema’s carefully crafted templates boast a comfortable content width and meticulously considered white space that creates a calming and immersive reading experience, ideal for the appreciation of poetry.",Free,https://wordpress.com/theme/poema?tab_filter=all&tier_filter=free,WordPress
-Hey,,Free,https://wordpress.com/theme/hey?tab_filter=all&tier_filter=free,WordPress
-CTLG,"CTLG is a free, responsive WordPress block theme specifically designed for creating lists, directories, and catalogs. It comes with a variety of pre-designed templates and four distinct style variations. Its index template features a full-width header, followed by a right-aligned query loop where you can display blog posts or pages, and a simple full-width footer. Its post and page templates follow the same layout.",Free,https://wordpress.com/theme/ctlg?tab_filter=all&tier_filter=free,WordPress
-Paimio,,Free,https://wordpress.com/theme/paimio?tab_filter=all&tier_filter=free,WordPress
-Vetro,"We know starting from scratch can be daunting, so we have clear, step-by-step instructions and video tutorials to help you build an attractive website. If you’d like to skip right to a specific section, click on the relevant link below.",Free,https://wordpress.com/theme/vetro?tab_filter=all&tier_filter=free,WordPress
-Adventurer,"We know starting from scratch can be daunting, so we have clear, step-by-step instructions and video tutorials to help you build an attractive website. If you’d like to skip right to a specific section, click on the relevant link below.",Free,https://wordpress.com/theme/adventurer?tab_filter=all&tier_filter=free,WordPress
-Bitácora,Bitácora — an old-school theme for a sidebar revival.,Free,https://wordpress.com/theme/bitacora?tab_filter=all&tier_filter=free,WordPress
-Upsidedown,"We know starting from scratch can be daunting, so we have clear, step-by-step instructions and video tutorials to help you build an attractive website. If you’d like to skip right to a specific section, click on the relevant link below.",Free,https://wordpress.com/theme/upsidedown?tab_filter=all&tier_filter=free,WordPress
-Tú,Tú is a theme about you. This is perfect if you want a simple page to show who you are.,Free,https://wordpress.com/theme/tu?tab_filter=all&tier_filter=free,WordPress
-Loudness,Loudness is a bold opinionated theme created with music education in mind.  Use Full Site Editing tooling and relevant patterns to create a unique experience.,Free,https://wordpress.com/theme/loudness?tab_filter=all&tier_filter=free,WordPress
-Muscat,Muscat is a simple blogging theme with grid post templates and a centered post layout.,Free,https://wordpress.com/theme/muscat?tab_filter=all&tier_filter=free,WordPress
-Twenty Twenty-Three,Twenty Twenty-Three is designed to take advantage of the new design tools introduced in WordPress 6.1.,Free,https://wordpress.com/theme/twentytwentythree?tab_filter=all&tier_filter=free,WordPress
-Calyx,"Calyx is a minimalist theme designed for single-page websites. Featuring a coming-soon pattern on the homepage, Calyx is a perfect choice to spread the word about the upcoming opening of a cafe, restaurant, or bar.",Free,https://wordpress.com/theme/calyx?tab_filter=all&tier_filter=free,WordPress
-Masu,Masu is a blog theme inspired by a traditional square wooden box used to measure rice in Japan.,Free,https://wordpress.com/theme/masu?tab_filter=all&tier_filter=free,WordPress
-Spearhead,"Spearhead Blocks is a podcasting starter theme with Full Site Editing features. A modernized version of the original Spearhead, this theme will allow you easily customize your podcast website.",Free,https://wordpress.com/theme/spearhead-blocks?tab_filter=all&tier_filter=free,WordPress
-Pixl,Pixl is a simple yet opinionated blogging theme inspired by websites of the nineties.,Free,https://wordpress.com/theme/pixl?tab_filter=all&tier_filter=free,WordPress
-Rainfall,"Rainfall is a clean, objective blogging theme strongly inspired by Swiss Design. Its minimalist functionality is balanced by a strong accent color, beautiful photography and post templates with sidebars.",Free,https://wordpress.com/theme/rainfall?tab_filter=all&tier_filter=free,WordPress
-Disco,"Disco is a funky, vibrant, opinionated theme with a monospaced font. Both its styles and spacing form an edgy aesthetic perfect for those looking to build a quirky website.",Free,https://wordpress.com/theme/disco?tab_filter=all&tier_filter=free,WordPress
-Lettre,Lettre is a theme for writers that want to publish a newsletter.,Free,https://wordpress.com/theme/lettre?tab_filter=all&tier_filter=free,WordPress
-Vivre,"Vivre is a bold, opinionated blogging theme, heavily inspired by fashion and lifestyle magazines and websites. With large heavy sans-serif paired with a light elegant serif font, it sets the tone to a refined reading experience.",Free,https://wordpress.com/theme/vivre?tab_filter=all&tier_filter=free,WordPress
-Remote,"Remote is a dark, minimal block theme ideal for bloggers. Its default styles – a sans-serif font and dark background – contribute for a comfortable, immersive reading experience. It features a set of bold block patterns such as a large posts list and bordered categories and tags.",Free,https://wordpress.com/theme/remote?tab_filter=all&tier_filter=free,WordPress
-Archeo,"Archeo is a theme inspired by Mayan history and culture, with a classic magazine-style mix of elegant typography and an interesting layout. With its archeology-inspired imagery and color tones, it’s a truly distinctive theme.",Free,https://wordpress.com/theme/archeo?tab_filter=all&tier_filter=free,WordPress
-Skatepark,"Skatepark is a bold and exciting WordPress theme designed for modern events and organizations. With its simple but vivid color default scheme, duotone support, and playful grid, Skatepark is a theme designed for work and play.",Free,https://wordpress.com/theme/skatepark?tab_filter=all&tier_filter=free,WordPress
-Marl,"Marl is a minimal, product-focused theme featuring Payments block. Its earthy, organic look makes it a perfect match for handmade artisanal items or natural health and beauty products.",Free,https://wordpress.com/theme/marl?tab_filter=all&tier_filter=free,WordPress
-Attar,"Attar is a minimal, product-focused theme featuring Payments block. It combines a modern layout with a high-contrast, elegant style that makes it a perfect match for selling beauty, health, or cosmetic products.",Free,https://wordpress.com/theme/attar?tab_filter=all&tier_filter=free,WordPress
-Winkel,"Winkel is a minimal, product-focused theme featuring Payments block. Its clean, cool look combined with a simple layout makes it perfect for showcasing fashion items – clothes, shoes, and accessories.",Free,https://wordpress.com/theme/winkel?tab_filter=all&tier_filter=free,WordPress
-Twenty Twenty-Two,"Built on a solidly designed foundation, Twenty Twenty-Two embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong, its color palette is drawn from nature, and its layout elements sit gently on the page.",Free,https://wordpress.com/theme/twentytwentytwo?tab_filter=all&tier_filter=free,WordPress
-Stewart,"Stewart is a modern blogging theme with a left sidebar. Its default color scheme is a striking combination of orange and light gray, to give your blog a sophisticated appearance from day one.",Free,https://wordpress.com/theme/stewart?tab_filter=all&tier_filter=free,WordPress
-Videomaker,Videomaker is a minimalistic WordPress theme ideal for film directors and video creators.,Free,https://wordpress.com/theme/videomaker?tab_filter=all&tier_filter=free,WordPress
-Livro,Livro is a simple theme designed to evoke the calm feeling you get when you settle in with a classic book.,Free,https://wordpress.com/theme/livro?tab_filter=all&tier_filter=free,WordPress
-Jackson,"Jackson is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.",Free,https://wordpress.com/theme/jackson?tab_filter=all&tier_filter=free,WordPress
-Twenty Twenty-Two (Swiss),"Built on a solidly designed foundation, Twenty Twenty-Two (Swiss) embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong and its layout elements sit gently on the page.",Free,https://wordpress.com/theme/twentytwentytwo-swiss?tab_filter=all&tier_filter=free,WordPress
-Arbutus,"Arbutus is an image-centric WordPress theme with a clean layout, designed to help you showcase your favorite images with minimal distractions. Whether you’re an amateur or a professional photographer looking for a canvas on which to display your work, Arbutus is an excellent choice.",Free,https://wordpress.com/theme/arbutus?tab_filter=all&tier_filter=free,WordPress
-Geologist - Cream,"Geologist (Cream) is a streamlined theme for modern bloggers. It consists of a simple single column of posts, paired with a sophisticated color palette and beautiful serif typography.",Free,https://wordpress.com/theme/geologist-cream?tab_filter=all&tier_filter=free,WordPress
-Russell,"Russell is an elegant and modern theme for personal blogs. Crafted with fashion, lifestyle, and travel bloggers in mind, Russell provides a subtle yet refined look that can be further customized with different colors and font pairings to match your vision perfectly.",Free,https://wordpress.com/theme/russell?tab_filter=all&tier_filter=free,WordPress
-Zoologist,"Zoologist is a streamlined theme for modern bloggers. It consists of a simple single column of posts, paired with a sophisticated color palette and beautiful sans-serif typography.",Free,https://wordpress.com/theme/zoologist?tab_filter=all&tier_filter=free,WordPress
-Quadrat,"Quadrat is a simple, versatile WordPress theme, designed for blogs and podcasts. Inspired by squared shapes and colourful, minimalist flat illustrations, Quadrat includes a set of custom images you can use on your site in block patterns. Quadrat’s default styles are bold and playful, relying on a simple sans-serif font and a strong color scheme that you can customize.",Free,https://wordpress.com/theme/quadrat?tab_filter=all&tier_filter=free,WordPress
-Geologist,"Geologist is a streamlined theme for modern bloggers. It consists of a simple single column of posts, paired with a sophisticated color palette and beautiful sans-serif typography.",Free,https://wordpress.com/theme/geologist?tab_filter=all&tier_filter=free,WordPress
-Bantry,"Bantry is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.",Free,https://wordpress.com/theme/bantry?tab_filter=all&tier_filter=free,WordPress
-Bradford,"Bradford is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.",Free,https://wordpress.com/theme/bradford?tab_filter=all&tier_filter=free,WordPress
-Baker,"Baker is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.",Free,https://wordpress.com/theme/baker?tab_filter=all&tier_filter=free,WordPress
-Twenty Twenty-Two (Red),"Built on a solidly designed foundation, Twenty Twenty-Two (Red) embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong and its layout elements sit gently on the page.",Free,https://wordpress.com/theme/twentytwentytwo-red?tab_filter=all&tier_filter=free,WordPress
-Twenty Twenty-One,"As the name suggests, Twenty Twenty-One is the default WordPress theme for 2021! This theme is a blank canvas for your ideas and it makes the block editor your best brush.",Free,https://wordpress.com/theme/twentytwentyone?tab_filter=all&tier_filter=free,WordPress
-Shine,Elevating Brands with Customizable Elegance and Long-Lasting Impact,$210 USD,https://themes.shopify.com/themes/shine/styles/sophisticated?locale=en&surface_inter_position=1&surface_intra_position=1&surface_type=all,Shopify
-Taste,Ideal for speciality products and bold branding,Free,https://themes.shopify.com/themes/taste/styles/default?locale=en&surface_inter_position=1&surface_intra_position=2&surface_type=all,Shopify
-Motion,Bring your brand to life with animation and video,$360 USD,https://themes.shopify.com/themes/motion/styles/classic?locale=en&surface_inter_position=1&surface_intra_position=3&surface_type=all,Shopify
-Craft,A refined theme that celebrates craftsmanship.,Free,https://themes.shopify.com/themes/craft/styles/default?locale=en&surface_inter_position=1&surface_intra_position=4&surface_type=all,Shopify
-Symmetry,"Versatile, fashionable, professional theme with premium features.",$380 USD,https://themes.shopify.com/themes/symmetry/styles/chantilly?locale=en&surface_inter_position=1&surface_intra_position=5&surface_type=all,Shopify
-Publisher,An avant-garde theme inspired by independent studios and publishers.,Free,https://themes.shopify.com/themes/publisher/styles/default?locale=en&surface_inter_position=1&surface_intra_position=6&surface_type=all,Shopify
-Prestige,"Designed for premium, high-end brand appeal",$380 USD,https://themes.shopify.com/themes/prestige/styles/allure?locale=en&surface_inter_position=1&surface_intra_position=7&surface_type=all,Shopify
-Be Yours,"Build, boost & scale your store with 8-hour support.",$320 USD,https://themes.shopify.com/themes/be-yours/styles/beauty?locale=en&surface_inter_position=1&surface_intra_position=8&surface_type=all,Shopify
-Baseline,A brutalist-inspired theme for a beautifully-curated storefront.,$350 USD,https://themes.shopify.com/themes/baseline/styles/modern?locale=en&surface_inter_position=1&surface_intra_position=9&surface_type=all,Shopify
-Spotlight,A streamlined theme designed to quickly start selling.,Free,https://themes.shopify.com/themes/spotlight/styles/default?locale=en&surface_inter_position=1&surface_intra_position=10&surface_type=all,Shopify
-Local,"Create a cohesive experience for your customers, online and in person",$360 USD,https://themes.shopify.com/themes/local/styles/light?locale=en&surface_inter_position=1&surface_intra_position=11&surface_type=all,Shopify
-Mr Parker,Sharp images and a variety of features for multi variant products,$240 USD,https://themes.shopify.com/themes/mr-parker/styles/wardrobe?locale=en&surface_inter_position=1&surface_intra_position=12&surface_type=all,Shopify
-Mandolin,"Flexible, easy to use and focused on an elegant user experience.",$320 USD,https://themes.shopify.com/themes/mandolin/styles/neat?locale=en&surface_inter_position=1&surface_intra_position=13&surface_type=all,Shopify
-Enterprise,"A new benchmark in store speed and conversion. Sell faster, sell more.",$380 USD,https://themes.shopify.com/themes/enterprise/styles/digital?locale=en&surface_inter_position=1&surface_intra_position=14&surface_type=all,Shopify
-Combine,"Bundle products & increase average order value, sales & revenue",$360 USD,https://themes.shopify.com/themes/combine/styles/objects?locale=en&surface_inter_position=1&surface_intra_position=15&surface_type=all,Shopify
-Vision,Optimized via AI to increase conversions.,$300 USD,https://themes.shopify.com/themes/vision/styles/default?locale=en&surface_inter_position=1&surface_intra_position=16&surface_type=all,Shopify
-Dawn,A minimalist theme that lets product images take center stage.,Free,https://themes.shopify.com/themes/dawn/styles/default?locale=en&surface_inter_position=1&surface_intra_position=17&surface_type=all,Shopify
-Bullet,Minimal grid based theme for contemporary brands.,$320 USD,https://themes.shopify.com/themes/bullet/styles/default?locale=en&surface_inter_position=1&surface_intra_position=18&surface_type=all,Shopify
-Refresh,A bold theme that elevates product quality and brand storytelling.,Free,https://themes.shopify.com/themes/refresh/styles/default?locale=en&surface_inter_position=1&surface_intra_position=19&surface_type=all,Shopify
-Expanse,"A clean, versatile theme for large inventories",$380 USD,https://themes.shopify.com/themes/expanse/styles/modern?locale=en&surface_inter_position=1&surface_intra_position=20&surface_type=all,Shopify
-Honey,"A highly flexible, quick set-up theme made for precious products.",$390 USD,https://themes.shopify.com/themes/honey/styles/paws?locale=en&surface_inter_position=1&surface_intra_position=21&surface_type=all,Shopify
-Kingdom,"An image-focused theme, designed around a stylish signature sidebar",$260 USD,https://themes.shopify.com/themes/kingdom/styles/king?locale=en&surface_inter_position=1&surface_intra_position=22&surface_type=all,Shopify
-Habitat,The natural environment for your products,$300 USD,https://themes.shopify.com/themes/habitat/styles/default?locale=en&surface_inter_position=1&surface_intra_position=23&surface_type=all,Shopify
-Showcase,"Beautiful, exciting + bold design with powerful tools. Make an impact!",$320 USD,https://themes.shopify.com/themes/showcase/styles/native?locale=en&surface_inter_position=1&surface_intra_position=24&surface_type=all,Shopify
-North,Create a web presence you're proud of,$220 USD,https://themes.shopify.com/themes/north/styles/default?locale=en&surface_inter_position=2&surface_intra_position=1&surface_type=all,Shopify
-Stiletto,A luxury Shopify theme optimized for growth,$340 USD,https://themes.shopify.com/themes/stiletto/styles/vogue?locale=en&surface_inter_position=2&surface_intra_position=2&surface_type=all,Shopify
-Broadcast,"Powerful, feature rich and designed to incentivize sales",$360 USD,https://themes.shopify.com/themes/broadcast/styles/clean?locale=en&surface_inter_position=2&surface_intra_position=3&surface_type=all,Shopify
-Sense,An energizing theme featuring extensive product detail layouts,Free,https://themes.shopify.com/themes/sense/styles/default?locale=en&surface_inter_position=2&surface_intra_position=4&surface_type=all,Shopify
-Reformation,"Feature-packed, high-performant Shopify theme",$320 USD,https://themes.shopify.com/themes/reformation/styles/default?locale=en&surface_inter_position=2&surface_intra_position=5&surface_type=all,Shopify
-Ride,"A distinct, dynamic theme that champions the world of sports.",Free,https://themes.shopify.com/themes/ride/styles/default?locale=en&surface_inter_position=2&surface_intra_position=6&surface_type=all,Shopify
-Stockmart,Meet the striking theme for building your world-class brand.,$380 USD,https://themes.shopify.com/themes/stockmart/styles/modern?locale=en&surface_inter_position=2&surface_intra_position=7&surface_type=all,Shopify
-Origin,A stylish theme designed for makers selling unique pieces,Free,https://themes.shopify.com/themes/origin/styles/default?locale=en&surface_inter_position=2&surface_intra_position=8&surface_type=all,Shopify
-Yuva,Modern yet elegant theme to best showcase your product catalog.,$260 USD,https://themes.shopify.com/themes/yuva/styles/amaze?locale=en&surface_inter_position=2&surface_intra_position=9&surface_type=all,Shopify
-Shapes,Move products fast with clever Shapes.,$350 USD,https://themes.shopify.com/themes/shapes/styles/neon?locale=en&surface_inter_position=2&surface_intra_position=10&surface_type=all,Shopify
-Boost,A playful and powerful premium theme built to BOOST your sales!,$330 USD,https://themes.shopify.com/themes/boost/styles/spark?locale=en&surface_inter_position=2&surface_intra_position=11&surface_type=all,Shopify
-Fashionopolism,Fast and packed with features to help you sell more,$280 USD,https://themes.shopify.com/themes/fashionopolism/styles/haute?locale=en&surface_inter_position=2&surface_intra_position=12&surface_type=all,Shopify
-Empire,A marketplace-inspired theme optimized for large product catalogs,$340 USD,https://themes.shopify.com/themes/empire/styles/supply?locale=en&surface_inter_position=2&surface_intra_position=13&surface_type=all,Shopify
-Modular,"Fun, lively design and elegant animations to entice your customers",$300 USD,https://themes.shopify.com/themes/modular/styles/mayfair?locale=en&surface_inter_position=2&surface_intra_position=14&surface_type=all,Shopify
-Split,Great for visual brands with a story to tell,$280 USD,https://themes.shopify.com/themes/split/styles/cuber?locale=en&surface_inter_position=2&surface_intra_position=15&surface_type=all,Shopify
-Colorblock,A striking theme ideal for high-end fashion,Free,https://themes.shopify.com/themes/colorblock/styles/default?locale=en&surface_inter_position=2&surface_intra_position=16&surface_type=all,Shopify
-ShowTime,Navigation focused theme ideal for large stores and drop-shippers,$280 USD,https://themes.shopify.com/themes/showtime/styles/cooktime?locale=en&surface_inter_position=2&surface_intra_position=17&surface_type=all,Shopify
-Studio,A stylish theme with special attention to artists and collections,Free,https://themes.shopify.com/themes/studio/styles/default?locale=en&surface_inter_position=2&surface_intra_position=18&surface_type=all,Shopify
-Icon,Perfect for visually striking brands with image-focused content,$280 USD,https://themes.shopify.com/themes/icon/styles/dolce?locale=en&surface_inter_position=2&surface_intra_position=19&surface_type=all,Shopify
-Pipeline,"A fashionable, feature rich theme designed for luxury brands",$360 USD,https://themes.shopify.com/themes/pipeline/styles/clean?locale=en&surface_inter_position=2&surface_intra_position=20&surface_type=all,Shopify
-Palo Alto,Exceptional design and powerful features to elevate your brand,$330 USD,https://themes.shopify.com/themes/palo-alto/styles/vibrant?locale=en&surface_inter_position=2&surface_intra_position=21&surface_type=all,Shopify
-Crave,An eye-catching theme optimized for shopping on the go.,Free,https://themes.shopify.com/themes/crave/styles/default?locale=en&surface_inter_position=2&surface_intra_position=22&surface_type=all,Shopify
-Xtra,A versatile theme fit for every industry built for boosting conversion,$400 USD,https://themes.shopify.com/themes/xtra/styles/maximum?locale=en&surface_inter_position=2&surface_intra_position=23&surface_type=all,Shopify
-Influence,Fashion focused with creative storytelling and powerful navigation,$180 USD,https://themes.shopify.com/themes/influence/styles/default?locale=en&surface_inter_position=2&surface_intra_position=24&surface_type=all,Shopify
-Sahara,Breathtaking visual treat that redefines the standards of online store,$350 USD,https://themes.shopify.com/themes/sahara/styles/sahara?locale=en&surface_inter_position=3&surface_intra_position=1&surface_type=all,Shopify
-Grid,"A masonry-style theme, perfect for contemporary brands with a story to tell",$260 USD,https://themes.shopify.com/themes/grid/styles/bright?locale=en&surface_inter_position=3&surface_intra_position=2&surface_type=all,Shopify
-Capital,Showcase large inventories with style and precision,$180 USD,https://themes.shopify.com/themes/capital/styles/berlin?locale=en&surface_inter_position=3&surface_intra_position=3&surface_type=all,Shopify
-Fresh,A clean and versatile theme designed for food and drink stores,$350 USD,https://themes.shopify.com/themes/fresh/styles/sweet?locale=en&surface_inter_position=3&surface_intra_position=4&surface_type=all,Shopify
-Editions,"A simple, spacious theme with a focus on featured products",$250 USD,https://themes.shopify.com/themes/editions/styles/spring?locale=en&surface_inter_position=3&surface_intra_position=5&surface_type=all,Shopify
-Athens,Designed to host even the most demanding product inventories,$300 USD,https://themes.shopify.com/themes/athens/styles/default?locale=en&surface_inter_position=3&surface_intra_position=6&surface_type=all,Shopify
-Stockholm,A clean and minimalist Shopify theme,$320 USD,https://themes.shopify.com/themes/stockholm/styles/default?locale=en&surface_inter_position=3&surface_intra_position=7&surface_type=all,Shopify
-Aurora,A flexible and feature-rich theme to express your unique style.,$340 USD,https://themes.shopify.com/themes/aurora/styles/pure?locale=en&surface_inter_position=3&surface_intra_position=8&surface_type=all,Shopify
-Sunrise,Ideal for commercial stores with a large number of products,$240 USD,https://themes.shopify.com/themes/sunrise/styles/spring?locale=en&surface_inter_position=3&surface_intra_position=9&surface_type=all,Shopify
-Beyond,Designed for ethical brands envisioning a more sustainable future,$340 USD,https://themes.shopify.com/themes/beyond/styles/organic?locale=en&surface_inter_position=3&surface_intra_position=10&surface_type=all,Shopify
-Align,"Modern, performant, and accessible. Built to maximize conversion.",$320 USD,https://themes.shopify.com/themes/align/styles/clean?locale=en&surface_inter_position=3&surface_intra_position=11&surface_type=all,Shopify
-Story,A theme designed to grow your brand and build customer trust,$300 USD,https://themes.shopify.com/themes/story/styles/bright?locale=en&surface_inter_position=3&surface_intra_position=12&surface_type=all,Shopify
-Expression,"Captivate your customer, through sophistication, versatility and style",$280 USD,https://themes.shopify.com/themes/expression/styles/naturale?locale=en&surface_inter_position=3&surface_intra_position=13&surface_type=all,Shopify
-Maker,"Contemporary, stylish, versatile. Created to captivate and convert.",$340 USD,https://themes.shopify.com/themes/maker/styles/bloom?locale=en&surface_inter_position=3&surface_intra_position=14&surface_type=all,Shopify
-Portland,Elevate your online presence with a minimalist and elegant theme.,$320 USD,https://themes.shopify.com/themes/portland/styles/heartbeat?locale=en&surface_inter_position=3&surface_intra_position=15&surface_type=all,Shopify
-Testament,Conversion focused and mobile optimized for fast online shopping,$320 USD,https://themes.shopify.com/themes/testament/styles/genesis?locale=en&surface_inter_position=3&surface_intra_position=16&surface_type=all,Shopify
-Venue,"Flexible, easy to use and packed with clever features.",$360 USD,https://themes.shopify.com/themes/venue/styles/morning?locale=en&surface_inter_position=3&surface_intra_position=17&surface_type=all,Shopify
-Impulse,"Flexible, fashionable, proven design with powerful promotions.",$380 USD,https://themes.shopify.com/themes/impulse/styles/modern?locale=en&surface_inter_position=3&surface_intra_position=18&surface_type=all,Shopify
-Area,"Optimized for conversions. Wine, ice creame, booster, fashion stores.",$190 USD,https://themes.shopify.com/themes/area/styles/stylish?locale=en&surface_inter_position=3&surface_intra_position=19&surface_type=all,Shopify
-Focal,"A bold grid-style theme, perfect for lifestyle and product imagery",$320 USD,https://themes.shopify.com/themes/focal/styles/carbon?locale=en&surface_inter_position=3&surface_intra_position=20&surface_type=all,Shopify
-Marble,"Functional, flexible, fast. Unique design that puts your brand ahead.",$290 USD,https://themes.shopify.com/themes/marble/styles/marble?locale=en&surface_inter_position=3&surface_intra_position=21&surface_type=all,Shopify
-Emerge,"Lightning fast, evocative designs to elevate your brand above the rest",$320 USD,https://themes.shopify.com/themes/emerge/styles/light?locale=en&surface_inter_position=3&surface_intra_position=22&surface_type=all,Shopify
-Avenue,Designed to help your customers quickly find the product they want,$280 USD,https://themes.shopify.com/themes/avenue/styles/precise?locale=en&surface_inter_position=3&surface_intra_position=23&surface_type=all,Shopify
-Fetch,"Modern pet supply theme: Perfectly playful, minimalist, and flexible.",$360 USD,https://themes.shopify.com/themes/fetch/styles/bark?locale=en&surface_inter_position=3&surface_intra_position=24&surface_type=all,Shopify
-Exhibit,A gallery-style theme for gallery-style people.,$350 USD,https://themes.shopify.com/themes/exhibit/styles/art?locale=en&surface_inter_position=4&surface_intra_position=1&surface_type=all,Shopify
-Blockshop,"Designed for luxury brands, delivering unrivalled speed and elegance.",$340 USD,https://themes.shopify.com/themes/blockshop/styles/beauty?locale=en&surface_inter_position=4&surface_intra_position=2&surface_type=all,Shopify
-Spark,"For direct-to-consumer brands, drop-shippers and first-time merchants",$320 USD,https://themes.shopify.com/themes/spark/styles/chic?locale=en&surface_inter_position=4&surface_intra_position=3&surface_type=all,Shopify
-Viola,Design theme with amazing visuals for an unforgettable user experience,$250 USD,https://themes.shopify.com/themes/viola/styles/classic?locale=en&surface_inter_position=4&surface_intra_position=4&surface_type=all,Shopify
-Impact,"A colored, typography-oriented theme for impactful brands",$380 USD,https://themes.shopify.com/themes/impact/styles/sound?locale=en&surface_inter_position=4&surface_intra_position=5&surface_type=all,Shopify
-Label,A theme for labels. No matter if yours is on cotton or vinyl.,$320 USD,https://themes.shopify.com/themes/label/styles/music?locale=en&surface_inter_position=4&surface_intra_position=6&surface_type=all,Shopify
-Galleria,An image-focused theme ideal for large inventories,$280 USD,https://themes.shopify.com/themes/galleria/styles/empire?locale=en&surface_inter_position=4&surface_intra_position=7&surface_type=all,Shopify
-Champion,A robust and visually impactful theme to propel your brand,$350 USD,https://themes.shopify.com/themes/champion/styles/flash?locale=en&surface_inter_position=4&surface_intra_position=8&surface_type=all,Shopify
-Zest,A flexible and modern design to win mobile conversion,$300 USD,https://themes.shopify.com/themes/zest/styles/gusto?locale=en&surface_inter_position=4&surface_intra_position=9&surface_type=all,Shopify
-Responsive,Focus on your products and brand with full-width imagery,$240 USD,https://themes.shopify.com/themes/responsive/styles/london?locale=en&surface_inter_position=4&surface_intra_position=10&surface_type=all,Shopify
-Warehouse,Designed to display and promote a large catalog of products,$320 USD,https://themes.shopify.com/themes/warehouse/styles/metal?locale=en&surface_inter_position=4&surface_intra_position=11&surface_type=all,Shopify
-Alchemy,"Fast, modern, easy set-up. Designed to best showcase your products!",$300 USD,https://themes.shopify.com/themes/alchemy/styles/modern?locale=en&surface_inter_position=4&surface_intra_position=12&surface_type=all,Shopify
-Retina,Showcase your products with bold imagery and refined styling,$220 USD,https://themes.shopify.com/themes/retina/styles/amsterdam?locale=en&surface_inter_position=4&surface_intra_position=13&surface_type=all,Shopify
-Erickson,A feature-rich theme for all product types designed to increase sales,$170 USD,https://themes.shopify.com/themes/erickson/styles/petra?locale=en&surface_inter_position=4&surface_intra_position=14&surface_type=all,Shopify
-Foodie,A versatile conversion focused theme for smaller inventories,$200 USD,https://themes.shopify.com/themes/foodie/styles/grind?locale=en&surface_inter_position=4&surface_intra_position=15&surface_type=all,Shopify
-Fame,Powerfully evoking emotion through creativity.,$360 USD,https://themes.shopify.com/themes/fame/styles/dark?locale=en&surface_inter_position=4&surface_intra_position=16&surface_type=all,Shopify
-Highlight,Showcase noteworthy products in a creative and engaging way,$280 USD,https://themes.shopify.com/themes/highlight/styles/modern?locale=en&surface_inter_position=4&surface_intra_position=17&surface_type=all,Shopify
-Minion,Ideal for the pet industry. With flexible features to fit more niches,$250 USD,https://themes.shopify.com/themes/minion/styles/vertical?locale=en&surface_inter_position=4&surface_intra_position=18&surface_type=all,Shopify
-Lorenza,"An editorial-inspired design, perfect for boutique retailers",$320 USD,https://themes.shopify.com/themes/lorenza/styles/chic?locale=en&surface_inter_position=4&surface_intra_position=19&surface_type=all,Shopify
-Tailor,Tailor-made for fashion brands with a story to tell.,$320 USD,https://themes.shopify.com/themes/tailor/styles/cotton?locale=en&surface_inter_position=4&surface_intra_position=20&surface_type=all,Shopify
-Pursuit,A bold theme for medium-large merchants who want to make a statement,$320 USD,https://themes.shopify.com/themes/pursuit/styles/aspen?locale=en&surface_inter_position=4&surface_intra_position=21&surface_type=all,Shopify
-Mode,"Feature-packed and fast, hand-crafted for growth and large inventories",$380 USD,https://themes.shopify.com/themes/mode/styles/orbit?locale=en&surface_inter_position=4&surface_intra_position=22&surface_type=all,Shopify
-Charge,Bring your store to the next level with a page speed optimized theme!,$170 USD,https://themes.shopify.com/themes/charge/styles/default?locale=en&surface_inter_position=4&surface_intra_position=23&surface_type=all,Shopify
-Colors,Bold theme designed with all Shopify's new features.,$240 USD,https://themes.shopify.com/themes/colors/styles/generic?locale=en&surface_inter_position=4&surface_intra_position=24&surface_type=all,Shopify
-Taiga,A blazing fast and modern theme with +10 video sections,$380 USD,https://themes.shopify.com/themes/taiga/styles/sage?locale=en&surface_inter_position=5&surface_intra_position=1&surface_type=all,Shopify
-Vantage,"Fast, sleek, and conversion focused for stores of all sizes",$200 USD,https://themes.shopify.com/themes/vantage/styles/clean?locale=en&surface_inter_position=5&surface_intra_position=2&surface_type=all,Shopify
-Masonry,"A modern, user-driven design to get customers to your products quickly",$280 USD,https://themes.shopify.com/themes/masonry/styles/flamingo?locale=en&surface_inter_position=5&surface_intra_position=3&surface_type=all,Shopify
-Amber,Unlock your potential with a fast and simple but powerful theme.,$250 USD,https://themes.shopify.com/themes/amber/styles/amber?locale=en&surface_inter_position=5&surface_intra_position=4&surface_type=all,Shopify
-Gain,"Modern, fast, customizable, flexible, supercharged, & developer-free.",$260 USD,https://themes.shopify.com/themes/gain/styles/the-lace?locale=en&surface_inter_position=5&surface_intra_position=5&surface_type=all,Shopify
-Startup,Perfect for Direct-to-Consumer focused brands with small catalogs.,$240 USD,https://themes.shopify.com/themes/startup/styles/tech?locale=en&surface_inter_position=5&surface_intra_position=6&surface_type=all,Shopify
-Banjo,"Flexible, easy to use and focused on an elegant user experience.",$320 USD,https://themes.shopify.com/themes/banjo/styles/creative?locale=en&surface_inter_position=5&surface_intra_position=7&surface_type=all,Shopify
-Blum,"Versatile, professional theme made for unmatched experience",$170 USD,https://themes.shopify.com/themes/blum/styles/celia?locale=en&surface_inter_position=5&surface_intra_position=8&surface_type=all,Shopify
-Andaman,"Based on minimalist design, typography and product storytelling.",$290 USD,https://themes.shopify.com/themes/andaman/styles/underwear?locale=en&surface_inter_position=5&surface_intra_position=9&surface_type=all,Shopify
-Canopy,"Amazon-inspired, feature-rich, and optimized for large scale selling.",$390 USD,https://themes.shopify.com/themes/canopy/styles/natural?locale=en&surface_inter_position=5&surface_intra_position=10&surface_type=all,Shopify
-Cascade,Get in flow with this soothing and sophisticated theme.,$350 USD,https://themes.shopify.com/themes/cascade/styles/modern?locale=en&surface_inter_position=5&surface_intra_position=11&surface_type=all,Shopify
-Forge,A product focused theme with unique set selling features and options,$220 USD,https://themes.shopify.com/themes/forge/styles/platinum?locale=en&surface_inter_position=5&surface_intra_position=12&surface_type=all,Shopify
-Handmade,"A theme for jewelry & accessory crafters, lifestyle brands, and DIYers",$320 USD,https://themes.shopify.com/themes/handmade/styles/dusty-brown?locale=en&surface_inter_position=5&surface_intra_position=13&surface_type=all,Shopify
-Drop,Conversion focused and optimized for sales & product drops,$230 USD,https://themes.shopify.com/themes/drop/styles/countdown?locale=en&surface_inter_position=5&surface_intra_position=14&surface_type=all,Shopify
-Pacific,"A modular, expansive theme for stores with large inventories",$240 USD,https://themes.shopify.com/themes/pacific/styles/bold?locale=en&surface_inter_position=5&surface_intra_position=15&surface_type=all,Shopify
-Maranello,A visually-centered theme perfect for extensive product catalogs.,$300 USD,https://themes.shopify.com/themes/maranello/styles/default?locale=en&surface_inter_position=5&surface_intra_position=16&surface_type=all,Shopify
-District,Ideal for showcasing featured products and collections,$220 USD,https://themes.shopify.com/themes/district/styles/district?locale=en&surface_inter_position=5&surface_intra_position=17&surface_type=all,Shopify
-Effortless,A quick-start premium theme with an effortless shopping experience.,$180 USD,https://themes.shopify.com/themes/effortless/styles/trend?locale=en&surface_inter_position=5&surface_intra_position=18&surface_type=all,Shopify
-Mojave,Contemporary design with proven functionality that converts to sales.,$350 USD,https://themes.shopify.com/themes/mojave/styles/mojave?locale=en&surface_inter_position=5&surface_intra_position=19&surface_type=all,Shopify
-Electro,Transforming product showcase with a super-fast and versatile theme,$170 USD,https://themes.shopify.com/themes/electro/styles/audio?locale=en&surface_inter_position=5&surface_intra_position=20&surface_type=all,Shopify
-Paper,A feature-rich theme designed for both large and small catalogs,$320 USD,https://themes.shopify.com/themes/paper/styles/poster?locale=en&surface_inter_position=5&surface_intra_position=21&surface_type=all,Shopify
-Emporium,Unlock your brand's potential with a fast and flexible theme.,$230 USD,https://themes.shopify.com/themes/emporium/styles/fruity?locale=en&surface_inter_position=5&surface_intra_position=22&surface_type=all,Shopify
-Streamline,An eye-catching theme designed for quick impact,$360 USD,https://themes.shopify.com/themes/streamline/styles/core?locale=en&surface_inter_position=5&surface_intra_position=23&surface_type=all,Shopify
-Creator,A versatile library of UI fundamentals built for multifaceted creators,$300 USD,https://themes.shopify.com/themes/creator/styles/streamer?locale=en&surface_inter_position=5&surface_intra_position=24&surface_type=all,Shopify
-Creator,A versatile library of UI fundamentals built for multifaceted creators,$300 USD,https://themes.shopify.com/themes/creator/styles/streamer?locale=en&surface_inter_position=6&surface_intra_position=1&surface_type=all,Shopify
-Atlantic,"Striking, scalable, and built to boost conversions",$280 USD,https://themes.shopify.com/themes/atlantic/styles/plush?locale=en&surface_inter_position=6&surface_intra_position=2&surface_type=all,Shopify
-Atom,A flexible & easy to use theme focused on an intuitive user experience,$160 USD,https://themes.shopify.com/themes/atom/styles/relativity?locale=en&surface_inter_position=6&surface_intra_position=3&surface_type=all,Shopify
-Parallax,Enhance your brand’s style with a striking parallax scrolling effect,$240 USD,https://themes.shopify.com/themes/parallax/styles/aspen?locale=en&surface_inter_position=6&surface_intra_position=4&surface_type=all,Shopify
-Launch,Designed to scale startups into successful online stores,$240 USD,https://themes.shopify.com/themes/launch/styles/cool?locale=en&surface_inter_position=6&surface_intra_position=5&surface_type=all,Shopify
-Mono,The SEO-optimized shopify theme for a flawless e-commerce experience,$200 USD,https://themes.shopify.com/themes/mono/styles/vanilla?locale=en&surface_inter_position=6&surface_intra_position=6&surface_type=all,Shopify
-Loft,Perfect for promotion-focused brands,$280 USD,https://themes.shopify.com/themes/loft/styles/nashville?locale=en&surface_inter_position=6&surface_intra_position=7&surface_type=all,Shopify
-Upscale,A premium theme supercharged with features and flexibility,$350 USD,https://themes.shopify.com/themes/upscale/styles/gem?locale=en&surface_inter_position=6&surface_intra_position=8&surface_type=all,Shopify
-Bazaar,Incredibly versatile for all product types. Highly advanced features.,$320 USD,https://themes.shopify.com/themes/bazaar/styles/default?locale=en&surface_inter_position=6&surface_intra_position=9&surface_type=all,Shopify
-Flow,Unlock the power of image-focused design and super flexible layouts,$350 USD,https://themes.shopify.com/themes/flow/styles/nourish?locale=en&surface_inter_position=6&surface_intra_position=10&surface_type=all,Shopify
-Frame,"Lightweight, minimal theme designed for fast and easy set-up.",$140 USD,https://themes.shopify.com/themes/frame/styles/madison?locale=en&surface_inter_position=6&surface_intra_position=11&surface_type=all,Shopify
-Creative,"An elegant, minimal theme loaded with powerful premium features",$350 USD,https://themes.shopify.com/themes/creative/styles/chalk?locale=en&surface_inter_position=6&surface_intra_position=12&surface_type=all,Shopify
-Woodstock,"Fast, flexible. Advanced features will push your store",$270 USD,https://themes.shopify.com/themes/woodstock/styles/light?locale=en&surface_inter_position=6&surface_intra_position=13&surface_type=all,Shopify
-Cama,A theme designed for contemporary and emerging Shopify DTC brands,$220 USD,https://themes.shopify.com/themes/cama/styles/grace?locale=en&surface_inter_position=6&surface_intra_position=14&surface_type=all,Shopify
-California,"Clean, simple, and focused on an elegant user experience",$240 USD,https://themes.shopify.com/themes/california/styles/generic?locale=en&surface_inter_position=6&surface_intra_position=15&surface_type=all,Shopify
-Gem,Shine online with this meticulously crafted theme for jewelry brands.,$380 USD,https://themes.shopify.com/themes/gem/styles/garnet?locale=en&surface_inter_position=6&surface_intra_position=16&surface_type=all,Shopify
-Roam,Uncomplicated mobile first theme optimized for smaller screens,$240 USD,https://themes.shopify.com/themes/roam/styles/solo?locale=en&surface_inter_position=6&surface_intra_position=17&surface_type=all,Shopify
-Whisk,Elevate your store's appeal with captivating organic shapes and layout,$290 USD,https://themes.shopify.com/themes/whisk/styles/soft?locale=en&surface_inter_position=6&surface_intra_position=18&surface_type=all,Shopify
-Avatar,"A modern, clean theme, designed to increase your average order value",$220 USD,https://themes.shopify.com/themes/avatar/styles/royal?locale=en&surface_inter_position=6&surface_intra_position=19&surface_type=all,Shopify
-Berlin,A seamless fusion of style and functionality in one theme.,$320 USD,https://themes.shopify.com/themes/berlin/styles/lifestyle?locale=en&surface_inter_position=6&surface_intra_position=20&surface_type=all,Shopify
-Mavon,A versatile theme designed to elevate your online business.,$280 USD,https://themes.shopify.com/themes/mavon/styles/fashion?locale=en&surface_inter_position=6&surface_intra_position=21&surface_type=all,Shopify
-Sydney,Supercharged with stunning designs and tools to incentivize sales.,$320 USD,https://themes.shopify.com/themes/sydney/styles/sophisticated?locale=en&surface_inter_position=6&surface_intra_position=22&surface_type=all,Shopify
-Avante,"Premium fashion design, best for clothing. Designed to impress.",$290 USD,https://themes.shopify.com/themes/avante/styles/fashion?locale=en&surface_inter_position=6&surface_intra_position=23&surface_type=all,Shopify
-Cornerstone,Flexible design and advanced functionality for high-volume stores,$340 USD,https://themes.shopify.com/themes/cornerstone/styles/glow?locale=en&surface_inter_position=6&surface_intra_position=24&surface_type=all,Shopify
-Unicorn,"Design a unique shop with the flexible, robust, high-end theme",$150 USD,https://themes.shopify.com/themes/unicorn/styles/valuable?locale=en&surface_inter_position=7&surface_intra_position=1&surface_type=all,Shopify
-Providence,"A clean, no-distraction theme, focused on conversions.",$200 USD,https://themes.shopify.com/themes/providence/styles/thunderbolt?locale=en&surface_inter_position=7&surface_intra_position=2&surface_type=all,Shopify
-Momentum,Display detailed product information to drive your store’s conversions,$350 USD,https://themes.shopify.com/themes/momentum/styles/fuel?locale=en&surface_inter_position=7&surface_intra_position=3&surface_type=all,Shopify
-Abode,"Best for Fashion,Furniture, Art, Tools, Clothing,Flower,Clothes",$140 USD,https://themes.shopify.com/themes/abode/styles/furniture?locale=en&surface_inter_position=7&surface_intra_position=4&surface_type=all,Shopify
-Huge,Like Nothing You've Seen Before,$220 USD,https://themes.shopify.com/themes/huge/styles/default?locale=en&surface_inter_position=7&surface_intra_position=5&surface_type=all,Shopify
-Eurus,"A fast, feature-rich and mobile first theme.",$230 USD,https://themes.shopify.com/themes/eurus/styles/puff?locale=en&surface_inter_position=7&surface_intra_position=6&surface_type=all,Shopify
-Next,Grow your brand with the most flexible theme for enterprise merchants,$400 USD,https://themes.shopify.com/themes/next/styles/wood?locale=en&surface_inter_position=7&surface_intra_position=7&surface_type=all,Shopify
-Automation,Visual-focused theme ideal for users who use many apps and automations,$260 USD,https://themes.shopify.com/themes/automation/styles/default?locale=en&surface_inter_position=7&surface_intra_position=8&surface_type=all,Shopify
-Monaco,A luxury theme to celebrate your refined brand.,$320 USD,https://themes.shopify.com/themes/monaco/styles/allure?locale=en&surface_inter_position=7&surface_intra_position=9&surface_type=all,Shopify
-Vivid,Exceptional design and powerful features to elevate your brand,$200 USD,https://themes.shopify.com/themes/vivid/styles/ruby?locale=en&surface_inter_position=7&surface_intra_position=10&surface_type=all,Shopify
-Kairo,A simple & consistent theme built for different kind of inventories,$140 USD,https://themes.shopify.com/themes/kairo/styles/default?locale=en&surface_inter_position=7&surface_intra_position=11&surface_type=all,Shopify
-Urge,Give your customers the Urge to buy more,$290 USD,https://themes.shopify.com/themes/urge/styles/default?locale=en&surface_inter_position=7&surface_intra_position=12&surface_type=all,Shopify
-Neat,A modern theme for visual storytelling brands,$200 USD,https://themes.shopify.com/themes/neat/styles/white?locale=en&surface_inter_position=7&surface_intra_position=13&surface_type=all,Shopify
-Chord,"Flexible, easy to use and focused on an elegant user experience.",$320 USD,https://themes.shopify.com/themes/chord/styles/warm?locale=en&surface_inter_position=7&surface_intra_position=14&surface_type=all,Shopify
-Brava,A flexible & scalable theme for all products types to increase sales,$190 USD,https://themes.shopify.com/themes/brava/styles/brava?locale=en&surface_inter_position=7&surface_intra_position=15&surface_type=all,Shopify
-Xclusive,Highly customizable for every industry that embraces remarkable design,$400 USD,https://themes.shopify.com/themes/xclusive/styles/shoes?locale=en&surface_inter_position=7&surface_intra_position=16&surface_type=all,Shopify
-Nostalgia,A simple theme for displaying products in a classic & elegant way.,$250 USD,https://themes.shopify.com/themes/nostalgia/styles/classic?locale=en&surface_inter_position=7&surface_intra_position=17&surface_type=all,Shopify
-Lute,Use color to communicate.,$320 USD,https://themes.shopify.com/themes/lute/styles/vibrant?locale=en&surface_inter_position=7&surface_intra_position=18&surface_type=all,Shopify
-Modules,Modular design allowing for deep customization and scalability,$200 USD,https://themes.shopify.com/themes/modules/styles/sky?locale=en&surface_inter_position=7&surface_intra_position=19&surface_type=all,Shopify
-Trade,A professional theme specifically designed for wholesale.,Free,https://themes.shopify.com/themes/trade/styles/default?locale=en&surface_inter_position=7&surface_intra_position=20&surface_type=all,Shopify
-Concept,The seamless mobile shopping experience for your customers,$250 USD,https://themes.shopify.com/themes/concept/styles/harmony?locale=en&surface_inter_position=7&surface_intra_position=21&surface_type=all,Shopify
-Essence,"A clean, feature rich theme for visual stores",$250 USD,https://themes.shopify.com/themes/essence/styles/bold?locale=en&surface_inter_position=7&surface_intra_position=22&surface_type=all,Shopify
-Digital,Designed to showcase digital products with flair and functionality.,$380 USD,https://themes.shopify.com/themes/digital/styles/electric?locale=en&surface_inter_position=7&surface_intra_position=23&surface_type=all,Shopify
-Minimalista,Stylish design and high performance united in one theme.,$380 USD,https://themes.shopify.com/themes/minimalista/styles/graphite?locale=en&surface_inter_position=7&surface_intra_position=24&surface_type=all,Shopify
-Borders,Craft your store's signature look with versatile customization options,$360 USD,https://themes.shopify.com/themes/borders/styles/raw?locale=en&surface_inter_position=8&surface_intra_position=1&surface_type=all,Shopify
-Shark,"Parallax, Modern, Multifaceted: The future of your Shopify store.",$200 USD,https://themes.shopify.com/themes/shark/styles/default?locale=en&surface_inter_position=8&surface_intra_position=2&surface_type=all,Shopify
-Distinctive,"Distinctive, premium, high-end brand appeal",$300 USD,https://themes.shopify.com/themes/distinctive/styles/default?locale=en&surface_inter_position=8&surface_intra_position=3&surface_type=all,Shopify
-Starlite,"Versatile & Stylish, Ideal for Shopify Professionals.",$290 USD,https://themes.shopify.com/themes/starlite/styles/classic?locale=en&surface_inter_position=8&surface_intra_position=4&surface_type=all,Shopify
-Multi,Highly flexible multi-purpose theme with extensive navigation options,$350 USD,https://themes.shopify.com/themes/multi/styles/spark?locale=en&surface_inter_position=8&surface_intra_position=5&surface_type=all,Shopify
-Veena,"Elevate E-Commerce Excellence with Veena: Your Sales, Your Way.",$290 USD,https://themes.shopify.com/themes/veena/styles/megamall?locale=en&surface_inter_position=8&surface_intra_position=6&surface_type=all,Shopify
-Copenhagen,"Classy, minimalist theme focused on user experience.",$320 USD,https://themes.shopify.com/themes/copenhagen/styles/primary?locale=en&surface_inter_position=8&surface_intra_position=7&surface_type=all,Shopify
-Relax,Take your Shopify business to the next level!,$170 USD,https://themes.shopify.com/themes/relax/styles/comfort?locale=en&surface_inter_position=8&surface_intra_position=8&surface_type=all,Shopify
-Essentials,A simple and minimalist theme built for high impact.,$250 USD,https://themes.shopify.com/themes/essentials/styles/monochrome?locale=en&surface_inter_position=8&surface_intra_position=9&surface_type=all,Shopify
-Monk,"A new benchmark in store speed and conversion. Sell faster, sell more.",$200 USD,https://themes.shopify.com/themes/monk/styles/monograph?locale=en&surface_inter_position=8&surface_intra_position=10&surface_type=all,Shopify
-Aesthetic,Streamlined design with essential functions for modern retail.,$250 USD,https://themes.shopify.com/themes/aesthetic/styles/wood-ash?locale=en&surface_inter_position=8&surface_intra_position=11&surface_type=all,Shopify
-Barcelona,Classy design combined with sales-optimized tools.,$320 USD,https://themes.shopify.com/themes/barcelona/styles/clean?locale=en&surface_inter_position=8&surface_intra_position=12&surface_type=all,Shopify
-Select,Tailored for impact: design brilliance boosting conversions.,$380 USD,https://themes.shopify.com/themes/select/styles/refined?locale=en&surface_inter_position=8&surface_intra_position=13&surface_type=all,Shopify
-Kidu,"Flexible Sections, Proven Design, Best CRO, Effortlessly Customizable",$270 USD,https://themes.shopify.com/themes/kidu/styles/toys?locale=en&surface_inter_position=8&surface_intra_position=14&surface_type=all,Shopify
-Iris,A seamless blend of elegance & functionality for an optimal experience,$300 USD,https://themes.shopify.com/themes/iris/styles/default?locale=en&surface_inter_position=8&surface_intra_position=15&surface_type=all,Shopify
-Praise,Dedicated to highlighting your brand narrative with product focus,$210 USD,https://themes.shopify.com/themes/praise/styles/bold?locale=en&surface_inter_position=8&surface_intra_position=16&surface_type=all,Shopify
-Elysian,An intuitive theme packed full of features to grow your business,$180 USD,https://themes.shopify.com/themes/elysian/styles/concepta?locale=en&surface_inter_position=8&surface_intra_position=17&surface_type=all,Shopify
-Pesto,A perfect theme to showcase foods to attract foodies,$180 USD,https://themes.shopify.com/themes/pesto/styles/restaurant?locale=en&surface_inter_position=8&surface_intra_position=18&surface_type=all,Shopify
-Igloo,Unleash the Power of Arctic-Inspired Design and Skyrocket Your Sales,$320 USD,https://themes.shopify.com/themes/igloo/styles/cool?locale=en&surface_inter_position=8&surface_intra_position=19&surface_type=all,Shopify
-StyleScape,Maximize Your Inventory with Our Image-Focused Theme,$240 USD,https://themes.shopify.com/themes/stylescape/styles/amber?locale=en&surface_inter_position=8&surface_intra_position=20&surface_type=all,Shopify
-Cello,"The Ultimate Choice for Electronics, Fashion, and More.",$290 USD,https://themes.shopify.com/themes/cello/styles/default?locale=en&surface_inter_position=8&surface_intra_position=21&surface_type=all,Shopify
-Divide,An easy to use theme for fun brands with small catalogs.,$300 USD,https://themes.shopify.com/themes/divide/styles/play?locale=en&surface_inter_position=8&surface_intra_position=22&surface_type=all,Shopify
-Artist,"Powerful solution for digital sellers: Membership logins, audio/video",$270 USD,https://themes.shopify.com/themes/artist/styles/default?locale=en&surface_inter_position=8&surface_intra_position=23&surface_type=all,Shopify
-Tokyo,Retail & education blend for enhanced customer engagement,$300 USD,https://themes.shopify.com/themes/tokyo/styles/default?locale=en&surface_inter_position=8&surface_intra_position=24&surface_type=all,Shopify
-Murmel,Where fun and shopping collide!,$320 USD,https://themes.shopify.com/themes/murmel/styles/default?locale=en&surface_inter_position=9&surface_intra_position=1&surface_type=all,Shopify
-Zora,A content-first theme for content creators built with memberships,$300 USD,https://themes.shopify.com/themes/zora/styles/default?locale=en&surface_inter_position=9&surface_intra_position=2&surface_type=all,Shopify
+Name: Infield
+Use Case: Infield is a WordPress blog theme with baseball fans in mind. Featuring a vibrant color palette and sporty details that will make your blog stand out from the crowd.
+Price: Free
+URL: https://wordpress.com/theme/infield?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: LowFi
+Use Case: LowFi is a simple blog theme with lo-fi aesthetics. Its narrow column layout is optimized for seamless browsing on mobile devices.
+Price: Free
+URL: https://wordpress.com/theme/lowfi?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Nook
+Use Case: Nook is a blog WordPress theme featuring a classic two-column layout with a sidebar. The design is elegant and timeless, with a sense of warmth and familiarity, offering a delightful canvas for your DIY projects, delicious recipes, and creative inspirations.
+Price: Free
+URL: https://wordpress.com/theme/nook?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Bedrock
+Use Case: Inspired by the iconic worlds of Minecraft and Minetest, Bedrock is a blog theme that reminds the immersive experience of these games.
+Price: Free
+URL: https://wordpress.com/theme/bedrock?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Strand
+Use Case: Strand is a blogging theme for writers who want to publish a newsletter, featuring sticky left column with a prominent subscription form for a hassle-free reader engagement.
+Price: Free
+URL: https://wordpress.com/theme/strand?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Allez
+Use Case: Allez is the perfect theme site for sports practitioners or fans who want to blog about their sport.
+Price: Free
+URL: https://wordpress.com/theme/allez?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Assembler
+Use Case: Assembler is a simple, minimal theme that supports full-site editing and global styles. Use it to build something beautiful.
+Price: Free
+URL: https://wordpress.com/theme/assembler?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Pomme
+Use Case: Pomme is a simple portfolio theme for painters.
+Price: Free
+URL: https://wordpress.com/theme/pomme?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Twenty Twenty-Four
+Use Case: Twenty Twenty-Four is designed to be flexible, versatile, and applicable to any website. Its collection of templates and patterns tailor to different needs, such as presenting a business, blogging and writing or showcasing work. A multitude of possibilities open up with just a few adjustments to color and typography. Twenty Twenty-Four comes with style variations and full page designs to help speed up the site building process, is fully compatible with the site editor, and takes advantage of new design tools introduced in WordPress 6.4.
+Price: Free
+URL: https://wordpress.com/theme/twentytwentyfour?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Ritratto
+Use Case: Besides an appreciable headshot, the theme offers large titles, descriptions, and links right away. There is also a grid of posts, and no Post Feature Images are used anytime.
+Price: Free
+URL: https://wordpress.com/theme/ritratto?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Sunderland
+Use Case: Sunderland is a simple WordPress event theme designed for announcing upcoming events in a visually captivating way. Sunderland’s character lies in its immersive landing page, with an easily switchable full width background image. Sunderland is the ideal choice for bands, musicians, artists or event organizers who want a sleek and eye-catching website to inform and engage their audience.
+Price: Free
+URL: https://wordpress.com/theme/sunderland?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Foam
+Use Case: Foam is a WordPress event theme with a vibrant, straightforward style. Entirely customisable, Foam allows you to present an event in a visually appealing way. Foam features a set of useful event patterns and essential templates.
+Price: Free
+URL: https://wordpress.com/theme/foam?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Alter
+Use Case: Alter is a lean theme for bloggers that goes directly to the point, showing text-only posts right above the fold ornamented by a single image to compound the style.
+Price: Free
+URL: https://wordpress.com/theme/alter?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Creatio 2
+Use Case: Creatio 2 is a simple, minimal theme that supports full-site editing and global styles. Use it to build something beautiful.
+Price: Free
+URL: https://wordpress.com/theme/creatio-2?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Luce
+Use Case: Luce is a simple resume and blog theme with bright personality. Whether you want to start a personal blog or showcase your writing portfolio, Luce is the theme for you.
+Price: Free
+URL: https://wordpress.com/theme/luce?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Texty
+Use Case: Texty is a text-only blog theme based on Post excerpts rather than Titles and Post Feature Images. It’s a remix of a theme called Issue and it has a bunch of colorful variations.
+Price: Free
+URL: https://wordpress.com/theme/texty?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Dawson
+Use Case: Dawson is a WordPress portfolio theme specifically tailored for photography. With a two column layout, the theme is ideal for those looking to build a portfolio website. Additionally, Dawson offers five distinct style variations, providing a wide range of aesthetic options to choose from.
+Price: Free
+URL: https://wordpress.com/theme/dawson?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Ron
+Use Case: Ron is a blogging theme designed with a focus on delivering an exceptional reading experience. Its offset post layout and sticky post navigation make it stand out. By intentionally omitting a header, including only a footer, Ron allows readers to dive straight into the content without distractions.
+Price: Free
+URL: https://wordpress.com/theme/ron?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: SND
+Use Case: SND is a minimal newsletter theme. With prominent subscribe section, and a spot for reader reviews, SND has everything you need to start your newsletter.
+Price: Free
+URL: https://wordpress.com/theme/snd?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Overlaid
+Use Case: Overlaid is a neat theme that displays large titles and post excerpts that scroll over an image on the Homepage. Its blog post pages are crafted especially for users who want their writings to be simple yet beautiful.
+Price: Free
+URL: https://wordpress.com/theme/overlaid?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: DOS
+Use Case: DOS is a blog theme designed for the nostalgic ones — as a tribute to the folks that invented computing as we know it today. An exciting opportunity to test blogging as if we were back again to the green (or amber) phosphor.
+Price: Free
+URL: https://wordpress.com/theme/dos?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Mpho
+Use Case: Mpho is a minimalist single column theme that draws inspiration from short-sized posts and social networks. It prioritizes the post content and author, featuring a header with the author’s bio and profile picture.
+Price: Free
+URL: https://wordpress.com/theme/mpho?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Reverie
+Use Case: Reverie is a theme inspired by the work of Mark Rothko. It features four style variations for each season — Spring (default), Summer, Fall, and Winter. Use it to illuminate your prose, poetry, stories, photos, and more.
+Price: Free
+URL: https://wordpress.com/theme/reverie?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Entry
+Use Case: Entry is a uniquely styled WordPress block theme designed for journalling. It features a grid layout and blocky layout for posts, with every element contained in squared or rectangular shapes. Its impactful design is sure to make a statement, while its customizable templates offer a range of options for creating a truly unique journaling experience.
+Price: Free
+URL: https://wordpress.com/theme/entry?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Didone
+Use Case: Didone draws inspiration from a genre of serif typeface that originated in the 18th century and became the standard style for general-purpose printing. It is bold, straightforward and timeless, designed to bring attention to the content and ideal to those looking to showcase written content elegantly.
+Price: Free
+URL: https://wordpress.com/theme/didone?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Luminance
+Use Case: Luminance is a captivating blogging theme with a confidently opinionated design and typography. Its unique and somewhat brutalist aesthetic compliments the abundance of post titles with featured images slammed against the canvas.
+Price: Free
+URL: https://wordpress.com/theme/luminance?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Artly
+Use Case: Artly is a WordPress theme designed for blogs and magazines. Its modern, offset layout for posts and pages comes in three style variations, allowing you to showcase your content in a visually stunning and functional way. With Artly, you can display your content beautifully and efficiently, all in a package that is easy to use and customize.
+Price: Free
+URL: https://wordpress.com/theme/artly?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Common
+Use Case: Common‘s style is anything but ordinary and it speaks for itself. The unique combination of an uppercase monospaced font and aesthetically pleasing demo content creates an excellent foundation for any website. Common is perfect for showcasing photos, articles, or collections of content. With its ever-present sidebar menu, browsing through content is both effortless and enjoyable.
+Price: Free
+URL: https://wordpress.com/theme/common?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Covr
+Use Case: Covr is a beautifully crafted theme that boasts a clean and modern design, specifically created to showcase images in an immersive and captivating way. Its full-width home template elegantly displays your portfolio, photography, or personal blog posts, providing an enjoyable browsing experience for your audience. Additionally, Covr’s highly functional single post template allows you to showcase your work or tell your stories in a compelling manner. Whether you’re a photographer, artist, or blogger, Covr is the perfect choice to present your work and make an impact.
+Price: Free
+URL: https://wordpress.com/theme/covr?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Fewer
+Use Case: Fewer is perfect for showcasing portfolios and blogs. With a clean and opinionated design, it offers excellent typography and style variations that make it easy to present your work or business. The theme is highly versatile, making it ideal for bloggers and businesses alike, and it offers a range of customizable options that allow you to tailor your site to your specific needs.
+Price: Free
+URL: https://wordpress.com/theme/fewer?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Nested
+Use Case: Nested is a blog design that displays posts overlapping featured images as a Matryoshka effect.
+Price: Free
+URL: https://wordpress.com/theme/nested?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Programme
+Use Case: Programme is a blog theme inspired by the legendary designer Massimo Vignelli and his playbills for the Piccolo Teatro in Milan. This theme is perfect for showcasing programs, calendars, and announcements.
+Price: Free
+URL: https://wordpress.com/theme/programme?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Fotograma
+Use Case: Fotograma is a portfolio theme for photographers seeking to showcase powerful photography in large sizes. Inter semi-bold is the typeface for this theme. It also comes with a white-style variation.
+Price: Free
+URL: https://wordpress.com/theme/fotograma?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Bibliophile
+Use Case: Bibliophile was designed to provide an impeccable reading experience. Its header on the left sidebar adds context, while its posts and content are elegantly displayed on the right. Inspired by printed books and with carefully chosen font sizes, Bibliophile offers a great solution for websites across devices. The layout is user-friendly and allows for seamless navigation, making it an ideal choice for those who enjoy reading on-the-go.
+Price: Free
+URL: https://wordpress.com/theme/bibliophile?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Poesis
+Use Case: Poesis pays homage to the literary figures represented in the painting “Six Tuscan Poets” by the Italian Renaissance painter, architect, and art historian Giorgio Vasari and is ideal for poetry or short stories. The theme’s main feature is its split layout, with a full height column containing a sticky header and footer and scrollable content on the other column.
+Price: Free
+URL: https://wordpress.com/theme/poesis?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Jaida
+Use Case: Jaida is a WordPress block theme specifically designed to meet the needs of bloggers. This theme features a visually captivating homepage that presents your content in an elegant grid layout, ensuring maximum visibility and engagement. Furthermore, Jaida offers a thoughtfully crafted post template with a sidebar, enabling seamless navigation and enhanced user experience while exploring your blog posts.
+Price: Free
+URL: https://wordpress.com/theme/jaida?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Sten
+Use Case: Sten is a minimal blogging theme with a simple, straightforward index template and post templates that contain a sidebar.
+Price: Free
+URL: https://wordpress.com/theme/sten?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Grammer One
+Use Case: Bring the social media experience to your site and transform it into a repository for your photos and videos. Get Grammer One now.
+Price: Free
+URL: https://wordpress.com/theme/grammerone?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Issue
+Use Case: Issue is a magazine theme focused on sizable typography and imagery to grow your blog posts, reviews, artwork, and news.
+Price: Free
+URL: https://wordpress.com/theme/issue?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Screenplay
+Use Case: Screenplay is a simple blog theme that suits perfectly writers or the general public that would like to have their sites formatted as movie scripts.
+Price: Free
+URL: https://wordpress.com/theme/screenplay?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Pieria
+Use Case: Pieria is a theme focused on typography — essentially following a low-level styling approach. Its headings, paragraphs, links, and navigation have the same appearance, with everything sitting quietly into simple columns that split navigation, blog posts, and a content block. A soft design to make your content sparkle.
+Price: Free
+URL: https://wordpress.com/theme/pieria?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Curriculum
+Use Case: Curriculum is a blog theme that echoes the structure of a professional profile page, with its original visuals and interesting navigation. It’s suitable for the general public and displays information, experiences, and education.
+Price: Free
+URL: https://wordpress.com/theme/curriculum?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Bute
+Use Case: Bute is a blog theme that has a full-screen front page.
+Price: Free
+URL: https://wordpress.com/theme/bute?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Freddie
+Use Case: Freddie is a theme using a full-screen background image to captivate the viewer with a brief, immersive moment.
+Price: Free
+URL: https://wordpress.com/theme/freddie?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Negai
+Use Case: Negai is a bold blogging theme that thrives on unadorned simplicity and minimalistic elegance. With the monochromatic hues, the straightforward and unapologetic aesthetic is as striking as some Brutalist designs on the web.
+Price: Free
+URL: https://wordpress.com/theme/negai?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Trellick
+Use Case: Trellick is a raw, brutalist blog theme that strips away the polished veneer of the “samey” web design to show the untamed essence of the digital realm.
+Price: Free
+URL: https://wordpress.com/theme/trellick?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Tomoni
+Use Case: Tomoni is a theme that displays a use case of multilingual content in English and Japanese. It’s inspired by wall labels in museums, roadsigns or posters in large immigrant communities that are important to reaching a more international audience.
+Price: Free
+URL: https://wordpress.com/theme/tomoni?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: JinJang
+Use Case: JinJang is a blog theme with a split, 50:50 layout like Yin Yang. It’s stark and bold and uses larger sizes of system font throughout the theme.
+Price: Free
+URL: https://wordpress.com/theme/jinjang?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Optimismo
+Use Case: Optimismo is a simple blog theme with a bold aesthetic—inspired by a UK rave party flyer in the late ’80s.
+Price: Free
+URL: https://wordpress.com/theme/optimismo?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Kigen
+Use Case: Kigen is a simple portfolio theme for one who quickly wants to showcase their art with a biography text. The design is straightforward. The front page has a gallery at the top, followed by a column block with links to social media and a biography text. The font, Newsreader conveys a classical sense while maintaining an authoritative feel. You’ll discover playfulness from the artist with the border at the bottom. The border is a pattern that is easy to remove or change its colours and add anywhere on the site.
+Price: Free
+URL: https://wordpress.com/theme/kigen?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: BSoJ
+Use Case: BSoJ (Blue Screen of Joy) is a blog theme inspired by the infamous Blue Screen of Death.
+Price: Free
+URL: https://wordpress.com/theme/bsoj?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Lineup
+Use Case: Lineup is a ’90s D.I.Y. fanzine-inspired theme that lists entries with bold typography and colour that are highly opinionated.
+Price: Free
+URL: https://wordpress.com/theme/lineup?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Otis
+Use Case: Otis is a WordPress block theme that is well-suited for personal blogging. It is designed to provide a polished, modern user experience. Its default templates include an opinionated header template with large type, and straightforward single and page templates, which are particularly useful for users who do not want to include images on their site. Otis’ strong design point of view encourages users to follow its design principles. It is focused on simplicity and readability, with a clean and uncluttered layout that allows readers to easily navigate content.
+Price: Free
+URL: https://wordpress.com/theme/otis?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Loïc
+Use Case: Loïc is a simple blogging theme ideal for writers. What sets it apart is its attention to detail—aside from the Index templates, the theme replaces the site title with the post or query title in its templates, adding a unique touch to each page. Loïc features five color variations, providing a range of options to effortlessly transform your website’s tone to suit individual preferences.
+Price: Free
+URL: https://wordpress.com/theme/loic?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Ueno
+Use Case: Ueno is suitable for any kind of blog or website. It has an opinionated default style and two alternative style variations. Ueno was inspired by Japanese kimono patterns and designs attributed to Ueno Seikō.
+Price: Free
+URL: https://wordpress.com/theme/ueno?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: George Lois
+Use Case: A theme in homage to George Lois, visionary American Art Director, and author. We will all miss your big ideas. Rest in Peace, George. From the Creative People of Automattic.
+Price: Free
+URL: https://wordpress.com/theme/george-lois?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Storia
+Use Case: Storia is a stunning visual story theme designed to showcase your creative work and engage your audience. With featured images and a minimalist design, this theme allows your visual content to take center stage and tell a compelling story.
+Price: Free
+URL: https://wordpress.com/theme/storia?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Poema
+Use Case: Poema pays tribute to the revered Portuguese writer and poet Fernando Pessoa and his various pseudonyms. Its minimalist design features a black-and-white color scheme, complemented by an elegant serif font. Poema’s carefully crafted templates boast a comfortable content width and meticulously considered white space that creates a calming and immersive reading experience, ideal for the appreciation of poetry.
+Price: Free
+URL: https://wordpress.com/theme/poema?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Hey
+Use Case: 
+Price: Free
+URL: https://wordpress.com/theme/hey?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: CTLG
+Use Case: CTLG is a free, responsive WordPress block theme specifically designed for creating lists, directories, and catalogs. It comes with a variety of pre-designed templates and four distinct style variations. Its index template features a full-width header, followed by a right-aligned query loop where you can display blog posts or pages, and a simple full-width footer. Its post and page templates follow the same layout.
+Price: Free
+URL: https://wordpress.com/theme/ctlg?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Paimio
+Use Case: 
+Price: Free
+URL: https://wordpress.com/theme/paimio?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Vetro
+Use Case: We know starting from scratch can be daunting, so we have clear, step-by-step instructions and video tutorials to help you build an attractive website. If you’d like to skip right to a specific section, click on the relevant link below.
+Price: Free
+URL: https://wordpress.com/theme/vetro?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Adventurer
+Use Case: We know starting from scratch can be daunting, so we have clear, step-by-step instructions and video tutorials to help you build an attractive website. If you’d like to skip right to a specific section, click on the relevant link below.
+Price: Free
+URL: https://wordpress.com/theme/adventurer?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Bitácora
+Use Case: Bitácora — an old-school theme for a sidebar revival.
+Price: Free
+URL: https://wordpress.com/theme/bitacora?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Upsidedown
+Use Case: We know starting from scratch can be daunting, so we have clear, step-by-step instructions and video tutorials to help you build an attractive website. If you’d like to skip right to a specific section, click on the relevant link below.
+Price: Free
+URL: https://wordpress.com/theme/upsidedown?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Tú
+Use Case: Tú is a theme about you. This is perfect if you want a simple page to show who you are.
+Price: Free
+URL: https://wordpress.com/theme/tu?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Loudness
+Use Case: Loudness is a bold opinionated theme created with music education in mind.  Use Full Site Editing tooling and relevant patterns to create a unique experience.
+Price: Free
+URL: https://wordpress.com/theme/loudness?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Muscat
+Use Case: Muscat is a simple blogging theme with grid post templates and a centered post layout.
+Price: Free
+URL: https://wordpress.com/theme/muscat?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Twenty Twenty-Three
+Use Case: Twenty Twenty-Three is designed to take advantage of the new design tools introduced in WordPress 6.1.
+Price: Free
+URL: https://wordpress.com/theme/twentytwentythree?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Calyx
+Use Case: Calyx is a minimalist theme designed for single-page websites. Featuring a coming-soon pattern on the homepage, Calyx is a perfect choice to spread the word about the upcoming opening of a cafe, restaurant, or bar.
+Price: Free
+URL: https://wordpress.com/theme/calyx?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Masu
+Use Case: Masu is a blog theme inspired by a traditional square wooden box used to measure rice in Japan.
+Price: Free
+URL: https://wordpress.com/theme/masu?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Spearhead
+Use Case: Spearhead Blocks is a podcasting starter theme with Full Site Editing features. A modernized version of the original Spearhead, this theme will allow you easily customize your podcast website.
+Price: Free
+URL: https://wordpress.com/theme/spearhead-blocks?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Pixl
+Use Case: Pixl is a simple yet opinionated blogging theme inspired by websites of the nineties.
+Price: Free
+URL: https://wordpress.com/theme/pixl?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Rainfall
+Use Case: Rainfall is a clean, objective blogging theme strongly inspired by Swiss Design. Its minimalist functionality is balanced by a strong accent color, beautiful photography and post templates with sidebars.
+Price: Free
+URL: https://wordpress.com/theme/rainfall?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Disco
+Use Case: Disco is a funky, vibrant, opinionated theme with a monospaced font. Both its styles and spacing form an edgy aesthetic perfect for those looking to build a quirky website.
+Price: Free
+URL: https://wordpress.com/theme/disco?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Lettre
+Use Case: Lettre is a theme for writers that want to publish a newsletter.
+Price: Free
+URL: https://wordpress.com/theme/lettre?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Vivre
+Use Case: Vivre is a bold, opinionated blogging theme, heavily inspired by fashion and lifestyle magazines and websites. With large heavy sans-serif paired with a light elegant serif font, it sets the tone to a refined reading experience.
+Price: Free
+URL: https://wordpress.com/theme/vivre?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Remote
+Use Case: Remote is a dark, minimal block theme ideal for bloggers. Its default styles – a sans-serif font and dark background – contribute for a comfortable, immersive reading experience. It features a set of bold block patterns such as a large posts list and bordered categories and tags.
+Price: Free
+URL: https://wordpress.com/theme/remote?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Archeo
+Use Case: Archeo is a theme inspired by Mayan history and culture, with a classic magazine-style mix of elegant typography and an interesting layout. With its archeology-inspired imagery and color tones, it’s a truly distinctive theme.
+Price: Free
+URL: https://wordpress.com/theme/archeo?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Skatepark
+Use Case: Skatepark is a bold and exciting WordPress theme designed for modern events and organizations. With its simple but vivid color default scheme, duotone support, and playful grid, Skatepark is a theme designed for work and play.
+Price: Free
+URL: https://wordpress.com/theme/skatepark?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Marl
+Use Case: Marl is a minimal, product-focused theme featuring Payments block. Its earthy, organic look makes it a perfect match for handmade artisanal items or natural health and beauty products.
+Price: Free
+URL: https://wordpress.com/theme/marl?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Attar
+Use Case: Attar is a minimal, product-focused theme featuring Payments block. It combines a modern layout with a high-contrast, elegant style that makes it a perfect match for selling beauty, health, or cosmetic products.
+Price: Free
+URL: https://wordpress.com/theme/attar?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Winkel
+Use Case: Winkel is a minimal, product-focused theme featuring Payments block. Its clean, cool look combined with a simple layout makes it perfect for showcasing fashion items – clothes, shoes, and accessories.
+Price: Free
+URL: https://wordpress.com/theme/winkel?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Twenty Twenty-Two
+Use Case: Built on a solidly designed foundation, Twenty Twenty-Two embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong, its color palette is drawn from nature, and its layout elements sit gently on the page.
+Price: Free
+URL: https://wordpress.com/theme/twentytwentytwo?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Stewart
+Use Case: Stewart is a modern blogging theme with a left sidebar. Its default color scheme is a striking combination of orange and light gray, to give your blog a sophisticated appearance from day one.
+Price: Free
+URL: https://wordpress.com/theme/stewart?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Videomaker
+Use Case: Videomaker is a minimalistic WordPress theme ideal for film directors and video creators.
+Price: Free
+URL: https://wordpress.com/theme/videomaker?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Livro
+Use Case: Livro is a simple theme designed to evoke the calm feeling you get when you settle in with a classic book.
+Price: Free
+URL: https://wordpress.com/theme/livro?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Jackson
+Use Case: Jackson is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.
+Price: Free
+URL: https://wordpress.com/theme/jackson?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Twenty Twenty-Two (Swiss)
+Use Case: Built on a solidly designed foundation, Twenty Twenty-Two (Swiss) embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong and its layout elements sit gently on the page.
+Price: Free
+URL: https://wordpress.com/theme/twentytwentytwo-swiss?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Arbutus
+Use Case: Arbutus is an image-centric WordPress theme with a clean layout, designed to help you showcase your favorite images with minimal distractions. Whether you’re an amateur or a professional photographer looking for a canvas on which to display your work, Arbutus is an excellent choice.
+Price: Free
+URL: https://wordpress.com/theme/arbutus?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Geologist - Cream
+Use Case: Geologist (Cream) is a streamlined theme for modern bloggers. It consists of a simple single column of posts, paired with a sophisticated color palette and beautiful serif typography.
+Price: Free
+URL: https://wordpress.com/theme/geologist-cream?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Russell
+Use Case: Russell is an elegant and modern theme for personal blogs. Crafted with fashion, lifestyle, and travel bloggers in mind, Russell provides a subtle yet refined look that can be further customized with different colors and font pairings to match your vision perfectly.
+Price: Free
+URL: https://wordpress.com/theme/russell?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Zoologist
+Use Case: Zoologist is a streamlined theme for modern bloggers. It consists of a simple single column of posts, paired with a sophisticated color palette and beautiful sans-serif typography.
+Price: Free
+URL: https://wordpress.com/theme/zoologist?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Quadrat
+Use Case: Quadrat is a simple, versatile WordPress theme, designed for blogs and podcasts. Inspired by squared shapes and colourful, minimalist flat illustrations, Quadrat includes a set of custom images you can use on your site in block patterns. Quadrat’s default styles are bold and playful, relying on a simple sans-serif font and a strong color scheme that you can customize.
+Price: Free
+URL: https://wordpress.com/theme/quadrat?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Geologist
+Use Case: Geologist is a streamlined theme for modern bloggers. It consists of a simple single column of posts, paired with a sophisticated color palette and beautiful sans-serif typography.
+Price: Free
+URL: https://wordpress.com/theme/geologist?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Bantry
+Use Case: Bantry is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.
+Price: Free
+URL: https://wordpress.com/theme/bantry?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Bradford
+Use Case: Bradford is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.
+Price: Free
+URL: https://wordpress.com/theme/bradford?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Baker
+Use Case: Baker is a minimalist theme, designed for single-page websites. Its single post and page layouts have no header, navigation menus, or widgets, so the page you design in the WordPress editor is just the same page you’ll see on the front end.
+Price: Free
+URL: https://wordpress.com/theme/baker?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Twenty Twenty-Two (Red)
+Use Case: Built on a solidly designed foundation, Twenty Twenty-Two (Red) embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong and its layout elements sit gently on the page.
+Price: Free
+URL: https://wordpress.com/theme/twentytwentytwo-red?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Twenty Twenty-One
+Use Case: As the name suggests, Twenty Twenty-One is the default WordPress theme for 2021! This theme is a blank canvas for your ideas and it makes the block editor your best brush.
+Price: Free
+URL: https://wordpress.com/theme/twentytwentyone?tab_filter=all&tier_filter=free
+Platform: WordPress
+
+Name: Shine
+Use Case: Elevating Brands with Customizable Elegance and Long-Lasting Impact
+Price: $210 USD
+URL: https://themes.shopify.com/themes/shine/styles/sophisticated?locale=en&surface_inter_position=1&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Taste
+Use Case: Ideal for speciality products and bold branding
+Price: Free
+URL: https://themes.shopify.com/themes/taste/styles/default?locale=en&surface_inter_position=1&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Motion
+Use Case: Bring your brand to life with animation and video
+Price: $360 USD
+URL: https://themes.shopify.com/themes/motion/styles/classic?locale=en&surface_inter_position=1&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Craft
+Use Case: A refined theme that celebrates craftsmanship.
+Price: Free
+URL: https://themes.shopify.com/themes/craft/styles/default?locale=en&surface_inter_position=1&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Symmetry
+Use Case: Versatile, fashionable, professional theme with premium features.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/symmetry/styles/chantilly?locale=en&surface_inter_position=1&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Publisher
+Use Case: An avant-garde theme inspired by independent studios and publishers.
+Price: Free
+URL: https://themes.shopify.com/themes/publisher/styles/default?locale=en&surface_inter_position=1&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Prestige
+Use Case: Designed for premium, high-end brand appeal
+Price: $380 USD
+URL: https://themes.shopify.com/themes/prestige/styles/allure?locale=en&surface_inter_position=1&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Be Yours
+Use Case: Build, boost & scale your store with 8-hour support.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/be-yours/styles/beauty?locale=en&surface_inter_position=1&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Baseline
+Use Case: A brutalist-inspired theme for a beautifully-curated storefront.
+Price: $350 USD
+URL: https://themes.shopify.com/themes/baseline/styles/modern?locale=en&surface_inter_position=1&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Spotlight
+Use Case: A streamlined theme designed to quickly start selling.
+Price: Free
+URL: https://themes.shopify.com/themes/spotlight/styles/default?locale=en&surface_inter_position=1&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Local
+Use Case: Create a cohesive experience for your customers, online and in person
+Price: $360 USD
+URL: https://themes.shopify.com/themes/local/styles/light?locale=en&surface_inter_position=1&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Mr Parker
+Use Case: Sharp images and a variety of features for multi variant products
+Price: $240 USD
+URL: https://themes.shopify.com/themes/mr-parker/styles/wardrobe?locale=en&surface_inter_position=1&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Mandolin
+Use Case: Flexible, easy to use and focused on an elegant user experience.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/mandolin/styles/neat?locale=en&surface_inter_position=1&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Enterprise
+Use Case: A new benchmark in store speed and conversion. Sell faster, sell more.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/enterprise/styles/digital?locale=en&surface_inter_position=1&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Combine
+Use Case: Bundle products & increase average order value, sales & revenue
+Price: $360 USD
+URL: https://themes.shopify.com/themes/combine/styles/objects?locale=en&surface_inter_position=1&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Vision
+Use Case: Optimized via AI to increase conversions.
+Price: $300 USD
+URL: https://themes.shopify.com/themes/vision/styles/default?locale=en&surface_inter_position=1&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: Dawn
+Use Case: A minimalist theme that lets product images take center stage.
+Price: Free
+URL: https://themes.shopify.com/themes/dawn/styles/default?locale=en&surface_inter_position=1&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Bullet
+Use Case: Minimal grid based theme for contemporary brands.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/bullet/styles/default?locale=en&surface_inter_position=1&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Refresh
+Use Case: A bold theme that elevates product quality and brand storytelling.
+Price: Free
+URL: https://themes.shopify.com/themes/refresh/styles/default?locale=en&surface_inter_position=1&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Expanse
+Use Case: A clean, versatile theme for large inventories
+Price: $380 USD
+URL: https://themes.shopify.com/themes/expanse/styles/modern?locale=en&surface_inter_position=1&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Honey
+Use Case: A highly flexible, quick set-up theme made for precious products.
+Price: $390 USD
+URL: https://themes.shopify.com/themes/honey/styles/paws?locale=en&surface_inter_position=1&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Kingdom
+Use Case: An image-focused theme, designed around a stylish signature sidebar
+Price: $260 USD
+URL: https://themes.shopify.com/themes/kingdom/styles/king?locale=en&surface_inter_position=1&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Habitat
+Use Case: The natural environment for your products
+Price: $300 USD
+URL: https://themes.shopify.com/themes/habitat/styles/default?locale=en&surface_inter_position=1&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Showcase
+Use Case: Beautiful, exciting + bold design with powerful tools. Make an impact!
+Price: $320 USD
+URL: https://themes.shopify.com/themes/showcase/styles/native?locale=en&surface_inter_position=1&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: North
+Use Case: Create a web presence you're proud of
+Price: $220 USD
+URL: https://themes.shopify.com/themes/north/styles/default?locale=en&surface_inter_position=2&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Stiletto
+Use Case: A luxury Shopify theme optimized for growth
+Price: $340 USD
+URL: https://themes.shopify.com/themes/stiletto/styles/vogue?locale=en&surface_inter_position=2&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Broadcast
+Use Case: Powerful, feature rich and designed to incentivize sales
+Price: $360 USD
+URL: https://themes.shopify.com/themes/broadcast/styles/clean?locale=en&surface_inter_position=2&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Sense
+Use Case: An energizing theme featuring extensive product detail layouts
+Price: Free
+URL: https://themes.shopify.com/themes/sense/styles/default?locale=en&surface_inter_position=2&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Reformation
+Use Case: Feature-packed, high-performant Shopify theme
+Price: $320 USD
+URL: https://themes.shopify.com/themes/reformation/styles/default?locale=en&surface_inter_position=2&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Ride
+Use Case: A distinct, dynamic theme that champions the world of sports.
+Price: Free
+URL: https://themes.shopify.com/themes/ride/styles/default?locale=en&surface_inter_position=2&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Stockmart
+Use Case: Meet the striking theme for building your world-class brand.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/stockmart/styles/modern?locale=en&surface_inter_position=2&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Origin
+Use Case: A stylish theme designed for makers selling unique pieces
+Price: Free
+URL: https://themes.shopify.com/themes/origin/styles/default?locale=en&surface_inter_position=2&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Yuva
+Use Case: Modern yet elegant theme to best showcase your product catalog.
+Price: $260 USD
+URL: https://themes.shopify.com/themes/yuva/styles/amaze?locale=en&surface_inter_position=2&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Shapes
+Use Case: Move products fast with clever Shapes.
+Price: $350 USD
+URL: https://themes.shopify.com/themes/shapes/styles/neon?locale=en&surface_inter_position=2&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Boost
+Use Case: A playful and powerful premium theme built to BOOST your sales!
+Price: $330 USD
+URL: https://themes.shopify.com/themes/boost/styles/spark?locale=en&surface_inter_position=2&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Fashionopolism
+Use Case: Fast and packed with features to help you sell more
+Price: $280 USD
+URL: https://themes.shopify.com/themes/fashionopolism/styles/haute?locale=en&surface_inter_position=2&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Empire
+Use Case: A marketplace-inspired theme optimized for large product catalogs
+Price: $340 USD
+URL: https://themes.shopify.com/themes/empire/styles/supply?locale=en&surface_inter_position=2&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Modular
+Use Case: Fun, lively design and elegant animations to entice your customers
+Price: $300 USD
+URL: https://themes.shopify.com/themes/modular/styles/mayfair?locale=en&surface_inter_position=2&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Split
+Use Case: Great for visual brands with a story to tell
+Price: $280 USD
+URL: https://themes.shopify.com/themes/split/styles/cuber?locale=en&surface_inter_position=2&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Colorblock
+Use Case: A striking theme ideal for high-end fashion
+Price: Free
+URL: https://themes.shopify.com/themes/colorblock/styles/default?locale=en&surface_inter_position=2&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: ShowTime
+Use Case: Navigation focused theme ideal for large stores and drop-shippers
+Price: $280 USD
+URL: https://themes.shopify.com/themes/showtime/styles/cooktime?locale=en&surface_inter_position=2&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Studio
+Use Case: A stylish theme with special attention to artists and collections
+Price: Free
+URL: https://themes.shopify.com/themes/studio/styles/default?locale=en&surface_inter_position=2&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Icon
+Use Case: Perfect for visually striking brands with image-focused content
+Price: $280 USD
+URL: https://themes.shopify.com/themes/icon/styles/dolce?locale=en&surface_inter_position=2&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Pipeline
+Use Case: A fashionable, feature rich theme designed for luxury brands
+Price: $360 USD
+URL: https://themes.shopify.com/themes/pipeline/styles/clean?locale=en&surface_inter_position=2&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Palo Alto
+Use Case: Exceptional design and powerful features to elevate your brand
+Price: $330 USD
+URL: https://themes.shopify.com/themes/palo-alto/styles/vibrant?locale=en&surface_inter_position=2&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Crave
+Use Case: An eye-catching theme optimized for shopping on the go.
+Price: Free
+URL: https://themes.shopify.com/themes/crave/styles/default?locale=en&surface_inter_position=2&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Xtra
+Use Case: A versatile theme fit for every industry built for boosting conversion
+Price: $400 USD
+URL: https://themes.shopify.com/themes/xtra/styles/maximum?locale=en&surface_inter_position=2&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Influence
+Use Case: Fashion focused with creative storytelling and powerful navigation
+Price: $180 USD
+URL: https://themes.shopify.com/themes/influence/styles/default?locale=en&surface_inter_position=2&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Sahara
+Use Case: Breathtaking visual treat that redefines the standards of online store
+Price: $350 USD
+URL: https://themes.shopify.com/themes/sahara/styles/sahara?locale=en&surface_inter_position=3&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Grid
+Use Case: A masonry-style theme, perfect for contemporary brands with a story to tell
+Price: $260 USD
+URL: https://themes.shopify.com/themes/grid/styles/bright?locale=en&surface_inter_position=3&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Capital
+Use Case: Showcase large inventories with style and precision
+Price: $180 USD
+URL: https://themes.shopify.com/themes/capital/styles/berlin?locale=en&surface_inter_position=3&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Fresh
+Use Case: A clean and versatile theme designed for food and drink stores
+Price: $350 USD
+URL: https://themes.shopify.com/themes/fresh/styles/sweet?locale=en&surface_inter_position=3&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Editions
+Use Case: A simple, spacious theme with a focus on featured products
+Price: $250 USD
+URL: https://themes.shopify.com/themes/editions/styles/spring?locale=en&surface_inter_position=3&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Athens
+Use Case: Designed to host even the most demanding product inventories
+Price: $300 USD
+URL: https://themes.shopify.com/themes/athens/styles/default?locale=en&surface_inter_position=3&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Stockholm
+Use Case: A clean and minimalist Shopify theme
+Price: $320 USD
+URL: https://themes.shopify.com/themes/stockholm/styles/default?locale=en&surface_inter_position=3&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Aurora
+Use Case: A flexible and feature-rich theme to express your unique style.
+Price: $340 USD
+URL: https://themes.shopify.com/themes/aurora/styles/pure?locale=en&surface_inter_position=3&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Sunrise
+Use Case: Ideal for commercial stores with a large number of products
+Price: $240 USD
+URL: https://themes.shopify.com/themes/sunrise/styles/spring?locale=en&surface_inter_position=3&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Beyond
+Use Case: Designed for ethical brands envisioning a more sustainable future
+Price: $340 USD
+URL: https://themes.shopify.com/themes/beyond/styles/organic?locale=en&surface_inter_position=3&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Align
+Use Case: Modern, performant, and accessible. Built to maximize conversion.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/align/styles/clean?locale=en&surface_inter_position=3&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Story
+Use Case: A theme designed to grow your brand and build customer trust
+Price: $300 USD
+URL: https://themes.shopify.com/themes/story/styles/bright?locale=en&surface_inter_position=3&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Expression
+Use Case: Captivate your customer, through sophistication, versatility and style
+Price: $280 USD
+URL: https://themes.shopify.com/themes/expression/styles/naturale?locale=en&surface_inter_position=3&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Maker
+Use Case: Contemporary, stylish, versatile. Created to captivate and convert.
+Price: $340 USD
+URL: https://themes.shopify.com/themes/maker/styles/bloom?locale=en&surface_inter_position=3&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Portland
+Use Case: Elevate your online presence with a minimalist and elegant theme.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/portland/styles/heartbeat?locale=en&surface_inter_position=3&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Testament
+Use Case: Conversion focused and mobile optimized for fast online shopping
+Price: $320 USD
+URL: https://themes.shopify.com/themes/testament/styles/genesis?locale=en&surface_inter_position=3&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: Venue
+Use Case: Flexible, easy to use and packed with clever features.
+Price: $360 USD
+URL: https://themes.shopify.com/themes/venue/styles/morning?locale=en&surface_inter_position=3&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Impulse
+Use Case: Flexible, fashionable, proven design with powerful promotions.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/impulse/styles/modern?locale=en&surface_inter_position=3&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Area
+Use Case: Optimized for conversions. Wine, ice creame, booster, fashion stores.
+Price: $190 USD
+URL: https://themes.shopify.com/themes/area/styles/stylish?locale=en&surface_inter_position=3&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Focal
+Use Case: A bold grid-style theme, perfect for lifestyle and product imagery
+Price: $320 USD
+URL: https://themes.shopify.com/themes/focal/styles/carbon?locale=en&surface_inter_position=3&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Marble
+Use Case: Functional, flexible, fast. Unique design that puts your brand ahead.
+Price: $290 USD
+URL: https://themes.shopify.com/themes/marble/styles/marble?locale=en&surface_inter_position=3&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Emerge
+Use Case: Lightning fast, evocative designs to elevate your brand above the rest
+Price: $320 USD
+URL: https://themes.shopify.com/themes/emerge/styles/light?locale=en&surface_inter_position=3&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Avenue
+Use Case: Designed to help your customers quickly find the product they want
+Price: $280 USD
+URL: https://themes.shopify.com/themes/avenue/styles/precise?locale=en&surface_inter_position=3&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Fetch
+Use Case: Modern pet supply theme: Perfectly playful, minimalist, and flexible.
+Price: $360 USD
+URL: https://themes.shopify.com/themes/fetch/styles/bark?locale=en&surface_inter_position=3&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Exhibit
+Use Case: A gallery-style theme for gallery-style people.
+Price: $350 USD
+URL: https://themes.shopify.com/themes/exhibit/styles/art?locale=en&surface_inter_position=4&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Blockshop
+Use Case: Designed for luxury brands, delivering unrivalled speed and elegance.
+Price: $340 USD
+URL: https://themes.shopify.com/themes/blockshop/styles/beauty?locale=en&surface_inter_position=4&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Spark
+Use Case: For direct-to-consumer brands, drop-shippers and first-time merchants
+Price: $320 USD
+URL: https://themes.shopify.com/themes/spark/styles/chic?locale=en&surface_inter_position=4&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Viola
+Use Case: Design theme with amazing visuals for an unforgettable user experience
+Price: $250 USD
+URL: https://themes.shopify.com/themes/viola/styles/classic?locale=en&surface_inter_position=4&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Impact
+Use Case: A colored, typography-oriented theme for impactful brands
+Price: $380 USD
+URL: https://themes.shopify.com/themes/impact/styles/sound?locale=en&surface_inter_position=4&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Label
+Use Case: A theme for labels. No matter if yours is on cotton or vinyl.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/label/styles/music?locale=en&surface_inter_position=4&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Galleria
+Use Case: An image-focused theme ideal for large inventories
+Price: $280 USD
+URL: https://themes.shopify.com/themes/galleria/styles/empire?locale=en&surface_inter_position=4&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Champion
+Use Case: A robust and visually impactful theme to propel your brand
+Price: $350 USD
+URL: https://themes.shopify.com/themes/champion/styles/flash?locale=en&surface_inter_position=4&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Zest
+Use Case: A flexible and modern design to win mobile conversion
+Price: $300 USD
+URL: https://themes.shopify.com/themes/zest/styles/gusto?locale=en&surface_inter_position=4&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Responsive
+Use Case: Focus on your products and brand with full-width imagery
+Price: $240 USD
+URL: https://themes.shopify.com/themes/responsive/styles/london?locale=en&surface_inter_position=4&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Warehouse
+Use Case: Designed to display and promote a large catalog of products
+Price: $320 USD
+URL: https://themes.shopify.com/themes/warehouse/styles/metal?locale=en&surface_inter_position=4&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Alchemy
+Use Case: Fast, modern, easy set-up. Designed to best showcase your products!
+Price: $300 USD
+URL: https://themes.shopify.com/themes/alchemy/styles/modern?locale=en&surface_inter_position=4&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Retina
+Use Case: Showcase your products with bold imagery and refined styling
+Price: $220 USD
+URL: https://themes.shopify.com/themes/retina/styles/amsterdam?locale=en&surface_inter_position=4&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Erickson
+Use Case: A feature-rich theme for all product types designed to increase sales
+Price: $170 USD
+URL: https://themes.shopify.com/themes/erickson/styles/petra?locale=en&surface_inter_position=4&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Foodie
+Use Case: A versatile conversion focused theme for smaller inventories
+Price: $200 USD
+URL: https://themes.shopify.com/themes/foodie/styles/grind?locale=en&surface_inter_position=4&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Fame
+Use Case: Powerfully evoking emotion through creativity.
+Price: $360 USD
+URL: https://themes.shopify.com/themes/fame/styles/dark?locale=en&surface_inter_position=4&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: Highlight
+Use Case: Showcase noteworthy products in a creative and engaging way
+Price: $280 USD
+URL: https://themes.shopify.com/themes/highlight/styles/modern?locale=en&surface_inter_position=4&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Minion
+Use Case: Ideal for the pet industry. With flexible features to fit more niches
+Price: $250 USD
+URL: https://themes.shopify.com/themes/minion/styles/vertical?locale=en&surface_inter_position=4&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Lorenza
+Use Case: An editorial-inspired design, perfect for boutique retailers
+Price: $320 USD
+URL: https://themes.shopify.com/themes/lorenza/styles/chic?locale=en&surface_inter_position=4&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Tailor
+Use Case: Tailor-made for fashion brands with a story to tell.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/tailor/styles/cotton?locale=en&surface_inter_position=4&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Pursuit
+Use Case: A bold theme for medium-large merchants who want to make a statement
+Price: $320 USD
+URL: https://themes.shopify.com/themes/pursuit/styles/aspen?locale=en&surface_inter_position=4&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Mode
+Use Case: Feature-packed and fast, hand-crafted for growth and large inventories
+Price: $380 USD
+URL: https://themes.shopify.com/themes/mode/styles/orbit?locale=en&surface_inter_position=4&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Charge
+Use Case: Bring your store to the next level with a page speed optimized theme!
+Price: $170 USD
+URL: https://themes.shopify.com/themes/charge/styles/default?locale=en&surface_inter_position=4&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Colors
+Use Case: Bold theme designed with all Shopify's new features.
+Price: $240 USD
+URL: https://themes.shopify.com/themes/colors/styles/generic?locale=en&surface_inter_position=4&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Taiga
+Use Case: A blazing fast and modern theme with +10 video sections
+Price: $380 USD
+URL: https://themes.shopify.com/themes/taiga/styles/sage?locale=en&surface_inter_position=5&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Vantage
+Use Case: Fast, sleek, and conversion focused for stores of all sizes
+Price: $200 USD
+URL: https://themes.shopify.com/themes/vantage/styles/clean?locale=en&surface_inter_position=5&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Masonry
+Use Case: A modern, user-driven design to get customers to your products quickly
+Price: $280 USD
+URL: https://themes.shopify.com/themes/masonry/styles/flamingo?locale=en&surface_inter_position=5&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Amber
+Use Case: Unlock your potential with a fast and simple but powerful theme.
+Price: $250 USD
+URL: https://themes.shopify.com/themes/amber/styles/amber?locale=en&surface_inter_position=5&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Gain
+Use Case: Modern, fast, customizable, flexible, supercharged, & developer-free.
+Price: $260 USD
+URL: https://themes.shopify.com/themes/gain/styles/the-lace?locale=en&surface_inter_position=5&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Startup
+Use Case: Perfect for Direct-to-Consumer focused brands with small catalogs.
+Price: $240 USD
+URL: https://themes.shopify.com/themes/startup/styles/tech?locale=en&surface_inter_position=5&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Banjo
+Use Case: Flexible, easy to use and focused on an elegant user experience.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/banjo/styles/creative?locale=en&surface_inter_position=5&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Blum
+Use Case: Versatile, professional theme made for unmatched experience
+Price: $170 USD
+URL: https://themes.shopify.com/themes/blum/styles/celia?locale=en&surface_inter_position=5&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Andaman
+Use Case: Based on minimalist design, typography and product storytelling.
+Price: $290 USD
+URL: https://themes.shopify.com/themes/andaman/styles/underwear?locale=en&surface_inter_position=5&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Canopy
+Use Case: Amazon-inspired, feature-rich, and optimized for large scale selling.
+Price: $390 USD
+URL: https://themes.shopify.com/themes/canopy/styles/natural?locale=en&surface_inter_position=5&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Cascade
+Use Case: Get in flow with this soothing and sophisticated theme.
+Price: $350 USD
+URL: https://themes.shopify.com/themes/cascade/styles/modern?locale=en&surface_inter_position=5&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Forge
+Use Case: A product focused theme with unique set selling features and options
+Price: $220 USD
+URL: https://themes.shopify.com/themes/forge/styles/platinum?locale=en&surface_inter_position=5&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Handmade
+Use Case: A theme for jewelry & accessory crafters, lifestyle brands, and DIYers
+Price: $320 USD
+URL: https://themes.shopify.com/themes/handmade/styles/dusty-brown?locale=en&surface_inter_position=5&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Drop
+Use Case: Conversion focused and optimized for sales & product drops
+Price: $230 USD
+URL: https://themes.shopify.com/themes/drop/styles/countdown?locale=en&surface_inter_position=5&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Pacific
+Use Case: A modular, expansive theme for stores with large inventories
+Price: $240 USD
+URL: https://themes.shopify.com/themes/pacific/styles/bold?locale=en&surface_inter_position=5&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Maranello
+Use Case: A visually-centered theme perfect for extensive product catalogs.
+Price: $300 USD
+URL: https://themes.shopify.com/themes/maranello/styles/default?locale=en&surface_inter_position=5&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: District
+Use Case: Ideal for showcasing featured products and collections
+Price: $220 USD
+URL: https://themes.shopify.com/themes/district/styles/district?locale=en&surface_inter_position=5&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Effortless
+Use Case: A quick-start premium theme with an effortless shopping experience.
+Price: $180 USD
+URL: https://themes.shopify.com/themes/effortless/styles/trend?locale=en&surface_inter_position=5&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Mojave
+Use Case: Contemporary design with proven functionality that converts to sales.
+Price: $350 USD
+URL: https://themes.shopify.com/themes/mojave/styles/mojave?locale=en&surface_inter_position=5&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Electro
+Use Case: Transforming product showcase with a super-fast and versatile theme
+Price: $170 USD
+URL: https://themes.shopify.com/themes/electro/styles/audio?locale=en&surface_inter_position=5&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Paper
+Use Case: A feature-rich theme designed for both large and small catalogs
+Price: $320 USD
+URL: https://themes.shopify.com/themes/paper/styles/poster?locale=en&surface_inter_position=5&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Emporium
+Use Case: Unlock your brand's potential with a fast and flexible theme.
+Price: $230 USD
+URL: https://themes.shopify.com/themes/emporium/styles/fruity?locale=en&surface_inter_position=5&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Streamline
+Use Case: An eye-catching theme designed for quick impact
+Price: $360 USD
+URL: https://themes.shopify.com/themes/streamline/styles/core?locale=en&surface_inter_position=5&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Creator
+Use Case: A versatile library of UI fundamentals built for multifaceted creators
+Price: $300 USD
+URL: https://themes.shopify.com/themes/creator/styles/streamer?locale=en&surface_inter_position=5&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Creator
+Use Case: A versatile library of UI fundamentals built for multifaceted creators
+Price: $300 USD
+URL: https://themes.shopify.com/themes/creator/styles/streamer?locale=en&surface_inter_position=6&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Atlantic
+Use Case: Striking, scalable, and built to boost conversions
+Price: $280 USD
+URL: https://themes.shopify.com/themes/atlantic/styles/plush?locale=en&surface_inter_position=6&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Atom
+Use Case: A flexible & easy to use theme focused on an intuitive user experience
+Price: $160 USD
+URL: https://themes.shopify.com/themes/atom/styles/relativity?locale=en&surface_inter_position=6&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Parallax
+Use Case: Enhance your brand’s style with a striking parallax scrolling effect
+Price: $240 USD
+URL: https://themes.shopify.com/themes/parallax/styles/aspen?locale=en&surface_inter_position=6&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Launch
+Use Case: Designed to scale startups into successful online stores
+Price: $240 USD
+URL: https://themes.shopify.com/themes/launch/styles/cool?locale=en&surface_inter_position=6&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Mono
+Use Case: The SEO-optimized shopify theme for a flawless e-commerce experience
+Price: $200 USD
+URL: https://themes.shopify.com/themes/mono/styles/vanilla?locale=en&surface_inter_position=6&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Loft
+Use Case: Perfect for promotion-focused brands
+Price: $280 USD
+URL: https://themes.shopify.com/themes/loft/styles/nashville?locale=en&surface_inter_position=6&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Upscale
+Use Case: A premium theme supercharged with features and flexibility
+Price: $350 USD
+URL: https://themes.shopify.com/themes/upscale/styles/gem?locale=en&surface_inter_position=6&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Bazaar
+Use Case: Incredibly versatile for all product types. Highly advanced features.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/bazaar/styles/default?locale=en&surface_inter_position=6&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Flow
+Use Case: Unlock the power of image-focused design and super flexible layouts
+Price: $350 USD
+URL: https://themes.shopify.com/themes/flow/styles/nourish?locale=en&surface_inter_position=6&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Frame
+Use Case: Lightweight, minimal theme designed for fast and easy set-up.
+Price: $140 USD
+URL: https://themes.shopify.com/themes/frame/styles/madison?locale=en&surface_inter_position=6&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Creative
+Use Case: An elegant, minimal theme loaded with powerful premium features
+Price: $350 USD
+URL: https://themes.shopify.com/themes/creative/styles/chalk?locale=en&surface_inter_position=6&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Woodstock
+Use Case: Fast, flexible. Advanced features will push your store
+Price: $270 USD
+URL: https://themes.shopify.com/themes/woodstock/styles/light?locale=en&surface_inter_position=6&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Cama
+Use Case: A theme designed for contemporary and emerging Shopify DTC brands
+Price: $220 USD
+URL: https://themes.shopify.com/themes/cama/styles/grace?locale=en&surface_inter_position=6&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: California
+Use Case: Clean, simple, and focused on an elegant user experience
+Price: $240 USD
+URL: https://themes.shopify.com/themes/california/styles/generic?locale=en&surface_inter_position=6&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Gem
+Use Case: Shine online with this meticulously crafted theme for jewelry brands.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/gem/styles/garnet?locale=en&surface_inter_position=6&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: Roam
+Use Case: Uncomplicated mobile first theme optimized for smaller screens
+Price: $240 USD
+URL: https://themes.shopify.com/themes/roam/styles/solo?locale=en&surface_inter_position=6&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Whisk
+Use Case: Elevate your store's appeal with captivating organic shapes and layout
+Price: $290 USD
+URL: https://themes.shopify.com/themes/whisk/styles/soft?locale=en&surface_inter_position=6&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Avatar
+Use Case: A modern, clean theme, designed to increase your average order value
+Price: $220 USD
+URL: https://themes.shopify.com/themes/avatar/styles/royal?locale=en&surface_inter_position=6&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Berlin
+Use Case: A seamless fusion of style and functionality in one theme.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/berlin/styles/lifestyle?locale=en&surface_inter_position=6&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Mavon
+Use Case: A versatile theme designed to elevate your online business.
+Price: $280 USD
+URL: https://themes.shopify.com/themes/mavon/styles/fashion?locale=en&surface_inter_position=6&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Sydney
+Use Case: Supercharged with stunning designs and tools to incentivize sales.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/sydney/styles/sophisticated?locale=en&surface_inter_position=6&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Avante
+Use Case: Premium fashion design, best for clothing. Designed to impress.
+Price: $290 USD
+URL: https://themes.shopify.com/themes/avante/styles/fashion?locale=en&surface_inter_position=6&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Cornerstone
+Use Case: Flexible design and advanced functionality for high-volume stores
+Price: $340 USD
+URL: https://themes.shopify.com/themes/cornerstone/styles/glow?locale=en&surface_inter_position=6&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Unicorn
+Use Case: Design a unique shop with the flexible, robust, high-end theme
+Price: $150 USD
+URL: https://themes.shopify.com/themes/unicorn/styles/valuable?locale=en&surface_inter_position=7&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Providence
+Use Case: A clean, no-distraction theme, focused on conversions.
+Price: $200 USD
+URL: https://themes.shopify.com/themes/providence/styles/thunderbolt?locale=en&surface_inter_position=7&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Momentum
+Use Case: Display detailed product information to drive your store’s conversions
+Price: $350 USD
+URL: https://themes.shopify.com/themes/momentum/styles/fuel?locale=en&surface_inter_position=7&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Abode
+Use Case: Best for Fashion,Furniture, Art, Tools, Clothing,Flower,Clothes
+Price: $140 USD
+URL: https://themes.shopify.com/themes/abode/styles/furniture?locale=en&surface_inter_position=7&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Huge
+Use Case: Like Nothing You've Seen Before
+Price: $220 USD
+URL: https://themes.shopify.com/themes/huge/styles/default?locale=en&surface_inter_position=7&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Eurus
+Use Case: A fast, feature-rich and mobile first theme.
+Price: $230 USD
+URL: https://themes.shopify.com/themes/eurus/styles/puff?locale=en&surface_inter_position=7&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Next
+Use Case: Grow your brand with the most flexible theme for enterprise merchants
+Price: $400 USD
+URL: https://themes.shopify.com/themes/next/styles/wood?locale=en&surface_inter_position=7&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Automation
+Use Case: Visual-focused theme ideal for users who use many apps and automations
+Price: $260 USD
+URL: https://themes.shopify.com/themes/automation/styles/default?locale=en&surface_inter_position=7&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Monaco
+Use Case: A luxury theme to celebrate your refined brand.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/monaco/styles/allure?locale=en&surface_inter_position=7&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Vivid
+Use Case: Exceptional design and powerful features to elevate your brand
+Price: $200 USD
+URL: https://themes.shopify.com/themes/vivid/styles/ruby?locale=en&surface_inter_position=7&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Kairo
+Use Case: A simple & consistent theme built for different kind of inventories
+Price: $140 USD
+URL: https://themes.shopify.com/themes/kairo/styles/default?locale=en&surface_inter_position=7&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Urge
+Use Case: Give your customers the Urge to buy more
+Price: $290 USD
+URL: https://themes.shopify.com/themes/urge/styles/default?locale=en&surface_inter_position=7&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Neat
+Use Case: A modern theme for visual storytelling brands
+Price: $200 USD
+URL: https://themes.shopify.com/themes/neat/styles/white?locale=en&surface_inter_position=7&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Chord
+Use Case: Flexible, easy to use and focused on an elegant user experience.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/chord/styles/warm?locale=en&surface_inter_position=7&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Brava
+Use Case: A flexible & scalable theme for all products types to increase sales
+Price: $190 USD
+URL: https://themes.shopify.com/themes/brava/styles/brava?locale=en&surface_inter_position=7&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Xclusive
+Use Case: Highly customizable for every industry that embraces remarkable design
+Price: $400 USD
+URL: https://themes.shopify.com/themes/xclusive/styles/shoes?locale=en&surface_inter_position=7&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: Nostalgia
+Use Case: A simple theme for displaying products in a classic & elegant way.
+Price: $250 USD
+URL: https://themes.shopify.com/themes/nostalgia/styles/classic?locale=en&surface_inter_position=7&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Lute
+Use Case: Use color to communicate.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/lute/styles/vibrant?locale=en&surface_inter_position=7&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Modules
+Use Case: Modular design allowing for deep customization and scalability
+Price: $200 USD
+URL: https://themes.shopify.com/themes/modules/styles/sky?locale=en&surface_inter_position=7&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: Trade
+Use Case: A professional theme specifically designed for wholesale.
+Price: Free
+URL: https://themes.shopify.com/themes/trade/styles/default?locale=en&surface_inter_position=7&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Concept
+Use Case: The seamless mobile shopping experience for your customers
+Price: $250 USD
+URL: https://themes.shopify.com/themes/concept/styles/harmony?locale=en&surface_inter_position=7&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Essence
+Use Case: A clean, feature rich theme for visual stores
+Price: $250 USD
+URL: https://themes.shopify.com/themes/essence/styles/bold?locale=en&surface_inter_position=7&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Digital
+Use Case: Designed to showcase digital products with flair and functionality.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/digital/styles/electric?locale=en&surface_inter_position=7&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Minimalista
+Use Case: Stylish design and high performance united in one theme.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/minimalista/styles/graphite?locale=en&surface_inter_position=7&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Borders
+Use Case: Craft your store's signature look with versatile customization options
+Price: $360 USD
+URL: https://themes.shopify.com/themes/borders/styles/raw?locale=en&surface_inter_position=8&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Shark
+Use Case: Parallax, Modern, Multifaceted: The future of your Shopify store.
+Price: $200 USD
+URL: https://themes.shopify.com/themes/shark/styles/default?locale=en&surface_inter_position=8&surface_intra_position=2&surface_type=all
+Platform: Shopify
+
+Name: Distinctive
+Use Case: Distinctive, premium, high-end brand appeal
+Price: $300 USD
+URL: https://themes.shopify.com/themes/distinctive/styles/default?locale=en&surface_inter_position=8&surface_intra_position=3&surface_type=all
+Platform: Shopify
+
+Name: Starlite
+Use Case: Versatile & Stylish, Ideal for Shopify Professionals.
+Price: $290 USD
+URL: https://themes.shopify.com/themes/starlite/styles/classic?locale=en&surface_inter_position=8&surface_intra_position=4&surface_type=all
+Platform: Shopify
+
+Name: Multi
+Use Case: Highly flexible multi-purpose theme with extensive navigation options
+Price: $350 USD
+URL: https://themes.shopify.com/themes/multi/styles/spark?locale=en&surface_inter_position=8&surface_intra_position=5&surface_type=all
+Platform: Shopify
+
+Name: Veena
+Use Case: Elevate E-Commerce Excellence with Veena: Your Sales, Your Way.
+Price: $290 USD
+URL: https://themes.shopify.com/themes/veena/styles/megamall?locale=en&surface_inter_position=8&surface_intra_position=6&surface_type=all
+Platform: Shopify
+
+Name: Copenhagen
+Use Case: Classy, minimalist theme focused on user experience.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/copenhagen/styles/primary?locale=en&surface_inter_position=8&surface_intra_position=7&surface_type=all
+Platform: Shopify
+
+Name: Relax
+Use Case: Take your Shopify business to the next level!
+Price: $170 USD
+URL: https://themes.shopify.com/themes/relax/styles/comfort?locale=en&surface_inter_position=8&surface_intra_position=8&surface_type=all
+Platform: Shopify
+
+Name: Essentials
+Use Case: A simple and minimalist theme built for high impact.
+Price: $250 USD
+URL: https://themes.shopify.com/themes/essentials/styles/monochrome?locale=en&surface_inter_position=8&surface_intra_position=9&surface_type=all
+Platform: Shopify
+
+Name: Monk
+Use Case: A new benchmark in store speed and conversion. Sell faster, sell more.
+Price: $200 USD
+URL: https://themes.shopify.com/themes/monk/styles/monograph?locale=en&surface_inter_position=8&surface_intra_position=10&surface_type=all
+Platform: Shopify
+
+Name: Aesthetic
+Use Case: Streamlined design with essential functions for modern retail.
+Price: $250 USD
+URL: https://themes.shopify.com/themes/aesthetic/styles/wood-ash?locale=en&surface_inter_position=8&surface_intra_position=11&surface_type=all
+Platform: Shopify
+
+Name: Barcelona
+Use Case: Classy design combined with sales-optimized tools.
+Price: $320 USD
+URL: https://themes.shopify.com/themes/barcelona/styles/clean?locale=en&surface_inter_position=8&surface_intra_position=12&surface_type=all
+Platform: Shopify
+
+Name: Select
+Use Case: Tailored for impact: design brilliance boosting conversions.
+Price: $380 USD
+URL: https://themes.shopify.com/themes/select/styles/refined?locale=en&surface_inter_position=8&surface_intra_position=13&surface_type=all
+Platform: Shopify
+
+Name: Kidu
+Use Case: Flexible Sections, Proven Design, Best CRO, Effortlessly Customizable
+Price: $270 USD
+URL: https://themes.shopify.com/themes/kidu/styles/toys?locale=en&surface_inter_position=8&surface_intra_position=14&surface_type=all
+Platform: Shopify
+
+Name: Iris
+Use Case: A seamless blend of elegance & functionality for an optimal experience
+Price: $300 USD
+URL: https://themes.shopify.com/themes/iris/styles/default?locale=en&surface_inter_position=8&surface_intra_position=15&surface_type=all
+Platform: Shopify
+
+Name: Praise
+Use Case: Dedicated to highlighting your brand narrative with product focus
+Price: $210 USD
+URL: https://themes.shopify.com/themes/praise/styles/bold?locale=en&surface_inter_position=8&surface_intra_position=16&surface_type=all
+Platform: Shopify
+
+Name: Elysian
+Use Case: An intuitive theme packed full of features to grow your business
+Price: $180 USD
+URL: https://themes.shopify.com/themes/elysian/styles/concepta?locale=en&surface_inter_position=8&surface_intra_position=17&surface_type=all
+Platform: Shopify
+
+Name: Pesto
+Use Case: A perfect theme to showcase foods to attract foodies
+Price: $180 USD
+URL: https://themes.shopify.com/themes/pesto/styles/restaurant?locale=en&surface_inter_position=8&surface_intra_position=18&surface_type=all
+Platform: Shopify
+
+Name: Igloo
+Use Case: Unleash the Power of Arctic-Inspired Design and Skyrocket Your Sales
+Price: $320 USD
+URL: https://themes.shopify.com/themes/igloo/styles/cool?locale=en&surface_inter_position=8&surface_intra_position=19&surface_type=all
+Platform: Shopify
+
+Name: StyleScape
+Use Case: Maximize Your Inventory with Our Image-Focused Theme
+Price: $240 USD
+URL: https://themes.shopify.com/themes/stylescape/styles/amber?locale=en&surface_inter_position=8&surface_intra_position=20&surface_type=all
+Platform: Shopify
+
+Name: Cello
+Use Case: The Ultimate Choice for Electronics, Fashion, and More.
+Price: $290 USD
+URL: https://themes.shopify.com/themes/cello/styles/default?locale=en&surface_inter_position=8&surface_intra_position=21&surface_type=all
+Platform: Shopify
+
+Name: Divide
+Use Case: An easy to use theme for fun brands with small catalogs.
+Price: $300 USD
+URL: https://themes.shopify.com/themes/divide/styles/play?locale=en&surface_inter_position=8&surface_intra_position=22&surface_type=all
+Platform: Shopify
+
+Name: Artist
+Use Case: Powerful solution for digital sellers: Membership logins, audio/video
+Price: $270 USD
+URL: https://themes.shopify.com/themes/artist/styles/default?locale=en&surface_inter_position=8&surface_intra_position=23&surface_type=all
+Platform: Shopify
+
+Name: Tokyo
+Use Case: Retail & education blend for enhanced customer engagement
+Price: $300 USD
+URL: https://themes.shopify.com/themes/tokyo/styles/default?locale=en&surface_inter_position=8&surface_intra_position=24&surface_type=all
+Platform: Shopify
+
+Name: Murmel
+Use Case: Where fun and shopping collide!
+Price: $320 USD
+URL: https://themes.shopify.com/themes/murmel/styles/default?locale=en&surface_inter_position=9&surface_intra_position=1&surface_type=all
+Platform: Shopify
+
+Name: Zora
+Use Case: A content-first theme for content creators built with memberships
+Price: $300 USD
+URL: https://themes.shopify.com/themes/zora/styles/default?locale=en&surface_inter_position=9&surface_intra_position=2&surface_type=all
+Platform: Shopify
