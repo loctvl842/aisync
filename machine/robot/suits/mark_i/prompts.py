@@ -30,10 +30,7 @@ def build_prompt_from_docs(assistant):
     """
     LONG_TERM_PROMPT = """
     Answer the following question: `{input}`.
-<<<<<<< HEAD
     Ignore all document knowledge that are not relevant to the question.
-=======
->>>>>>> b928a3dce4a7081a2d985aa1397f1d4d9a4b98fc
     Use the following document knowledge to answer the question to the best of your ability:
 
     {document}

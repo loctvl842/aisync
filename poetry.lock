@@ -1044,27 +1044,6 @@ cuda = ["nvidia-cublas-cu12", "nvidia-cuda-runtime-cu12"]
 dev = ["black", "gpt4all[all]", "isort", "mkautodoc", "mkdocs-jupyter", "mkdocs-material", "mkdocstrings[python]", "pytest", "setuptools", "twine", "typing-extensions (>=3.10)", "wheel"]
 
 [[package]]
-name = "gpt4all"
-version = "2.7.0"
-description = "Python bindings for GPT4All"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "gpt4all-2.7.0-py3-none-macosx_10_15_universal2.whl", hash = "sha256:6e3263fbf4817916a09a7c1af36f90104fcb450b33a66bdb163dcd7587f56188"},
-    {file = "gpt4all-2.7.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:35891bb52f9179e82b07f61602b37e7b4cb695d1a9fa458e1fe3c01b4ad6abce"},
-    {file = "gpt4all-2.7.0-py3-none-win_amd64.whl", hash = "sha256:b83275ff9ace9c5237cbee4a776b13f2187de22e7999639cb4e8ef84a171fcea"},
-]
-
-[package.dependencies]
-requests = "*"
-tqdm = "*"
-
-[package.extras]
-all = ["gpt4all[cuda]"]
-cuda = ["nvidia-cublas-cu12", "nvidia-cuda-runtime-cu12"]
-dev = ["black", "gpt4all[all]", "isort", "mkautodoc", "mkdocs-jupyter", "mkdocs-material", "mkdocstrings[python]", "pytest", "setuptools", "twine", "typing-extensions (>=3.10)", "wheel"]
-
-[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -1538,13 +1517,13 @@ tiktoken = ">=0.7,<1"
 
 [[package]]
 name = "langchain-postgres"
-version = "0.0.8"
+version = "0.0.9"
 description = "An integration package connecting Postgres and LangChain"
 optional = false
 python-versions = "<4.0.0,>=3.8.1"
 files = [
-    {file = "langchain_postgres-0.0.8-py3-none-any.whl", hash = "sha256:df97f33e4c442a0f094ed101c8a8ed2b1ef673f8c30e3b2b9747a0c87a1f020a"},
-    {file = "langchain_postgres-0.0.8.tar.gz", hash = "sha256:59e2d13737d30d8b3342ed536a5b2dcbc350c73967c140239a93e05f1d52029f"},
+    {file = "langchain_postgres-0.0.9-py3-none-any.whl", hash = "sha256:efbd8afbb7cc810fa6dfa87dd269e466c70d9af9f74aececcf47893e4b51535e"},
+    {file = "langchain_postgres-0.0.9.tar.gz", hash = "sha256:f68e1981e79f2130ae34053683b90eea63335d7ef451db3f870a36b48d5675ab"},
 ]
 
 [package.dependencies]
@@ -2129,28 +2108,6 @@ files = [
 
 [package.dependencies]
 typing-extensions = ">=4.4"
-
-[[package]]
-name = "psycopg2"
-version = "2.9.9"
-description = "psycopg2 - Python-PostgreSQL Database Adapter"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "psycopg2-2.9.9-cp310-cp310-win32.whl", hash = "sha256:38a8dcc6856f569068b47de286b472b7c473ac7977243593a288ebce0dc89516"},
-    {file = "psycopg2-2.9.9-cp310-cp310-win_amd64.whl", hash = "sha256:426f9f29bde126913a20a96ff8ce7d73fd8a216cfb323b1f04da402d452853c3"},
-    {file = "psycopg2-2.9.9-cp311-cp311-win32.whl", hash = "sha256:ade01303ccf7ae12c356a5e10911c9e1c51136003a9a1d92f7aa9d010fb98372"},
-    {file = "psycopg2-2.9.9-cp311-cp311-win_amd64.whl", hash = "sha256:121081ea2e76729acfb0673ff33755e8703d45e926e416cb59bae3a86c6a4981"},
-    {file = "psycopg2-2.9.9-cp312-cp312-win32.whl", hash = "sha256:d735786acc7dd25815e89cc4ad529a43af779db2e25aa7c626de864127e5a024"},
-    {file = "psycopg2-2.9.9-cp312-cp312-win_amd64.whl", hash = "sha256:a7653d00b732afb6fc597e29c50ad28087dcb4fbfb28e86092277a559ae4e693"},
-    {file = "psycopg2-2.9.9-cp37-cp37m-win32.whl", hash = "sha256:5e0d98cade4f0e0304d7d6f25bbfbc5bd186e07b38eac65379309c4ca3193efa"},
-    {file = "psycopg2-2.9.9-cp37-cp37m-win_amd64.whl", hash = "sha256:7e2dacf8b009a1c1e843b5213a87f7c544b2b042476ed7755be813eaf4e8347a"},
-    {file = "psycopg2-2.9.9-cp38-cp38-win32.whl", hash = "sha256:ff432630e510709564c01dafdbe996cb552e0b9f3f065eb89bdce5bd31fabf4c"},
-    {file = "psycopg2-2.9.9-cp38-cp38-win_amd64.whl", hash = "sha256:bac58c024c9922c23550af2a581998624d6e02350f4ae9c5f0bc642c633a2d5e"},
-    {file = "psycopg2-2.9.9-cp39-cp39-win32.whl", hash = "sha256:c92811b2d4c9b6ea0285942b2e7cac98a59e166d59c588fe5cfe1eda58e72d59"},
-    {file = "psycopg2-2.9.9-cp39-cp39-win_amd64.whl", hash = "sha256:de80739447af31525feddeb8effd640782cf5998e1a4e9192ebdf829717e3913"},
-    {file = "psycopg2-2.9.9.tar.gz", hash = "sha256:d1454bde93fb1e224166811694d600e746430c006fbb031ea06ecc2ea41bf156"},
-]
 
 [[package]]
 name = "pyasn1"
@@ -3518,4 +3475,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6192074e47204dd12a563cc9c0690ec21ab3ddff27f19dbbc207901865b157bf"
+content-hash = "1ab91bbae5e271f2966200cd0eb2eccca5f904c723d6fc37e1b1b1349c69300f"

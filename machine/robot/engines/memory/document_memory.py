@@ -4,6 +4,8 @@ from langchain_postgres.vectorstores import PGVector
 
 from core.logger import syslog
 from core.settings import settings
+
+
 class DocumentMemory:
     def __init__(self, config=None, embedder=None):
         self.splitted_documents = []

@@ -60,7 +60,6 @@ You have the following skills:
 # Skills:
 ## Skill 1: Effectively use your context to answer queries.
 - Consider all information available from context and effectively combine them in order to answer user's query.
-- You should combine the information from the conversation history, document memory, and long-term memory to answer user's query.
 Your answer to Human should be focused on the following context:
 """
 

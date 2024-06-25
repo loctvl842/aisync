@@ -74,7 +74,9 @@ class ChatChain:
         # fetch document_memory
         try:
             doc = await assistant.document_memory.similarity_search(input["input"])
-            document_memory = assistant.agent_manager.execute_documents(agent_input={"input": input["input"], "document": doc}, assistant=assistant)
+            document_memory = assistant.agent_manager.execute_documents(
+                agent_input={"input": input["input"], "document": doc}, assistant=assistant
+            )
             input["document_memory"] = f"## Document Knowledge Output: `{document_memory}`"
         except Exception as e:
             syslog.error(f"Error when fetching document memory: {e}")
@@ -119,7 +121,9 @@ class ChatChain:
         # fetch document_memory
         try:
             doc = await assistant.document_memory.similarity_search(input["input"])
-            document_memory = assistant.agent_manager.execute_documents(agent_input={"input": input["input"], "document": doc}, assistant=assistant)
+            document_memory = assistant.agent_manager.execute_documents(
+                agent_input={"input": input["input"], "document": doc}, assistant=assistant
+            )
             input["document_memory"] = f"## Document Knowledge Output: `{document_memory}`"
         except Exception as e:
             syslog.error(f"Error when fetching document memory: {e}")
