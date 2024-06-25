@@ -43,7 +43,6 @@ class ChatChain:
         prompt_suffix = self._suit.execute_hook(
             "build_prompt_suffix", default=prompts.DEFAULT_PROMPT_SUFFIX, assistant=assistant
         )
-
         prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
         chain = prompt | assistant.llm
         return chain
