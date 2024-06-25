@@ -20,7 +20,8 @@ class DocumentMemory:
 
         # Split the document into smaller chunks
         text_splitter = CharacterTextSplitter(chunk_size=800, chunk_overlap=0)
-        self.splitted_documents = text_splitter.split_documents(documents)
+        for doc in text_splitter.split_documents(documents):
+            self.splitted_documents.append(doc)
 
     async def similarity_search(self, query, k=4):
 
