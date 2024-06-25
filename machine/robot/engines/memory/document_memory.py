@@ -2,13 +2,14 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_postgres.vectorstores import PGVector
 
-
+from core.logger import syslog
+from core.settings import settings
 class DocumentMemory:
     def __init__(self, config=None, embedder=None):
         self.splitted_documents = []
         self.vectorstore = None
         self.config = config or {}
-        self.connection_string = "postgresql+psycopg://postgres:postgres@localhost:5432/aisync"
+        self.connection_string = settings.LANGCHAIN_PGVECTOR_URI
         self.embedder = embedder
 
     def read(self, file_path):
@@ -16,7 +17,7 @@ class DocumentMemory:
         documents = TextLoader(file_path).load()
 
         # Split the document into smaller chunks
-        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        text_splitter = CharacterTextSplitter(chunk_size=800, chunk_overlap=0)
         self.splitted_documents = text_splitter.split_documents(documents)
 
     async def similarity_search(self, query, k=4):
@@ -24,7 +25,7 @@ class DocumentMemory:
         if self.vectorstore is None:
 
             # Create the PGVector store
-
+            # TODO: use core.sessions
             self.vectorstore = await PGVector.afrom_documents(
                 embedding=self.embedder,
                 documents=self.splitted_documents,
@@ -41,5 +42,5 @@ class DocumentMemory:
         for doc in relevant_docs:
             res += f"- Document {counter}: {doc.page_content}\n\n"
             counter += 1
-
+        syslog.info(f"Document Memory: {res}")
         return res

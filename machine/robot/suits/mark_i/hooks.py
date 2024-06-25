@@ -27,7 +27,7 @@ def embed_output(output: str, assistant):
     """
     return assistant.embedder.embed_query(text=output)
 
-
+# TODO
 @hook
 async def fetch_memory(input, assistant):
     """

@@ -105,7 +105,7 @@ class AgentManager:
 
         chain = prompt | assistant.llm
 
-        res = chain.invoke(input={"input": agent_input["input"], "document": agent_input["document"]})
+        res = chain.invoke(input={"input": agent_input["input"], "document": agent_input["document"]}, config=assistant.config)
         if isinstance(res, str):
             return res
 

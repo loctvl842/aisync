@@ -38,6 +38,7 @@ langchain-postgres = "^0.0.8"
 gpt4all = "^2.7.0"
 langchain-postgres = "^0.0.8"
 gpt4all = "^2.7.0"
+langchain-postgres = "^0.0.9"
 
 [build-system]
 requires = ["poetry-core"]
