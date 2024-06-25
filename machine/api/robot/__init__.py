@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from .llm import router as llm_router
 from .embedder import router as embedder_router
+from .llm import router as llm_router
 
 router = APIRouter(prefix="/robot")
 router.include_router(llm_router)

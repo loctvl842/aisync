@@ -19,3 +19,20 @@ def build_prompt_suffix(default: str, assistant):
     `prompt_suffix` mission is to define the structure of a conversation.
     """
     return default
+
+
+@hook
+def build_prompt_from_docs(assistant):
+    """
+    You can custom your own long-term memory prompt here.
+
+    `long_term_prompt` mission is to define the structure of a long-term memory.
+    """
+    LONG_TERM_PROMPT = """
+    Answer the following question: `{input}`.
+    Ignore all document knowledge that are not relevant to the question.
+    Use the following document knowledge to answer the question to the best of your ability:
+
+    {document}
+    """
+    return LONG_TERM_PROMPT
