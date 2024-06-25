@@ -23,6 +23,8 @@ class Jarvis(Assistant):
         self.load_document(self.manager.suits[suit]._path_to_doc)
 
     def greet(self):
+        if "set_greeting_message" in self._chain._suit._hooks:
+            return self._chain._suit.execute_hook("set_greeting_message", assistant=self)
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
 
     def load_document(self, file_path):

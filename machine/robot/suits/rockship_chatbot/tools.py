@@ -43,6 +43,7 @@ def get_appstore_application_info(tool_input: Any):
         "type": "social media",
     }
 
+
 @tool
 def workflow_automation_price_estimation(tool_input: int):
     """
@@ -52,6 +53,7 @@ def workflow_automation_price_estimation(tool_input: int):
     The input should be an integer indicating the number of connections needed to setup the workflow automation.
     """
     return f"\n- Cost: ${tool_input * 100}\n- Maintenance fee: $50 / year\n"
+
 
 @tool
 def low_code_price_estimation(tool_input: dict):
@@ -70,21 +72,17 @@ def low_code_price_estimation(tool_input: dict):
     for key in ["platform", "num_of_plugins", "template_price"]:
         if key not in tool_input:
             return f"Missing key: {key} in the input dictionary"
-    
+
     platform = (tool_input["platform"]).lower()
-    price_by_platform = {
-        "wix": 700,
-        "shopify": 800,
-        "wordpress": 600
-    }
+    price_by_platform = {"wix": 700, "shopify": 800, "wordpress": 600}
     if platform not in price_by_platform.keys():
         return "Unsupported platform by Rockship"
     platform_cost = price_by_platform[platform]
     maintenance_fee = 100
     plugin_fee = tool_input["num_of_plugins"] * 50
-    price_report = f'\n- Platform cost: ${platform_cost}\n'
-    price_report += f'- Maintenance fee: ${maintenance_fee} / year\n'
-    price_report += f'- Plugin cost: ${plugin_fee}\n'
+    price_report = f"\n- Platform cost: ${platform_cost}\n"
+    price_report += f"- Maintenance fee: ${maintenance_fee} / year\n"
+    price_report += f"- Plugin cost: ${plugin_fee}\n"
     price_report += f'- Template cost: ${tool_input["template_price"]}\n'
     price_report += f'- Total cost: ${platform_cost + plugin_fee + tool_input["template_price"]}\n\n'
     return price_report

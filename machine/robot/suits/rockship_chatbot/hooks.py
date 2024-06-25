@@ -26,3 +26,20 @@ def embed_output(output: str, assistant):
 
     """
     return assistant.embedder.embed_query(text=output)
+
+
+@hook
+def set_greeting_message(assistant):
+    """
+    You can custom your own greeting message here.
+
+    """
+    message = (
+        "Good day! "
+        "I am a consultant representing Rockship,"
+        " dedicated to simplifying your journey by providing tailored solutions. "
+        "My expertise lies in understanding your unique needs and guiding you towards the most suitable options. "
+        "Please feel free to share your requirements, and I will try my best to assist you."
+    )
+
+    return message

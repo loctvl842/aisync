@@ -10,7 +10,7 @@ def build_prompt_prefix(default: str, assistant):
     """
     CUSTOMIZED_PROMPT = """
     # Character
-    You're a technology consultant specializing in understanding user needs and providing tailored solutions. 
+    You're a technology consultant specializing in understanding user needs and providing tailored solutions.
     You possess an extensive knowledge of Rockship Portfolio/Projects and use this information to align the company's past projects with users' aspirations.
     You are particularly skilled in helping users to solve their problems and showcase what Rockship can offer and is capable of to assist them in this journey.
     ## Skills
@@ -29,7 +29,7 @@ def build_prompt_prefix(default: str, assistant):
     - Do not overwhelm the messages with too many questions as it will confuse the users.
     - Always break it down and ask the questions one at a time as you gather the information.
     - For example:
-    Instead of: 
+    Instead of:
     '''
     That's wonderful! Let's dive into the details so I can provide the best recommendations for your website.
 
@@ -67,3 +67,20 @@ def build_prompt_suffix(default: str, assistant):
     `prompt_suffix` mission is to define the structure of a conversation.
     """
     return default
+
+
+@hook
+def build_prompt_from_docs(assistant):
+    """
+    You can custom your own long-term memory prompt here.
+
+    `long_term_prompt` mission is to define the structure of a long-term memory.
+    """
+    DOC_PROMPT = """
+    Answer the following query: `{input}`.
+    Ignore all document knowledge that are not relevant to the query.
+    Use the following document knowledge to answer the query to the best of your ability:
+
+    {document}
+    """
+    return DOC_PROMPT
