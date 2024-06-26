@@ -20,12 +20,22 @@ class Jarvis(Assistant):
         self._chain = ChatChain(self.manager.suits[suit], self)
         self.long_term_memory = LongTermMemory()
         self.document_memory = DocumentMemory(embedder=self.embedder)
-        self.load_document(self.manager.suits[suit]._path_to_doc)
+        self.load_document(suit)
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
 
-    def load_document(self, file_path):
+    def load_document(self, suit):
+
+        file_path = self._chain._suit.execute_hook("get_path_to_doc")
+        """
+            If user do not specify the directory
+        --> Use default path to doc: ./robot/suits/mark_i
+            where 'i' is the suit that the AI wear
+        """
+        if file_path == []:
+            file_path = self.manager.suits[suit]._path_to_doc
+
         for fp in file_path:
             self.document_memory.read(fp)
 
