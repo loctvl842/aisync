@@ -1,6 +1,6 @@
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import String
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import mapped_column
 
 from core.db import Base

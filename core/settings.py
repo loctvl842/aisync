@@ -21,7 +21,6 @@ class PGVectorSettings(BaseSettings):
     # SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5431/aisync"
     # Change your PGVECTOR URI here
     SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/aisync"
-    LANGCHAIN_PGVECTOR_URI: str =  "postgresql+psycopg://postgres:postgres@localhost:5432/aisync"
 
 
 class RedisSettings(BaseSettings):
