@@ -1,5 +1,5 @@
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import String
+from sqlalchemy import Index, String
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import mapped_column
 
@@ -13,3 +13,5 @@ class DocCollection(Base):
     doc_metadata = mapped_column(JSONB, nullable=False)
     page_content = mapped_column(String, nullable=False)
     embedding = mapped_column(Vector(768), nullable=False)
+
+    __table_args__ = (Index("idx_embedding", "embedding"),)

@@ -1,6 +1,6 @@
 from .buffer_memory import BufferMemory
 from .document_memory import DocumentMemory
-from .long_term_memory import LongTermMemory
+from .persist_memory import PersistMemory
 from .universal_loader import UniversalLoader
 
-__all__ = ["BufferMemory", "LongTermMemory", "DocumentMemory", "UniversalLoader"]
+__all__ = ["BufferMemory", "PersistMemory", "DocumentMemory", "UniversalLoader"]

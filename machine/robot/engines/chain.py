@@ -69,7 +69,7 @@ class ChatChain:
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
 
         lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
-        input["long_term_memory"] = lt_memory["long_term_memory"]
+        input["persist_memory"] = lt_memory["persist_memory"]
 
         # fetch document_memory
         try:
@@ -116,7 +116,7 @@ class ChatChain:
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
 
         lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
-        input["long_term_memory"] = lt_memory["long_term_memory"]
+        input["persist_memory"] = lt_memory["persist_memory"]
 
         # fetch document_memory
         try:
