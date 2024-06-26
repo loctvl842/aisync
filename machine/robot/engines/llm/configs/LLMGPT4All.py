@@ -11,7 +11,7 @@ from .base import LLMConfig
 
 
 class CustomizedGPT4All(GPT4All):
-    max_tool_iter: Optional[int] = 10
+    max_tool_iter: Optional[int] = 5
     tool_name_to_tool: Optional[dict] = None
 
     def __init__(self, **kwargs: Any):
@@ -110,4 +110,4 @@ class LLMGPT4All(LLMConfig):
     # Change those configurations based on your device and desired speed
     device: str = "gpu"
     n_threads: int = 10
-    temp: float = 0.4
+    temp: float = 0.1

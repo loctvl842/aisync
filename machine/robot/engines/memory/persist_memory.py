@@ -10,7 +10,7 @@ from core.db.session import Dialect, sessions
 from machine.models import QueryLogs, ResponseLogs
 
 
-class LongTermMemory:
+class PersistMemory:
     def __init__(self, top_matches: Optional[int] = 10):
         self._top_matches = top_matches
 
@@ -29,7 +29,7 @@ class LongTermMemory:
     async def similarity_search(self, vectorized_input) -> Dict[str, str]:
         # TODO: Change to cosine distance
         res = {}
-        res["long_term_memory"] = "## Past interaction:\n\n"
+        res["persist_memory"] = "## Past interaction:\n\n"
         # DB Session for similarity search
         sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
         async with sessions[Dialect.PGVECTOR].session() as session:
@@ -54,7 +54,7 @@ class LongTermMemory:
 
             for inter in ordered_res:
                 payload = json.loads(inter.payload)
-                res["long_term_memory"] += f'At {payload["timestamp"]}:\n'
-                res["long_term_memory"] += f'- Human: {payload["input"]}\n- AI: {payload["output"]}\n\n'
+                res["persist_memory"] += f'At {payload["timestamp"]}:\n'
+                res["persist_memory"] += f'- Human: {payload["input"]}\n- AI: {payload["output"]}\n\n'
             await session.commit()
         return res

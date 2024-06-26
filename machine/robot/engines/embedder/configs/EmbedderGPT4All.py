@@ -1,4 +1,4 @@
-from typing import Type
+from typing import List, Type
 
 from gpt4all import Embed4All
 
@@ -11,6 +11,19 @@ class GP4ALLEmbedder(Embed4All):
 
     def embed_query(self, text: str):
         return self.embed(text=text, dimensionality=768)
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        """Embed a list of documents using GPT4All.
+
+        Args:
+            texts: The list of texts to embed.
+
+        Returns:
+            List of embeddings, one for each text.
+        """
+
+        embeddings = [self.embed(text=text, dimensionality=768) for text in texts]
+        return [list(map(float, e)) for e in embeddings]
 
 
 class EmbedderGPT4All(EmbedderConfig):
