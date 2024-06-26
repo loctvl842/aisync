@@ -1,5 +1,5 @@
 from core.utils.decorators import singleton
-from machine.robot.engines.memory import DocumentMemory, PersistMemory
+from machine.robot.engines.memory import DocumentMemory, PersistMemory, ToolKnowledge
 
 from ..manager import Manager
 from .agent_manager import AgentManager
@@ -49,6 +49,8 @@ class Brain:
         self.persist_memory = PersistMemory()
 
         self.document_memory = DocumentMemory(embedder=self.embedder)
+
+        self.tool_knowledge = ToolKnowledge()
 
     def load_agent(self):
         """

@@ -41,7 +41,9 @@ Observation: the result of the action
 When you have a final answer to say to the Human, you MUST use the format:
 
 ```
-[your response here]
+I used the following tool: [tool_name]
+Its purpose is: [tool_description]
+My answer is: [answer]
 ```
 
 Begin!

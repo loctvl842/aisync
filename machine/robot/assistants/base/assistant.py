@@ -29,6 +29,8 @@ class Assistant(ABC):
                 print("👨: ", end="", flush=True)
                 user_input = input()
                 if (user_input == "\\exit") or (user_input == "\\quit"):
+                    # Remove tools from vectordb
+                    await self.tool_knowledge.remove_tools()
                     stop = True
                 else:
                     if streaming:
@@ -40,6 +42,8 @@ class Assistant(ABC):
                         print("🤖: ", end="", flush=True)
                         print(assistant_response, "\n")
         except KeyboardInterrupt:
+            # Remove tools from vectordb
+            await self.tool_knowledge.remove_tools()
             print("Exiting gracefully.")
 
     @abstractmethod
