@@ -1,13 +1,12 @@
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, Optional, Dict
 
 from langchain.agents import tool
 
 from core.logger import syslog
 
-
 @tool
-def get_today_date(tool_input: Optional[Any] = None):
+def get_today_date(tool_input: Optional[Dict] = None):
     """
     Get today's date.
     Reply to any question involve current date or time.
@@ -17,7 +16,7 @@ def get_today_date(tool_input: Optional[Any] = None):
 
 
 @tool
-def none_of_the_above(tool_input: Optional[Any] = None):
+def none_of_the_above(tool_input: Optional[Dict] = None):
     """
     Use this tool if none of the above tools help.
     Input is always None.
@@ -26,7 +25,7 @@ def none_of_the_above(tool_input: Optional[Any] = None):
 
 
 @tool
-def get_appstore_application_info(tool_input: Any):
+def get_appstore_application_info(tool_input: Dict):
     """
     Get information about an application in the App Store.
     Reply with a quotation about the application.
@@ -42,21 +41,3 @@ def get_appstore_application_info(tool_input: Any):
         "email": "",
         "type": "social media",
     }
-
-
-@tool
-def add(a: int, b: int):
-    """
-    Add two numbers.
-    Input is two integers.
-    """
-    return a + b
-
-
-@tool
-def multiply(a: int, b: int):
-    """
-    Multiply two numbers.
-    Input is two integers.
-    """
-    return a * b
