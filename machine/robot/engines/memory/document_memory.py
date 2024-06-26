@@ -1,14 +1,14 @@
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.document_loaders import TextLoader
+from .universal_loader import UniversalLoader
 from langchain_postgres.vectorstores import PGVector
-
 from core.logger import syslog
 from core.settings import settings
 
 
+    
 class DocumentMemory:
     def __init__(self, config=None, embedder=None):
-        self.splitted_documents = []
+        self.document_loader = UniversalLoader()
         self.vectorstore = None
         self.config = config or {}
         self.connection_string = settings.LANGCHAIN_PGVECTOR_URI
@@ -16,7 +16,8 @@ class DocumentMemory:
 
     def read(self, file_path):
         """Loads and processes the document specified by file_path."""
-        documents = TextLoader(file_path).load()
+        loader = self.document_loader.choose_loader()
+        documents = loader(file_path).load()
 
         # Split the document into smaller chunks
         text_splitter = CharacterTextSplitter(chunk_size=800, chunk_overlap=0)
