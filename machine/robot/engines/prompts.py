@@ -73,7 +73,7 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 
 {document_memory}
 
-{long_term_memory}
+{persist_memory}
 
 {tool_output}
 

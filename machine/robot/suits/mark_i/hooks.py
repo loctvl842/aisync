@@ -38,7 +38,7 @@ async def fetch_memory(input, assistant):
     Fetch memory from long term memory
 
     """
-    res = await assistant.long_term_memory.similarity_search(input)
+    res = await assistant.persist_memory.similarity_search(input)
     return res
 
 

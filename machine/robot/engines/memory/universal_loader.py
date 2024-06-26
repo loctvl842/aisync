@@ -25,7 +25,7 @@ class UniversalLoader:
         """
         # TODO: Add more file types
 
-        loader_name = self.supported_file_type.get(self.file_type)
+        loader_name = self.supported_file_type.get(self.file_type, "txt")
 
         if loader_name:
             self.loader = getattr(DocumentLoader, loader_name, None)

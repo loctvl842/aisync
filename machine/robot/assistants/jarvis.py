@@ -3,7 +3,7 @@ from typing import Callable
 
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
-from ..engines.memory import BufferMemory, DocumentMemory, LongTermMemory
+from ..engines.memory import BufferMemory
 from ..manager import Manager
 from .base import Assistant
 
@@ -18,8 +18,6 @@ class Jarvis(Assistant):
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
-        self.long_term_memory = LongTermMemory()
-        self.document_memory = DocumentMemory(embedder=self.embedder)
         self.load_document(suit)
 
     def greet(self):
@@ -43,7 +41,7 @@ class Jarvis(Assistant):
 
     async def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
-        await self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
+        await self.persist_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
@@ -106,6 +104,14 @@ class Jarvis(Assistant):
     @property
     def llm(self):
         return Brain().llm
+
+    @property
+    def persist_memory(self):
+        return Brain().persist_memory
+
+    @property
+    def document_memory(self):
+        return Brain().document_memory
 
     @property
     def agent_manager(self):

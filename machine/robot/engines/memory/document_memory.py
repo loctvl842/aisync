@@ -21,6 +21,10 @@ class DocumentMemory:
     def read(self, file_path, chunk_size=800, chunk_overlap=0):
         """Loads and processes the document specified by file_path."""
         loader = self.document_loader.choose_loader()
+        if loader is None:
+            syslog.error(f"Unsupported file type: {self.document_loader.file_type}")
+            raise ValueError(f"Unsupported file type: {self.document_loader.file_type}")
+
         documents = loader(file_path).load()
         # Split the document into smaller chunks
         text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
