@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import Any, Optional, Dict
+from typing import Dict, Optional
 
 from langchain.agents import tool
 
 from core.logger import syslog
+
 
 @tool
 def get_today_date(tool_input: Optional[Dict] = None):
@@ -25,7 +26,7 @@ def none_of_the_above(tool_input: Optional[Dict] = None):
 
 
 @tool
-def get_appstore_application_info(tool_input: Dict):
+def get_appstore_application_info(tool_input: Optional[Dict] = None):
     """
     Get information about an application in the App Store.
     Reply with a quotation about the application.

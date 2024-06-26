@@ -51,3 +51,19 @@ class Brain:
         Load Agents
         """
         self.agent_manager = AgentManager()
+
+    def change_llm(self, llm_name):
+        cfg_cls = get_llm_by_name(llm_name)
+        if cfg_cls is None:
+            raise ValueError(f"LLM {llm_name} not found. Using LLMChatOpenAI instead.")
+
+        default_cfg = cfg_cls().model_dump()
+        self.llm = cfg_cls.get_llm(default_cfg)
+
+    def change_embedder(self, embedder_name):
+        cfg_cls = get_embedder_by_name(embedder_name)
+        if cfg_cls is None:
+            raise ValueError(f"Embedder {embedder_name} not found. Using EmbedderOpenAI instead.")
+
+        default_cfg = cfg_cls().model_dump()
+        self.embedder = cfg_cls.get_embedder(default_cfg)

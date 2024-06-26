@@ -1,6 +1,8 @@
 import asyncio
 from typing import Callable
 
+from core.logger import syslog
+
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
 from ..engines.memory import BufferMemory, LongTermMemory
@@ -19,6 +21,18 @@ class Jarvis(Assistant):
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
         self.long_term_memory = LongTermMemory()
+        self.customize_llm_and_embedder()
+
+    def customize_llm_and_embedder(self):
+        try:
+            Brain().change_llm(self._chain._suit.execute_hook("set_suit_llm", assistant=self))
+        except ValueError as e:
+            syslog.error(e)
+
+        try:
+            Brain().change_embedder(self._chain._suit.execute_hook("set_suit_embedder", assistant=self))
+        except ValueError as e:
+            syslog.error(e)
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
