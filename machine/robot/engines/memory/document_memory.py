@@ -1,4 +1,3 @@
-from typing import Dict
 from uuid import uuid4
 
 from langchain.text_splitter import CharacterTextSplitter
@@ -6,7 +5,6 @@ from sqlalchemy import select
 
 from core.db.session import Dialect, sessions
 from core.logger import syslog
-from core.settings import settings
 from machine.models import DocCollection
 
 from .universal_loader import UniversalLoader
@@ -18,7 +16,6 @@ class DocumentMemory:
         self.vectorstore = None
         self.config = config or {}
         self.splitted_documents = []
-        # self.connection_string = settings.LANGCHAIN_PGVECTOR_URI
         self.embedder = embedder
 
     def read(self, file_path, chunk_size=800, chunk_overlap=0):
