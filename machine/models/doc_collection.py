@@ -14,10 +14,12 @@ class DocCollection(Base):
     page_content = mapped_column(String, nullable=False)
     embedding = mapped_column(Vector(768), nullable=False)
 
-    __table_args__ = (Index(
-                        "idx_embedding", 
-                        "embedding",     
-                        postgresql_using='hnsw',
-                        postgresql_with={'m': 16, 'ef_construction': 64},
-                        postgresql_ops={'embedding': 'vector_l2_ops'}
-                    ),)
+    __table_args__ = (
+        Index(
+            "idx_embedding",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_with={"m": 16, "ef_construction": 64},
+            postgresql_ops={"embedding": "vector_l2_ops"},
+        ),
+    )

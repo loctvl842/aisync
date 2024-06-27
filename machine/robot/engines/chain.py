@@ -49,12 +49,14 @@ class ChatChain:
 
     async def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
-       
+
         # Embed input
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
 
         # Run similarity search to find relevant tools
-        tools = await assistant.tool_knowledge.find_relevant_tools(suit=self._suit, vectorized_input=self.vectorized_input)
+        tools = await assistant.tool_knowledge.find_relevant_tools(
+            suit=self._suit, vectorized_input=self.vectorized_input
+        )
 
         if len(tools) > 0:
             try:
@@ -104,7 +106,9 @@ class ChatChain:
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
 
         # Run similarity search to find relevant tools
-        tools = await assistant.tool_knowledge.find_relevant_tools(suit=self._suit, vectorized_input=self.vectorized_input)
+        tools = await assistant.tool_knowledge.find_relevant_tools(
+            suit=self._suit, vectorized_input=self.vectorized_input
+        )
 
         if len(tools) > 0:
             try:
@@ -120,7 +124,6 @@ class ChatChain:
 
         if "tool_output" not in input:
             input["tool_output"] = ""
-
 
         lt_memory = await assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
         input["persist_memory"] = lt_memory["persist_memory"]
