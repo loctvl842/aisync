@@ -5,6 +5,8 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
 from langchain_core.prompts import PromptTemplate
 
+from core.logger import syslog
+
 from ..manager import Manager
 from .parser import ActionOutputParser
 from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate
@@ -88,10 +90,14 @@ class AgentManager:
         agent_executor = AgentExecutor.from_agent_and_tools(
             agent=agent, tools=tools, return_intermediate_steps=True, handle_parsing_errors=True, verbose=should_log
         )
-        res = agent_executor.invoke(
-            input=agent_input,
-            config=assistant.config,
-        )
+        res = None
+        try:
+            res = agent_executor.invoke(
+                input=agent_input,
+                config=assistant.config,
+            )
+        except Exception as e:
+            syslog.debug("Error when invoking agent_executor:\n\n", e)
 
         # Remove tools in case it's CustomizedGPT4All
         if hasattr(assistant.llm, "remove_tools"):

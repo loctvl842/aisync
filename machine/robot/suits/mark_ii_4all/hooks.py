@@ -67,13 +67,3 @@ def embed_output(output: str, assistant):
 
     """
     return assistant.embedder.embed_query(text=output)
-
-
-@hook
-async def fetch_memory(input, assistant):
-    """
-    Fetch memory from long term memory
-
-    """
-    res = await assistant.persist_memory.similarity_search(input)
-    return res

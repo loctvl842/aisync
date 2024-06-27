@@ -33,16 +33,6 @@ def embed_output(output: str, assistant):
 
 
 @hook
-async def fetch_memory(input, assistant):
-    """
-    Fetch memory from long term memory
-
-    """
-    res = await assistant.persist_memory.similarity_search(input)
-    return res
-
-
-@hook
 def get_path_to_doc():
     """
     Specify your path in to the 'user_path_specify' list as below.

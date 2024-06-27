@@ -50,14 +50,22 @@ class ChatChain:
     async def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
 
-        # Get tools from all chatbot suits
-        tools = list(self._suit.tools.values())
+        # Embed input
+        self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
+
+        # Run similarity search to find relevant tools
+        tools = await assistant.tool_knowledge.find_relevant_tools(
+            suit=self._suit, vectorized_input=self.vectorized_input
+        )
 
         if len(tools) > 0:
             try:
                 res = assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
-                tool_output = res["output"]
-                input["tool_output"] = f"## Tool Output: `{tool_output}`" if tool_output else ""
+                if res is None:
+                    input["tool_output"] = ""
+                else:
+                    tool_output = res["output"]
+                    input["tool_output"] = f"## Tool Output:\n `{tool_output}`" if tool_output else ""
             except Exception as e:
                 syslog.error(f"Error when executing tools: {e}")
                 traceback.print_exc()
@@ -65,10 +73,7 @@ class ChatChain:
         if "tool_output" not in input:
             input["tool_output"] = ""
 
-        # Embed input
-        self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
-
-        lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
+        lt_memory = await assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
         input["persist_memory"] = lt_memory["persist_memory"]
 
         # fetch document_memory
@@ -97,14 +102,22 @@ class ChatChain:
     async def stream(self, assistant, handle_chunk: Callable):
         input = self._format_input(assistant)
 
-        # Get tools from all chatbot suits
-        tools = list(self._suit.tools.values())
+        # Embed input
+        self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
+
+        # Run similarity search to find relevant tools
+        tools = await assistant.tool_knowledge.find_relevant_tools(
+            suit=self._suit, vectorized_input=self.vectorized_input
+        )
 
         if len(tools) > 0:
             try:
                 res = assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
-                tool_output = res["output"]
-                input["tool_output"] = f"## Tool Output: `{tool_output}`" if tool_output else ""
+                if res is None:
+                    input["tool_output"] = ""
+                else:
+                    tool_output = res["output"]
+                    input["tool_output"] = f"## Tool Output:\n `{tool_output}`" if tool_output else ""
             except Exception as e:
                 syslog.error(f"Error when executing tools: {e}")
                 traceback.print_exc()
@@ -112,10 +125,7 @@ class ChatChain:
         if "tool_output" not in input:
             input["tool_output"] = ""
 
-        # Embed input
-        self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=assistant)
-
-        lt_memory = await self._suit.execute_hook("fetch_memory", input=self.vectorized_input, assistant=assistant)
+        lt_memory = await assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
         input["persist_memory"] = lt_memory["persist_memory"]
 
         # fetch document_memory
