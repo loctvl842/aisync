@@ -1,10 +1,9 @@
 import asyncio
-import json
 from typing import Callable
 
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
-from ..engines.memory import BufferMemory, LongTermMemory
+from ..engines.memory import BufferMemory
 from ..manager import Manager
 from .base import Assistant
 
@@ -19,14 +18,40 @@ class Jarvis(Assistant):
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
-        self.long_term_memory = LongTermMemory()
+        self.load_document(suit)
+        self.turn_on(suit)
+
+    def turn_on(self, suit):
+        self.load_tools(suit)
+
+    async def turn_off(self):
+        # Remove tools from vectordb
+        await self.tool_knowledge.remove_tools()
 
     def greet(self):
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
 
+    def load_document(self, suit):
+
+        file_path = self._chain._suit.execute_hook("get_path_to_doc")
+        """
+            If user do not specify the directory
+        --> Use default path to doc: ./robot/suits/mark_i
+            where 'i' is the suit that the AI wear
+        """
+        if file_path == []:
+            file_path = self.manager.suits[suit]._path_to_doc
+
+        for fp in file_path:
+            self.document_memory.read(fp)
+
+    def load_tools(self, suit):
+        tools = list(self.manager.suits[suit].tools.values())
+        self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
+
     async def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
-        await self.long_term_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
+        await self.persist_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
@@ -53,7 +78,8 @@ class Jarvis(Assistant):
         queue = asyncio.Queue()
 
         async def proccess_queue(chunk):
-            chars = list(chunk.content)
+            # Follow output format of GPT4All
+            chars = list(chunk if isinstance(chunk, str) else chunk.content)
             for c in chars:
                 await queue.put(c)
 
@@ -90,9 +116,21 @@ class Jarvis(Assistant):
         return Brain().llm
 
     @property
+    def persist_memory(self):
+        return Brain().persist_memory
+
+    @property
+    def document_memory(self):
+        return Brain().document_memory
+
+    @property
     def agent_manager(self):
         return Brain().agent_manager
 
     @property
     def embedder(self):
         return Brain().embedder
+
+    @property
+    def tool_knowledge(self):
+        return Brain().tool_knowledge

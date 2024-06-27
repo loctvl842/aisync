@@ -42,21 +42,3 @@ def get_appstore_application_info(tool_input: Any):
         "email": "",
         "type": "social media",
     }
-
-
-@tool
-def add(a: int, b: int):
-    """
-    Add two numbers.
-    Input is two integers.
-    """
-    return a + b
-
-
-@tool
-def multiply(a: int, b: int):
-    """
-    Multiply two numbers.
-    Input is two integers.
-    """
-    return a * b
