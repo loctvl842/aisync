@@ -1,5 +1,6 @@
 from tokencost import count_string_tokens
 
+
 class BufferMemory(dict):
     def __init__(self, memory_size=1000) -> None:
         super().__init__({"pending_message": "", "chat_history": []})
@@ -7,15 +8,17 @@ class BufferMemory(dict):
 
     def __call__(self) -> str:
         return self.format_chat_history()
-    
+
     def set_token_limit(self, token: int) -> None:
         self.token_limit = token
 
     def format_chat_history(self) -> str:
         # Default to show memory_size most recent messages
         if not hasattr(self, "token_limit"):
-            return "\n".join([f"{msg['sender']}: {msg['message']}" for msg in self["chat_history"][-self.memory_size :]])
-        
+            return "\n".join(
+                [f"{msg['sender']}: {msg['message']}" for msg in self["chat_history"][-self.memory_size :]]
+            )
+
         # Add more messages until token limit is reached
         index = len(self["chat_history"]) - 1
         chat_history = []

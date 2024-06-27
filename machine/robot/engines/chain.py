@@ -9,7 +9,6 @@ from core.logger import syslog
 from ..assistants.base.assistant import Assistant
 from . import prompts
 
-# from tokencost import count_message_tokens, count_string_tokens
 
 class ChatChain:
     def __init__(self, suit, assistant):
@@ -44,20 +43,9 @@ class ChatChain:
         prompt_suffix = self._suit.execute_hook(
             "build_prompt_suffix", default=prompts.DEFAULT_PROMPT_SUFFIX, assistant=assistant
         )
-        self.prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
-        chain = self.prompt | assistant.llm
+        prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
+        chain = prompt | assistant.llm
         return chain
-    
-    # def count_tokens(self, input_variables: List[str], assistant) -> dict:
-    #     empty_input = {}
-    #     for var in input_variables:
-    #         empty_input[var] = ""
-    #     filled_prompt = self.prompt.format(input=empty_input)
-    #     token_count = assistant.max_token - count_string_tokens(filled_prompt)
-    #     return {
-    #         "long_term_memory_limit": token_count / 2,
-    #         "short_term_memory_limit": token_count / 2,
-    #     }
 
     async def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
@@ -98,16 +86,6 @@ class ChatChain:
         except Exception as e:
             syslog.error(f"Error when fetching document memory: {e}")
             traceback.print_exc()
-
-        if "document_memory" not in input:
-            input["document_memory"] = ""
-
-
-        # document_memory = await self._suit.execute_hook("fetch_document_memory", input=input["input"], assistant=assistant)
-        # input["document"] = document_memory
-        # input["document_memory"] = "## Document Knowledge Output: `"
-        # input["document_memory"] += assistant.agent_manager.execute_long_term(agent_input=input, assistant=assistant)
-        # input["document_memory"] += "`"
 
         if "document_memory" not in input:
             input["document_memory"] = ""
