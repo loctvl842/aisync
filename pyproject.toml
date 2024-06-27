@@ -26,7 +26,7 @@ sqlalchemy = "^2.0.30"
 alembic = "^1.13.1"
 asyncpg = "^0.29.0"
 redis = "^5.0.4"
-langchain = "^0.1.20"
+langchain = ">=0.2.6"
 langchain-openai = "^0.1.6"
 langchain-google-genai = "^1.0.3"
 langchain-google-vertexai = "^1.0.4"
@@ -34,7 +34,8 @@ langfuse = "^2.31.0"
 pgvector = "^0.2.5"
 numpy = "^1.26.4"
 gpt4all = "^2.7.0"
-tokencost = "^0.1.10"
+tokencost = "^0.1.11"
+langchain-community = "^0.2.6"
 
 [build-system]
 requires = ["poetry-core"]

@@ -13,14 +13,24 @@ class Jarvis(Assistant):
     version = "0.1"
     year = 2024
 
-    def __init__(self, suit="rockship_chatbot"):
+    def __init__(self, suit="mark_i", token_limit=1000):
         super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
+        self.set_max_token(token_limit, suit)
         self._chain = ChatChain(self.manager.suits[suit], self)
         self.load_document(suit)
         self.turn_on(suit)
 
+
+    def set_max_token(self, limit, suit):
+        if "set_token_limit" in self.manager.suits[suit]._hooks:
+            self.max_token = self.manager.suits[suit].execute_hook("set_max_token")
+        else:
+            self.max_token = limit
+        if self.max_token <= 0:
+            raise ValueError("Token limit must be a positive integer")
+        
     def turn_on(self, suit):
         self.load_tools(suit)
 

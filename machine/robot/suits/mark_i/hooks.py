@@ -31,6 +31,14 @@ def embed_output(output: str, assistant):
     """
     return assistant.embedder.embed_query(text=output)
 
+@hook
+def set_max_token():
+    """
+    Set the token limit for the assistant
+
+    """
+    MY_LIMIT = 1000
+    return MY_LIMIT
 
 @hook
 def get_path_to_doc():
