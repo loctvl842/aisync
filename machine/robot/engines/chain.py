@@ -3,13 +3,12 @@ from typing import Callable, List, Optional
 
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
+from tokencost import count_string_tokens
 
 from core.logger import syslog
 
 from ..assistants.base.assistant import Assistant
 from . import prompts
-
-from tokencost import count_string_tokens
 
 
 class ChatChain:
@@ -48,11 +47,11 @@ class ChatChain:
         self.prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
         chain = self.prompt | assistant.llm
         return chain
-    
+
     def _add_chat_history(self, input, assistant):
         self.set_buffer_limit(input, assistant)
         return assistant.buffer_memory.format_chat_history(self.buffer_token_limit, self.model_name)
-    
+
     def set_buffer_limit(self, input, assistant):
         print(input)
         filled_prompt = self.prompt.format(**input)
@@ -61,7 +60,7 @@ class ChatChain:
 
         # Find remaining number of tokens to add to buffer
         self.buffer_token_limit = assistant.max_token - count_string_tokens(filled_prompt, self.model_name)
-        syslog.info(f'Max token: {assistant.max_token}, Buffer token limit: {self.buffer_token_limit}')
+        syslog.info(f"Max token: {assistant.max_token}, Buffer token limit: {self.buffer_token_limit}")
 
     async def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
@@ -105,7 +104,7 @@ class ChatChain:
 
         if "document_memory" not in input:
             input["document_memory"] = ""
-        
+
         # Optimize Chat History
         input["chat_history"] = self._add_chat_history(input, assistant)
 
@@ -160,7 +159,7 @@ class ChatChain:
 
         if "document_memory" not in input:
             input["document_memory"] = ""
-        
+
         # Optimize Chat History
         input["chat_history"] = self._add_chat_history(input, assistant)
 

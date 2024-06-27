@@ -21,7 +21,7 @@ class BufferMemory(dict):
         while index >= 0:
             msg = self["chat_history"][index]
             cur_chat_str = f"{msg['sender']}: {msg['message']}"
-            cur_chat_token = count_string_tokens(f'{cur_chat_str}\n', model_name)
+            cur_chat_token = count_string_tokens(f"{cur_chat_str}\n", model_name)
             tot_token += cur_chat_token
             if tot_token > token_limit:
                 break

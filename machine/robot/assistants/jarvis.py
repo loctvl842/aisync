@@ -22,7 +22,6 @@ class Jarvis(Assistant):
         self.load_document(suit)
         self.turn_on(suit)
 
-
     def set_max_token(self, limit, suit):
         if "set_token_limit" in self.manager.suits[suit]._hooks:
             self.max_token = self.manager.suits[suit].execute_hook("set_max_token")
@@ -30,7 +29,7 @@ class Jarvis(Assistant):
             self.max_token = limit
         if self.max_token <= 0:
             raise ValueError("Token limit must be a positive integer")
-        
+
     def turn_on(self, suit):
         self.load_tools(suit)
 

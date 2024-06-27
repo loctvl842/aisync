@@ -31,6 +31,7 @@ def embed_output(output: str, assistant):
     """
     return assistant.embedder.embed_query(text=output)
 
+
 @hook
 def set_max_token():
     """
@@ -39,6 +40,7 @@ def set_max_token():
     """
     MY_LIMIT = 1000
     return MY_LIMIT
+
 
 @hook
 def get_path_to_doc():
