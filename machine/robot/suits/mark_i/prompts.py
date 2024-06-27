@@ -28,11 +28,11 @@ def build_prompt_from_docs(assistant):
 
     `long_term_prompt` mission is to define the structure of a long-term memory.
     """
-    LONG_TERM_PROMPT = """
+    DOC_PROMPT = """
     Answer the following question: `{input}`.
     Ignore all document knowledge that are not relevant to the question.
     Use the following document knowledge to answer the question to the best of your ability:
 
     {document}
     """
-    return LONG_TERM_PROMPT
+    return DOC_PROMPT
