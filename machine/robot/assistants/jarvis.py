@@ -19,6 +19,14 @@ class Jarvis(Assistant):
         self.manager = Manager()
         self._chain = ChatChain(self.manager.suits[suit], self)
         self.load_document(suit)
+        self.turn_on(suit)
+
+    def turn_on(self, suit):
+        self.load_tools(suit)
+
+    async def turn_off(self):
+        # Remove tools from vectordb
+        await self.tool_knowledge.remove_tools()
 
     def greet(self):
         if "set_greeting_message" in self._chain._suit._hooks:
@@ -38,6 +46,10 @@ class Jarvis(Assistant):
 
         for fp in file_path:
             self.document_memory.read(fp)
+
+    def load_tools(self, suit):
+        tools = list(self.manager.suits[suit].tools.values())
+        self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
     async def save_to_db(self, input: str, output: str):
         vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
@@ -120,3 +132,7 @@ class Jarvis(Assistant):
     @property
     def embedder(self):
         return Brain().embedder
+
+    @property
+    def tool_knowledge(self):
+        return Brain().tool_knowledge

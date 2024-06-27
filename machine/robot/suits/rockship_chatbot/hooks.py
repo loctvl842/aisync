@@ -48,6 +48,7 @@ def set_greeting_message(assistant):
 
     return message
 
+
 @hook
 def get_path_to_doc():
     """
