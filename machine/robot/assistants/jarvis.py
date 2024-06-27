@@ -13,7 +13,7 @@ class Jarvis(Assistant):
     version = "0.1"
     year = 2024
 
-    def __init__(self, suit="mark_i"):
+    def __init__(self, suit="rockship_chatbot"):
         super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
@@ -29,6 +29,8 @@ class Jarvis(Assistant):
         await self.tool_knowledge.remove_tools()
 
     def greet(self):
+        if "set_greeting_message" in self._chain._suit._hooks:
+            return self._chain._suit.execute_hook("set_greeting_message", assistant=self)
         return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
 
     def load_document(self, suit):

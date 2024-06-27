@@ -1,0 +1,32 @@
+Company: Worknow
+Overview: WorkNow is the workspace booking platform enables business to manage their hybrid workforce efficiently through the extensive suites of solutions: space provider management platform, on-demand booking UI, and office brokerage solution
+Technology used: Python, Javascript, ChatGPT
+Website link: https://worknow.center/
+Notes: Rockship works closely with the client to identify the key use cases in office rental business via interviewing customers
+
+Company: iSense
+Overview: iSense is flavor digitalization platform where flavor house, F&B manufacturer and distributor can collaborate to create, test and commercialize new flavor concepts. 
+Technology: Python, Javascript
+Website link: https://www.isensegroup.com/
+Notes: Rockship is the sole builder of the platform and help guide the client in best design & engineering practices in user flow, product discovery in the marketplace.
+
+Company: Meimei
+Overview: MeiMei is a community for lifestyle and beauty in Vietnam. Rockship builds the key features of MeiMei including: e-commerce experience for booking for beauty services, social sharing of images and video, data anlytics to tracking post performance, generative AI to augment content on the beauty application or the beauty social groups on Facebook & Zalo.
+Technology: Python, Javascript, ChatGPT
+Website link: https://www.facebook.com/thanhxuanmaimai.tech
+Notes: Generative AI to crawl & suggest contents for content creators
+
+Company: JustOtter
+Overview: JustOtter builds an operation system for every restaurants from menu ordering, loyalty program and queue management system. Rockship helps JustOtter prototypes the solution and tackle the product challenges in term of how to build a digitalized menu, how to integrate blockchain for restaurant loyalty program. Rockship also supports JustOtter in hiring the initial engineering team members in Vietnam.
+Technology: Python, Javascript
+Website link: https://justotter.com/
+Notes: Rockship aids JustOtter in prototyping and overcoming product challenges, including digitalizing menus, integrating blockchain for loyalty programs, and streamlining restaurant operations, encompassing menu ordering and queue management.
+
+Company: Rovo
+Overview: Rovo is a social platform for sports players. Rockship supports Rovo in building the booking solution for facilities for sports facility operators: tennis court, badminton, table tennis, etc. This booking platform facilitates sport players in easily discovering and reserving facilities based on their individual demands.
+Technology: Javascript, NodeJS, ReactJS
+Website link: https://rovo.co/
+Notes: Rockship provides Rovo with a tech-savyy engineering team to develop their booking solution for sports facility operators. The platform allows players to easily discover and reserve facilities such as tennis courts, badminton courts, and table tennis tables based on their individual preferences and needs.
+
+Company: Math Mavens
+Overview: Rockship helps build the Math Mavens application that enables primary students to access math practice materials, learn math skills as they play, anytime and anywhere.
