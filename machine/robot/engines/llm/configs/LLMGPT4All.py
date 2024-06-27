@@ -17,11 +17,6 @@ class CustomizedGPT4All(GPT4All):
     def __init__(self, **kwargs: Any):
         super().__init__(**kwargs)
 
-    """
-    A version of create_tool_calling_agent that does not require the LLM to bind tools.
-    Enable usage with Langchain's AgentExecutor.
-    """
-
     def process_input(self, str_request: str) -> Tuple[Union[str, dict], bool]:
         try:
             str_request = str_request[str_request.index("{") :].strip()
@@ -34,7 +29,7 @@ class CustomizedGPT4All(GPT4All):
             return f"Invalid input. Please try again.\n {e}", False
 
     def invoke_tool(self, input: Union[str, dict], config: Optional[RunnableConfig] = None) -> str:
-        """A function that we can use the perform a tool invocation.
+        """A function that we can use to perform a tool invocation.
 
         Args:
             tool_call_request: a dict that contains the keys name and arguments.

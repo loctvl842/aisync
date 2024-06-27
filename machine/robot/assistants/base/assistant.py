@@ -21,6 +21,7 @@ class Assistant(ABC):
             self.config = {"callbacks": [CallbackHandler()]}
 
     async def start(self, streaming=False):
+        # await self.load_document("../gpt4all/Rockship.txt")
         try:
             stop = False
             print("🤖: ", end="", flush=True)

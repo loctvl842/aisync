@@ -2787,6 +2787,25 @@ requests = ">=2.26.0"
 blobfile = ["blobfile (>=2)"]
 
 [[package]]
+name = "tokencost"
+version = "0.1.10"
+description = "To calculate token and translated USD cost of string and message calls to OpenAI, for example when used by AI agents"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tokencost-0.1.10-py3-none-any.whl", hash = "sha256:38ba6ce8245c1abb865aff695adf7d29c10834b28ba2c3f6c51176fd84e6cfd1"},
+    {file = "tokencost-0.1.10.tar.gz", hash = "sha256:22e5160fe8ed3cd3c1617148093f16b19774910ecd6132befcdf483d41a1f3e1"},
+]
+
+[package.dependencies]
+aiohttp = ">=3.9.3"
+tiktoken = ">=0.7.0"
+
+[package.extras]
+dev = ["coverage[toml] (>=7.4.0)", "flake8 (>=3.1.0)", "pytest (>=7.4.4)"]
+llama-index = ["llama-index (>=0.10.23)"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -3411,4 +3430,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6192074e47204dd12a563cc9c0690ec21ab3ddff27f19dbbc207901865b157bf"
+content-hash = "3d0bdbd4fad823c4ef8cf1c77cf6b56f8931b41e99f03ae0c6f3d2b5a17d03d0"

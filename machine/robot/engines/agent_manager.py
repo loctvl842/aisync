@@ -63,6 +63,18 @@ class AgentManager:
             | ActionOutputParser()
         )
         return agent
+    
+    def execute_long_term(self, agent_input, assistant):
+        from langchain_core.prompts import PromptTemplate
+        prompt = self.chatbot_suits.execute_hook("build_long_term_prompt", assistant=assistant)
+        prompt = PromptTemplate.from_template(prompt)
+        chain = prompt | assistant.llm
+        res = chain.invoke(input = {"input": agent_input["input"], "document": agent_input["document"]})
+        if isinstance(res, str):
+            return res
+        from core.logger import syslog
+        syslog.info(res)
+        return res.content
 
     def execute_tools(self, agent_input, tools, assistant):
         # Prompt
