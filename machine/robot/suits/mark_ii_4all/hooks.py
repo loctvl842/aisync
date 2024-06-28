@@ -45,7 +45,7 @@ def build_format_instructions(default: str, assistant):
     Begin!
     ## Previous conversation history:
 
-    {chat_history}
+    {buffer_memory}
     Question: {input}
     {agent_scratchpad}"""
     return FORMAT_INSTRUCTIONS_GPT4All
