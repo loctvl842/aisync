@@ -34,8 +34,9 @@ langfuse = "^2.31.0"
 pgvector = "^0.2.5"
 numpy = "^1.26.4"
 gpt4all = "^2.7.0"
-tokencost = "^0.1.11"
+langchain-anthropic = "^0.1.16"
 langchain-community = "^0.2.6"
+tokencost = "^0.1.11"
 
 [build-system]
 requires = ["poetry-core"]
