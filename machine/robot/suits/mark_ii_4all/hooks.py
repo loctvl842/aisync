@@ -1,5 +1,24 @@
 from ...decorators import hook
 
+@hook
+def set_suit_llm(assistant):
+    """
+    Set the LLM model for the assistant
+    Change the model_name to the llm model of your choice.
+    """
+
+    model_name = "LLMGPT4All"
+    return model_name
+
+
+@hook
+def set_suit_embedder(assistant):
+    """
+    Set the embedder for the assistant
+    Change the model_name to the embedding model of your choice.
+    """
+    model_name = "EmbedderGPT4All"
+    return model_name
 
 @hook
 def build_format_instructions(default: str, assistant):

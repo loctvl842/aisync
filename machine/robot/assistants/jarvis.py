@@ -50,7 +50,7 @@ class Jarvis(Assistant):
 
     def load_document(self, suit):
 
-        file_path = self._chain._suit.execute_hook("get_path_to_doc")
+        file_path = self._chain._suit.execute_hook("get_path_to_doc") or []
         """
             If user do not specify the directory
         --> Use default path to doc: ./robot/suits/mark_i
