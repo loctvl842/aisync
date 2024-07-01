@@ -6,27 +6,6 @@ from ...decorators import hook
 
 
 @hook
-def set_suit_llm(assistant):
-    """
-    Set the LLM model for the assistant
-    Change the model_name to the llm model of your choice.
-    """
-
-    model_name = "LLMChatOpenAI"
-    return model_name
-
-
-@hook
-def set_suit_embedder(assistant):
-    """
-    Set the embedder for the assistant
-    Change the model_name to the embedding model of your choice.
-    """
-    model_name = "EmbedderOpenAI"
-    return model_name
-
-
-@hook
 def build_format_instructions(default: str, assistant):
     """
     You can custom your own format instructions here.
@@ -51,6 +30,23 @@ def embed_output(output: str, assistant):
 
     """
     return assistant.embedder.embed_query(text=output)
+
+
+@hook
+def set_greeting_message(assistant):
+    """
+    You can custom your own greeting message here.
+
+    """
+    message = (
+        "Good day! "
+        "I am a consultant representing Rockship,"
+        " dedicated to simplifying your journey by providing tailored solutions. "
+        "My expertise lies in understanding your unique needs and guiding you towards the most suitable options. "
+        "Please feel free to share your requirements, and I will try my best to assist you."
+    )
+
+    return message
 
 
 @hook
