@@ -703,13 +703,13 @@ files = [
 
 [[package]]
 name = "fsspec"
-version = "2024.6.0"
+version = "2024.6.1"
 description = "File-system specification"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fsspec-2024.6.0-py3-none-any.whl", hash = "sha256:58d7122eb8a1a46f7f13453187bfea4972d66bf01618d37366521b1998034cee"},
-    {file = "fsspec-2024.6.0.tar.gz", hash = "sha256:f579960a56e6d8038a9efc8f9c77279ec12e6299aa86b0769a7e9c46b94527c2"},
+    {file = "fsspec-2024.6.1-py3-none-any.whl", hash = "sha256:3cb443f8bcd2efb31295a5b9fdb02aee81d8452c80d28f97a6d0959e6cee101e"},
+    {file = "fsspec-2024.6.1.tar.gz", hash = "sha256:fad7d7e209dd4c1208e3bbfda706620e0da5142bebbd9c384afb95b07e798e49"},
 ]
 
 [package.extras]
@@ -784,13 +784,13 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.134.0"
+version = "2.135.0"
 description = "Google API Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-api-python-client-2.134.0.tar.gz", hash = "sha256:4a8f0bea651a212997cc83c0f271fc86f80ef93d1cee9d84de7dfaeef2a858b6"},
-    {file = "google_api_python_client-2.134.0-py2.py3-none-any.whl", hash = "sha256:ba05d60f6239990b7994f6328f17bb154c602d31860fb553016dc9f8ce886945"},
+    {file = "google-api-python-client-2.135.0.tar.gz", hash = "sha256:b552a28123ed95493035698db80e8ed78c9106a8b422e63a175150b9b55b704e"},
+    {file = "google_api_python_client-2.135.0-py2.py3-none-any.whl", hash = "sha256:91742fa4c779d48456c0256ef346fa1cc185ba427176d3277e35141fa3268026"},
 ]
 
 [package.dependencies]
@@ -1599,13 +1599,13 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
 name = "langchain-anthropic"
-version = "0.1.16"
+version = "0.1.17"
 description = "An integration package connecting AnthropicMessages and LangChain"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_anthropic-0.1.16-py3-none-any.whl", hash = "sha256:0d3f66b7ffb2d4ef739ef87c4b096f0dbbf0ce12f988205d1fcaa1da2c9d09fa"},
-    {file = "langchain_anthropic-0.1.16.tar.gz", hash = "sha256:28187dfb19389772e0abba98eeb0210ed3d99ab0a73f2e6707aa46c9bbbbe407"},
+    {file = "langchain_anthropic-0.1.17-py3-none-any.whl", hash = "sha256:e139602594deebd5deb1531434823889390a58c3b99df911f9ced3ec7cc0746e"},
+    {file = "langchain_anthropic-0.1.17.tar.gz", hash = "sha256:bd8b16d07c6b78228eaf76ca6aae28e29a186e0048aab79effd35ccf819d1851"},
 ]
 
 [package.dependencies]
@@ -1700,18 +1700,18 @@ anthropic = ["anthropic[vertexai] (>=0.29.0,<1)"]
 
 [[package]]
 name = "langchain-openai"
-version = "0.1.10"
+version = "0.1.13"
 description = "An integration package connecting OpenAI and LangChain"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_openai-0.1.10-py3-none-any.whl", hash = "sha256:62eb000980eb45e4f16c88acdbaeccf3d59266554b0dd3ce6bebea1bbe8143dd"},
-    {file = "langchain_openai-0.1.10.tar.gz", hash = "sha256:30f881f8ccaec28c054759837c41fd2a2264fcc5564728ce12e1715891a9ce3c"},
+    {file = "langchain_openai-0.1.13-py3-none-any.whl", hash = "sha256:4344b6c5c67088a28eed80ba763157fdd1d690cee679966a021b42f305dbf7b5"},
+    {file = "langchain_openai-0.1.13.tar.gz", hash = "sha256:03318669bcb3238f7d1bb043329f91d150ca09246f1faf569ef299f535405c71"},
 ]
 
 [package.dependencies]
 langchain-core = ">=0.2.2,<0.3"
-openai = ">=1.26.0,<2.0.0"
+openai = ">=1.32.0,<2.0.0"
 tiktoken = ">=0.7,<1"
 
 [[package]]
@@ -2088,13 +2088,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.35.5"
+version = "1.35.7"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.35.5-py3-none-any.whl", hash = "sha256:28d92503c6e4b6a32a89277b36693023ef41f60922a4b5c8c621e8c5697ae3a6"},
-    {file = "openai-1.35.5.tar.gz", hash = "sha256:67ef289ae22d350cbf9381d83ae82c4e3596d71b7ad1cc886143554ee12fe0c9"},
+    {file = "openai-1.35.7-py3-none-any.whl", hash = "sha256:3d1e0b0aac9b0db69a972d36dc7efa7563f8e8d65550b27a48f2a0c2ec207e80"},
+    {file = "openai-1.35.7.tar.gz", hash = "sha256:009bfa1504c9c7ef64d87be55936d142325656bbc6d98c68b669d6472e4beb09"},
 ]
 
 [package.dependencies]
@@ -2983,6 +2983,25 @@ requests = ">=2.26.0"
 blobfile = ["blobfile (>=2)"]
 
 [[package]]
+name = "tokencost"
+version = "0.1.11"
+description = "To calculate token and translated USD cost of string and message calls to OpenAI, for example when used by AI agents"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tokencost-0.1.11-py3-none-any.whl", hash = "sha256:6f47fd724e90f2bb11639be7ce3131530c8e6469853d02f7d52edd34e17d6ec6"},
+    {file = "tokencost-0.1.11.tar.gz", hash = "sha256:4602469f8b4e01c526badaa35b3951fdf17b14a9bbf736cefe3e32b0a8d9b006"},
+]
+
+[package.dependencies]
+aiohttp = ">=3.9.3"
+tiktoken = ">=0.7.0"
+
+[package.extras]
+dev = ["coverage[toml] (>=7.4.0)", "flake8 (>=3.1.0)", "pytest (>=7.4.4)"]
+llama-index = ["llama-index (>=0.10.23)"]
+
+[[package]]
 name = "tokenizers"
 version = "0.19.1"
 description = ""
@@ -3724,4 +3743,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b8038d462041cec6f611d2e8a99b6f3c7712b200b62b846185ad97381ee9146d"
+content-hash = "78cbe2c39baf6e64e96be3b6feb576109a8f5b29a7e11d1e05229343bebf1b62"
