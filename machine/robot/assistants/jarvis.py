@@ -26,6 +26,10 @@ class Jarvis(Assistant):
 
     def turn_on(self, suit):
         self.load_tools(suit)
+        self.change_agent_manager_suit(suit)
+
+    def change_agent_manager_suit(self, suit):
+        self.agent_manager.switch_suit(suit)
 
     async def turn_off(self):
         # Remove tools from vectordb
