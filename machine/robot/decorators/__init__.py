@@ -1,4 +1,5 @@
 from .action import SuitAction, action
+from .custom_tool import custom_tool
 from .hook import SuitHook, hook
 
 __all__ = [
@@ -6,4 +7,5 @@ __all__ = [
     "action",
     "SuitHook",
     "hook",
+    "custom_tool",
 ]

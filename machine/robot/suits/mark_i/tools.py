@@ -5,14 +5,18 @@ from langchain.agents import tool
 
 from core.logger import syslog
 
+from ...decorators import custom_tool
 
-@tool
-def get_today_date(tool_input: Optional[Any] = None):
+
+@custom_tool
+def get_today_date(tool_input: Optional[Any] = None, **kwargs: Any):
     """
     Get today's date.
     Reply to any question involve current date or time.
     Input is always None.
     """
+    assistant = kwargs["assistant"]
+    syslog.info(f"The tool's assistant is {assistant.name}")
     return datetime.today()
 
 
@@ -53,7 +57,7 @@ def add(a: int, b: int):
     return a + b
 
 
-@tool
+@custom_tool
 def multiply(a: int, b: int):
     """
     Multiply two numbers.
