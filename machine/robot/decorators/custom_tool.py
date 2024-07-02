@@ -15,14 +15,26 @@ class CustomTool(Tool):
 
     def set_assistant(self, assistant: Assistant):
         self.assistant = assistant
-        cur_func = self.func
 
-        @functools.wraps(cur_func)
-        def wrapper(*args, **kwargs):
-            kwargs["assistant"] = self.assistant
-            return cur_func(*args, **kwargs)
+        if self.func is not None:
+            cur_func = self.func
 
-        self.func = wrapper
+            @functools.wraps(cur_func)
+            def wrapper(*args, **kwargs):
+                kwargs["assistant"] = self.assistant
+                return cur_func(*args, **kwargs)
+
+            self.func = wrapper
+        else:
+            print("coroutine")
+            cur_func = self.coroutine
+
+            @functools.wraps(cur_func)
+            async def wrapper(*args, **kwargs):
+                kwargs["assistant"] = self.assistant
+                return await cur_func(*args, **kwargs)
+
+            self.coroutine = wrapper
 
 
 class CustomStructuredTool(StructuredTool):
@@ -30,14 +42,26 @@ class CustomStructuredTool(StructuredTool):
 
     def set_assistant(self, assistant: Assistant):
         self.assistant = assistant
-        cur_func = self.func
 
-        @functools.wraps(cur_func)
-        def wrapper(*args, **kwargs):
-            kwargs["assistant"] = self.assistant
-            return cur_func(*args, **kwargs)
+        if self.func is not None:
+            cur_func = self.func
 
-        self.func = wrapper
+            @functools.wraps(cur_func)
+            def wrapper(*args, **kwargs):
+                kwargs["assistant"] = self.assistant
+                return cur_func(*args, **kwargs)
+
+            self.func = wrapper
+        else:
+            print("coroutine")
+            cur_func = self.coroutine
+
+            @functools.wraps(cur_func)
+            async def wrapper(*args, **kwargs):
+                kwargs["assistant"] = self.assistant
+                return await cur_func(*args, **kwargs)
+
+            self.coroutine = wrapper
 
 
 def custom_tool(

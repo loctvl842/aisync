@@ -64,7 +64,7 @@ class AgentManager:
         )
         return agent
 
-    def execute_tools(self, agent_input, tools, assistant):
+    async def execute_tools(self, agent_input, tools, assistant):
         # Prompt
         format_instructions = self.chatbot_suits.execute_hook(
             "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=assistant
@@ -92,7 +92,7 @@ class AgentManager:
         )
         res = None
         try:
-            res = agent_executor.invoke(
+            res = await agent_executor.ainvoke(
                 input=agent_input,
                 config=assistant.config,
             )
