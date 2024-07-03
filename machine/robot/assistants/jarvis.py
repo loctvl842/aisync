@@ -1,6 +1,8 @@
 import asyncio
 from typing import Callable
 
+from core.logger import syslog
+
 from ..engines.brain import Brain
 from ..engines.chain import ChatChain
 from ..engines.memory import BufferMemory
@@ -19,6 +21,7 @@ class Jarvis(Assistant):
         self.manager = Manager()
         self.set_max_token(token_limit, suit)
         self._chain = ChatChain(self.manager.suits[suit], self)
+        self.customize_llm_and_embedder()
         self.load_document(suit)
         self.turn_on(suit)
 
@@ -32,10 +35,26 @@ class Jarvis(Assistant):
 
     def turn_on(self, suit):
         self.load_tools(suit)
+        self.change_agent_manager_suit(suit)
+
+    def change_agent_manager_suit(self, suit):
+        self.agent_manager.switch_suit(suit)
 
     async def turn_off(self):
         # Remove tools from vectordb
         await self.tool_knowledge.remove_tools()
+
+    def customize_llm_and_embedder(self):
+        try:
+            Brain().change_llm(self._chain._suit.execute_hook("set_suit_llm", assistant=self))
+        except ValueError as e:
+            syslog.error(e)
+
+        try:
+            Brain().change_embedder(self._chain._suit.execute_hook("set_suit_embedder", assistant=self))
+        except ValueError as e:
+            syslog.error(e)
+        
 
     def greet(self):
         if "set_greeting_message" in self._chain._suit._hooks:
@@ -44,7 +63,7 @@ class Jarvis(Assistant):
 
     def load_document(self, suit):
 
-        file_path = self._chain._suit.execute_hook("get_path_to_doc")
+        file_path = self._chain._suit.execute_hook("get_path_to_doc") or []
         """
             If user do not specify the directory
         --> Use default path to doc: ./robot/suits/mark_i
@@ -58,6 +77,9 @@ class Jarvis(Assistant):
 
     def load_tools(self, suit):
         tools = list(self.manager.suits[suit].tools.values())
+        for tool in tools:
+            if hasattr(tool, "set_assistant"):
+                tool.set_assistant(self)
         self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
     async def save_to_db(self, input: str, output: str):

@@ -23,6 +23,9 @@ class AgentManager:
         # Change to suit mark_ii_4all if you want to use GPT4All, rockship_chatbot for Rockship Chatbot
         self.chatbot_suits = Manager().suits["mark_i"]
         self.chain = None
+    
+    def switch_suit(self, suit: str):
+        self.chatbot_suits = Manager().suits[suit]
 
     def create_prompt(
         self,
@@ -64,7 +67,7 @@ class AgentManager:
         )
         return agent
 
-    def execute_tools(self, agent_input, tools, assistant):
+    async def execute_tools(self, agent_input, tools, assistant):
         # Prompt
         format_instructions = self.chatbot_suits.execute_hook(
             "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=assistant
@@ -92,7 +95,7 @@ class AgentManager:
         )
         res = None
         try:
-            res = agent_executor.invoke(
+            res = await agent_executor.ainvoke(
                 input=agent_input,
                 config=assistant.config,
             )
