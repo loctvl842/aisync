@@ -49,7 +49,7 @@ My answer is: [answer]
 Begin!
 ## Previous conversation history:
 
-{chat_history}
+{buffer_memory}
 Question: {input}
 {agent_scratchpad}"""
 
@@ -71,7 +71,7 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 
 ## Previous conversation history:
 
-{chat_history}
+{buffer_memory}
 
 {document_memory}
 

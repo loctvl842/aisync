@@ -54,6 +54,16 @@ def embed_output(output: str, assistant):
 
 
 @hook
+def set_max_token():
+    """
+    Set the token limit for the assistant
+
+    """
+    MY_LIMIT = 1000
+    return MY_LIMIT
+
+
+@hook
 def get_path_to_doc():
     """
     Specify your path in to the 'user_path_specify' list as below.

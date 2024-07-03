@@ -34,7 +34,7 @@ class AgentManager:
         input_variables: Optional[List[str]] = None,
     ) -> ActionPromptTemplate:
         if input_variables is None:
-            input_variables = ["input", "intermediate_steps", "chat_history"]
+            input_variables = ["input", "intermediate_steps", "buffer_memory"]
 
         return ActionPromptTemplate(
             template=format_instructions,
@@ -58,7 +58,7 @@ class AgentManager:
         agent = (
             {
                 "input": lambda x: x["input"],
-                "chat_history": lambda x: x["chat_history"],
+                "buffer_memory": lambda x: x["buffer_memory"],
                 "intermediate_steps": lambda x: x["intermediate_steps"],
             }
             | prompt

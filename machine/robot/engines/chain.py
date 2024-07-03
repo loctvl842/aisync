@@ -3,6 +3,7 @@ from typing import Callable, List, Optional
 
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
+from tokencost import count_string_tokens
 
 from core.logger import syslog
 
@@ -18,7 +19,7 @@ class ChatChain:
     def _format_input(self, assistant: Assistant):
         return {
             "input": assistant.buffer_memory.get_pending_message(),
-            "chat_history": assistant.buffer_memory.format_chat_history(),
+            "buffer_memory": "",
         }
 
     def _make_prompt(
@@ -29,7 +30,7 @@ class ChatChain:
     ):
         template = "\n\n".join([prefix, suffix])
         if input_variables is None:
-            input_variables = ["input", "chat_history"]
+            input_variables = ["input", "buffer_memory", "document_memory", "persist_memory", "tool_output"]
         return PromptTemplate(
             template=template,
             input_variables=input_variables,
@@ -43,9 +44,23 @@ class ChatChain:
         prompt_suffix = self._suit.execute_hook(
             "build_prompt_suffix", default=prompts.DEFAULT_PROMPT_SUFFIX, assistant=assistant
         )
-        prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
-        chain = prompt | assistant.llm
+        self.prompt = self._make_prompt(prefix=prompt_prefix, suffix=prompt_suffix)
+        chain = self.prompt | assistant.llm
         return chain
+
+    def _add_buffer_memory(self, input, assistant):
+        self.set_buffer_limit(input, assistant)
+        return assistant.buffer_memory.format_buffer_memory(self.buffer_token_limit, self.model_name)
+
+    def set_buffer_limit(self, input, assistant):
+        print(input)
+        filled_prompt = self.prompt.format(**input)
+        self.model_name = assistant.llm.model if hasattr(assistant.llm, "model") else assistant.llm.model_name
+        syslog.info(self.model_name)
+
+        # Find remaining number of tokens to add to buffer
+        self.buffer_token_limit = assistant.max_token - count_string_tokens(filled_prompt, self.model_name)
+        syslog.info(f"Max token: {assistant.max_token}, Buffer token limit: {self.buffer_token_limit}")
 
     async def invoke(self, assistant: Assistant):
         input = self._format_input(assistant)
@@ -89,6 +104,9 @@ class ChatChain:
 
         if "document_memory" not in input:
             input["document_memory"] = ""
+
+        # Optimize Chat History
+        input["buffer_memory"] = self._add_buffer_memory(input, assistant)
 
         res = {}
         ai_response = self._chain.invoke(input, config=assistant.config)
@@ -141,6 +159,9 @@ class ChatChain:
 
         if "document_memory" not in input:
             input["document_memory"] = ""
+
+        # Optimize Chat History
+        input["buffer_memory"] = self._add_buffer_memory(input, assistant)
 
         async for chunk in self._chain.astream(input, assistant.config):
             await handle_chunk(chunk)
