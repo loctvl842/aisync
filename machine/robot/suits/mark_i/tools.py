@@ -1,14 +1,12 @@
 from datetime import datetime
 from typing import Any, Optional
 
-from langchain.agents import tool
-
 from core.logger import syslog
 
-from ...decorators import custom_tool
+from ...decorators import tool
 
 
-@custom_tool
+@tool
 def get_today_date(tool_input: Optional[Any] = None, **kwargs: Any):
     """
     Get today's date.
@@ -57,7 +55,7 @@ def add(a: int, b: int):
     return a + b
 
 
-@custom_tool
+@tool
 def multiply(a: int, b: int):
     """
     Multiply two numbers.
