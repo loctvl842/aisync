@@ -24,6 +24,7 @@ class OmniTool(BaseTool):
     coroutine: Optional[Callable[..., Awaitable[Any]]] = None
     """The asynchronous version of the function."""
     assistant: Optional[Assistant] = None
+    """The assistant that the tool is associated with."""
 
     # --- Config assistant ---
     def set_assistant(self, assistant: Assistant):
@@ -200,11 +201,8 @@ def tool(
         return_direct: Whether to return directly from the tool rather
             than continuing the agent loop.
         args_schema: optional argument schema for user to specify
-        infer_schema: Whether to infer the schema of the arguments from
-            the function's signature. This also makes the resultant tool
-            accept a dictionary input to its `run()` function. Forced to be true
-            in order to always require schema as it's compatible with more LLMs
-            and generally perform better.
+        infer_schema: Always infer schema as schema-based tools are compatible with more LLMs
+                      and generally perform better.
 
     Requires:
         - Function must be of type (str) -> str
@@ -213,12 +211,12 @@ def tool(
     Examples:
         .. code-block:: python
 
-            @custom_tool
+            @tool
             def search_api(query: str) -> str:
                 # Searches the API for the query.
                 return
 
-            @custom_tool("search", return_direct=True)
+            @tool("search", return_direct=True)
             def search_api(query: str) -> str:
                 # Searches the API for the query.
                 return
