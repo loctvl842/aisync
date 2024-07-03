@@ -1,18 +1,20 @@
 from datetime import datetime
 from typing import Any, Optional
 
-from langchain.agents import tool
-
 from core.logger import syslog
+
+from ...decorators import tool
 
 
 @tool
-def get_today_date(tool_input: Optional[Any] = None):
+def get_today_date(tool_input: Optional[Any] = None, **kwargs: Any):
     """
     Get today's date.
     Reply to any question involve current date or time.
     Input is always None.
     """
+    assistant = kwargs["assistant"]
+    syslog.info(f"The tool's assistant is {assistant.name}")
     return datetime.today()
 
 

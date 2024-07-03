@@ -60,7 +60,7 @@ class ChatChain:
 
         if len(tools) > 0:
             try:
-                res = assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
+                res = await assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
                 if res is None:
                     input["tool_output"] = ""
                 else:
@@ -112,7 +112,7 @@ class ChatChain:
 
         if len(tools) > 0:
             try:
-                res = assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
+                res = await assistant.agent_manager.execute_tools(agent_input=input, tools=tools, assistant=assistant)
                 if res is None:
                     input["tool_output"] = ""
                 else:

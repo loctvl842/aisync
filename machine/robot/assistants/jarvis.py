@@ -13,7 +13,7 @@ class Jarvis(Assistant):
     version = "0.1"
     year = 2024
 
-    def __init__(self, suit="rockship_chatbot"):
+    def __init__(self, suit="mark_i"):
         super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
@@ -49,6 +49,9 @@ class Jarvis(Assistant):
 
     def load_tools(self, suit):
         tools = list(self.manager.suits[suit].tools.values())
+        for tool in tools:
+            if hasattr(tool, "set_assistant"):
+                tool.set_assistant(self)
         self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
     async def save_to_db(self, input: str, output: str):
