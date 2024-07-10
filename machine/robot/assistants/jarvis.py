@@ -66,7 +66,7 @@ class Jarvis(Assistant):
 
     def load_document(self, suit):
 
-        file_path = self._chain._suit.execute_hook("get_path_to_doc") or []
+        file_path = self.suit.execute_hook("get_path_to_doc") or []
         """
             If user do not specify the directory
         --> Use default path to doc: ./robot/suits/mark_i
@@ -86,22 +86,23 @@ class Jarvis(Assistant):
         self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
     async def save_to_db(self, input: str, output: str):
-        vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
-        await self.persist_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
+        vectorized_output = self.suit.execute_hook("embed_output", output=output, assistant=self)
+        vectorized_input = self.suit.execute_hook("embed_input", input=input, assistant=self)
+        await self.persist_memory.save_interaction(input, output, vectorized_input, vectorized_output)
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
         # res = await self._chain.invoke(self)
         res = await self.compiler.ainvoke(input={"input": input})
         # output = res["output"]
-        output = res
+        output = res["agent_output"]
 
         # Save to chat memory
         self.buffer_memory.save_message(sender="Human", message=input)
         self.buffer_memory.save_message(sender="AI", message=output)
 
         # Save to database
-        # await self.save_to_db(input, output)
+        await self.save_to_db(input, output)
 
         return output
 

@@ -50,10 +50,10 @@ class ToolKnowledge:
             await session.execute(delete(ToolCollection))
             await session.commit()
 
-    async def find_relevant_tools(self, vectorized_input, tools_access, suit):
+    async def find_relevant_tools(self, vectorized_input, tools_access, tools):
         await self.save_tools()
         # TODO: Change to cosine distance
-        res = [suit.tools["none_of_the_above"]]
+        res = [tools["none_of_the_above"]]
         # DB Session for similarity search
         sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
         async with sessions[Dialect.PGVECTOR].session() as session:
@@ -68,7 +68,7 @@ class ToolKnowledge:
             for tool in tool_match:
                 if tool.name == "none_of_the_above":
                     continue
-                res.append(suit.tools[tool.name])
+                res.append(tools[tool.name])
             await session.commit()
         if len(res) == 1:
             res = []

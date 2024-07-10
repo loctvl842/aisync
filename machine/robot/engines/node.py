@@ -76,7 +76,7 @@ class Node:
     
     async def execute_tools(self, agent_input, tools):
         # Prompt
-        format_instructions = self.chatbot_suits.execute_hook(
+        format_instructions = self._suit.execute_hook(
             "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=self.assistant
         )
         prompt = self.create_prompt(
@@ -111,6 +111,9 @@ class Node:
         return res
     
     def execute_documents(self, agent_input):
+        """
+        Function to summarize understanding from documents
+        """
         prompt = PromptTemplate.from_template(DOC_PROMPT)
 
         chain = prompt | self.llm
@@ -129,7 +132,9 @@ class Node:
         """
         # TODO: add filter by tool name
         tools = await self.assistant.tool_knowledge.find_relevant_tools(
-            suit=self._suit, vectorized_input=self.vectorized_input
+            tools=self._suit.tools, 
+            vectorized_input=self.vectorized_input,
+            tools_access=self.tools,
         )
 
         tool_result = ""
@@ -149,17 +154,21 @@ class Node:
         return tool_result
 
     async def persist_memory(self):
-        # Run similarity search to find relevant tools
+        """
+        Retrieve relevant persistent memory from past sessions
+        """
         lt_memory = await self.assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
         return lt_memory["persist_memory"]
 
     async def document_memory(self, input):
-        # fetch document_memory
+        """
+        Retrieve relevant document
+        """
         document_memory_output = ""
         try:
             doc = await self.assistant.document_memory.similarity_search(
                 vectorized_input=self.vectorized_input,
-                # TODO: add filter by document names
+                document_name=self.document_names,
             )
             document_memory = self.execute_documents(
                 agent_input={"input": input, "document": doc}
@@ -172,6 +181,9 @@ class Node:
         return document_memory_output
 
     def buffer_memory(self):
+        """
+        Retrieve buffer memory
+        """
         return f"## Buffer Memory:\n\n{self.assistant.buffer_memory.format_buffer_memory_no_token()}"
     
     async def setup_input(self, state):

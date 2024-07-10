@@ -146,7 +146,8 @@ prompt_prefix_template = {
 intent_manager = Node(
     name="intent_manager",
     prompt_prefix=prompt_prefix_template["intent_manager"],
-    tools=["get_today_date"]
+    tools=["get_today_date"],
+    document_names=["rockship_expertises.txt"]
 )
 
 # staffing_agent = Node(
@@ -164,7 +165,8 @@ intent_manager = Node(
 low_code_agent = Node(
     name="low_code_agent",
     prompt_prefix=prompt_prefix_template["low_code_agent"],
-    tools=["get_today_date", "low_code_price_estimation"]
+    tools=["get_today_date", "low_code_price_estimation"],
+    document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
 )
 
 # workflow_automation_agent = Node(
