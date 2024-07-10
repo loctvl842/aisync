@@ -3,7 +3,7 @@ from ..assistants.base.assistant import Assistant
 from . import prompts
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
-from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate, DOC_PROMPT, DEFAULT_AGENT_PROMPT_SUFFIX, DEFAULT_PROMPT_SUFFIX
+from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate, DOC_PROMPT, DEFAULT_AGENT_PROMPT_SUFFIX, DEFAULT_PROMPT_SUFFIX, DEFAULT_PROMPT_PREFIX
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from core.logger import syslog
 from .parser import ActionOutputParser
@@ -14,7 +14,7 @@ class Node:
     def __init__(
         self,
         name: str,
-        prompt_prefix: Optional[str]=DEFAULT_PROMPT_SUFFIX,
+        prompt_prefix: Optional[str]=DEFAULT_PROMPT_PREFIX,
         prompt_suffix: Optional[str]=DEFAULT_AGENT_PROMPT_SUFFIX,
         conditional_prompt: Optional[str]="",
         tools: Optional[List[str]]=[],
@@ -35,6 +35,7 @@ class Node:
         self.assistant = assistant
         self.llm = assistant.llm
         self._suit = assistant.suit
+        self._chain = self._make_chain()
 
     def create_prompt(
         self,
@@ -135,7 +136,7 @@ class Node:
 
         if len(tools) > 0:
             try:
-                res = await self.execute_tools(agent_input=input, tools=tools, assistant=self.assistant)
+                res = await self.execute_tools(agent_input=input, tools=tools)
                 if res is None:
                     tool_result = ""
                 else:
@@ -150,9 +151,9 @@ class Node:
     async def persist_memory(self):
         # Run similarity search to find relevant tools
         lt_memory = await self.assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
-        input["persist_memory"] = lt_memory["persist_memory"]
+        return lt_memory["persist_memory"]
 
-    async def document_memory(self):
+    async def document_memory(self, input):
         # fetch document_memory
         document_memory_output = ""
         try:
@@ -161,7 +162,7 @@ class Node:
                 # TODO: add filter by document names
             )
             document_memory = self.execute_documents(
-                agent_input={"input": input["input"], "document": doc}, assistant=self.assistant
+                agent_input={"input": input, "document": doc}
             )
             document_memory_output = f"## Document Knowledge Output: `{document_memory}`"
         except Exception as e:
@@ -172,15 +173,15 @@ class Node:
 
     def buffer_memory(self):
         return f"## Buffer Memory:\n\n{self.assistant.buffer_memory.format_buffer_memory_no_token()}"
-
-    async def invoke(self, state):
-        input = {"input": state.input}
+    
+    async def setup_input(self, state):
+        input = {"input": state["input"]}
 
         # Embed input
         self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=self.assistant)
 
         # Document memory
-        input["document_memory"] = await self.document_memory()
+        input["document_memory"] = await self.document_memory(input["input"])
 
         # Tool Output
         input["tool_output"] = await self.tool_output()
@@ -188,8 +189,19 @@ class Node:
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()
 
+        return input
+
+    @staticmethod
+    async def invoke(state, **kwargs):
+        cur_node = kwargs["cur_node"]
+        syslog.info(f"Invoking node: {cur_node.name}")
+        input = await cur_node.setup_input(state)
+
+        syslog.info(input)
+
         res = {}
-        ai_response = self._chain.invoke(input, config=self.assistant.config)
+        ai_response = cur_node._chain.invoke(input, config=cur_node.assistant.config)
+        syslog.info(ai_response)
         if isinstance(ai_response, str):
             res["agent_output"] = ai_response
         else:

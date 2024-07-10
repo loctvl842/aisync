@@ -135,6 +135,17 @@ class Suit:
                 return default
         syslog.error(f"Hook `{hook_name}` not found")
         return default
+    
+    def execute_workflow(self, *args, **kwargs) -> Any:
+        default = kwargs.get("default", None)
+        workflow_name = next(iter(self._workflow))
+        try:
+            syslog.debug(f"Executing plugin hook `{self.name}::{workflow_name}`")
+            return self._workflow[workflow_name].call(*args, **kwargs)
+        except Exception as e:
+            syslog.error(f"Error when executing plugin hook `{self.name}::{workflow_name}`: {e}")
+            traceback.print_exc()
+            return default
 
     @property
     def name(self):
@@ -159,3 +170,7 @@ class Suit:
     @property
     def workflow(self):
         return self._workflow
+    
+    @property
+    def nodes(self):
+        return self._nodes

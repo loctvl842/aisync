@@ -19,11 +19,15 @@ class Jarvis(Assistant):
         super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
+        self.suit = self.manager.suits[suit]
+        self.customize_llm_and_embedder()
         self.set_max_token(token_limit, suit)
         self._chain = ChatChain(self.manager.suits[suit], self)
-        self.customize_llm_and_embedder()
         self.load_document(suit)
         self.turn_on(suit)
+
+        # Compile langgraph workflow
+        self.compile()
 
     def set_max_token(self, limit, suit):
         if "set_token_limit" in self.manager.suits[suit]._hooks:
@@ -46,12 +50,12 @@ class Jarvis(Assistant):
 
     def customize_llm_and_embedder(self):
         try:
-            Brain().change_llm(self._chain._suit.execute_hook("set_suit_llm", assistant=self))
+            Brain().change_llm(self.suit.execute_hook("set_suit_llm", assistant=self))
         except ValueError as e:
             syslog.error(e)
 
         try:
-            Brain().change_embedder(self._chain._suit.execute_hook("set_suit_embedder", assistant=self))
+            Brain().change_embedder(self.suit.execute_hook("set_suit_embedder", assistant=self))
         except ValueError as e:
             syslog.error(e)
         
@@ -88,15 +92,17 @@ class Jarvis(Assistant):
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-        res = await self._chain.invoke(self)
-        output = res["output"]
+        # res = await self._chain.invoke(self)
+        res = await self.compiler.ainvoke(input={"input": input})
+        # output = res["output"]
+        output = res
 
         # Save to chat memory
         self.buffer_memory.save_message(sender="Human", message=input)
         self.buffer_memory.save_message(sender="AI", message=output)
 
         # Save to database
-        await self.save_to_db(input, output)
+        # await self.save_to_db(input, output)
 
         return output
 
@@ -167,3 +173,12 @@ class Jarvis(Assistant):
     @property
     def tool_knowledge(self):
         return Brain().tool_knowledge
+
+    @property
+    def compiler(self):
+        return Brain().compiler
+
+    def compile(self):
+        self.compiler.activate(self)
+        self.suit.execute_workflow(assistant=self)
+        self.compiler.compile()
