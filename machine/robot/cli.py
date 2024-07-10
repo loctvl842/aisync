@@ -38,7 +38,7 @@ def get_ai_options() -> List[Tuple[str, Type[Assistant]]]:
 @click.option("--suit", help="Name of the suit to activate", default="mark_i")
 def activate(name: str, streaming: bool, suit: str):
     """
-    Run command python cli.py activate --name "Jarvis" --streaming 
+    Run command python cli.py activate --name "Jarvis" --streaming
     """
     load_dotenv(find_dotenv())
 

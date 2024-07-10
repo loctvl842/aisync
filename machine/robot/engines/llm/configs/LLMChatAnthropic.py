@@ -10,4 +10,3 @@ class LLMChatAnthropic(LLMConfig):
 
     model: str = "claude-3-haiku-20240307"
     temperature: float = 0.1
-    

@@ -23,7 +23,7 @@ class AgentManager:
         # Change to suit mark_ii_4all if you want to use GPT4All, rockship_chatbot for Rockship Chatbot
         self.chatbot_suits = Manager().suits["mark_i"]
         self.chain = None
-    
+
     def switch_suit(self, suit: str):
         self.chatbot_suits = Manager().suits[suit]
 
