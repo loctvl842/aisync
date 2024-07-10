@@ -4,7 +4,7 @@ from uuid import uuid4
 from sqlalchemy import delete, select
 
 from core.db.session import Dialect, sessions
-from machine.models import ToolCollection
+from machine.robot.models import ToolCollection
 
 
 class ToolKnowledge:

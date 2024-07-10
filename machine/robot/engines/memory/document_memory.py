@@ -5,7 +5,7 @@ from sqlalchemy import select
 
 from core.db.session import Dialect, sessions
 from core.logger import syslog
-from machine.models import DocCollection
+from machine.robot.models import DocCollection
 
 from .universal_loader import UniversalLoader
 
