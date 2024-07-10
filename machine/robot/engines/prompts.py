@@ -69,7 +69,7 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 
 # Context:
 
-## Previous conversation history:
+## Buffer Memory:
 
 {buffer_memory}
 
@@ -83,6 +83,18 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 Human: {input}
 AI:"""
 
+
+DEFAULT_AGENT_PROMPT_SUFFIX = """Begin!
+
+# Context:
+
+{buffer_memory}
+
+{document_memory}
+
+{tool_output}
+"""
+  
 CLASSIFIER_PROMPT = """Detect the topic of the following question: `{input}`.
 Only output one of the following topics:
 
@@ -95,3 +107,11 @@ Here are available topics:
 
 Begin!
 Question: {input}"""
+
+DOC_PROMPT = """
+    This is the context: `{input}`.
+    Ignore all document knowledge that are not relevant to the context.
+    Output any relevant information that might be relevant to the context using the following document knowledge:
+
+    {document}
+    """
