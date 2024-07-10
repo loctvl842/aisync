@@ -26,6 +26,10 @@ class DocumentMemory:
             raise ValueError(f"Unsupported file type: {self.document_loader.file_type}")
 
         documents = loader(file_path).load()
+
+        # get the file name from file path
+        file_name = file_path.split("/")[-1]
+        syslog.info(f"Processing document: {file_name}")
         # Split the document into smaller chunks
         text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         docs = text_splitter.split_documents(documents)
@@ -36,7 +40,12 @@ class DocumentMemory:
         index = 0
         for doc in docs:
             self.splitted_documents.append(
-                {"doc_metadata": doc.metadata, "page_content": doc.page_content, "embedding": all_embeddings[index]}
+                {
+                    "doc_metadata": doc.metadata,
+                    "page_content": doc.page_content,
+                    "embedding": all_embeddings[index],
+                    "document_name": file_name,
+                }
             )
             index += 1
 
@@ -52,12 +61,13 @@ class DocumentMemory:
                         page_content=doc["page_content"],
                         embedding=doc["embedding"],
                         id=uuid4(),
+                        document_name=doc["document_name"],
                     )
                 )
             await session.commit()
         self.splitted_documents = []
 
-    async def similarity_search(self, vectorized_input, k=4) -> str:
+    async def similarity_search(self, vectorized_input, document_name, k=4) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"
         # DB Session for similarity search
@@ -65,7 +75,10 @@ class DocumentMemory:
         async with sessions[Dialect.PGVECTOR].session() as session:
             # Top self._top_matches similarity search neighbors from input and output tables
             doc_match = await session.scalars(
-                select(DocCollection).order_by(DocCollection.embedding.l2_distance(vectorized_input)).limit(k)
+                select(DocCollection)
+                .where(DocCollection.document_name.in_(document_name))
+                .order_by(DocCollection.embedding.l2_distance(vectorized_input))
+                .limit(k)
             )
             counter = 1
             for doc in doc_match:

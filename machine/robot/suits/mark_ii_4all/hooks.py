@@ -1,5 +1,6 @@
 from ...decorators import hook
 
+
 @hook
 def set_suit_llm(assistant):
     """

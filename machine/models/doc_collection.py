@@ -13,7 +13,7 @@ class DocCollection(Base):
     doc_metadata = mapped_column(JSONB, nullable=False)
     page_content = mapped_column(String, nullable=False)
     embedding = mapped_column(Vector(768), nullable=False)
-
+    document_name = mapped_column(String, nullable=False)
     __table_args__ = (
         Index(
             "idx_embedding",

@@ -50,7 +50,7 @@ class ToolKnowledge:
             await session.execute(delete(ToolCollection))
             await session.commit()
 
-    async def find_relevant_tools(self, vectorized_input, suit):
+    async def find_relevant_tools(self, vectorized_input, tools_access, suit):
         await self.save_tools()
         # TODO: Change to cosine distance
         res = [suit.tools["none_of_the_above"]]
@@ -60,6 +60,7 @@ class ToolKnowledge:
             # Top self._top_matches similarity search neighbors from input and output tables
             tool_match = await session.scalars(
                 select(ToolCollection)
+                .where(ToolCollection.name.in_(tools_access))
                 .order_by(ToolCollection.embedding.l2_distance(vectorized_input))
                 .limit(self._top_matches)
             )

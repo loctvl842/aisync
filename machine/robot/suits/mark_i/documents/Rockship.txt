@@ -1,18 +1,3 @@
-ROCKSHIP COMPANY: AI AS A SERVICE
-
-Build Your AI with Rockship
-We customize solutions from the cutting edge AI technology to solve your business requirements.
-
-Key Information Extraction
-Extract unstructured data from various documents like financial statements, CVs, invoices & receipts to run further analysis or ingest the data into your structured data pipeline and do further analysis.
-
-AI Chatbots
-Ingest your company specific knowledge as the context to LLM to automate customer service tasks or provide consultation.
-
-Implement caching of requests to LLMs to help you save cost on your chatbot.
-
-Chatbot system is able to plug in various LLM backend for question types.
-
 Madam Speaker, Madam Vice President, our First Lady and Second Gentleman. Members of Congress and the Cabinet. Justices of the Supreme Court. My fellow Americans.  
 
 Last year COVID-19 kept us apart. This year we are finally together again. 

@@ -58,7 +58,6 @@ class Jarvis(Assistant):
             Brain().change_embedder(self.suit.execute_hook("set_suit_embedder", assistant=self))
         except ValueError as e:
             syslog.error(e)
-        
 
     def greet(self):
         if "set_greeting_message" in self._chain._suit._hooks:
