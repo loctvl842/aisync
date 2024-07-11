@@ -179,7 +179,7 @@ class Node:
         document_memory_output = ""
         try:
             doc = await self.assistant.document_memory.similarity_search(
-                vectorized_input=self.vectorized_input,
+                input=input,
                 document_name=self.document_names,
             )
             document_memory = self.execute_documents(agent_input={"input": input, "document": doc})
