@@ -112,7 +112,7 @@ class Node:
         )
         res = None
         try:
-            syslog.info(agent_input)
+            # syslog.info(agent_input)
             res = await agent_executor.ainvoke(
                 input=agent_input,
                 config=self.assistant.config,
@@ -179,7 +179,7 @@ class Node:
         document_memory_output = ""
         try:
             doc = await self.assistant.document_memory.similarity_search(
-                vectorized_input=self.vectorized_input,
+                input=input,
                 document_name=self.document_names,
             )
             document_memory = self.execute_documents(agent_input={"input": input, "document": doc})
@@ -216,16 +216,16 @@ class Node:
     @staticmethod
     async def invoke(state, **kwargs):
         cur_node = kwargs["cur_node"]
+        if cur_node.name == "intent_manager":
+            return {"agent_output": ""}
         assistant = cur_node.assistant
         syslog.info(f"Invoking node: {cur_node.name}")
         input = await cur_node.setup_input(state)
 
-        syslog.info(input)
-
         res = {}
         try:
             ai_response = cur_node._chain.invoke(input, config=cur_node.assistant.config)
-            syslog.info(ai_response)
+            # syslog.info(ai_response)
             if isinstance(ai_response, str):
                 res["agent_output"] = ai_response
             else:

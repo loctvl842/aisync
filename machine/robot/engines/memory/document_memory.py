@@ -12,6 +12,8 @@ from machine.robot.models import DocCollection
 
 from .universal_loader import UniversalLoader
 
+from core.cache import Cache
+
 
 class DocumentMemory:
     def __init__(self, config=None, embedder=None):
@@ -75,10 +77,12 @@ class DocumentMemory:
         await session.execute(stmt)
         self.splitted_documents = []
 
-    async def similarity_search(self, vectorized_input, document_name, k=8) -> str:
+    @Cache.cached(prefix="document", ttl=60)
+    async def similarity_search(self, input, document_name, k=8) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"
         # DB Session for similarity search
+        vectorized_input = self.embedder.embed_query(text=input)
         sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
         async with sessions[Dialect.PGVECTOR].session() as session:
             # Top self._top_matches similarity search neighbors from input and output tables

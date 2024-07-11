@@ -169,8 +169,8 @@ intent_manager = Node(
     prompt_prefix=prompt_prefix_template["intent_manager"],
     tools=["get_today_date"],
     document_names=["rockship_expertises.txt"],
-    next_nodes=["staffing_agent", "ai_consult_agent", "low_code_agent", "workflow_automation_agent"],
-    conditional_prompt=conditional_prompts["intent_manager"],
+    next_nodes=["staffing_agent", "ai_consult_agent", "low_code_agent", "workflow_automation_agent", "general_information_agent"],
+    conditional_prompt=conditional_prompts["intent_manager"]
 )
 
 staffing_agent = Node(
@@ -204,4 +204,12 @@ workflow_automation_agent = Node(
     tools=["get_today_date", "workflow_automation_price_estimation"],
     next_nodes=["intent_manager"],
     conditional_prompt=conditional_prompts["workflow_automation_agent"],
+)
+
+general_information_agent = Node(
+    name="general_information_agent",
+    prompt_prefix="This is a general information agent that's responsible for answering general question about Rockship.",
+    next_nodes=["intent_manager"],
+    document_names=["rockship_expertises.txt", "rockship_projects.txt"],
+    conditional_prompt="Used when the users' intent is not clear or the users are asking general questions."
 )
