@@ -101,12 +101,13 @@ class Node:
         )
         res = None
         try:
+            syslog.info(agent_input)
             res = await agent_executor.ainvoke(
                 input=agent_input,
                 config=self.assistant.config,
             )
         except Exception as e:
-            syslog.debug("Error when invoking agent_executor:\n\n", e)
+            syslog.error("Error when invoking agent_executor:\n\n", e)
 
         return res
     
@@ -126,7 +127,7 @@ class Node:
 
         return res.content
     
-    async def tool_output(self):
+    async def tool_output(self, input):
         """
         Function to execute tools and format the output to put into final prompt
         """
@@ -195,11 +196,13 @@ class Node:
         # Document memory
         input["document_memory"] = await self.document_memory(input["input"])
 
-        # Tool Output
-        input["tool_output"] = await self.tool_output()
-
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()
+        
+        # Tool Output
+        input["tool_output"] = await self.tool_output(input)
+
+        
 
         return input
 

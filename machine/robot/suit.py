@@ -107,8 +107,6 @@ class Suit:
 
     def activate(self):
         self._actions, self._hooks, self._tools, self._workflow, self._nodes = self._get_decorated_fn()
-        syslog.info(self._nodes)
-        syslog.info(self._workflow)
         self._active = True
 
     def deactivate(self):

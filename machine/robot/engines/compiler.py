@@ -2,6 +2,10 @@ from langgraph.graph import StateGraph
 from typing import TypedDict, Callable, Any
 import functools
 from .node_core import NodeCore
+from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT
+from langchain_core.prompts import PromptTemplate
+from .node import Node
+from ..assistants.base.assistant import Assistant
 
 from core.logger import syslog
 
@@ -14,6 +18,7 @@ class Compiler:
         self.state_type = None  # Placeholder for state datatype
         self.compiled_graph = None # Not compiled yet
         self.state_graph = None # No graph setup yet
+        self.all_nodes = {}
         
 
     def setup_node_core(self, assistant):
@@ -33,7 +38,7 @@ class Compiler:
         for node_name, node in assistant.suit.nodes.items():
             node.activate(assistant)
             self.add_node(node)
-            self.add_edge(node_name, "node_core")
+            self.add_conditional_edge(node_name, self.wrapper_choose_agent(node, assistant))
         self.set_end_point("node_core")
 
     def gen_wrapper(self, fn, node):
@@ -79,13 +84,14 @@ class Compiler:
         """
         self.compiled_graph = self.state_graph.compile()
 
-    def add_node(self, node):
+    def add_node(self, node: Node):
         """
         Add a node to the graph.
         """
         self.state_graph.add_node(node.name, self.gen_wrapper(node.invoke, node))
+        self.all_nodes[node.name] = node
 
-    async def ainvoke(self, input):
+    async def ainvoke(self, input: State):
         """
         Executes the compiled graph starting from the entry point.
         
@@ -99,3 +105,59 @@ class Compiler:
         except Exception as e:
             syslog.error(f'The following error has occured while invoking graph: {e}')
             return {"agent_output": f"An error has occured"}
+        
+    def wrapper_choose_agent(self, main_node: Node, assistant: Assistant) -> callable:
+        def choose_agent(state: State, **kwargs):
+            """
+            if the user is interested in a particular agent, choose the agent
+            """
+            compiler = kwargs["compiler"]
+            assistant = kwargs["assistant"]
+            agent_names = [node for node in main_node.next_nodes]
+            all_next_agents = [compiler.all_nodes[agent_name] for agent_name in agent_names]
+            agents_conditions = ""
+            for node in all_next_agents:
+                agents_conditions += f"- {node.name}: {node.conditional_prompt}\n"
+            agent_names.append("node_core")
+            prompt = PromptTemplate.from_template(
+                DEFAULT_CHOOSE_AGENT_PROMPT
+            )
+            iterations = 5
+            flag = False
+            error_log = ""
+            while (iterations > 0):
+                chain = prompt | assistant.llm
+                res = chain.invoke(
+                    input={
+                        "all_agent_names": agent_names,
+                        "conditions": agents_conditions,
+                        "input": state["input"],
+                        "agent_output": state["agent_output"],
+                        "error_log": error_log
+                    }, 
+                    config=assistant.config
+                )
+
+                for name in agent_names:
+                    if name in res.content:
+                        return name
+
+                # if res.content in agent_names:
+                #     print("Jump to node: {res.content}")
+                #     return res.content
+                # elif res.content[1:-1] in agent_names:
+                #     print("Jump to node: {res.content}")
+                #     return res.content[1:-1]
+                # else:
+                if flag == False:
+                    error_log += f"Invalid output. please only choose one of the following agents {agent_names}. But you chose {res.content}\n"
+                iterations -= 1
+            print("Jump to node_core after failing to find a next node")
+            return "node_core"
+        @functools.wraps(choose_agent)
+        def wrapper(state: State, **kwargs):
+            kwargs["compiler"] = self
+            kwargs["assistant"] = assistant
+            return choose_agent(state, **kwargs)
+        
+        return wrapper

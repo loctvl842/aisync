@@ -143,34 +143,65 @@ prompt_prefix_template = {
 }
 
 
+conditional_prompts = {
+    "intent_manager": """
+    Used for deciding what scenario the user is in to route them to the corresponding agent. Move here when the users' intent change.
+    Can also be used when users' intent change and try to route to a more appropriate agent.
+    """,
+    "staffing_agent": """
+    Used when the client already had the tech team and wanted to have tech team extension
+    """,
+    "ai_consult_agent": """
+    Used when users' problem need to be solved using AI or the users are interested in using AI/LLM.
+    """,
+    "low_code_agent": """
+    Used when users want to create a new website/application that utilizes low-code platforms.
+    """,
+    "workflow_automation_agent": """
+    Used to help users develop a workflow automation for their company. 
+    Used if the users have the need to connect certain apps or want to automate some tasks in their companies.
+    """
+}
+
+
 intent_manager = Node(
     name="intent_manager",
     prompt_prefix=prompt_prefix_template["intent_manager"],
     tools=["get_today_date"],
-    document_names=["rockship_expertises.txt"]
+    document_names=["rockship_expertises.txt"],
+    next_nodes=["staffing_agent", "ai_consult_agent", "low_code_agent", "workflow_automation_agent"],
+    conditional_prompt=conditional_prompts["intent_manager"]
 )
 
-# staffing_agent = Node(
-#     name="staffing_agent",
-#     prompt_prefix=prompt_prefix_template["staffing_agent"],
-#     tools=["get_today_date"]
-# )
+staffing_agent = Node(
+    name="staffing_agent",
+    prompt_prefix=prompt_prefix_template["staffing_agent"],
+    tools=["get_today_date"],
+    next_nodes=["intent_manager"],
+    conditional_prompt=conditional_prompts["staffing_agent"]
+)
 
-# ai_consult_agent = Node(
-#     name="ai_consult_agent",
-#     prompt_prefix=prompt_prefix_template["ai_consult_agent"],
-#     tools=["get_today_date"]
-# )
+ai_consult_agent = Node(
+    name="ai_consult_agent",
+    prompt_prefix=prompt_prefix_template["ai_consult_agent"],
+    tools=["get_today_date"],
+    next_nodes=["intent_manager"],
+    conditional_prompt=conditional_prompts["ai_consult_agent"]
+)
 
-# low_code_agent = Node(
-#     name="low_code_agent",
-#     prompt_prefix=prompt_prefix_template["low_code_agent"],
-#     tools=["get_today_date", "low_code_price_estimation"],
-#     document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
-# )
+low_code_agent = Node(
+    name="low_code_agent",
+    prompt_prefix=prompt_prefix_template["low_code_agent"],
+    tools=["get_today_date", "low_code_price_estimation"],
+    document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
+    next_nodes=["intent_manager"],
+    conditional_prompt=conditional_prompts["low_code_agent"]
+)
 
-# workflow_automation_agent = Node(
-#     name="workflow_automation_agent",
-#     prompt_prefix=prompt_prefix_template["workflow_automation_agent"],
-#     tools=["get_today_date", "workflow_automation_price_estimation"]
-# )
+workflow_automation_agent = Node(
+    name="workflow_automation_agent",
+    prompt_prefix=prompt_prefix_template["workflow_automation_agent"],
+    tools=["get_today_date", "workflow_automation_price_estimation"],
+    next_nodes=["intent_manager"],
+    conditional_prompt=conditional_prompts["workflow_automation_agent"]
+)
