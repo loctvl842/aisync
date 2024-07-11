@@ -133,6 +133,7 @@ class Compiler:
                     input={
                         "all_agent_names": agent_names,
                         "conditions": agents_conditions,
+                        "buffer_memory": assistant.buffer_memory.format_buffer_memory_no_token(),
                         "input": state["input"],
                         "agent_output": state["agent_output"],
                         "error_log": error_log,
