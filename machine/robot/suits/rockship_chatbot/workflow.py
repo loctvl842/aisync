@@ -14,5 +14,5 @@ def chatbot_workflow(**kwargs):
     # syslog.info("Setting end point")
     
     # set the graph
-    assistant.compiler.add_edge("intent_manager", "low_code_agent")
+    # assistant.compiler.add_edge("intent_manager", "low_code_agent")
 

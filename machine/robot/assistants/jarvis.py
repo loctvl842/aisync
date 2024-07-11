@@ -75,6 +75,8 @@ class Jarvis(Assistant):
         if file_path == []:
             file_path = self.manager.suits[suit]._path_to_doc
 
+        self.all_files_path = file_path
+
         for fp in file_path:
             self.document_memory.read(fp)
 

@@ -206,18 +206,23 @@ class Node:
     @staticmethod
     async def invoke(state, **kwargs):
         cur_node = kwargs["cur_node"]
+        assistant = cur_node.assistant
         syslog.info(f"Invoking node: {cur_node.name}")
         input = await cur_node.setup_input(state)
 
         syslog.info(input)
 
         res = {}
-        ai_response = cur_node._chain.invoke(input, config=cur_node.assistant.config)
-        syslog.info(ai_response)
-        if isinstance(ai_response, str):
-            res["agent_output"] = ai_response
-        else:
-            res["agent_output"] = ai_response.content
-
-        return res
-        
+        try:
+            ai_response = cur_node._chain.invoke(input, config=cur_node.assistant.config)
+            syslog.info(ai_response)
+            if isinstance(ai_response, str):
+                res["agent_output"] = ai_response
+            else:
+                res["agent_output"] = ai_response.content
+        except Exception as e:
+            syslog.error(f"Error when invoking node: {e}")
+            traceback.print_exc()
+            res["agent_output"] = "Failed to execute\n"
+        assistant.buffer_memory.save_message(cur_node.name, res["agent_output"])
+        return res        

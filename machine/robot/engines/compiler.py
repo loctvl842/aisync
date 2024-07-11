@@ -1,10 +1,9 @@
-from langgraph.graph import START, END, StateGraph, MessagesState
-from langgraph.graph.graph import CompiledGraph
-from langchain_core.pydantic_v1 import BaseModel, Field
-from typing import Annotated, Sequence, TypedDict, Callable, Any, Union
-from langgraph.graph import MessagesState
+from langgraph.graph import StateGraph
+from typing import TypedDict, Callable, Any
 import functools
 from .node_core import NodeCore
+
+from core.logger import syslog
 
 class State(TypedDict):
     input: str
@@ -15,20 +14,26 @@ class Compiler:
         self.state_type = None  # Placeholder for state datatype
         self.compiled_graph = None # Not compiled yet
         self.state_graph = None # No graph setup yet
-        self.node_core = NodeCore(name="node_core")
+        
+
+    def setup_node_core(self, assistant):
+        """
+        Function to create a core node in the graph workflow
+        """
+        # This node has access to all documents available
+        docs = [doc.split("/")[-1] for doc in assistant.all_files_path]
+        self.node_core = NodeCore(name="node_core", document_names=docs)
+        self.node_core.activate(assistant)
+        self.add_node(self.node_core)
         
     def activate(self, assistant):
         self.set_state()
         self.state_graph = StateGraph(self.state_type)
-        kwargs = {"cur_node": self.node_core}
-        self.node_core.activate(assistant)
-        self.add_node("node_core",  self.gen_wrapper(self.node_core.invoke, self.node_core))
+        self.setup_node_core(assistant)
         for node_name, node in assistant.suit.nodes.items():
             node.activate(assistant)
-            kwargs = {"cur_node": node}
-            self.add_node(node_name, self.gen_wrapper(node.invoke, node))
-            if node_name != "intent_manager":
-                self.add_edge(node_name, "node_core")
+            self.add_node(node)
+            self.add_edge(node_name, "node_core")
         self.set_end_point("node_core")
 
     def gen_wrapper(self, fn, node):
@@ -74,11 +79,11 @@ class Compiler:
         """
         self.compiled_graph = self.state_graph.compile()
 
-    def add_node(self, node_name, node):
+    def add_node(self, node):
         """
         Add a node to the graph.
         """
-        self.state_graph.add_node(node_name, node)
+        self.state_graph.add_node(node.name, self.gen_wrapper(node.invoke, node))
 
     async def ainvoke(self, input):
         """
@@ -89,4 +94,8 @@ class Compiler:
         """
         if self.compiled_graph is None:
             raise Exception("Graph is not compiled yet.")
-        return await self.compiled_graph.ainvoke(input)
+        try: 
+            return await self.compiled_graph.ainvoke(input)
+        except Exception as e:
+            syslog.error(f'The following error has occured while invoking graph: {e}')
+            return {"agent_output": f"An error has occured"}

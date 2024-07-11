@@ -162,12 +162,12 @@ intent_manager = Node(
 #     tools=["get_today_date"]
 # )
 
-low_code_agent = Node(
-    name="low_code_agent",
-    prompt_prefix=prompt_prefix_template["low_code_agent"],
-    tools=["get_today_date", "low_code_price_estimation"],
-    document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
-)
+# low_code_agent = Node(
+#     name="low_code_agent",
+#     prompt_prefix=prompt_prefix_template["low_code_agent"],
+#     tools=["get_today_date", "low_code_price_estimation"],
+#     document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
+# )
 
 # workflow_automation_agent = Node(
 #     name="workflow_automation_agent",

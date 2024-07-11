@@ -84,7 +84,12 @@ Human: {input}
 AI:"""
 
 
-DEFAULT_AGENT_PROMPT_SUFFIX = """Begin!
+DEFAULT_AGENT_PROMPT_SUFFIX = """
+Effectively use your context to answer queries.
+- Consider all information available from context and effectively combine them in order to respond to the query.
+Your answer to Human should be focused on the following context:
+
+Begin!
 
 # Context:
 
