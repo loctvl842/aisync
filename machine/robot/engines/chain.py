@@ -53,7 +53,6 @@ class ChatChain:
         return assistant.buffer_memory.format_buffer_memory(self.buffer_token_limit, self.model_name)
 
     def set_buffer_limit(self, input, assistant):
-        print(input)
         filled_prompt = self.prompt.format(**input)
         self.model_name = assistant.llm.model if hasattr(assistant.llm, "model") else assistant.llm.model_name
         syslog.info(self.model_name)
