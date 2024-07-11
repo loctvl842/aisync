@@ -1,6 +1,7 @@
 import asyncio
 from typing import Callable
 
+from core.cache import Cache, DefaultKeyMaker, RedisBackend
 from core.logger import syslog
 
 from ..engines.brain import Brain
@@ -28,6 +29,10 @@ class Jarvis(Assistant):
 
         # Compile langgraph workflow
         self.compile()
+        self.init_cache()
+
+    def init_cache(self) -> None:
+        Cache.configure(backend=RedisBackend(), key_maker=DefaultKeyMaker())
 
     def set_max_token(self, limit, suit):
         if "set_token_limit" in self.manager.suits[suit]._hooks:

@@ -4,6 +4,7 @@ from langchain.text_splitter import CharacterTextSplitter
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
+from core.cache.default_key_maker import DefaultKeyMaker
 from core.db.session import Dialect, sessions
 from core.db.transactional import Transactional
 from core.db.utils import SessionContext
@@ -77,7 +78,7 @@ class DocumentMemory:
         await session.execute(stmt)
         self.splitted_documents = []
 
-    @Cache.cached(prefix="document", ttl=60)
+    @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
     async def similarity_search(self, input, document_name, k=8) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"

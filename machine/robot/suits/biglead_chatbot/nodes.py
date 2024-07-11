@@ -42,7 +42,7 @@ terms_and_conditions_agent = Node(
     prompt_prefix=prompt_prefix_template["terms_and_conditions_agent"],
     tools=[],
     document_names=["biglead_terms.txt"],
-    next_nodes=["monitor"],
+    next_nodes=[],
     conditional_prompt=conditional_prompts["terms_and_conditions_agent"]
 )
 
@@ -51,6 +51,6 @@ general_info_agent = Node(
     prompt_prefix=prompt_prefix_template["general_info_agent"],
     tools=[],
     document_names=["biglead_info.txt", "biglead_customer_services_multi-platform.txt"],
-    next_nodes=["monitor"],
+    next_nodes=[],
     conditional_prompt=conditional_prompts["general_info_agent"]
 )
