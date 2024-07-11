@@ -1,26 +1,37 @@
-from typing import Optional, List, Sequence
-from ..assistants.base.assistant import Assistant
-from . import prompts
+import traceback
+from typing import List, Optional, Sequence
+
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain.agents.tools import BaseTool
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
-from .prompts import FORMAT_INSTRUCTIONS, ActionPromptTemplate, DOC_PROMPT, DEFAULT_AGENT_PROMPT_SUFFIX, DEFAULT_PROMPT_SUFFIX, DEFAULT_PROMPT_PREFIX
-from langchain.agents import AgentExecutor, create_tool_calling_agent
+
 from core.logger import syslog
+
+from ..assistants.base.assistant import Assistant
+from . import prompts
 from .parser import ActionOutputParser
-from langchain.agents.tools import BaseTool
-import traceback
+from .prompts import (
+    DEFAULT_AGENT_PROMPT_SUFFIX,
+    DEFAULT_PROMPT_PREFIX,
+    DEFAULT_PROMPT_SUFFIX,
+    DOC_PROMPT,
+    FORMAT_INSTRUCTIONS,
+    ActionPromptTemplate,
+)
+
 
 class Node:
     def __init__(
         self,
         name: str,
-        prompt_prefix: Optional[str]=DEFAULT_PROMPT_PREFIX,
-        prompt_suffix: Optional[str]=DEFAULT_AGENT_PROMPT_SUFFIX,
-        conditional_prompt: Optional[str]="",
-        tools: Optional[List[str]]=[],
-        document_names: Optional[List[str]]=[],
-        interrupt_before: Optional[List[str]]=[],
-        next_nodes: Optional[List[str]]=[]
+        prompt_prefix: Optional[str] = DEFAULT_PROMPT_PREFIX,
+        prompt_suffix: Optional[str] = DEFAULT_AGENT_PROMPT_SUFFIX,
+        conditional_prompt: Optional[str] = "",
+        tools: Optional[List[str]] = [],
+        document_names: Optional[List[str]] = [],
+        interrupt_before: Optional[List[str]] = [],
+        next_nodes: Optional[List[str]] = [],
     ):
         self.name = name
         self.prompt_prefix = prompt_prefix
@@ -67,13 +78,13 @@ class Node:
             template=template,
             input_variables=input_variables,
         )
-    
+
     def _make_chain(self) -> RunnableSequence:
         # Prepare prompt
         self.prompt = self._make_prompt(prefix=self.prompt_prefix, suffix=self.prompt_suffix)
         chain = self.prompt | self.llm
         return chain
-    
+
     async def execute_tools(self, agent_input, tools):
         # Prompt
         format_instructions = self._suit.execute_hook(
@@ -110,7 +121,7 @@ class Node:
             syslog.error("Error when invoking agent_executor:\n\n", e)
 
         return res
-    
+
     def execute_documents(self, agent_input):
         """
         Function to summarize understanding from documents
@@ -126,14 +137,14 @@ class Node:
             return res
 
         return res.content
-    
+
     async def tool_output(self, input):
         """
         Function to execute tools and format the output to put into final prompt
         """
         # TODO: add filter by tool name
         tools = await self.assistant.tool_knowledge.find_relevant_tools(
-            tools=self._suit.tools, 
+            tools=self._suit.tools,
             vectorized_input=self.vectorized_input,
             tools_access=self.tools,
         )
@@ -171,9 +182,7 @@ class Node:
                 vectorized_input=self.vectorized_input,
                 document_name=self.document_names,
             )
-            document_memory = self.execute_documents(
-                agent_input={"input": input, "document": doc}
-            )
+            document_memory = self.execute_documents(agent_input={"input": input, "document": doc})
             document_memory_output = f"## Document Knowledge Output: `{document_memory}`"
         except Exception as e:
             syslog.error(f"Error when fetching document memory: {e}")
@@ -186,7 +195,7 @@ class Node:
         Retrieve buffer memory
         """
         return f"## Buffer Memory:\n\n{self.assistant.buffer_memory.format_buffer_memory_no_token()}"
-    
+
     async def setup_input(self, state):
         input = {"input": state["input"]}
 
@@ -198,11 +207,9 @@ class Node:
 
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()
-        
+
         # Tool Output
         input["tool_output"] = await self.tool_output(input)
-
-        
 
         return input
 
@@ -228,4 +235,4 @@ class Node:
             traceback.print_exc()
             res["agent_output"] = "Failed to execute\n"
         assistant.buffer_memory.save_message(cur_node.name, res["agent_output"])
-        return res        
+        return res

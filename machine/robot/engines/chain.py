@@ -69,7 +69,7 @@ class ChatChain:
 
         # Run similarity search to find relevant tools
         tools = await assistant.tool_knowledge.find_relevant_tools(
-            suit=self._suit, vectorized_input=self.vectorized_input, tools_access = ["none_of_the_above", "get_my_name"]
+            suit=self._suit, vectorized_input=self.vectorized_input, tools_access=["none_of_the_above", "get_my_name"]
         )
 
         if len(tools) > 0:
@@ -92,7 +92,9 @@ class ChatChain:
 
         # fetch document_memory
         try:
-            doc = await assistant.document_memory.similarity_search(vectorized_input=self.vectorized_input, document_name=["Rockship.txt"])
+            doc = await assistant.document_memory.similarity_search(
+                vectorized_input=self.vectorized_input, document_name=["Rockship.txt"]
+            )
             document_memory = assistant.agent_manager.execute_documents(
                 agent_input={"input": input["input"], "document": doc}, assistant=assistant
             )
@@ -124,7 +126,7 @@ class ChatChain:
 
         # Run similarity search to find relevant tools
         tools = await assistant.tool_knowledge.find_relevant_tools(
-            suit=self._suit, vectorized_input=self.vectorized_input, tools_access = ["none_of_the_above", "get_my_name"]
+            suit=self._suit, vectorized_input=self.vectorized_input, tools_access=["none_of_the_above", "get_my_name"]
         )
 
         if len(tools) > 0:
@@ -147,7 +149,9 @@ class ChatChain:
 
         # fetch document_memory
         try:
-            doc = await assistant.document_memory.similarity_search(vectorized_input=self.vectorized_input, document_name=["Rockship.txt"])
+            doc = await assistant.document_memory.similarity_search(
+                vectorized_input=self.vectorized_input, document_name=["Rockship.txt"]
+            )
             document_memory = assistant.agent_manager.execute_documents(
                 agent_input={"input": input["input"], "document": doc}, assistant=assistant
             )

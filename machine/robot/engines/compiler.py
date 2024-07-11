@@ -1,25 +1,28 @@
-from langgraph.graph import StateGraph
-from typing import TypedDict, Callable, Any
 import functools
-from .node_core import NodeCore
-from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT
+from typing import Any, Callable, TypedDict
+
 from langchain_core.prompts import PromptTemplate
-from .node import Node
-from ..assistants.base.assistant import Assistant
+from langgraph.graph import StateGraph
 
 from core.logger import syslog
+
+from ..assistants.base.assistant import Assistant
+from .node import Node
+from .node_core import NodeCore
+from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT
+
 
 class State(TypedDict):
     input: str
     agent_output: str
 
+
 class Compiler:
     def __init__(self):
         self.state_type = None  # Placeholder for state datatype
-        self.compiled_graph = None # Not compiled yet
-        self.state_graph = None # No graph setup yet
+        self.compiled_graph = None  # Not compiled yet
+        self.state_graph = None  # No graph setup yet
         self.all_nodes = {}
-        
 
     def setup_node_core(self, assistant):
         """
@@ -30,7 +33,7 @@ class Compiler:
         self.node_core = NodeCore(name="node_core", document_names=docs)
         self.node_core.activate(assistant)
         self.add_node(self.node_core)
-        
+
     def activate(self, assistant):
         self.set_state()
         self.state_graph = StateGraph(self.state_type)
@@ -46,6 +49,7 @@ class Compiler:
         async def wrapper(state, **kwargs):
             kwargs["cur_node"] = node
             return await fn(state, **kwargs)
+
         return wrapper
 
     def set_state(self):
@@ -94,18 +98,18 @@ class Compiler:
     async def ainvoke(self, input: State):
         """
         Executes the compiled graph starting from the entry point.
-        
+
         :param initial_input: The initial input or state required to start the graph execution.
         :return: The final state or output after executing the graph.
         """
         if self.compiled_graph is None:
             raise Exception("Graph is not compiled yet.")
-        try: 
+        try:
             return await self.compiled_graph.ainvoke(input)
         except Exception as e:
-            syslog.error(f'The following error has occured while invoking graph: {e}')
+            syslog.error(f"The following error has occured while invoking graph: {e}")
             return {"agent_output": f"An error has occured"}
-        
+
     def wrapper_choose_agent(self, main_node: Node, assistant: Assistant) -> callable:
         def choose_agent(state: State, **kwargs):
             """
@@ -119,13 +123,11 @@ class Compiler:
             for node in all_next_agents:
                 agents_conditions += f"- {node.name}: {node.conditional_prompt}\n"
             agent_names.append("node_core")
-            prompt = PromptTemplate.from_template(
-                DEFAULT_CHOOSE_AGENT_PROMPT
-            )
+            prompt = PromptTemplate.from_template(DEFAULT_CHOOSE_AGENT_PROMPT)
             iterations = 5
             flag = False
             error_log = ""
-            while (iterations > 0):
+            while iterations > 0:
                 chain = prompt | assistant.llm
                 res = chain.invoke(
                     input={
@@ -133,9 +135,9 @@ class Compiler:
                         "conditions": agents_conditions,
                         "input": state["input"],
                         "agent_output": state["agent_output"],
-                        "error_log": error_log
-                    }, 
-                    config=assistant.config
+                        "error_log": error_log,
+                    },
+                    config=assistant.config,
                 )
 
                 for name in agent_names:
@@ -154,10 +156,11 @@ class Compiler:
                 iterations -= 1
             print("Jump to node_core after failing to find a next node")
             return "node_core"
+
         @functools.wraps(choose_agent)
         def wrapper(state: State, **kwargs):
             kwargs["compiler"] = self
             kwargs["assistant"] = assistant
             return choose_agent(state, **kwargs)
-        
+
         return wrapper
