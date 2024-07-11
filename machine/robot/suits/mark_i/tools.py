@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, Optional, Any
+from typing import Any, Dict, Optional
 
 from core.logger import syslog
 
@@ -17,6 +17,7 @@ def get_today_date(tool_input: Optional[Any] = None, **kwargs: Any):
     syslog.info(f"The tool's assistant is {assistant.name}")
     return datetime.today()
 
+
 @tool
 def get_my_name(tool_input: Optional[Any] = None, **kwargs: Any):
     """
@@ -27,6 +28,8 @@ def get_my_name(tool_input: Optional[Any] = None, **kwargs: Any):
     assistant = kwargs["assistant"]
     syslog.info(f"The tool's assistant is {assistant.name}")
     return "Nhan Vo"
+
+
 @tool
 def none_of_the_above(tool_input: Optional[Dict] = None):
     """

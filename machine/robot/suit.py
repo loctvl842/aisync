@@ -39,11 +39,11 @@ class Suit:
     @staticmethod
     def _is_suit_tool(member):
         return isinstance(member, BaseTool)
-    
+
     @staticmethod
     def _is_suit_workflow(member):
         return isinstance(member, SuitWorkflow)
-    
+
     @staticmethod
     def _is_node(member):
         return isinstance(member, Node)
@@ -84,7 +84,9 @@ class Suit:
                     syslog.warning(f"Duplicate tool detected: {duplicate_tools}")
 
                 # find workflow
-                new_workflow = {workflow_fn[0]: workflow_fn[1] for workflow_fn in getmembers(suit_module, self._is_suit_workflow)}
+                new_workflow = {
+                    workflow_fn[0]: workflow_fn[1] for workflow_fn in getmembers(suit_module, self._is_suit_workflow)
+                }
                 duplicate_workflow = set(workflow.keys()) & set(new_workflow.keys())
                 if duplicate_workflow:
                     syslog.warning(f"Duplicate workflow detected: {duplicate_workflow}")
@@ -94,7 +96,7 @@ class Suit:
                 duplicate_nodes = set(nodes.keys()) & set(new_nodes.keys())
                 if duplicate_nodes:
                     syslog.warning(f"Duplicate node detected: {duplicate_nodes}")
-                
+
                 actions.update(new_actions)
                 hooks.update(new_hooks)
                 tools.update(new_tools)
@@ -133,7 +135,7 @@ class Suit:
                 return default
         syslog.error(f"Hook `{hook_name}` not found")
         return default
-    
+
     def execute_workflow(self, *args, **kwargs) -> Any:
         default = kwargs.get("default", None)
         workflow_name = next(iter(self._workflow))
@@ -164,11 +166,11 @@ class Suit:
     @property
     def tools(self):
         return self._tools
-    
+
     @property
     def workflow(self):
         return self._workflow
-    
+
     @property
     def nodes(self):
         return self._nodes

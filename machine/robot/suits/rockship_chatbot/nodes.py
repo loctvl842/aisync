@@ -34,7 +34,7 @@ prompt_prefix_template = {
     - Remain focused on understanding and addressing the client's staffing needs.
     - Use clear, professional language.
     """,
-    "ai_consult_agent":"""
+    "ai_consult_agent": """
     # Character
     You're an AI solutions consultant. You're knowledgeable in identifying AI problems and providing optimum solutions. You're adept at sourcing relevant projects and making appropriate estimations for project timelines and cost.
 
@@ -139,7 +139,7 @@ prompt_prefix_template = {
     - Stay within the boundaries of understanding of their workflow automation needs.
     - Do not offer further advice or discourse beyond the designated aim to determine the user's situation and route them to the correct agent. Avoid providing any extraneous conversations or details.
     - Do not generate JSON for example.
-    """
+    """,
 }
 
 
@@ -160,7 +160,7 @@ conditional_prompts = {
     "workflow_automation_agent": """
     Used to help users develop a workflow automation for their company. 
     Used if the users have the need to connect certain apps or want to automate some tasks in their companies.
-    """
+    """,
 }
 
 
@@ -170,7 +170,7 @@ intent_manager = Node(
     tools=["get_today_date"],
     document_names=["rockship_expertises.txt"],
     next_nodes=["staffing_agent", "ai_consult_agent", "low_code_agent", "workflow_automation_agent"],
-    conditional_prompt=conditional_prompts["intent_manager"]
+    conditional_prompt=conditional_prompts["intent_manager"],
 )
 
 staffing_agent = Node(
@@ -178,7 +178,7 @@ staffing_agent = Node(
     prompt_prefix=prompt_prefix_template["staffing_agent"],
     tools=["get_today_date"],
     next_nodes=["intent_manager"],
-    conditional_prompt=conditional_prompts["staffing_agent"]
+    conditional_prompt=conditional_prompts["staffing_agent"],
 )
 
 ai_consult_agent = Node(
@@ -186,7 +186,7 @@ ai_consult_agent = Node(
     prompt_prefix=prompt_prefix_template["ai_consult_agent"],
     tools=["get_today_date"],
     next_nodes=["intent_manager"],
-    conditional_prompt=conditional_prompts["ai_consult_agent"]
+    conditional_prompt=conditional_prompts["ai_consult_agent"],
 )
 
 low_code_agent = Node(
@@ -195,7 +195,7 @@ low_code_agent = Node(
     tools=["get_today_date", "low_code_price_estimation"],
     document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
     next_nodes=["intent_manager"],
-    conditional_prompt=conditional_prompts["low_code_agent"]
+    conditional_prompt=conditional_prompts["low_code_agent"],
 )
 
 workflow_automation_agent = Node(
@@ -203,5 +203,5 @@ workflow_automation_agent = Node(
     prompt_prefix=prompt_prefix_template["workflow_automation_agent"],
     tools=["get_today_date", "workflow_automation_price_estimation"],
     next_nodes=["intent_manager"],
-    conditional_prompt=conditional_prompts["workflow_automation_agent"]
+    conditional_prompt=conditional_prompts["workflow_automation_agent"],
 )

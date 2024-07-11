@@ -77,7 +77,7 @@ def get_path_to_doc():
 
     Example: "home/nhan/aisync/machine/robot/suits/mark_i/document/Rockship.txt"
     """
-    user_path_specify = ["~/tet.txt", "~/text.doc", "~/test.txt"]
+    user_path_specify = []
     filter_path = []
     for i in range(len(user_path_specify)):
         try:

@@ -21,6 +21,7 @@ def set_suit_embedder(assistant):
     model_name = "EmbedderGPT4All"
     return model_name
 
+
 @hook
 def build_format_instructions(default: str, assistant):
     """

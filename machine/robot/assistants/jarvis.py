@@ -78,7 +78,7 @@ class Jarvis(Assistant):
         self.all_files_path = file_path
 
         for fp in file_path:
-            self.document_memory.read(fp)
+            self.document_memory.read(suit, fp)
 
     def load_tools(self, suit):
         tools = list(self.manager.suits[suit].tools.values())

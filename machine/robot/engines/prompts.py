@@ -99,7 +99,7 @@ Begin!
 
 {tool_output}
 """
-  
+
 CLASSIFIER_PROMPT = """Detect the topic of the following question: `{input}`.
 Only output one of the following topics:
 

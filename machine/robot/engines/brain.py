@@ -3,9 +3,9 @@ from machine.robot.engines.memory import DocumentMemory, PersistMemory, ToolKnow
 
 from ..manager import Manager
 from .agent_manager import AgentManager
+from .compiler import Compiler
 from .embedder import get_embedder_by_name
 from .llm import get_llm_by_name
-from .compiler import Compiler
 
 
 @singleton
