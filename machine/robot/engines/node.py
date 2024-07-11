@@ -101,7 +101,7 @@ class Node:
         )
         res = None
         try:
-            syslog.info(agent_input)
+            # syslog.info(agent_input)
             res = await agent_executor.ainvoke(
                 input=agent_input,
                 config=self.assistant.config,
@@ -209,16 +209,16 @@ class Node:
     @staticmethod
     async def invoke(state, **kwargs):
         cur_node = kwargs["cur_node"]
+        if cur_node.name == "intent_manager":
+            return {"agent_output": ""}
         assistant = cur_node.assistant
         syslog.info(f"Invoking node: {cur_node.name}")
         input = await cur_node.setup_input(state)
 
-        syslog.info(input)
-
         res = {}
         try:
             ai_response = cur_node._chain.invoke(input, config=cur_node.assistant.config)
-            syslog.info(ai_response)
+            # syslog.info(ai_response)
             if isinstance(ai_response, str):
                 res["agent_output"] = ai_response
             else:
