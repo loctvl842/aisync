@@ -146,6 +146,5 @@ Your answer must be in format: [Agent Name], Agent Name include: {all_agent_name
 
 Begin!
 Query: {input}
-Agent Output: {agent_output}
 Error Log: {error_log}
 """

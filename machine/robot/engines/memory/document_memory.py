@@ -75,7 +75,7 @@ class DocumentMemory:
         await session.execute(stmt)
         self.splitted_documents = []
 
-    async def similarity_search(self, vectorized_input, document_name, k=4) -> str:
+    async def similarity_search(self, vectorized_input, document_name, k=8) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"
         # DB Session for similarity search
