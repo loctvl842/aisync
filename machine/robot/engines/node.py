@@ -232,7 +232,7 @@ class Node:
         cur_node = kwargs["cur_node"]
         assistant = cur_node.assistant
         syslog.info(f"Invoking node: {cur_node.name}")
-        syslog.info(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, "model") else cur_node.llm.model_name}")
+        syslog.info(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, 'model') else cur_node.llm.model_name}")
         input = await cur_node.setup_input(state)
 
         res = {}

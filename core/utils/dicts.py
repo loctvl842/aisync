@@ -1,8 +1,11 @@
 from typing import Any, Optional
+
+
 def dict_deep_extend(*dicts):
     """
     Merge an arbitrary number of dictionaries deeply.
     """
+
     def merge_2_dicts(a, b):
         if isinstance(a, dict) and isinstance(b, dict):
             result = {**b}
@@ -14,12 +17,15 @@ def dict_deep_extend(*dicts):
             return result
         else:
             return b if a is None else a
+
     merged = {}
     for d in dicts:
         if not isinstance(d, dict):
             raise TypeError("All arguments must be dictionaries")
         merged = merge_2_dicts(merged, d)
     return merged
+
+
 def dig(dict_: dict[str, Any], path: str, default: Optional[Any] = None) -> Any:
     keys = path.split(".")
     value = dict_
@@ -29,6 +35,8 @@ def dig(dict_: dict[str, Any], path: str, default: Optional[Any] = None) -> Any:
         except KeyError:
             return default
     return value
+
+
 def plant(dict_: dict[str, Any], path: str, value: Any):
     keys = path.split(".")
     current = dict_
