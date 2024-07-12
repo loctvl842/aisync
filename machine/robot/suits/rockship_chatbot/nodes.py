@@ -177,22 +177,25 @@ intent_manager = Node(
         "general_information_agent",
     ],
     conditional_prompt=conditional_prompts["intent_manager"],
+    llm="LLMChatOllama",
 )
 
 staffing_agent = Node(
     name="staffing_agent",
     prompt_prefix=prompt_prefix_template["staffing_agent"],
     tools=["get_today_date"],
-    next_nodes=["intent_manager"],
+    next_nodes=[],
     conditional_prompt=conditional_prompts["staffing_agent"],
+    llm="LLMChatOllama",
 )
 
 ai_consult_agent = Node(
     name="ai_consult_agent",
     prompt_prefix=prompt_prefix_template["ai_consult_agent"],
     tools=["get_today_date"],
-    next_nodes=["intent_manager"],
+    next_nodes=[],
     conditional_prompt=conditional_prompts["ai_consult_agent"],
+    llm="LLMChatOllama",
 )
 
 low_code_agent = Node(
@@ -200,22 +203,25 @@ low_code_agent = Node(
     prompt_prefix=prompt_prefix_template["low_code_agent"],
     tools=["get_today_date", "low_code_price_estimation"],
     document_names=["all_low_code_templates.txt", "rockship_projects.txt"],
-    next_nodes=["intent_manager"],
+    next_nodes=[],
     conditional_prompt=conditional_prompts["low_code_agent"],
+    llm="LLMChatOllama",
 )
 
 workflow_automation_agent = Node(
     name="workflow_automation_agent",
     prompt_prefix=prompt_prefix_template["workflow_automation_agent"],
     tools=["get_today_date", "workflow_automation_price_estimation"],
-    next_nodes=["intent_manager"],
+    next_nodes=[],
     conditional_prompt=conditional_prompts["workflow_automation_agent"],
+    llm="LLMChatOllama",
 )
 
 general_information_agent = Node(
     name="general_information_agent",
     prompt_prefix="This is a general information agent that's responsible for answering general question about Rockship.",
-    next_nodes=["intent_manager"],
+    next_nodes=[],
     document_names=["rockship_expertises.txt", "rockship_projects.txt"],
     conditional_prompt="Used when the users' intent is not clear or the users are asking general questions.",
+    llm="LLMChatOllama",
 )

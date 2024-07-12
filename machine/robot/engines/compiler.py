@@ -31,7 +31,7 @@ class Compiler:
         # This node has access to all documents available
         docs = [doc.split("/")[-1] for doc in assistant.all_files_path]
         self.node_core = NodeCore(name="node_core", document_names=docs)
-        self.node_core.activate(assistant)
+        self.node_core.activate(assistant, True)
         self.add_node(self.node_core)
 
     def activate(self, assistant):

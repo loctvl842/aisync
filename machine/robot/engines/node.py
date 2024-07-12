@@ -10,6 +10,7 @@ from core.logger import syslog
 
 from ..assistants.base.assistant import Assistant
 from . import prompts
+from .llm import get_llm_by_name
 from .parser import ActionOutputParser
 from .prompts import (
     DEFAULT_AGENT_PROMPT_SUFFIX,
@@ -32,6 +33,7 @@ class Node:
         document_names: Optional[List[str]] = [],
         interrupt_before: Optional[List[str]] = [],
         next_nodes: Optional[List[str]] = [],
+        llm: Optional[str] = "LLMChatOpenAI",
     ):
         self.name = name
         self.prompt_prefix = prompt_prefix
@@ -41,12 +43,22 @@ class Node:
         self.document_names = document_names
         self.interrupt_before = interrupt_before
         self.next_nodes = next_nodes
+        self.change_llm(llm)
 
-    def activate(self, assistant: Assistant):
+    def change_llm(self, llm_name):
+        cfg_cls = get_llm_by_name(llm_name)
+        if cfg_cls is None:
+            cfg_cls = get_llm_by_name("LLMChatOpenAI")
+            syslog.error(f"LLM {llm_name} not found. Using LLMChatOpenAI instead.")
+        default_cfg = cfg_cls().model_dump()
+        self.llm = cfg_cls.get_llm(default_cfg)
+
+    def activate(self, assistant: Assistant, use_assistant_llm: Optional[bool] = False):
         self.assistant = assistant
-        self.llm = assistant.llm
         self._suit = assistant.suit
         self._chain = self._make_chain()
+        if use_assistant_llm:
+            self.llm = assistant.llm
 
     def create_prompt(
         self,
@@ -216,10 +228,9 @@ class Node:
     @staticmethod
     async def invoke(state, **kwargs):
         cur_node = kwargs["cur_node"]
-        if cur_node.name == "intent_manager":
-            return {"agent_output": ""}
         assistant = cur_node.assistant
         syslog.info(f"Invoking node: {cur_node.name}")
+        syslog.info(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, "model") else cur_node.llm.model_name}")
         input = await cur_node.setup_input(state)
 
         res = {}
