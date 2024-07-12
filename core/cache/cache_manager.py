@@ -2,6 +2,8 @@ from functools import wraps
 from typing import Callable, TypeVar
 
 import core.utils as ut
+import inspect
+import asyncio
 from core.utils.decorators import stopwatch
 
 from .base import BaseBackend, BaseKeyMaker
@@ -42,18 +44,27 @@ class CacheManager:
     def cached(self, prefix: str = None, ttl: int = 60, key_maker: BaseKeyMaker = None):
         def _cached(fn):
             @wraps(fn)
-            async def __cached(*args, **kwargs):
+            def __cached(*args, **kwargs):
                 be = self.backend
                 km = key_maker or self.key_maker
-
                 if not be or not km:
                     raise ValueError("Backend or KeyMaker not initialized")
 
-                key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
+                if inspect.iscoroutinefunction(fn):
+                    print("async")
+                    async def async_cached():
+                        key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
+                        response = await self.attempt(key, ttl, fn, *args, **kwargs)
+                        return response
+                    return async_cached()
+                else:
+                    print("sync")
+                    async def sync_wrapper():
+                        key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
+                        response = await self.attempt(key, ttl, fn, *args, **kwargs)
+                        return response
 
-                response = await self.attempt(key, ttl, fn, *args, **kwargs)
-
-                return response
+                    return asyncio.run(sync_wrapper())
 
             return __cached
 

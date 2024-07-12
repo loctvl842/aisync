@@ -24,12 +24,14 @@ class Jarvis(Assistant):
         self.customize_llm_and_embedder()
         self.set_max_token(token_limit, suit)
         self._chain = ChatChain(self.manager.suits[suit], self)
+        self.init_cache()
+        
         self.load_document(suit)
         self.turn_on(suit)
 
         # Compile langgraph workflow
         self.compile()
-        self.init_cache()
+        
 
     def init_cache(self) -> None:
         Cache.configure(backend=RedisBackend(), key_maker=DefaultKeyMaker())

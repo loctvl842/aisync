@@ -4,15 +4,15 @@ from typing import Any, Callable, TypedDict
 from langchain_core.prompts import PromptTemplate
 from langgraph.graph import StateGraph
 
+import core.utils as utils
 from core.logger import syslog
+from core.settings import settings
 
 from ..assistants.base.assistant import Assistant
 from .node import Node
 from .node_core import NodeCore
 from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT
 
-from core.settings import settings
-import core.utils as utils
 
 class State(TypedDict):
     input: str
