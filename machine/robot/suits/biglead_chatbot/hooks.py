@@ -12,7 +12,7 @@ def set_suit_llm(assistant):
     Change the model_name to the llm model of your choice.
     """
 
-    model_name = "LLMChatOllama"
+    model_name = "LLMChatOpenAI"
     return model_name
 
 

@@ -33,7 +33,7 @@ class Compiler:
         # This node has access to all documents available
         docs = [doc.split("/")[-1] for doc in assistant.all_files_path]
         self.node_core = NodeCore(name="node_core", document_names=docs)
-        self.node_core.activate(assistant)
+        self.node_core.activate(assistant, True)
         self.add_node(self.node_core)
 
     def activate(self, assistant):
@@ -45,6 +45,8 @@ class Compiler:
             node.activate(assistant, should_customize_node_llm)
             self.add_node(node)
             self.add_conditional_edge(node_name, self.wrapper_choose_agent(node, assistant))
+        if len(assistant.suit.nodes) == 0:
+            self.set_start_point("node_core")
         self.set_end_point("node_core")
 
     def gen_wrapper(self, fn, node):

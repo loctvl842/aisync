@@ -138,6 +138,9 @@ class Suit:
 
     def execute_workflow(self, *args, **kwargs) -> Any:
         default = kwargs.get("default", None)
+        if len(self._workflow) == 0:
+            return None
+            
         workflow_name = next(iter(self._workflow))
         try:
             syslog.debug(f"Executing plugin hook `{self.name}::{workflow_name}`")
