@@ -42,6 +42,8 @@ class Compiler:
             node.activate(assistant)
             self.add_node(node)
             self.add_conditional_edge(node_name, self.wrapper_choose_agent(node, assistant))
+        if len(assistant.suit.nodes) == 0:
+            self.set_start_point("node_core")
         self.set_end_point("node_core")
 
     def gen_wrapper(self, fn, node):
