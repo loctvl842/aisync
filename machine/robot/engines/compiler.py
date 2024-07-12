@@ -11,6 +11,8 @@ from .node import Node
 from .node_core import NodeCore
 from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT
 
+from core.settings import settings
+import core.utils as utils
 
 class State(TypedDict):
     input: str
@@ -38,8 +40,9 @@ class Compiler:
         self.set_state()
         self.state_graph = StateGraph(self.state_type)
         self.setup_node_core(assistant)
+        should_customize_node_llm = assistant.suit.execute_hook("should_customize_node_llm")
         for node_name, node in assistant.suit.nodes.items():
-            node.activate(assistant)
+            node.activate(assistant, should_customize_node_llm)
             self.add_node(node)
             self.add_conditional_edge(node_name, self.wrapper_choose_agent(node, assistant))
         if len(assistant.suit.nodes) == 0:
@@ -111,6 +114,19 @@ class Compiler:
         except Exception as e:
             syslog.error(f"The following error has occured while invoking graph: {e}")
             return {"agent_output": f"An error has occured"}
+
+    async def stream(self, input: State, handle_chunk):
+        has_printed = False
+        async for event in self.compiled_graph.astream_events(input, version="v2"):
+            kind = event["event"]
+            current_node = (event.get("metadata", {})).get("langgraph_node", "")
+            if kind == "on_chain_stream" and "node_core" == current_node:
+                syslog.info(settings.ENV)
+                if settings.ENV == "development" and not has_printed:
+                    await handle_chunk("🤖: ")
+                has_printed = True
+                data = utils.dig(event, "data.chunk.agent_output", "")
+                await handle_chunk(data)
 
     def wrapper_choose_agent(self, main_node: Node, assistant: Assistant) -> callable:
         def choose_agent(state: State, **kwargs):

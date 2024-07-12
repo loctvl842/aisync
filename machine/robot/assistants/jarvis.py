@@ -140,7 +140,8 @@ class Jarvis(Assistant):
                 await asyncio.sleep(delay)
             return output
 
-        producer = asyncio.create_task(self._chain.stream(self, handle_chunk=proccess_queue))
+        # producer = asyncio.create_task(self._chain.stream(self, handle_chunk=proccess_queue))
+        producer = asyncio.create_task(self.compiler.stream(input={"input": input}, handle_chunk=proccess_queue))
         consumer = asyncio.create_task(consume_queue(delay=delay))
         await producer  # Wait for producer to finish
         await queue.put(None)  # Signal consumer to stop

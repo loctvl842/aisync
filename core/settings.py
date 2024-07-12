@@ -41,6 +41,10 @@ class GoogleAISettings(BaseSettings):
     GOOGLE_API_KEY: str = "AIza1234567890abcdef1234567890abcdef"
 
 
+class AnthropicAISettings(BaseSettings):
+    ANTHROPIC_API_KEY: str = ""
+
+
 class Settings(
     CoreSettings,
     PostgresSettings,
@@ -49,6 +53,7 @@ class Settings(
     LangfuseSettings,
     OpenAISettings,
     GoogleAISettings,
+    AnthropicAISettings,
 ): ...
 
 
