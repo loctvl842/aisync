@@ -60,7 +60,7 @@ monitor = Node(
     document_names=[],
     next_nodes=["terms_and_conditions_agent", "general_info_agent", "software_packages_consulting_agent"],
     conditional_prompt=conditional_prompts["monitor"],
-    llm="LLMChatOllama",
+    llm_name="LLMChatOllama",
 )
 
 terms_and_conditions_agent = Node(
@@ -70,7 +70,7 @@ terms_and_conditions_agent = Node(
     document_names=["biglead_terms.txt"],
     next_nodes=[],
     conditional_prompt=conditional_prompts["terms_and_conditions_agent"],
-    llm="LLMChatOllama",
+    llm_name="LLMChatOllama",
 )
 
 general_info_agent = Node(
@@ -80,7 +80,7 @@ general_info_agent = Node(
     document_names=["biglead_info.txt", "biglead_customer_services_multi-platform.txt"],
     next_nodes=[],
     conditional_prompt=conditional_prompts["general_info_agent"],
-    llm="LLMChatOllama",
+    llm_name="LLMChatOllama",
 )
 
 software_packages_consulting_agent = Node(
@@ -90,5 +90,5 @@ software_packages_consulting_agent = Node(
     document_names=["biglead_software_packages.txt"],
     next_nodes=[],
     conditional_prompt=conditional_prompts["software_packages_consulting_agent"],
-    llm="LLMChatOllama",
+    llm_name="LLMChatOllama",
 )
