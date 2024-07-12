@@ -23,7 +23,7 @@ class DocumentMemory:
         self.splitted_documents = []
         self.embedder = embedder
 
-    @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
+    @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=24 * 60 * 60)
     def read(self, suit: str, file_path: str, chunk_size=800, chunk_overlap=0):
         """Loads and processes the document specified by file_path."""
 
@@ -58,7 +58,7 @@ class DocumentMemory:
                 }
             )
         return self.splitted_documents
-    
+
     @SessionContext(dialect=Dialect.PGVECTOR)
     @Transactional(dialect=Dialect.PGVECTOR)
     async def add_docs(self) -> None:

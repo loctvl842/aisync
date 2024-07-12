@@ -51,14 +51,12 @@ class CacheManager:
                     raise ValueError("Backend or KeyMaker not initialized")
 
                 if inspect.iscoroutinefunction(fn):
-                    print("async")
                     async def async_cached():
                         key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
                         response = await self.attempt(key, ttl, fn, *args, **kwargs)
                         return response
                     return async_cached()
                 else:
-                    print("sync")
                     async def sync_wrapper():
                         key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
                         response = await self.attempt(key, ttl, fn, *args, **kwargs)
