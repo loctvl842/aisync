@@ -53,10 +53,10 @@ class Node:
         default_cfg = cfg_cls().model_dump()
         self.llm = cfg_cls.get_llm(default_cfg)
 
-    def activate(self, assistant: Assistant, use_assistant_llm: Optional[bool] = False):
+    def activate(self, assistant: Assistant, should_use_assistant_llm: Optional[bool] = False):
         self.assistant = assistant
         self._suit = assistant.suit
-        if use_assistant_llm:
+        if should_use_assistant_llm:
             self.llm = assistant.llm
         else:
             self.change_llm(self.llm_name)
