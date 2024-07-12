@@ -4,16 +4,15 @@ from langchain.text_splitter import CharacterTextSplitter
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
+from core.cache import Cache
 from core.cache.default_key_maker import DefaultKeyMaker
 from core.db.session import Dialect, sessions
 from core.db.transactional import Transactional
 from core.db.utils import SessionContext
 from core.logger import syslog
-from machine.robot.models import DocCollection
+from machine.robot.db.collections import DocCollection
 
 from .universal_loader import UniversalLoader
-
-from core.cache import Cache
 
 
 class DocumentMemory:
