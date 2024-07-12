@@ -33,7 +33,7 @@ class Assistant(ABC):
                     stop = True
                 else:
                     if streaming:
-                        print("🤖: ", end="", flush=True)
+                        # print("🤖: ", end="", flush=True)
                         await self.streaming(user_input)
                         print("\n")
                     else:

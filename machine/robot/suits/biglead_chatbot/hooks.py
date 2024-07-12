@@ -43,6 +43,12 @@ def embed_input(input: str, assistant):
     """
     return assistant.embedder.embed_query(text=input)
 
+@hook
+def should_customize_node_llm() -> bool:
+    """
+    Choose to use assistant llm or node's llm
+    """
+    return True
 
 @hook
 def embed_output(output: str, assistant):
