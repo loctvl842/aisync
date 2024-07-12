@@ -142,7 +142,8 @@ class Compiler:
                 )
 
                 for name in agent_names:
-                    if name in res.content:
+                    content = res if isinstance(res, str) else res.content
+                    if name in content:
                         return name
 
                 # if res.content in agent_names:
@@ -152,8 +153,9 @@ class Compiler:
                 #     print("Jump to node: {res.content}")
                 #     return res.content[1:-1]
                 # else:
-                if flag == False:
-                    error_log += f"Invalid output. please only choose one of the following agents {agent_names}. But you chose {res.content}\n"
+                if flag is False:
+                    content = res if isinstance(res, str) else res.content
+                    error_log += f"Invalid output. please only choose one of the following agents {agent_names}. But you chose {content}\n"
                 iterations -= 1
             print("Jump to node_core after failing to find a next node")
             return "node_core"
