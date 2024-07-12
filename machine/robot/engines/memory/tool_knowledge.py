@@ -1,10 +1,10 @@
-from typing import Dict, Optional
+from typing import Optional
 from uuid import uuid4
 
 from sqlalchemy import delete, select
 
 from core.db.session import Dialect, sessions
-from machine.robot.models import ToolCollection
+from machine.robot.db.collections import ToolCollection
 
 
 class ToolKnowledge:

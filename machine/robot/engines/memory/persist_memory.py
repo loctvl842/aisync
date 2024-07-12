@@ -7,7 +7,7 @@ from numpy.linalg import norm as l2_distance
 from sqlalchemy import select
 
 from core.db.session import Dialect, sessions
-from machine.robot.models import QueryLogs, ResponseLogs
+from machine.robot.db.collections import QueryLogs, ResponseLogs
 
 
 class PersistMemory:

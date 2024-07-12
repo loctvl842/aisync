@@ -33,7 +33,7 @@ Bạn là một trợ lý thông minh tiếng Việt, bạn có những thông t
 
 ## Ràng buộc:
 - Chỉ đưa người dùng đến những link thông tin hướng dẫn sử dụng khi họ cần thông tin chi tiết. Không nên để chung trong 1 đoạn tin nhắn dài với các thông tin khác.
-    """
+    """,
 }
 
 
@@ -47,9 +47,9 @@ conditional_prompts = {
     "general_info_agent": """
     Giúp người dùng trả lời những câu hỏi liên quan đến Tính năng, Sản phẩm, Giải pháp, Bảng giá, Thông tin liên hệ của công ty,
     """,
-    "software_packages_consulting_agent":"""
+    "software_packages_consulting_agent": """
     Giúp tư vấn cho người dùng về các gói phần mềm của công ty BigLead
-    """
+    """,
 }
 
 
@@ -59,7 +59,7 @@ monitor = Node(
     tools=[],
     document_names=[],
     next_nodes=["terms_and_conditions_agent", "general_info_agent", "software_packages_consulting_agent"],
-    conditional_prompt=conditional_prompts["monitor"]
+    conditional_prompt=conditional_prompts["monitor"],
 )
 
 terms_and_conditions_agent = Node(
@@ -68,7 +68,7 @@ terms_and_conditions_agent = Node(
     tools=[],
     document_names=["biglead_terms.txt"],
     next_nodes=[],
-    conditional_prompt=conditional_prompts["terms_and_conditions_agent"]
+    conditional_prompt=conditional_prompts["terms_and_conditions_agent"],
 )
 
 general_info_agent = Node(
@@ -77,7 +77,7 @@ general_info_agent = Node(
     tools=[],
     document_names=["biglead_info.txt", "biglead_customer_services_multi-platform.txt"],
     next_nodes=[],
-    conditional_prompt=conditional_prompts["general_info_agent"]
+    conditional_prompt=conditional_prompts["general_info_agent"],
 )
 
 software_packages_consulting_agent = Node(
@@ -86,5 +86,5 @@ software_packages_consulting_agent = Node(
     tools=[],
     document_names=["biglead_software_packages.txt"],
     next_nodes=[],
-    conditional_prompt=conditional_prompts["software_packages_consulting_agent"]
+    conditional_prompt=conditional_prompts["software_packages_consulting_agent"],
 )

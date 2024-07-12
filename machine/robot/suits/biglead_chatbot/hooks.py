@@ -59,10 +59,8 @@ def set_greeting_message(assistant):
     You can custom your own greeting message here.
 
     """
-    message = (
-        """Xin chào! Tôi là trợ lý thông minh của công ty BigLead. Tôi có thể cung cấp thông tin về công ty và trả lời câu hỏi của bạn về BigLead. Hãy hỏi tôi về thông tin bạn muốn biết về công ty nhé!
+    message = """Xin chào! Tôi là trợ lý thông minh của công ty BigLead. Tôi có thể cung cấp thông tin về công ty và trả lời câu hỏi của bạn về BigLead. Hãy hỏi tôi về thông tin bạn muốn biết về công ty nhé!
         """
-    )
 
     return message
 
