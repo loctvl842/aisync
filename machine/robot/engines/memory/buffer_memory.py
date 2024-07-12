@@ -30,6 +30,9 @@ class BufferMemory(dict):
         buffer_memory.reverse()
         return "\n".join(buffer_memory)
 
+    def format_buffer_memory_no_token(self):
+        return "\n".join([f"{msg['sender']}: {msg['message']}" for msg in self["buffer_memory"]])
+
     def clear_pending_message(self):
         self["pending_message"] = ""
 

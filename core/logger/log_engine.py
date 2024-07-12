@@ -152,7 +152,7 @@ class LogEngine:
 
             Reference: https://docs.sqlalchemy.org/en/20/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute
             """
-            self.info("Executing SQL:\n", "```sql\n", f"{statement}", "\n```\nParameters:\n", f"{parameters}")
+            self.debug("Executing SQL:\n", "```sql\n", f"{statement}", "\n```\nParameters:\n", f"{parameters}")
 
         @event.listens_for(Engine, "after_cursor_execute")
         def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):

@@ -60,11 +60,8 @@ def set_greeting_message(assistant):
 
     """
     message = (
-        "Good day! "
-        "I am a consultant representing Rockship,"
-        " dedicated to simplifying your journey by providing tailored solutions. "
-        "My expertise lies in understanding your unique needs and guiding you towards the most suitable options. "
-        "Please feel free to share your requirements, and I will try my best to assist you."
+        """Xin chào! Tôi là trợ lý thông minh của công ty BigLead. Tôi có thể cung cấp thông tin về công ty và trả lời câu hỏi của bạn về BigLead. Hãy hỏi tôi về thông tin bạn muốn biết về công ty nhé!
+        """
     )
 
     return message

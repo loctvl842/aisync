@@ -3,6 +3,7 @@ from machine.robot.engines.memory import DocumentMemory, PersistMemory, ToolKnow
 
 from ..manager import Manager
 from .agent_manager import AgentManager
+from .compiler import Compiler
 from .embedder import get_embedder_by_name
 from .llm import get_llm_by_name
 
@@ -57,6 +58,7 @@ class Brain:
         Load Agents
         """
         self.agent_manager = AgentManager()
+        self.compiler = Compiler()
 
     def change_llm(self, llm_name):
         cfg_cls = get_llm_by_name(llm_name)

@@ -53,7 +53,6 @@ class ChatChain:
         return assistant.buffer_memory.format_buffer_memory(self.buffer_token_limit, self.model_name)
 
     def set_buffer_limit(self, input, assistant):
-        print(input)
         filled_prompt = self.prompt.format(**input)
         self.model_name = assistant.llm.model if hasattr(assistant.llm, "model") else assistant.llm.model_name
         syslog.info(self.model_name)
@@ -70,7 +69,7 @@ class ChatChain:
 
         # Run similarity search to find relevant tools
         tools = await assistant.tool_knowledge.find_relevant_tools(
-            suit=self._suit, vectorized_input=self.vectorized_input
+            suit=self._suit, vectorized_input=self.vectorized_input, tools_access=["none_of_the_above", "get_my_name"]
         )
 
         if len(tools) > 0:
@@ -93,7 +92,9 @@ class ChatChain:
 
         # fetch document_memory
         try:
-            doc = await assistant.document_memory.similarity_search(vectorized_input=self.vectorized_input)
+            doc = await assistant.document_memory.similarity_search(
+                vectorized_input=self.vectorized_input, document_name=["Rockship.txt"]
+            )
             document_memory = assistant.agent_manager.execute_documents(
                 agent_input={"input": input["input"], "document": doc}, assistant=assistant
             )
@@ -125,7 +126,7 @@ class ChatChain:
 
         # Run similarity search to find relevant tools
         tools = await assistant.tool_knowledge.find_relevant_tools(
-            suit=self._suit, vectorized_input=self.vectorized_input
+            suit=self._suit, vectorized_input=self.vectorized_input, tools_access=["none_of_the_above", "get_my_name"]
         )
 
         if len(tools) > 0:
@@ -148,7 +149,9 @@ class ChatChain:
 
         # fetch document_memory
         try:
-            doc = await assistant.document_memory.similarity_search(input["input"])
+            doc = await assistant.document_memory.similarity_search(
+                vectorized_input=self.vectorized_input, document_name=["Rockship.txt"]
+            )
             document_memory = assistant.agent_manager.execute_documents(
                 agent_input={"input": input["input"], "document": doc}, assistant=assistant
             )

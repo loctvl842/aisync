@@ -1,6 +1,7 @@
 import asyncio
 from typing import Callable
 
+from core.cache import Cache, DefaultKeyMaker, RedisBackend
 from core.logger import syslog
 
 from ..engines.brain import Brain
@@ -19,11 +20,19 @@ class Jarvis(Assistant):
         super().__init__()
         self.buffer_memory = BufferMemory()
         self.manager = Manager()
+        self.suit = self.manager.suits[suit]
+        self.customize_llm_and_embedder()
         self.set_max_token(token_limit, suit)
         self._chain = ChatChain(self.manager.suits[suit], self)
-        self.customize_llm_and_embedder()
         self.load_document(suit)
         self.turn_on(suit)
+
+        # Compile langgraph workflow
+        self.compile()
+        self.init_cache()
+
+    def init_cache(self) -> None:
+        Cache.configure(backend=RedisBackend(), key_maker=DefaultKeyMaker())
 
     def set_max_token(self, limit, suit):
         if "set_token_limit" in self.manager.suits[suit]._hooks:
@@ -46,15 +55,14 @@ class Jarvis(Assistant):
 
     def customize_llm_and_embedder(self):
         try:
-            Brain().change_llm(self._chain._suit.execute_hook("set_suit_llm", assistant=self))
+            Brain().change_llm(self.suit.execute_hook("set_suit_llm", assistant=self))
         except ValueError as e:
             syslog.error(e)
 
         try:
-            Brain().change_embedder(self._chain._suit.execute_hook("set_suit_embedder", assistant=self))
+            Brain().change_embedder(self.suit.execute_hook("set_suit_embedder", assistant=self))
         except ValueError as e:
             syslog.error(e)
-        
 
     def greet(self):
         if "set_greeting_message" in self._chain._suit._hooks:
@@ -63,7 +71,7 @@ class Jarvis(Assistant):
 
     def load_document(self, suit):
 
-        file_path = self._chain._suit.execute_hook("get_path_to_doc") or []
+        file_path = self.suit.execute_hook("get_path_to_doc") or []
         """
             If user do not specify the directory
         --> Use default path to doc: ./robot/suits/mark_i
@@ -72,8 +80,10 @@ class Jarvis(Assistant):
         if file_path == []:
             file_path = self.manager.suits[suit]._path_to_doc
 
+        self.all_files_path = file_path
+
         for fp in file_path:
-            self.document_memory.read(fp)
+            self.document_memory.read(suit, fp)
 
     def load_tools(self, suit):
         tools = list(self.manager.suits[suit].tools.values())
@@ -83,13 +93,16 @@ class Jarvis(Assistant):
         self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
     async def save_to_db(self, input: str, output: str):
-        vectorized_output = self._chain._suit.execute_hook("embed_output", output=output, assistant=self)
-        await self.persist_memory.save_interaction(input, output, self._chain.vectorized_input, vectorized_output)
+        vectorized_output = self.suit.execute_hook("embed_output", output=output, assistant=self)
+        vectorized_input = self.suit.execute_hook("embed_input", input=input, assistant=self)
+        await self.persist_memory.save_interaction(input, output, vectorized_input, vectorized_output)
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-        res = await self._chain.invoke(self)
-        output = res["output"]
+        # res = await self._chain.invoke(self)
+        res = await self.compiler.ainvoke(input={"input": input})
+        # output = res["output"]
+        output = res["agent_output"]
 
         # Save to chat memory
         self.buffer_memory.save_message(sender="Human", message=input)
@@ -167,3 +180,12 @@ class Jarvis(Assistant):
     @property
     def tool_knowledge(self):
         return Brain().tool_knowledge
+
+    @property
+    def compiler(self):
+        return Brain().compiler
+
+    def compile(self):
+        self.compiler.activate(self)
+        self.suit.execute_workflow(assistant=self)
+        self.compiler.compile()

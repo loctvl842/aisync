@@ -1,5 +1,6 @@
 from ...decorators import hook
 
+
 @hook
 def set_suit_llm(assistant):
     """
@@ -19,6 +20,7 @@ def set_suit_embedder(assistant):
     """
     model_name = "EmbedderGPT4All"
     return model_name
+
 
 @hook
 def build_format_instructions(default: str, assistant):

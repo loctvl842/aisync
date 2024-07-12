@@ -23,7 +23,7 @@ class AgentManager:
         # Change to suit mark_ii_4all if you want to use GPT4All, rockship_chatbot for Rockship Chatbot
         self.chatbot_suits = Manager().suits["mark_i"]
         self.chain = None
-    
+
     def switch_suit(self, suit: str):
         self.chatbot_suits = Manager().suits[suit]
 
@@ -100,7 +100,7 @@ class AgentManager:
                 config=assistant.config,
             )
         except Exception as e:
-            syslog.debug("Error when invoking agent_executor:\n\n", e)
+            syslog.error("Error when invoking agent_executor:\n\n", e)
 
         # Remove tools in case it's CustomizedGPT4All
         if hasattr(assistant.llm, "remove_tools"):

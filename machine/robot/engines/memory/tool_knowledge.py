@@ -4,7 +4,7 @@ from uuid import uuid4
 from sqlalchemy import delete, select
 
 from core.db.session import Dialect, sessions
-from machine.models import ToolCollection
+from machine.robot.models import ToolCollection
 
 
 class ToolKnowledge:
@@ -50,16 +50,17 @@ class ToolKnowledge:
             await session.execute(delete(ToolCollection))
             await session.commit()
 
-    async def find_relevant_tools(self, vectorized_input, suit):
+    async def find_relevant_tools(self, vectorized_input, tools_access, tools):
         await self.save_tools()
         # TODO: Change to cosine distance
-        res = [suit.tools["none_of_the_above"]]
+        res = [tools["none_of_the_above"]]
         # DB Session for similarity search
         sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
         async with sessions[Dialect.PGVECTOR].session() as session:
             # Top self._top_matches similarity search neighbors from input and output tables
             tool_match = await session.scalars(
                 select(ToolCollection)
+                .where(ToolCollection.name.in_(tools_access))
                 .order_by(ToolCollection.embedding.l2_distance(vectorized_input))
                 .limit(self._top_matches)
             )
@@ -67,7 +68,7 @@ class ToolKnowledge:
             for tool in tool_match:
                 if tool.name == "none_of_the_above":
                     continue
-                res.append(suit.tools[tool.name])
+                res.append(tools[tool.name])
             await session.commit()
         if len(res) == 1:
             res = []
