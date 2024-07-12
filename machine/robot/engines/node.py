@@ -33,7 +33,7 @@ class Node:
         document_names: Optional[List[str]] = [],
         interrupt_before: Optional[List[str]] = [],
         next_nodes: Optional[List[str]] = [],
-        llm: Optional[str] = "LLMChatOpenAI",
+        llm_name: Optional[str] = "LLMChatOpenAI",
     ):
         self.name = name
         self.prompt_prefix = prompt_prefix
@@ -43,7 +43,7 @@ class Node:
         self.document_names = document_names
         self.interrupt_before = interrupt_before
         self.next_nodes = next_nodes
-        self.change_llm(llm)
+        self.llm_name = llm_name
 
     def change_llm(self, llm_name):
         cfg_cls = get_llm_by_name(llm_name)
@@ -53,12 +53,14 @@ class Node:
         default_cfg = cfg_cls().model_dump()
         self.llm = cfg_cls.get_llm(default_cfg)
 
-    def activate(self, assistant: Assistant, use_assistant_llm: Optional[bool] = False):
+    def activate(self, assistant: Assistant, should_use_assistant_llm: Optional[bool] = False):
         self.assistant = assistant
         self._suit = assistant.suit
-        self._chain = self._make_chain()
-        if use_assistant_llm:
+        if should_use_assistant_llm:
             self.llm = assistant.llm
+        else:
+            self.change_llm(self.llm_name)
+        self._chain = self._make_chain()
 
     def create_prompt(
         self,
