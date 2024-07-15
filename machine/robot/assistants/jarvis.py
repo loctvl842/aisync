@@ -66,6 +66,8 @@ class Jarvis(Assistant):
         except ValueError as e:
             syslog.error(e)
 
+        Brain().load_memory()
+
     def greet(self):
         if "set_greeting_message" in self._chain._suit._hooks:
             return self._chain._suit.execute_hook("set_greeting_message", assistant=self)
