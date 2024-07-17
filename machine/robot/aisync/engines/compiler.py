@@ -8,7 +8,7 @@ import core.utils as utils
 from core.logger import syslog
 from core.settings import settings
 
-from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT
+from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT, DEFAULT_PROMPT_PREFIX
 
 if TYPE_CHECKING:
     from ..assistants.base.assistant import Assistant
@@ -35,7 +35,13 @@ class Compiler:
         from .node_core import NodeCore
 
         docs = [doc.split("/")[-1] for doc in assistant.all_files_path]
-        self.node_core = NodeCore(name="node_core", document_names=docs)
+        self.node_core = NodeCore(
+            name="node_core",
+            document_names=docs,
+            prompt_prefix=assistant.suit.execute_hook(
+                "build_prompt_prefix", default=DEFAULT_PROMPT_PREFIX, assistant=assistant
+            ),
+        )
         self.node_core.activate(assistant, True)
         self.add_node(self.node_core)
 
