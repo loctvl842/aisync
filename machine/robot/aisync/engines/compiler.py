@@ -1,8 +1,9 @@
 import functools
-from typing import TYPE_CHECKING, Any, Callable, TypedDict
+from typing import TYPE_CHECKING, Any, Callable, Dict, TypedDict
 
 from langchain_core.prompts import PromptTemplate
 from langgraph.graph import StateGraph
+from pydantic import BaseModel, Field
 
 import core.utils as utils
 from core.logger import syslog
@@ -15,8 +16,16 @@ if TYPE_CHECKING:
     from .node import Node
 
 
+class AISyncInput(BaseModel):
+    """
+    Model for the input to the AISync engine.
+    """
+
+    query: str = Field("", description="Default field")
+
+
 class State(TypedDict):
-    input: str
+    input: AISyncInput
     agent_output: str
 
 
@@ -121,7 +130,7 @@ class Compiler:
         try:
             return await self.compiled_graph.ainvoke(input)
         except Exception as e:
-            syslog.error(f"The following error has occured while invoking graph: {e}")
+            syslog.error(f"The following error has occured while invoking graph:\n{e}")
             return {"agent_output": f"An error has occured"}
 
     async def stream(self, input: State, handle_chunk):
@@ -130,7 +139,7 @@ class Compiler:
             kind = event["event"]
             current_node = (event.get("metadata", {})).get("langgraph_node", "")
             if kind == "on_chain_stream" and "node_core" == current_node:
-                syslog.info(settings.ENV)
+                syslog(settings.ENV)
                 if settings.ENV == "development" and not has_printed:
                     await handle_chunk("🤖: ")
                 has_printed = True
@@ -170,18 +179,11 @@ class Compiler:
                     if name in content:
                         return name
 
-                # if res.content in agent_names:
-                #     print("Jump to node: {res.content}")
-                #     return res.content
-                # elif res.content[1:-1] in agent_names:
-                #     print("Jump to node: {res.content}")
-                #     return res.content[1:-1]
-                # else:
                 if flag is False:
                     content = res if isinstance(res, str) else res.content
                     error_log += f"Invalid output. please only choose one of the following agents {agent_names}. But you chose {content}\n"
                 iterations -= 1
-            print("Jump to node_core after failing to find a next node")
+            syslog.warning("Jump to node_core after failing to find a next node")
             return "node_core"
 
         @functools.wraps(choose_agent)

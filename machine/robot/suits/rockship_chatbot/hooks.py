@@ -95,6 +95,7 @@ def get_path_to_doc():
             syslog.error(f"An unexpected error occurred: {str(e)}")
     return filter_path
 
+
 @hook
 def set_document_similarity_search_metric():
     """
@@ -102,6 +103,7 @@ def set_document_similarity_search_metric():
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
     """
     return "l2_distance"
+
 
 @hook
 def set_persist_memory_similarity_search_metric():

@@ -89,6 +89,7 @@ class Node:
         input_variables: Optional[List[str]] = None,
     ):
         template = "\n\n".join([prefix, suffix])
+        self.template = template
         if input_variables is None:
             input_variables = ["input", "buffer_memory", "document_memory", "tool_output"]
         return PromptTemplate(
@@ -147,22 +148,19 @@ class Node:
 
         chain = prompt | self.llm
 
-        res = chain.invoke(
-            input={"input": agent_input["input"], "document": agent_input["document"]}, config=self.assistant.config
-        )
+        res = chain.invoke(input=agent_input, config=self.assistant.config)
         if isinstance(res, str):
             return res
 
         return res.content
 
-    async def tool_output(self, input: dict) -> str:
+    async def tool_output(self, input: dict, vectorized_input: List[float]) -> str:
         """
         Function to execute tools and format the output to put into final prompt
         """
-        # TODO: add filter by tool name
         tools = await self.assistant.tool_knowledge.find_relevant_tools(
             tools=self._suit.tools,
-            vectorized_input=self.vectorized_input,
+            vectorized_input=vectorized_input,
             tools_access=self.tools,
         )
 
@@ -189,17 +187,17 @@ class Node:
         lt_memory = await self.assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
         return lt_memory["persist_memory"]
 
-    async def document_memory(self, input: str) -> str:
+    async def document_memory(self, vectorized_input: List[float], query: str) -> str:
         """
         Retrieve relevant document
         """
         document_memory_output = ""
         try:
             doc = await self.assistant.document_memory.similarity_search(
-                input=input,
+                vectorized_input=vectorized_input,
                 document_name=self.document_names,
             )
-            document_memory = self.execute_documents(agent_input={"input": input, "document": doc})
+            document_memory = self.execute_documents(agent_input={"query": query, "document": doc})
             document_memory_output = f"## Document Knowledge Output: `{document_memory}`"
         except Exception as e:
             syslog.error(f"Error when fetching document memory: {e}")
@@ -214,29 +212,51 @@ class Node:
         return f"## Buffer Memory:\n\n{self.assistant.buffer_memory.format_buffer_memory(self.assistant)}"
 
     async def setup_input(self, state: dict) -> dict:
-        input = {"input": state["input"]}
-
+        input = state["input"].model_dump()
         # Embed input
-        self.vectorized_input = self._suit.execute_hook("embed_input", input=input["input"], assistant=self.assistant)
+        self.vectorized_input = self._suit.execute_hook("embed_input", input=state["input"], assistant=self.assistant)
 
         # Document memory
-        input["document_memory"] = await self.document_memory(input["input"])
+        input["document_memory"] = await self.document_memory(
+            vectorized_input=self.vectorized_input, query=input["query"]
+        )
 
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()
 
         # Tool Output
-        input["tool_output"] = await self.tool_output(input)
+        input["tool_output"] = await self.tool_output(input, vectorized_input=self.vectorized_input)
 
         return input
+
+    def find_missing_var(self, input: dict, prompt: str) -> set:
+        """
+        Function to validate prompt
+        """
+        from langchain_core.prompts import get_template_variables
+
+        input_variables = get_template_variables(template=prompt, template_format="f-string")
+        available_input_vars = set(input.keys())
+        missing_vars = set()
+        for v in input_variables:
+            if v not in available_input_vars:
+                missing_vars.add(v)
+        return missing_vars
 
     @staticmethod
     async def invoke(state, **kwargs):
         cur_node = kwargs["cur_node"]
         assistant = cur_node.assistant
-        syslog.info(f"Invoking node: {cur_node.name}")
-        syslog.info(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, 'model') else cur_node.llm.model_name}")
+        syslog(f"Invoking node: {cur_node.name}")
+        syslog(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, 'model') else cur_node.llm.model_name}")
         input = await cur_node.setup_input(state)
+
+        syslog(input)
+
+        missing_vars = cur_node.find_missing_var(input=input, prompt=cur_node.template)
+
+        if len(missing_vars) > 0:
+            raise ValueError(f"Invalid prompt for node: {cur_node.name}\nReason: Missing variables {missing_vars}")
 
         res = {}
         try:

@@ -22,7 +22,7 @@ class ActionPromptTemplate(StringPromptTemplate):
         return self.template.format(**kwargs)
 
 
-FORMAT_INSTRUCTIONS = """Answer the following question: `{input}`.
+FORMAT_INSTRUCTIONS = """Answer the following question: `{query}`.
 
 TOOLS:
 ------
@@ -50,7 +50,7 @@ Begin!
 ## Previous conversation history:
 
 {buffer_memory}
-Question: {input}
+Question: {query}
 {agent_scratchpad}"""
 
 
@@ -80,7 +80,7 @@ DEFAULT_PROMPT_SUFFIX = """Begin!
 {tool_output}
 
 # Current conversation:
-Human: {input}
+Human: {query}
 AI:"""
 
 
@@ -100,7 +100,7 @@ Begin!
 {tool_output}
 """
 
-CLASSIFIER_PROMPT = """Detect the topic of the following question: `{input}`.
+CLASSIFIER_PROMPT = """Detect the topic of the following question: `{query}`.
 Only output one of the following topics:
 
 TOPICS:
@@ -114,7 +114,7 @@ Begin!
 Question: {input}"""
 
 DOC_PROMPT = """
-    This is the context: `{input}`.
+    This is the context: `{query}`.
     Ignore all document knowledge that are not relevant to the context.
     Output any relevant information that might be relevant to the context using the following document knowledge:
 
@@ -173,6 +173,6 @@ Given the context and workers, who should act next?
 {agent_output}
 
 # Current conversation:
-Human: {input}
+Human: {query}
 AI:
 """

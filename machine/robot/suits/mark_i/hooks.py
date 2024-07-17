@@ -2,7 +2,7 @@ import os
 
 from core.logger import syslog
 
-from ...aisync import hook
+from ...aisync import AISyncInput, hook
 
 
 @hook
@@ -36,12 +36,12 @@ def build_format_instructions(default: str, assistant):
 
 
 @hook
-def embed_input(input: str, assistant):
+def embed_input(input: AISyncInput, assistant):
     """
     You can embed user's input here for similarity search
 
     """
-    return assistant.embedder.embed_query(text=input)
+    return assistant.embedder.embed_query(text=input.query)
 
 
 @hook
@@ -54,6 +54,36 @@ def embed_output(output: str, assistant):
 
 
 @hook
+def customized_input(query: str, assistant):
+    """
+    You can customize the input here
+
+    """
+    EMAIL_MARKDOWN_HELP = """
+    Please use markdown format for the email content. Use **bold** or *italic* or both for highlight
+    important content like names, service... ensure that each section are seperated
+    by double newlines, and most IMPORTANTLY with the sign section, the complimentary closings part, name part, and position part
+    must be separated by a double space like this "  ". Example:
+
+    Best regards,
+    Fravist SG
+
+    Your message STRICTLY follow the rules below:
+    - Language: English
+    - Tone: formal, friendly, and witty
+    - Word limit: 50 to 120 words
+    - Do not make up any information that is not provided in the context.
+    - No subject line is needed.
+    """
+
+    class MyInput(AISyncInput):
+        name: str
+        EMAIL_MARKDOWN_HELP: str
+
+    return MyInput(query=query, name="Nhan", EMAIL_MARKDOWN_HELP=EMAIL_MARKDOWN_HELP)
+
+
+@hook
 def set_max_token():
     """
     Set the token limit for the assistant
@@ -61,6 +91,7 @@ def set_max_token():
     """
     MY_LIMIT = 1000
     return MY_LIMIT
+
 
 @hook
 def set_document_similarity_search_metric():
@@ -70,6 +101,7 @@ def set_document_similarity_search_metric():
     """
     return "l2_distance"
 
+
 @hook
 def set_persist_memory_similarity_search_metric():
     """
@@ -77,6 +109,7 @@ def set_persist_memory_similarity_search_metric():
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
     """
     return "l2_distance"
+
 
 @hook
 def get_path_to_doc():
