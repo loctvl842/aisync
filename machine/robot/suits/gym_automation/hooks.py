@@ -45,6 +45,14 @@ def embed_input(input: str, assistant):
 
 
 @hook
+def should_customize_node_llm() -> bool:
+    """
+    Choose to use assistant llm or node's llm
+    """
+    return True
+
+
+@hook
 def embed_output(output: str, assistant):
     """
     You can embed assistant's output here for similarity search
@@ -52,22 +60,31 @@ def embed_output(output: str, assistant):
     """
     return assistant.embedder.embed_query(text=output)
 
+@hook
+def set_document_similarity_search_metric():
+    """
+    Set the metric for similarity search of document memory
+    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
+    """
+    return "l2_distance"
 
 @hook
-def set_greeting_message(assistant):
+def set_persist_memory_similarity_search_metric():
     """
-    You can custom your own greeting message here.
-
+    Set the metric for similarity search of persist memory
+    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
     """
-    message = (
-        "Good day! "
-        "I am a consultant representing Rockship,"
-        " dedicated to simplifying your journey by providing tailored solutions. "
-        "My expertise lies in understanding your unique needs and guiding you towards the most suitable options. "
-        "Please feel free to share your requirements, and I will try my best to assist you."
-    )
+    return "l2_distance"
 
-    return message
+
+# @hook
+# def set_greeting_message(assistant):
+#     """
+#     You can custom your own greeting message here.
+
+#     """
+
+#     return message
 
 
 @hook
@@ -94,19 +111,3 @@ def get_path_to_doc():
         except Exception as e:
             syslog.error(f"An unexpected error occurred: {str(e)}")
     return filter_path
-
-@hook
-def set_document_similarity_search_metric():
-    """
-    Set the metric for similarity search of document memory
-    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
-    """
-    return "l2_distance"
-
-@hook
-def set_persist_memory_similarity_search_metric():
-    """
-    Set the metric for similarity search of persist memory
-    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
-    """
-    return "l2_distance"
