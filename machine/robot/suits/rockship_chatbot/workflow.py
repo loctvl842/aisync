@@ -1,6 +1,6 @@
 from core.logger import syslog
 
-from ...decorators import workflow
+from ...aisync import workflow
 
 
 @workflow

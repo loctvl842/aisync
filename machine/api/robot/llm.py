@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from machine.robot.engines.llm import get_llm_schemas
+from machine.robot.aisync.engines.llm import get_llm_schemas
 
 router = APIRouter(prefix="/llms", tags=["llms"])
 

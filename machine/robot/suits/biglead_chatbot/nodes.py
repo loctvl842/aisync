@@ -1,4 +1,4 @@
-from machine.robot.engines.node import Node
+from ...aisync import Node
 
 prompt_prefix_template = {
     "monitor": """

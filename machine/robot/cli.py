@@ -7,7 +7,7 @@ from dotenv import find_dotenv, load_dotenv
 
 from core.logger import syslog
 
-from .assistants.base import Assistant
+from .aisync import Assistant
 
 
 @click.group()
@@ -17,7 +17,7 @@ def robot():
 
 def get_ai_options() -> List[Tuple[str, Type[Assistant]]]:
     options = []
-    package_path = "machine.robot.assistants"
+    package_path = "machine.robot.aisync.assistants"
 
     try:
         module = importlib.import_module(package_path)

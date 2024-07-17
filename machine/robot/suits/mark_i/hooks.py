@@ -2,7 +2,7 @@ import os
 
 from core.logger import syslog
 
-from ...decorators import hook
+from ...aisync import hook
 
 
 @hook

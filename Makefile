@@ -65,14 +65,14 @@ migrate: ## Run the migrations
 	$(eval include .env)
 	$(eval export $(sh sed 's/=.*//' .env))
 
-	poetry run alembic -c machine/robot/db/alembic.ini upgrade head
+	poetry run alembic -c machine/robot/aisync/db/alembic.ini upgrade head
 
 .PHONY: rollback
 rollback: ## Rollback the migrations
 	$(eval include .env)
 	$(eval export $(sh sed 's/=.*//' .env))
 
-	poetry run alembic -c machine/robot/db/alembic.ini downgrade -1
+	poetry run alembic -c machine/robot/aisync/db/alembic.ini downgrade -1
 
 .PHONY: generate-migration
 generate-migration: ## Generate a new migration
@@ -81,7 +81,7 @@ generate-migration: ## Generate a new migration
 
 	@printf "\033[33mEnter migration message: \033[0m"
 	@read -r message; \
-	poetry run alembic -c machine/robot/db/alembic.ini revision --autogenerate -m "$$message"
+	poetry run alembic -c machine/robot/aisync/db/alembic.ini revision --autogenerate -m "$$message"
 	@make lint migration
 
 # Code quality commands

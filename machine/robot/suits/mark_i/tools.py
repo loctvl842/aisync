@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional
 
 from core.logger import syslog
 
-from ...decorators import tool
+from ...aisync import tool
 
 
 @tool

@@ -1,4 +1,4 @@
-from ...decorators import hook
+from ...aisync import hook
 
 
 @hook
