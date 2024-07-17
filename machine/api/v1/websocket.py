@@ -3,8 +3,8 @@ import traceback
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 from core.logger import syslog
-from machine.robot.assistants import Jarvis
-from machine.robot.assistants.base import Assistant
+from machine.robot.aisync.assistants import Jarvis
+from machine.robot.aisync.assistants.base import Assistant
 
 router = APIRouter()
 

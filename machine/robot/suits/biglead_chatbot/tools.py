@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Any, Optional
 
-from langchain.agents import tool
-
 from core.logger import syslog
+
+from ...aisync import tool
 
 
 @tool

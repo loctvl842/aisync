@@ -12,7 +12,7 @@ from core.fastapi.middlewares import SQLAlchemyMiddleware
 from core.response import Error
 from core.settings import settings
 from machine.api import router
-from machine.robot.engines.brain import Brain
+from machine.robot.aisync.engines.brain import Brain
 
 
 def init_routers(app_: FastAPI) -> None:

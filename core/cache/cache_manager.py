@@ -1,9 +1,9 @@
+import asyncio
+import inspect
 from functools import wraps
 from typing import Callable, TypeVar
 
 import core.utils as ut
-import inspect
-import asyncio
 from core.utils.decorators import stopwatch
 
 from .base import BaseBackend, BaseKeyMaker
@@ -51,12 +51,15 @@ class CacheManager:
                     raise ValueError("Backend or KeyMaker not initialized")
 
                 if inspect.iscoroutinefunction(fn):
+
                     async def async_cached():
                         key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
                         response = await self.attempt(key, ttl, fn, *args, **kwargs)
                         return response
+
                     return async_cached()
                 else:
+
                     async def sync_wrapper():
                         key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
                         response = await self.attempt(key, ttl, fn, *args, **kwargs)
