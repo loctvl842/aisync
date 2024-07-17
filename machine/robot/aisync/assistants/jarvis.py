@@ -46,6 +46,8 @@ class Jarvis(Assistant):
 
     def turn_on(self, suit) -> None:
         self.load_tools(suit)
+        self.document_memory.set_similarity_metrics(self.suit.execute_hook("set_document_similarity_search_metric"))
+        self.persist_memory.set_similarity_metrics(self.suit.execute_hook("set_persist_memory_similarity_search_metric"))
 
     async def turn_off(self) -> None:
         # Remove tools from vectordb
