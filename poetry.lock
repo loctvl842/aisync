@@ -2202,12 +2202,12 @@ files = [
 
 [[package]]
 name = "pgvector"
-version = "0.2.5"
+version = "0.3.1"
 description = "pgvector support for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pgvector-0.2.5-py2.py3-none-any.whl", hash = "sha256:5e5e93ec4d3c45ab1fa388729d56c602f6966296e19deee8878928c6d567e41b"},
+    {file = "pgvector-0.3.1-py2.py3-none-any.whl", hash = "sha256:7da0629915083a9769b9a73481efb4cdc9122cfd35fc7a9248ce43d177a9c8e8"},
 ]
 
 [package.dependencies]
@@ -3757,4 +3757,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "7bed669acabc221b6d68f5bf6a3e5ab08e85570c66922a55e218543edb6a4c86"
+content-hash = "9e6a4768d76703856c3315b16d7ac71a80c5e69a59b88f79d3015b9324fa48a4"

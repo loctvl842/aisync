@@ -72,6 +72,22 @@ def set_greeting_message(assistant):
 
     return message
 
+@hook
+def set_document_similarity_search_metric():
+    """
+    Set the metric for similarity search of document memory
+    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
+    """
+    return "l2_distance"
+
+@hook
+def set_persist_memory_similarity_search_metric():
+    """
+    Set the metric for similarity search of persist memory
+    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
+    """
+    return "l2_distance"
+
 
 @hook
 def get_path_to_doc():

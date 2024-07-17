@@ -10,10 +10,21 @@ from core.db.session import Dialect, sessions
 
 from ...db.collections import QueryLogs, ResponseLogs
 
+from pgvector.sqlalchemy import Vector
+
+from core.logger import syslog
+
+
 
 class PersistMemory:
     def __init__(self, top_matches: Optional[int] = 10):
         self._top_matches = top_matches
+        self.similarity_metrics = getattr(Vector.comparator_factory, "l2_distance")
+
+    def set_similarity_metrics(self, similarity_metrics: str) -> None:
+        if not hasattr(Vector.comparator_factory, similarity_metrics):
+            syslog.warning(f"Unsupported similarity metric for persist memory: {similarity_metrics}, using l2_distance instead")
+        self.similarity_metrics = getattr(Vector.comparator_factory, similarity_metrics, self.similarity_metrics)
 
     async def save_interaction(
         self, input: str, output: str, vectorized_input: List[float], vectorized_output: List[float]
@@ -38,11 +49,13 @@ class PersistMemory:
         async with sessions[Dialect.PGVECTOR].session() as session:
             # Top self._top_matches similarity search neighbors from input and output tables
             input_match = await session.scalars(
-                select(QueryLogs).order_by(QueryLogs.embedding.l2_distance(vectorized_input)).limit(self._top_matches)
+                select(QueryLogs).
+                order_by(self.similarity_metrics(QueryLogs.embedding, vectorized_input)).
+                limit(self._top_matches)
             )
             output_match = await session.scalars(
                 select(ResponseLogs)
-                .order_by(ResponseLogs.embedding.l2_distance(vectorized_input))
+                .order_by(self.similarity_metrics(ResponseLogs.embedding, vectorized_input))
                 .limit(self._top_matches)
             )
 
