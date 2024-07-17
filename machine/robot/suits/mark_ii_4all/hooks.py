@@ -98,6 +98,7 @@ def set_document_similarity_search_metric():
     """
     return "l2_distance"
 
+
 @hook
 def set_persist_memory_similarity_search_metric():
     """

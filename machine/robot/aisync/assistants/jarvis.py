@@ -5,6 +5,7 @@ from core.cache import Cache, DefaultKeyMaker, RedisBackend
 from core.logger import syslog
 
 from ..engines.brain import Brain
+from ..engines.compiler import AISyncInput
 from ..engines.memory import BufferMemory
 from ..manager import Manager
 from .base import Assistant
@@ -47,7 +48,9 @@ class Jarvis(Assistant):
     def turn_on(self, suit) -> None:
         self.load_tools(suit)
         self.document_memory.set_similarity_metrics(self.suit.execute_hook("set_document_similarity_search_metric"))
-        self.persist_memory.set_similarity_metrics(self.suit.execute_hook("set_persist_memory_similarity_search_metric"))
+        self.persist_memory.set_similarity_metrics(
+            self.suit.execute_hook("set_persist_memory_similarity_search_metric")
+        )
 
     async def turn_off(self) -> None:
         # Remove tools from vectordb
@@ -94,15 +97,16 @@ class Jarvis(Assistant):
                 tool.set_assistant(self)
         self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
-    async def save_to_db(self, input: str, output: str) -> None:
+    async def save_to_db(self, input: AISyncInput, output: str) -> None:
         vectorized_output = self.suit.execute_hook("embed_output", output=output, assistant=self)
         vectorized_input = self.suit.execute_hook("embed_input", input=input, assistant=self)
-        await self.persist_memory.save_interaction(input, output, vectorized_input, vectorized_output)
+        # TODO: Allow user to choose which field(s) to save as input column
+        await self.persist_memory.save_interaction(input.query, output, vectorized_input, vectorized_output)
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-
-        res = await self.compiler.ainvoke(input={"input": input})
+        customized_input = self.suit.execute_hook("customized_input", query=input, assistant=self)
+        res = await self.compiler.ainvoke(input={"input": customized_input})
 
         output = res["agent_output"]
 
@@ -111,7 +115,7 @@ class Jarvis(Assistant):
         self.buffer_memory.save_message(sender="AI", message=output)
 
         # Save to database
-        await self.save_to_db(input, output)
+        await self.save_to_db(customized_input, output)
 
         return output
 
@@ -142,7 +146,11 @@ class Jarvis(Assistant):
                 await asyncio.sleep(delay)
             return output
 
-        producer = asyncio.create_task(self.compiler.stream(input={"input": input}, handle_chunk=proccess_queue))
+        customized_input = self.suit.execute_hook("customized_input", query=input, assistant=self)
+
+        producer = asyncio.create_task(
+            self.compiler.stream(input={"input": customized_input}, handle_chunk=proccess_queue)
+        )
         consumer = asyncio.create_task(consume_queue(delay=delay))
         await producer  # Wait for producer to finish
         await queue.put(None)  # Signal consumer to stop
@@ -153,7 +161,7 @@ class Jarvis(Assistant):
         self.buffer_memory.save_message(sender="AI", message=output)
 
         # Save to database
-        await self.save_to_db(input, output)
+        await self.save_to_db(customized_input, output)
 
     @property
     def llm(self):

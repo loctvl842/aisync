@@ -2,6 +2,7 @@ from typing import List
 from uuid import uuid4
 
 from langchain.text_splitter import CharacterTextSplitter
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
@@ -15,7 +16,6 @@ from core.logger import syslog
 from ...db.collections import DocCollection
 from .universal_loader import UniversalLoader
 
-from pgvector.sqlalchemy import Vector
 
 class DocumentMemory:
     def __init__(self, config: dict = None, embedder=None):
@@ -26,10 +26,11 @@ class DocumentMemory:
         self.embedder = embedder
         self.similarity_metrics = getattr(Vector.comparator_factory, "l2_distance")
 
-
     def set_similarity_metrics(self, similarity_metrics: str) -> None:
         if not hasattr(Vector.comparator_factory, similarity_metrics):
-            syslog.warning(f"Unsupported similarity metric for document memory: {similarity_metrics}, using l2_distance instead")
+            syslog.warning(
+                f"Unsupported similarity metric for document memory: {similarity_metrics}, using l2_distance instead"
+            )
         self.similarity_metrics = getattr(Vector.comparator_factory, similarity_metrics, self.similarity_metrics)
 
     # @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=24 * 60 * 60)
@@ -46,7 +47,7 @@ class DocumentMemory:
         # get the file name from file path
         file_name = file_path.split("/")[-1]
 
-        syslog.info(f"Processing document: {file_name}")
+        syslog(f"Processing document: {file_name}")
         # Split the document into smaller chunks
         text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         docs = text_splitter.split_documents(documents)
@@ -88,12 +89,11 @@ class DocumentMemory:
         await session.execute(stmt)
         self.splitted_documents = []
 
-    # @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
-    async def similarity_search(self, input: str, document_name: List[str], k: int = 8) -> str:
+    @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
+    async def similarity_search(self, vectorized_input: List[float], document_name: List[str], k: int = 8) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"
         # DB Session for similarity search
-        vectorized_input = self.embedder.embed_query(text=input)
         sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
         async with sessions[Dialect.PGVECTOR].session() as session:
             # Top self._top_matches similarity search neighbors from input and output tables
@@ -103,7 +103,6 @@ class DocumentMemory:
                 .order_by(self.similarity_metrics(DocCollection.embedding, vectorized_input))
                 .limit(k)
             )
-            syslog.info(doc_match)
             counter = 1
             for doc in doc_match:
                 res += f"- Document {counter}: {doc.page_content}\n\n"
