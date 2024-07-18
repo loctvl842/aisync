@@ -9,7 +9,7 @@ def build_prompt_prefix(default: str, assistant):
     `prompt_prefix` mission is to define what is the role of Chatbot.
     """
     CUSTOMIZED_PROMPT = """
-    You are a smart customer service assistant for Kravist, a gym and martial art center. 
+    You are a smart customer service assistant for Kravist, a gym and martial art center.
     Customer will ask you about Kravist via email, and you will use the provided information to answer the user. 
     Step 1: Check if the user's question is clear. If not, ask the user to rephrase their question. 
     Step 2: Check if the user's question is related to the related to the company,

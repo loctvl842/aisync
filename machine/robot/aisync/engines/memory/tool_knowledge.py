@@ -58,7 +58,7 @@ class ToolKnowledge:
         self, vectorized_input: List[float], tools_access: Sequence[str], tools: Sequence["BaseTool"]
     ) -> List["BaseTool"]:
         await self.save_tools()
-        # TODO: Change to cosine distance
+        # TODO: Fix to use user-custom distance metric
         res = [tools["none_of_the_above"]]
         # DB Session for similarity search
         sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))

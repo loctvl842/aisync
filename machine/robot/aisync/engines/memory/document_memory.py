@@ -1,7 +1,6 @@
-from typing import List
+from typing import TYPE_CHECKING, List
 from uuid import uuid4
 
-from langchain.text_splitter import CharacterTextSplitter
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
@@ -15,6 +14,11 @@ from core.logger import syslog
 
 from ...db.collections import DocCollection
 from .universal_loader import UniversalLoader
+
+if TYPE_CHECKING:
+    from ...assistants.base import Assistant
+
+from core.utils.decorators import stopwatch
 
 
 class DocumentMemory:
@@ -34,7 +38,7 @@ class DocumentMemory:
         self.similarity_metrics = getattr(Vector.comparator_factory, similarity_metrics, self.similarity_metrics)
 
     # @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=24 * 60 * 60)
-    def read(self, suit: str, file_path: str, chunk_size: int = 800, chunk_overlap: int = 0) -> List[dict]:
+    def read(self, suit: str, file_path: str, assistant: "Assistant") -> List[dict]:
         """Loads and processes the document specified by file_path."""
 
         loader = self.document_loader.choose_loader()
@@ -49,8 +53,7 @@ class DocumentMemory:
 
         syslog(f"Processing document: {file_name}")
         # Split the document into smaller chunks
-        text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-        docs = text_splitter.split_documents(documents)
+        docs = assistant.splitter.split_documents(documents)
         all_content = [doc.page_content for doc in docs]
 
         all_embeddings = self.embedder.embed_documents(texts=list(all_content))
@@ -67,6 +70,8 @@ class DocumentMemory:
                     "document_name": file_name,
                 }
             )
+            syslog(f"Document {index}: {doc.page_content}")
+
         return self.splitted_documents
 
     @SessionContext(dialect=Dialect.PGVECTOR)
@@ -90,7 +95,8 @@ class DocumentMemory:
         self.splitted_documents = []
 
     @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
-    async def similarity_search(self, vectorized_input: List[float], document_name: List[str], k: int = 8) -> str:
+    @stopwatch(prefix="document_sim_search")
+    async def similarity_search(self, vectorized_input: List[float], document_name: List[str], k: int = 3) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"
         # DB Session for similarity search

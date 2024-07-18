@@ -7,6 +7,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
 
 from core.logger import syslog
+from core.utils.decorators import stopwatch
 
 from ..assistants.base.assistant import Assistant
 from . import prompts
@@ -72,7 +73,7 @@ class Node:
         input_variables: Optional[List[str]] = None,
     ) -> ActionPromptTemplate:
         if input_variables is None:
-            input_variables = ["input", "intermediate_steps", "buffer_memory"]
+            input_variables = ["query", "intermediate_steps", "buffer_memory"]
 
         return ActionPromptTemplate(
             template=format_instructions,
@@ -140,7 +141,8 @@ class Node:
 
         return res
 
-    def execute_documents(self, agent_input: dict) -> str:
+    @stopwatch(prefix="summarize_document_chain")
+    async def execute_documents(self, agent_input: dict) -> str:
         """
         Function to summarize understanding from documents
         """
@@ -154,6 +156,7 @@ class Node:
 
         return res.content
 
+    @stopwatch(prefix="Using tools")
     async def tool_output(self, input: dict, vectorized_input: List[float]) -> str:
         """
         Function to execute tools and format the output to put into final prompt
@@ -197,7 +200,7 @@ class Node:
                 vectorized_input=vectorized_input,
                 document_name=self.document_names,
             )
-            document_memory = self.execute_documents(agent_input={"query": query, "document": doc})
+            document_memory = await self.execute_documents(agent_input={"query": query, "document": doc})
             document_memory_output = f"## Document Knowledge Output: `{document_memory}`"
         except Exception as e:
             syslog.error(f"Error when fetching document memory: {e}")
@@ -211,21 +214,25 @@ class Node:
         """
         return f"## Buffer Memory:\n\n{self.assistant.buffer_memory.format_buffer_memory(self.assistant)}"
 
+    @stopwatch(prefix="setup_input")
     async def setup_input(self, state: dict) -> dict:
         input = state["input"].model_dump()
         # Embed input
         self.vectorized_input = self._suit.execute_hook("embed_input", input=state["input"], assistant=self.assistant)
 
-        # Document memory
-        input["document_memory"] = await self.document_memory(
-            vectorized_input=self.vectorized_input, query=input["query"]
-        )
-
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()
 
-        # Tool Output
-        input["tool_output"] = await self.tool_output(input, vectorized_input=self.vectorized_input)
+        import asyncio
+
+        tool_task = asyncio.create_task(self.tool_output(input, vectorized_input=self.vectorized_input))
+        document_task = asyncio.create_task(
+            self.document_memory(vectorized_input=self.vectorized_input, query=input["query"])
+        )
+        tool_output_res, document_output_res = await asyncio.gather(tool_task, document_task)
+
+        input["tool_output"] = tool_output_res
+        input["document_memory"] = document_output_res
 
         return input
 
@@ -244,11 +251,12 @@ class Node:
         return missing_vars
 
     @staticmethod
+    @stopwatch(prefix="node_running")
     async def invoke(state, **kwargs):
         cur_node = kwargs["cur_node"]
         assistant = cur_node.assistant
-        syslog(f"Invoking node: {cur_node.name}")
-        syslog(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, 'model') else cur_node.llm.model_name}")
+        syslog.info(f"Invoking node: {cur_node.name}")
+        syslog.info(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, 'model') else cur_node.llm.model_name}")
         input = await cur_node.setup_input(state)
 
         syslog(input)

@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 from core.logger import syslog
 
@@ -6,23 +7,35 @@ from ...aisync import AISyncInput, hook
 
 
 @hook
-def set_suit_llm(assistant):
+def set_suit_llm(assistant) -> Union[str, tuple[str, dict]]:
     """
     Set the LLM model for the assistant
     Change the model_name to the llm model of your choice.
     """
 
     model_name = "LLMChatOpenAI"
-    return model_name
+    model_config = {"model": "gpt-3.5-turbo"}
+    return model_name, model_config
 
 
 @hook
-def set_suit_embedder(assistant):
+def set_suit_embedder(assistant) -> Union[str, tuple[str, dict]]:
     """
     Set the embedder for the assistant
     Change the model_name to the embedding model of your choice.
     """
     model_name = "EmbedderOpenAI"
+    model_config = {"model": "text-embedding-3-small", "dimensions": 768}
+    return model_name
+
+
+@hook
+def set_suit_splitter(assistant) -> Union[str, tuple[str, dict]]:
+    """
+    Set the splitter for processing documents
+    Should be one of [SplitterRecursiveCharacter, SplitterCharacter, SplitterSemantic]
+    """
+    model_name = "SplitterRecursiveCharacter"
     return model_name
 
 

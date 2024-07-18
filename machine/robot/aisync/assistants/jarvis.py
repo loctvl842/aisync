@@ -67,6 +67,11 @@ class Jarvis(Assistant):
         except ValueError as e:
             syslog.error(e)
 
+        try:
+            Brain().change_splitter(self.suit.execute_hook("set_suit_splitter", assistant=self))
+        except ValueError as e:
+            syslog.error(e)
+
         Brain().load_memory()
 
     def greet(self) -> str:
@@ -88,7 +93,7 @@ class Jarvis(Assistant):
         self.all_files_path = file_path
 
         for fp in file_path:
-            self.document_memory.read(suit, fp)
+            self.document_memory.read(suit, fp, self)
 
     def load_tools(self, suit) -> None:
         tools = list(self.manager.suits[suit].tools.values())
@@ -186,6 +191,10 @@ class Jarvis(Assistant):
     @property
     def compiler(self):
         return Brain().compiler
+
+    @property
+    def splitter(self):
+        return Brain().splitter
 
     def compile(self):
         self.compiler.activate(self)
