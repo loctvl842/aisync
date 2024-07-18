@@ -8,12 +8,13 @@ from sqlalchemy import select
 
 from core.db.session import Dialect, sessions
 from core.logger import syslog
+from core.utils.decorators import stopwatch
 
 from ...db.collections import QueryLogs, ResponseLogs
 
 
 class PersistMemory:
-    def __init__(self, top_matches: Optional[int] = 10):
+    def __init__(self, top_matches: Optional[int] = 4):
         self._top_matches = top_matches
         self.similarity_metrics = getattr(Vector.comparator_factory, "l2_distance")
 
@@ -38,6 +39,7 @@ class PersistMemory:
             session.add(ResponseLogs(payload=json.dumps(payload), embedding=vectorized_output))
             await session.commit()
 
+    @stopwatch(prefix="Persist memory similarity search")
     async def similarity_search(self, vectorized_input: List[float]) -> Dict[str, str]:
         # TODO: Change to cosine distance
         res = {}

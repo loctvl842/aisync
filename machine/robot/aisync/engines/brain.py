@@ -1,3 +1,5 @@
+from typing import Union
+
 from core.utils.decorators import singleton
 
 from ..manager import Manager
@@ -5,6 +7,7 @@ from .compiler import Compiler
 from .embedder import get_embedder_by_name
 from .llm import get_llm_by_name
 from .memory import DocumentMemory, PersistMemory, ToolKnowledge
+from .splitter import get_splitter_by_name
 
 
 @singleton
@@ -42,6 +45,12 @@ class Brain:
         default_cfg = cfg_cls().model_dump()
         self.embedder = cfg_cls.get_embedder(default_cfg)
 
+        cfg_cls = get_splitter_by_name("SplitterCharacter")
+        if cfg_cls is None:
+            raise ValueError("Splitter not found")
+        default_cfg = cfg_cls().model_dump()
+        self.splitter = cfg_cls.get_splitter(default_cfg)
+
     def load_memory(self) -> None:
         """
         Load memories
@@ -58,18 +67,60 @@ class Brain:
         """
         self.compiler: Compiler = Compiler()
 
-    def change_llm(self, llm_name: str) -> None:
-        cfg_cls = get_llm_by_name(llm_name)
-        if cfg_cls is None:
-            raise ValueError(f"LLM {llm_name} not found. Using LLMChatOpenAI instead.")
+    def change_llm(self, llm_config: Union[str, tuple[str, dict]]) -> None:
+        if isinstance(llm_config, str):
+            cfg_cls = get_llm_by_name(llm_config)
+            if cfg_cls is None:
+                raise ValueError(f"LLM {llm_config} not found. Using LLMChatOpenAI instead.")
 
-        default_cfg = cfg_cls().model_dump()
-        self.llm = cfg_cls.get_llm(default_cfg)
+            default_cfg = cfg_cls().model_dump()
+            self.llm = cfg_cls.get_llm(default_cfg)
+        elif isinstance(llm_config, tuple):
+            llm_name, llm_schema = llm_config
+            if not isinstance(llm_schema, dict) or not isinstance(llm_name, str):
+                raise ValueError("Invalid LLM configuration")
+            cfg_cls = get_llm_by_name(llm_name)
+            if cfg_cls is None:
+                raise ValueError(f"LLM {llm_config} not found. Using LLMChatOpenAI instead.")
+            self.llm = cfg_cls.get_llm(llm_schema)
+        else:
+            raise ValueError("Invalid LLM configuration")
 
-    def change_embedder(self, embedder_name: str) -> None:
-        cfg_cls = get_embedder_by_name(embedder_name)
-        if cfg_cls is None:
-            raise ValueError(f"Embedder {embedder_name} not found. Using EmbedderOpenAI instead.")
+    def change_embedder(self, embedder_config: Union[str, tuple[str, dict]]) -> None:
+        if isinstance(embedder_config, str):
+            cfg_cls = get_embedder_by_name(embedder_config)
+            if cfg_cls is None:
+                raise ValueError(f"Embedder {embedder_config} not found. Using EmbedderOpenAI instead.")
 
-        default_cfg = cfg_cls().model_dump()
-        self.embedder = cfg_cls.get_embedder(default_cfg)
+            default_cfg = cfg_cls().model_dump()
+            self.embedder = cfg_cls.get_embedder(default_cfg)
+        elif isinstance(embedder_config, tuple):
+            embedder_name, embedder_schema = embedder_config
+            if not isinstance(embedder_schema, dict) or not isinstance(embedder_name, str):
+                raise ValueError("Invalid Embedder configuration")
+            cfg_cls = get_embedder_by_name(embedder_name)
+            if cfg_cls is None:
+                raise ValueError(f"Embedder {embedder_name} not found. Using EmbedderOpenAI instead.")
+            self.embedder = cfg_cls.get_embedder(embedder_schema)
+        else:
+            raise ValueError("Invalid Embedder configuration")
+
+    def change_splitter(self, splitter_config: Union[str, tuple[str, dict]]) -> None:
+        # Assume that it's being run after change_embedder so that an embedder can be set in case SemanticChunking is used
+        if isinstance(splitter_config, str):
+            cfg_cls = get_splitter_by_name(splitter_config)
+            if cfg_cls is None:
+                raise ValueError(f"Splitter {splitter_config} not found. Using SplitterCharacter instead.")
+
+            default_cfg = cfg_cls().model_dump()
+            self.splitter = cfg_cls.get_splitter(default_cfg)
+        elif isinstance(splitter_config, tuple):
+            splitter_name, splitter_schema = splitter_config
+            if not isinstance(splitter_schema, dict) or not isinstance(splitter_name, str):
+                raise ValueError("Invalid Splitter configuration")
+            cfg_cls = get_splitter_by_name(splitter_name)
+            if cfg_cls is None:
+                raise ValueError(f"Splitter {splitter_name} not found. Using SplitterCharacter instead.")
+            self.splitter = cfg_cls.get_splitter(splitter_schema)
+        else:
+            raise ValueError("Invalid Splitter configuration")

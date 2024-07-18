@@ -2,7 +2,7 @@ import os
 
 from core.logger import syslog
 
-from ...aisync import hook
+from ...aisync import AISyncInput, hook
 
 
 @hook
@@ -36,12 +36,12 @@ def build_format_instructions(default: str, assistant):
 
 
 @hook
-def embed_input(input: str, assistant):
+def embed_input(input: AISyncInput, assistant):
     """
     You can embed user's input here for similarity search
 
     """
-    return assistant.embedder.embed_query(text=input)
+    return assistant.embedder.embed_query(text=input.query)
 
 
 @hook
@@ -112,3 +112,13 @@ def set_persist_memory_similarity_search_metric():
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
     """
     return "l2_distance"
+
+
+@hook
+def customized_input(query: str, assistant):
+    """
+    You can customize the input here
+
+    """
+
+    return AISyncInput(query=query)
