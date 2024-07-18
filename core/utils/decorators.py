@@ -35,18 +35,30 @@ def stopwatch(
 
     def decorator(fn: Callable[..., T]) -> Callable[..., Union[T, Awaitable[T]]]:
         @wraps(fn)
-        async def wrapper(*args, **kwargs) -> T:
+        def wrapper(*args, **kwargs) -> Union[T, Awaitable[T]]:
             from core.logger import syslog
 
             start = time.time_ns()
+
+            def do(elapsed_time):
+                syslog.info(f"Elapsed time for {''.join([prefix + ':' if prefix else '', fn.__name__])}: {elapsed_time} ms")
+
             if asyncio.iscoroutinefunction(fn):
-                result = await fn(*args, **kwargs)
+
+                async def async_wrapper() -> T:
+                    result = await fn(*args, **kwargs)
+                    end = time.time_ns()
+                    elapsed_time = (end - start) / 1e6
+                    do(elapsed_time)
+                    return result
+
+                return async_wrapper()
             else:
                 result = fn(*args, **kwargs)
-            end = time.time_ns()
-            elapsed_time = (end - start) / 1e6
-            syslog.info(f"Elapsed time for {''.join([prefix + ':' if prefix else '', fn.__name__])}: {elapsed_time} ms")
-            return result
+                end = time.time_ns()
+                elapsed_time = (end - start) / 1e6
+                do(elapsed_time)
+                return result
 
         return wrapper
 
