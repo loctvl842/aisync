@@ -41,7 +41,9 @@ def stopwatch(
             start = time.time_ns()
 
             def do(elapsed_time):
-                syslog.info(f"Elapsed time for {''.join([prefix + ':' if prefix else '', fn.__name__])}: {elapsed_time} ms")
+                syslog.info(
+                    f"Elapsed time for {''.join([prefix + ':' if prefix else '', fn.__name__])}: {elapsed_time} ms"
+                )
 
             if asyncio.iscoroutinefunction(fn):
 
