@@ -13,8 +13,8 @@ def set_suit_llm(assistant) -> Union[str, tuple[str, dict]]:
     Change the model_name to the llm model of your choice.
     """
 
-    model_name = "LLMChatOpenAI"
-    model_config = {"model": "gpt-3.5-turbo"}
+    model_name = "LLMChatOllama"
+    model_config = {"model": "llama3-chatqa"}
     return model_name, model_config
 
 
@@ -24,9 +24,9 @@ def set_suit_embedder(assistant) -> Union[str, tuple[str, dict]]:
     Set the embedder for the assistant
     Change the model_name to the embedding model of your choice.
     """
-    model_name = "EmbedderOpenAI"
-    model_config = {"model": "text-embedding-3-small", "dimensions": 768}
-    return model_name
+    model_name = "EmbedderLocal"
+    model_config = {"model_name_or_path": "BAAI/bge-base-en-v1.5"}
+    return model_name, model_config
 
 
 @hook
