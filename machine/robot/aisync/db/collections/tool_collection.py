@@ -17,10 +17,31 @@ class ToolCollection(Base):
 
     __table_args__ = (
         Index(
-            "idx_tool_embedding",
+            "idx_tool_embedding_vector_l2_ops",
             "embedding",
             postgresql_using="hnsw",
             postgresql_with={"m": 16, "ef_construction": 64},
             postgresql_ops={"embedding": "vector_l2_ops"},
+        ),
+        Index(
+            "idx_tool_embedding_vector_l1_ops",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_with={"m": 16, "ef_construction": 64},
+            postgresql_ops={"embedding": "vector_l1_ops"},
+        ),
+        Index(
+            "idx_tool_embedding_vector_ip_ops",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_with={"m": 16, "ef_construction": 64},
+            postgresql_ops={"embedding": "vector_ip_ops"},
+        ),
+        Index(
+            "idx_tool_embedding_vector_cosine_ops",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_with={"m": 16, "ef_construction": 64},
+            postgresql_ops={"embedding": "vector_cosine_ops"},
         ),
     )
