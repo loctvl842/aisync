@@ -94,7 +94,7 @@ class DocumentMemory:
         await session.execute(stmt)
         self.splitted_documents = []
 
-    @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
+    # @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
     @stopwatch(prefix="document_sim_search")
     async def similarity_search(self, vectorized_input: List[float], document_name: List[str], k: int = 3) -> str:
         await self.add_docs()
