@@ -39,7 +39,7 @@ class Jarvis(Assistant):
 
     def set_max_token(self, limit: int, suit: "Suit"):
         if "set_token_limit" in self.manager.suits[suit]._hooks:
-            self.max_token = self.manager.suits[suit].execute_hook("set_max_token")
+            self.max_token = self.manager.suits[suit].execute_hook("set_max_token", default=1000)
         else:
             self.max_token = limit
         if self.max_token <= 0:
@@ -47,9 +47,11 @@ class Jarvis(Assistant):
 
     def turn_on(self, suit) -> None:
         self.load_tools(suit)
-        self.document_memory.set_similarity_metrics(self.suit.execute_hook("set_document_similarity_search_metric"))
+        self.document_memory.set_similarity_metrics(
+            self.suit.execute_hook("set_document_similarity_search_metric", default="l2_distance")
+        )
         self.persist_memory.set_similarity_metrics(
-            self.suit.execute_hook("set_persist_memory_similarity_search_metric")
+            self.suit.execute_hook("set_persist_memory_similarity_search_metric", default="l2_distance")
         )
 
     async def turn_off(self) -> None:
@@ -58,30 +60,36 @@ class Jarvis(Assistant):
 
     def customize_llm_and_embedder(self):
         try:
-            Brain().change_llm(self.suit.execute_hook("set_suit_llm", assistant=self))
+            Brain().change_llm(self.suit.execute_hook("set_suit_llm", assistant=self, default="LLMChatOpenAI"))
         except ValueError as e:
             syslog.error(e)
 
         try:
-            Brain().change_embedder(self.suit.execute_hook("set_suit_embedder", assistant=self))
+            Brain().change_embedder(
+                self.suit.execute_hook("set_suit_embedder", assistant=self, default="EmbedderOpenAI")
+            )
         except ValueError as e:
             syslog.error(e)
 
         try:
-            Brain().change_splitter(self.suit.execute_hook("set_suit_splitter", assistant=self))
+            Brain().change_splitter(
+                self.suit.execute_hook("set_suit_splitter", assistant=self, default="SplitterRecursiveCharacter")
+            )
         except ValueError as e:
             syslog.error(e)
 
         Brain().load_memory()
 
     def greet(self) -> str:
-        if "set_greeting_message" in self.suit._hooks:
-            return self.suit.execute_hook("set_greeting_message", assistant=self)
-        return f"Hello, I am {self.name} {self.version} and I was created in {self.year}"
+        return self.suit.execute_hook(
+            "set_greeting_message",
+            assistant=self,
+            default=f"Hello, I am {self.name} {self.version} and I was created in {self.year}",
+        )
 
     def load_document(self, suit):
 
-        file_path = self.suit.execute_hook("get_path_to_doc") or []
+        file_path = self.suit.execute_hook("get_path_to_doc", default=[])
         """
             If user do not specify the directory
         --> Use default path to doc: ./robot/suits/mark_i
@@ -103,14 +111,16 @@ class Jarvis(Assistant):
         self.tool_knowledge.add_tools(tools=tools, embedder=self.embedder)
 
     async def save_to_db(self, input: AISyncInput, output: str) -> None:
-        vectorized_output = self.suit.execute_hook("embed_output", output=output, assistant=self)
-        vectorized_input = self.suit.execute_hook("embed_input", input=input, assistant=self)
+        vectorized_output = self.suit.execute_hook("embed_output", output=output, assistant=self, default=[0] * 768)
+        vectorized_input = self.suit.execute_hook("embed_input", input=input, assistant=self, default=[0] * 768)
         # TODO: Allow user to choose which field(s) to save as input column
         await self.persist_memory.save_interaction(input.query, output, vectorized_input, vectorized_output)
 
     async def respond(self, input: str) -> str:
         self.buffer_memory.save_pending_message(input)
-        customized_input = self.suit.execute_hook("customized_input", query=input, assistant=self)
+        customized_input = self.suit.execute_hook(
+            "customized_input", query=input, assistant=self, default=AISyncInput(query=input)
+        )
         res = await self.compiler.ainvoke(input={"input": customized_input})
 
         output = res["agent_output"]
@@ -151,7 +161,9 @@ class Jarvis(Assistant):
                 await asyncio.sleep(delay)
             return output
 
-        customized_input = self.suit.execute_hook("customized_input", query=input, assistant=self)
+        customized_input = self.suit.execute_hook(
+            "customized_input", query=input, assistant=self, default=AISyncInput(query=input)
+        )
 
         producer = asyncio.create_task(
             self.compiler.stream(input={"input": customized_input}, handle_chunk=proccess_queue)

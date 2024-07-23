@@ -7,7 +7,7 @@ from ...aisync import tool
 
 
 @tool
-def get_today_date(tool_input: Optional[Any] = None):
+def get_today_date(tool_input: Optional[Any] = None, **kwargs):
     """
     Get today's date.
     Reply to any question involve current date or time.
@@ -17,7 +17,7 @@ def get_today_date(tool_input: Optional[Any] = None):
 
 
 @tool
-def none_of_the_above(tool_input: Optional[Any] = None):
+def none_of_the_above(tool_input: Optional[Any] = None, **kwargs):
     """
     Use this tool if none of the above tools help.
     Input is always None.
@@ -26,7 +26,7 @@ def none_of_the_above(tool_input: Optional[Any] = None):
 
 
 @tool
-def get_appstore_application_info(tool_input: Any):
+def get_appstore_application_info(tool_input: Any, **kwargs):
     """
     Get information about an application in the App Store.
     Reply with a quotation about the application.

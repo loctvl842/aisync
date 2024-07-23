@@ -59,7 +59,7 @@ class Compiler:
         self.set_state()
         self.state_graph = StateGraph(self.state_type)
         self.setup_node_core(assistant)
-        should_customize_node_llm = assistant.suit.execute_hook("should_customize_node_llm")
+        should_customize_node_llm = assistant.suit.execute_hook("should_customize_node_llm", default=True)
         for node_name, node in assistant.suit.nodes.items():
             node.activate(assistant, should_customize_node_llm)
             self.add_node(node)

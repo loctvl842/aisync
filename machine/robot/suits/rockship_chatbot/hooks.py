@@ -6,7 +6,7 @@ from ...aisync import AISyncInput, hook
 
 
 @hook
-def set_suit_llm(assistant):
+def set_suit_llm(assistant, default):
     """
     Set the LLM model for the assistant
     Change the model_name to the llm model of your choice.
@@ -17,7 +17,7 @@ def set_suit_llm(assistant):
 
 
 @hook
-def set_suit_embedder(assistant):
+def set_suit_embedder(assistant, default):
     """
     Set the embedder for the assistant
     Change the model_name to the embedding model of your choice.
@@ -36,7 +36,7 @@ def build_format_instructions(default: str, assistant):
 
 
 @hook
-def embed_input(input: AISyncInput, assistant):
+def embed_input(input: AISyncInput, assistant, default):
     """
     You can embed user's input here for similarity search
 
@@ -45,7 +45,7 @@ def embed_input(input: AISyncInput, assistant):
 
 
 @hook
-def embed_output(output: str, assistant):
+def embed_output(output: str, assistant, default):
     """
     You can embed assistant's output here for similarity search
 
@@ -54,7 +54,7 @@ def embed_output(output: str, assistant):
 
 
 @hook
-def set_greeting_message(assistant):
+def set_greeting_message(assistant, default):
     """
     You can custom your own greeting message here.
 
@@ -71,7 +71,7 @@ def set_greeting_message(assistant):
 
 
 @hook
-def get_path_to_doc():
+def get_path_to_doc(default):
     """
     Specify your path in to the 'user_path_specify' list as below.
 
@@ -97,7 +97,7 @@ def get_path_to_doc():
 
 
 @hook
-def set_document_similarity_search_metric():
+def set_document_similarity_search_metric(default):
     """
     Set the metric for similarity search of document memory
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
@@ -106,7 +106,7 @@ def set_document_similarity_search_metric():
 
 
 @hook
-def set_persist_memory_similarity_search_metric():
+def set_persist_memory_similarity_search_metric(default):
     """
     Set the metric for similarity search of persist memory
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
@@ -115,7 +115,7 @@ def set_persist_memory_similarity_search_metric():
 
 
 @hook
-def customized_input(query: str, assistant):
+def customized_input(query: str, assistant, default):
     """
     You can customize the input here
 

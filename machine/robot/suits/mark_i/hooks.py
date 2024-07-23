@@ -7,7 +7,7 @@ from ...aisync import AISyncInput, hook
 
 
 @hook
-def set_suit_llm(assistant) -> Union[str, tuple[str, dict]]:
+def set_suit_llm(assistant, default) -> Union[str, tuple[str, dict]]:
     """
     Set the LLM model for the assistant
     Change the model_name to the llm model of your choice.
@@ -19,7 +19,7 @@ def set_suit_llm(assistant) -> Union[str, tuple[str, dict]]:
 
 
 @hook
-def set_suit_embedder(assistant) -> Union[str, tuple[str, dict]]:
+def set_suit_embedder(assistant, default) -> Union[str, tuple[str, dict]]:
     """
     Set the embedder for the assistant
     Change the model_name to the embedding model of your choice.
@@ -30,7 +30,7 @@ def set_suit_embedder(assistant) -> Union[str, tuple[str, dict]]:
 
 
 @hook
-def set_suit_splitter(assistant) -> Union[str, tuple[str, dict]]:
+def set_suit_splitter(assistant, default) -> Union[str, tuple[str, dict]]:
     """
     Set the splitter for processing documents
     Should be one of [SplitterRecursiveCharacter, SplitterCharacter, SplitterSemantic]
@@ -49,7 +49,7 @@ def build_format_instructions(default: str, assistant):
 
 
 @hook
-def embed_input(input: AISyncInput, assistant):
+def embed_input(input: AISyncInput, assistant, default):
     """
     You can embed user's input here for similarity search
 
@@ -58,7 +58,7 @@ def embed_input(input: AISyncInput, assistant):
 
 
 @hook
-def embed_output(output: str, assistant):
+def embed_output(output: str, assistant, default):
     """
     You can embed assistant's output here for similarity search
 
@@ -67,7 +67,7 @@ def embed_output(output: str, assistant):
 
 
 @hook
-def customized_input(query: str, assistant):
+def customized_input(query: str, assistant, default):
     """
     You can customize the input here
 
@@ -97,7 +97,7 @@ def customized_input(query: str, assistant):
 
 
 @hook
-def set_max_token():
+def set_max_token(default):
     """
     Set the token limit for the assistant
 
@@ -107,7 +107,7 @@ def set_max_token():
 
 
 @hook
-def set_document_similarity_search_metric():
+def set_document_similarity_search_metric(default):
     """
     Set the metric for similarity search of document memory
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
@@ -116,7 +116,7 @@ def set_document_similarity_search_metric():
 
 
 @hook
-def set_persist_memory_similarity_search_metric():
+def set_persist_memory_similarity_search_metric(default):
     """
     Set the metric for similarity search of persist memory
     Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
@@ -125,7 +125,7 @@ def set_persist_memory_similarity_search_metric():
 
 
 @hook
-def get_path_to_doc():
+def get_path_to_doc(default):
     """
     Specify your path in to the 'user_path_specify' list as below.
 
