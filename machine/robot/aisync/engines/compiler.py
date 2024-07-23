@@ -10,7 +10,7 @@ import core.utils as utils
 from core.logger import syslog
 from core.settings import settings
 
-from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT, DEFAULT_PROMPT_PREFIX
+from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT, DEFAULT_PROMPT_PREFIX, DEFAULT_PROMPT_SUFFIX
 
 if TYPE_CHECKING:
     from ..assistants.base.assistant import Assistant
@@ -51,6 +51,10 @@ class Compiler:
             prompt_prefix=assistant.suit.execute_hook(
                 "build_prompt_prefix", default=DEFAULT_PROMPT_PREFIX, assistant=assistant
             ),
+            prompt_suffix=assistant.suit.execute_hook(
+                "build_prompt_suffix", default=DEFAULT_PROMPT_SUFFIX, assistant=assistant
+            ),
+            tools=assistant.suit.tools.keys()
         )
         self.node_core.activate(assistant, True)
         self.add_node(self.node_core)
