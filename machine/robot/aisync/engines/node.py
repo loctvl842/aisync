@@ -218,7 +218,9 @@ class Node:
     async def setup_input(self, state: dict) -> dict:
         input = state["input"].model_dump()
         # Embed input
-        self.vectorized_input = self._suit.execute_hook("embed_input", input=state["input"], assistant=self.assistant)
+        self.vectorized_input = self._suit.execute_hook(
+            "embed_input", input=state["input"], assistant=self.assistant, default=[0] * 768
+        )
 
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()

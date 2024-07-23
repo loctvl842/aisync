@@ -31,7 +31,7 @@ def get_my_name(tool_input: Optional[Any] = None, **kwargs: Any):
 
 
 @tool
-def none_of_the_above(tool_input: Optional[Dict] = None):
+def none_of_the_above(tool_input: Optional[Dict] = None, **kwargs):
     """
     Use this tool if none of the above tools help.
     Input is always None.
@@ -40,7 +40,7 @@ def none_of_the_above(tool_input: Optional[Dict] = None):
 
 
 @tool
-def get_appstore_application_info(tool_input: Optional[Dict] = None):
+def get_appstore_application_info(tool_input: Optional[Dict] = None, **kwargs):
     """
     Get information about an application in the App Store.
     Reply with a quotation about the application.
@@ -59,7 +59,7 @@ def get_appstore_application_info(tool_input: Optional[Dict] = None):
 
 
 @tool
-def add(a: int, b: int):
+def add(a: int, b: int, **kwargs):
     """
     Add two numbers.
     Input is two integers.
@@ -68,7 +68,7 @@ def add(a: int, b: int):
 
 
 @tool
-def multiply(a: int, b: int):
+def multiply(a: int, b: int, **kwargs):
     """
     Multiply two numbers.
     Input is two integers.

@@ -7,7 +7,7 @@ from ...aisync import tool
 
 
 @tool
-def get_today_date(tool_input: Optional[Any] = None):
+def get_today_date(tool_input: Optional[Any] = None, **kwargs):
     """
     Get today's date.
     Reply to any question involve current date or time.
@@ -17,7 +17,7 @@ def get_today_date(tool_input: Optional[Any] = None):
 
 
 @tool
-def none_of_the_above(tool_input: Optional[Any] = None):
+def none_of_the_above(tool_input: Optional[Any] = None, **kwargs):
     """
     Use this tool if none of the above tools help.
     Input is always None.
@@ -26,7 +26,7 @@ def none_of_the_above(tool_input: Optional[Any] = None):
 
 
 @tool
-def get_appstore_application_info(tool_input: Any):
+def get_appstore_application_info(tool_input: Any, **kwargs):
     """
     Get information about an application in the App Store.
     Reply with a quotation about the application.
@@ -45,7 +45,7 @@ def get_appstore_application_info(tool_input: Any):
 
 
 @tool
-def workflow_automation_price_estimation(tool_input: int):
+def workflow_automation_price_estimation(tool_input: int, **kwargs):
     """
     Estimate the price of a workflow automation setup
     Reply with a full estimated quote for the user's requested workflow automation setup
@@ -56,7 +56,7 @@ def workflow_automation_price_estimation(tool_input: int):
 
 
 @tool
-def low_code_price_estimation(tool_input: dict):
+def low_code_price_estimation(tool_input: dict, **kwargs):
     """
     Estimate the price of a low-code application.
     Reply with a full estimated quote for the user's requested low-code application
