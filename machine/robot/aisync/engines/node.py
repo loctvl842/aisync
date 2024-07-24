@@ -146,7 +146,8 @@ class Node:
         """
         Function to summarize understanding from documents
         """
-        prompt = PromptTemplate.from_template(DOC_PROMPT)
+        template = self._suit.execute_hook("build_prompt_from_docs", default=DOC_PROMPT, assistant=self.assistant)
+        prompt = PromptTemplate.from_template(template)
 
         chain = prompt | self.llm
 
