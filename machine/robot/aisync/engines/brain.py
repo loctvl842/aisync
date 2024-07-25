@@ -67,14 +67,14 @@ class Brain:
         """
         self.compiler: Compiler = Compiler()
 
-    def change_llm(self, llm_config: Union[str, tuple[str, dict]]) -> None:
+    def get_llm(self, llm_config: Union[str, tuple[str, dict]]):
         if isinstance(llm_config, str):
             cfg_cls = get_llm_by_name(llm_config)
             if cfg_cls is None:
                 raise ValueError(f"LLM {llm_config} not found. Using LLMChatOpenAI instead.")
 
             default_cfg = cfg_cls().model_dump()
-            self.llm = cfg_cls.get_llm(default_cfg)
+            return cfg_cls.get_llm(default_cfg)
         elif isinstance(llm_config, tuple):
             llm_name, llm_schema = llm_config
             if not isinstance(llm_schema, dict) or not isinstance(llm_name, str):
@@ -82,18 +82,16 @@ class Brain:
             cfg_cls = get_llm_by_name(llm_name)
             if cfg_cls is None:
                 raise ValueError(f"LLM {llm_config} not found. Using LLMChatOpenAI instead.")
-            self.llm = cfg_cls.get_llm(llm_schema)
-        else:
-            raise ValueError("Invalid LLM configuration")
+            return cfg_cls.get_llm(llm_schema)
 
-    def change_embedder(self, embedder_config: Union[str, tuple[str, dict]]) -> None:
+    def get_embedder(self, embedder_config: Union[str, tuple[str, dict]]):
         if isinstance(embedder_config, str):
             cfg_cls = get_embedder_by_name(embedder_config)
             if cfg_cls is None:
                 raise ValueError(f"Embedder {embedder_config} not found. Using EmbedderOpenAI instead.")
 
             default_cfg = cfg_cls().model_dump()
-            self.embedder = cfg_cls.get_embedder(default_cfg)
+            return cfg_cls.get_embedder(default_cfg)
         elif isinstance(embedder_config, tuple):
             embedder_name, embedder_schema = embedder_config
             if not isinstance(embedder_schema, dict) or not isinstance(embedder_name, str):
@@ -101,26 +99,39 @@ class Brain:
             cfg_cls = get_embedder_by_name(embedder_name)
             if cfg_cls is None:
                 raise ValueError(f"Embedder {embedder_name} not found. Using EmbedderOpenAI instead.")
-            self.embedder = cfg_cls.get_embedder(embedder_schema)
-        else:
-            raise ValueError("Invalid Embedder configuration")
+            return cfg_cls.get_embedder(embedder_schema)
 
-    def change_splitter(self, splitter_config: Union[str, tuple[str, dict]]) -> None:
-        # Assume that it's being run after change_embedder so that an embedder can be set in case SemanticChunking is used
+    def get_splitter(self, splitter_config: Union[str, tuple[str, dict]]):
+        splitter_name, splitter_schema = None, None
+
+        current_splitter = None
+
         if isinstance(splitter_config, str):
+            splitter_name = splitter_config
             cfg_cls = get_splitter_by_name(splitter_config)
             if cfg_cls is None:
                 raise ValueError(f"Splitter {splitter_config} not found. Using SplitterCharacter instead.")
-
-            default_cfg = cfg_cls().model_dump()
-            self.splitter = cfg_cls.get_splitter(default_cfg)
+            splitter_schema = cfg_cls().model_dump()
         elif isinstance(splitter_config, tuple):
             splitter_name, splitter_schema = splitter_config
-            if not isinstance(splitter_schema, dict) or not isinstance(splitter_name, str):
-                raise ValueError("Invalid Splitter configuration")
-            cfg_cls = get_splitter_by_name(splitter_name)
-            if cfg_cls is None:
-                raise ValueError(f"Splitter {splitter_name} not found. Using SplitterCharacter instead.")
-            self.splitter = cfg_cls.get_splitter(splitter_schema)
-        else:
+
+        if not isinstance(splitter_schema, dict) or not isinstance(splitter_name, str):
             raise ValueError("Invalid Splitter configuration")
+        cfg_cls = get_splitter_by_name(splitter_name)
+        if cfg_cls is None:
+            raise ValueError(f"Splitter {splitter_name} not found. Using SplitterCharacter instead.")
+        current_splitter = cfg_cls.get_splitter(splitter_schema)
+        if splitter_name == "SplitterSemantic":
+            current_splitter.set_embedder(self.embedder)
+
+        return current_splitter
+
+    def change_llm(self, llm_config: Union[str, tuple[str, dict]]) -> None:
+        self.llm = self.get_llm(llm_config)
+
+    def change_embedder(self, embedder_config: Union[str, tuple[str, dict]]) -> None:
+        self.embedder = self.get_embedder(embedder_config)
+
+    def change_splitter(self, splitter_config: Union[str, tuple[str, dict]]) -> None:
+        # Assume that it's being run after change_embedder so that an embedder can be set in case SemanticChunking is used
+        self.splitter = self.get_splitter(splitter_config)

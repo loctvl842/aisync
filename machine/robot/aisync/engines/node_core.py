@@ -2,12 +2,8 @@ from typing import TYPE_CHECKING, List, Optional
 
 from .node import Node
 from .prompts import (
-    DEFAULT_AGENT_PROMPT_SUFFIX,
     DEFAULT_PROMPT_PREFIX,
     DEFAULT_PROMPT_SUFFIX,
-    DOC_PROMPT,
-    FORMAT_INSTRUCTIONS,
-    ActionPromptTemplate,
 )
 
 if TYPE_CHECKING:
@@ -34,6 +30,5 @@ class NodeCore(Node):
         """
         Override the setup_input of node to include persist-memory
         """
-        input = await super().setup_input(state)
-        input["persist_memory"] = await self.persist_memory()
-        return input
+        await super().setup_input(state)
+        self.input["persist_memory"] = await self.persist_memory()

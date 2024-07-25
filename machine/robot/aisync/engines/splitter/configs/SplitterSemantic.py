@@ -8,10 +8,10 @@ import numpy as np
 from langchain_core.documents import BaseDocumentTransformer, Document
 from langchain_core.embeddings import Embeddings
 from langchain_openai import OpenAIEmbeddings
-from numpy.linalg import norm
 
 from core.logger import syslog
 
+from ....utils import cosine_distance, l1_distance, l2_distance, max_inner_product
 from .base import SplitterConfig
 
 
@@ -55,7 +55,11 @@ def combine_sentences(sentences: List[dict], buffer_size: int = 1) -> List[dict]
 
 
 def single_distance_calculation(
-    embedding_current: List[float], embedding_next: List[float], distance_metric: Optional[str] = "cosine_distance"
+    embedding_current: List[float],
+    embedding_next: List[float],
+    distance_metric: Optional[
+        Literal["l2_distance", "l1_distance", "cosine_distance", "max_inner_product"]
+    ] = "cosine_distance",
 ) -> float:
     """Calculate cosine distance between two embeddings.
 
@@ -70,35 +74,23 @@ def single_distance_calculation(
     """
 
     # predefined functions for distance calculation
-    def cosine_distance(vector_one: List[float], vector_two: List[float]) -> float:
-        return 1 - np.dot(np.array(vector_one), np.array(vector_two)) / (
-            norm(np.array(vector_one)) * norm(np.array(vector_two))
-        )
-
-    def l2_distance(vector_one: List[float], vector_two: List[float]) -> float:
-        return norm(np.array(vector_one) - np.array(vector_two))
-
-    def l1_distance(vector_one: List[float], vector_two: List[float]) -> float:
-        return np.sum(np.abs(np.array(vector_one) - np.array(vector_two)))
-
-    def max_inner_product(vector_one: List[float], vector_two: List[float]) -> float:
-        return np.dot(np.array(vector_one), np.array(vector_two))
-
+    # Calculate distance based on user input distance metric
     distance_metric_mapping = {
         "cosine_distance": cosine_distance,
         "l2_distance": l2_distance,
         "l1_distance": l1_distance,
         "max_inner_product": max_inner_product,
     }
-
-    # Calculate distance based on user input distance metric
     distance = distance_metric_mapping[distance_metric](embedding_current, embedding_next)
 
     return distance
 
 
 def calculate_distances(
-    sentences: List[dict], distance_metric: Optional[str] = "cosine_distance"
+    sentences: List[dict],
+    distance_metric: Optional[
+        Literal["l2_distance", "l1_distance", "cosine_distance", "max_inner_product"]
+    ] = "cosine_distance",
 ) -> Tuple[List[float], List[dict]]:
     """Calculate cosine distances between sentences.
 
@@ -158,7 +150,9 @@ class SemanticTextSplitter(BaseDocumentTransformer):
         breakpoint_threshold_amount: Optional[float] = None,
         number_of_chunks: Optional[int] = None,
         sentence_split_regex: str = r"(?<=[.?!])\s+",
-        distance_metric: Optional[str] = "cosine_distance",
+        distance_metric: Optional[
+            Literal["l2_distance", "l1_distance", "cosine_distance", "max_inner_product"]
+        ] = "cosine_distance",
     ):
         self._add_start_index = add_start_index
         self.embeddings = embeddings
@@ -171,10 +165,14 @@ class SemanticTextSplitter(BaseDocumentTransformer):
         else:
             self.breakpoint_threshold_amount = breakpoint_threshold_amount
         self.distance_metric = distance_metric
-        syslog(f"======> {self.distance_metric}")
 
     def set_embedder(self, embedding: Embeddings) -> None:
         self.embeddings = embedding
+
+    def set_distance_metric(
+        self, distance_metric: Literal["l2_distance", "l1_distance", "cosine_distance", "max_inner_product"]
+    ) -> None:
+        self.distance_metric = distance_metric
 
     def _calculate_breakpoint_threshold(self, distances: List[float]) -> Tuple[float, List[float]]:
         if self.breakpoint_threshold_type == "percentile":
@@ -302,6 +300,7 @@ class SemanticTextSplitter(BaseDocumentTransformer):
 
     def split_documents(self, documents: Iterable[Document]) -> List[Document]:
         """Split documents."""
+        syslog(f"=======> {self.distance_metric}")
         texts, metadatas = [], []
         for doc in documents:
             texts.append(doc.page_content)
@@ -322,4 +321,6 @@ class SplitterSemantic(SplitterConfig):
     breakpoint_threshold_amount: float = 95
     number_of_chunks: Optional[int] = None
     sentence_split_regex: str = r"(?<=[.?!])\s+"
-    distance_metric: Optional[str] = "cosine_distance"
+    distance_metric: Optional[Literal["l2_distance", "l1_distance", "cosine_distance", "max_inner_product"]] = (
+        "cosine_distance"
+    )
