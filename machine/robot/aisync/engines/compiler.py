@@ -10,6 +10,7 @@ import core.utils as utils
 from core.logger import syslog
 from core.settings import settings
 
+from ..decorators import HookOptions
 from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT, DEFAULT_PROMPT_PREFIX, DEFAULT_PROMPT_SUFFIX
 
 if TYPE_CHECKING:
@@ -49,12 +50,12 @@ class Compiler:
             name="node_core",
             document_names=docs,
             prompt_prefix=assistant.suit.execute_hook(
-                "build_prompt_prefix", default=DEFAULT_PROMPT_PREFIX, assistant=assistant
+                HookOptions.BUILD_PROMPT_PREFIX, default=DEFAULT_PROMPT_PREFIX, assistant=assistant
             ),
             prompt_suffix=assistant.suit.execute_hook(
-                "build_prompt_suffix", default=DEFAULT_PROMPT_SUFFIX, assistant=assistant
+                HookOptions.BUILD_PROMPT_SUFFIX, default=DEFAULT_PROMPT_SUFFIX, assistant=assistant
             ),
-            tools=assistant.suit.tools.keys()
+            tools=assistant.suit.tools.keys(),
         )
         self.node_core.activate(assistant, True)
         self.add_node(self.node_core)
@@ -63,7 +64,7 @@ class Compiler:
         self.set_state()
         self.state_graph = StateGraph(self.state_type)
         self.setup_node_core(assistant)
-        should_customize_node_llm = assistant.suit.execute_hook("should_customize_node_llm", default=True)
+        should_customize_node_llm = assistant.suit.execute_hook(HookOptions.SHOULD_CUSTOMIZE_NODE_LLM, default=True)
         for node_name, node in assistant.suit.nodes.items():
             node.activate(assistant, should_customize_node_llm)
             self.add_node(node)
@@ -165,6 +166,8 @@ class Compiler:
             iterations = 5
             flag = False
             error_log = ""
+            from ..service import AISyncHandler
+
             while iterations > 0:
                 chain = prompt | assistant.llm
                 res = chain.invoke(
@@ -176,7 +179,15 @@ class Compiler:
                         "agent_output": state["agent_output"],
                         "error_log": error_log,
                     },
-                    config=assistant.config,
+                    config={
+                        "callbacks": [
+                            AISyncHandler(
+                                trace_name="choose_agent",
+                                max_retries=iterations,
+                                tags=[f"{assistant.suit.name}", "compiler", "workflow"],
+                            )
+                        ]
+                    },
                 )
 
                 for name in agent_names:

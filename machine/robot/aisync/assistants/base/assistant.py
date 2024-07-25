@@ -2,7 +2,8 @@ from abc import ABC, abstractmethod
 from typing import Callable, Optional
 
 from langchain_core.runnables import RunnableConfig
-from langfuse.callback import CallbackHandler
+
+from ...service import AISyncHandler
 
 
 class Assistant(ABC):
@@ -14,11 +15,11 @@ class Assistant(ABC):
     def __init__(self, config: Optional[RunnableConfig] = None):
         if config is not None:
             # If config is provided, extend it with default callbacks
-            config.setdefault("callbacks", []).extend([CallbackHandler()])
+            config.setdefault("callbacks", []).extend([AISyncHandler()])
             self.config = config
         else:
             # If config is None, initialize it with default callbacks
-            self.config = {"callbacks": [CallbackHandler()]}
+            self.config = {"callbacks": [AISyncHandler()]}
 
     async def start(self, streaming=False) -> None:
         try:

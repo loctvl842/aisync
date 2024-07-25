@@ -5,7 +5,6 @@ from core.logger import syslog
 
 from ...aisync import tool
 
-
 # @tool
 # def get_today_date(tool_input: Optional[Any] = None, **kwargs: Any):
 #     """

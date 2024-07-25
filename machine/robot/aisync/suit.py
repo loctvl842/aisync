@@ -9,7 +9,7 @@ from langchain.agents.tools import BaseTool
 
 from core.logger import syslog
 
-from .decorators import SuitAction, SuitHook, SuitWorkflow
+from .decorators import HookOptions, SuitAction, SuitHook, SuitWorkflow
 from .utils import get_suit_name
 
 
@@ -74,7 +74,9 @@ class Suit:
                 if duplicate_actions:
                     syslog.warning(f"Duplicate action detected: {duplicate_actions}")
                 # find hooks
-                new_hooks = {hook_fn[0]: hook_fn[1] for hook_fn in getmembers(suit_module, self._is_suit_hook)}
+                new_hooks = {
+                    HookOptions(hook_fn[0]): hook_fn[1] for hook_fn in getmembers(suit_module, self._is_suit_hook)
+                }
                 duplicate_hooks = set(hooks.keys()) & set(new_hooks.keys())
                 if duplicate_hooks:
                     syslog.warning(f"Duplicate hook detected: {duplicate_hooks}")
@@ -124,7 +126,7 @@ class Suit:
             return self._actions[action_name].call(*args, **kwargs)
         syslog.error(f"Action {action_name} not found")
 
-    def execute_hook(self, hook_name: str, *args, **kwargs) -> Any:
+    def execute_hook(self, hook_name: HookOptions, *args, **kwargs) -> Any:
         default = kwargs.get("default", None)
         if hook_name in self._hooks:
             try:

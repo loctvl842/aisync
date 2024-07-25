@@ -10,6 +10,8 @@ from core.logger import syslog
 from core.utils.decorators import stopwatch
 
 from ..assistants.base.assistant import Assistant
+from ..decorators import HookOptions
+from ..service import AISyncHandler
 from . import prompts
 from .llm import get_llm_by_name
 from .parser import ActionOutputParser
@@ -83,31 +85,40 @@ class Node:
             output_parser=ActionOutputParser(),
         )
 
-    def _make_prompt(
+    def set_template(self, prefix: str = prompts.DEFAULT_PROMPT_PREFIX, suffix: str = prompts.DEFAULT_PROMPT_SUFFIX):
+        template = "\n\n".join([prefix, suffix])
+        self.template = template
+
+    def get_template(self):
+        return self.template
+
+    def set_prompt(
         self,
         prefix: str = prompts.DEFAULT_PROMPT_PREFIX,
         suffix: str = prompts.DEFAULT_PROMPT_SUFFIX,
         input_variables: Optional[List[str]] = None,
     ):
-        template = "\n\n".join([prefix, suffix])
-        self.template = template
+        self.set_template(prefix, suffix)
         if input_variables is None:
             input_variables = ["input", "buffer_memory", "document_memory", "tool_output"]
-        return PromptTemplate(
-            template=template,
+        self.prompt = PromptTemplate(
+            template=self.template,
             input_variables=input_variables,
         )
 
+    def get_prompt(self):
+        return self.prompt
+
     def _make_chain(self) -> RunnableSequence:
         # Prepare prompt
-        self.prompt = self._make_prompt(prefix=self.prompt_prefix, suffix=self.prompt_suffix)
+        self.set_prompt(prefix=self.prompt_prefix, suffix=self.prompt_suffix)
         chain = self.prompt | self.llm
         return chain
 
     async def execute_tools(self, agent_input, tools) -> dict:
         # Prompt
         format_instructions = self._suit.execute_hook(
-            "build_format_instructions", default=FORMAT_INSTRUCTIONS, assistant=self.assistant
+            HookOptions.BUILD_FORMAT_INSTRUCTIONS, default=FORMAT_INSTRUCTIONS, assistant=self.assistant
         )
         prompt = self.create_prompt(
             tools=tools,
@@ -134,7 +145,14 @@ class Node:
             # syslog.info(agent_input)
             res = await agent_executor.ainvoke(
                 input=agent_input,
-                config=self.assistant.config,
+                config={
+                    "callbacks": [
+                        AISyncHandler(
+                            trace_name=f"Node: {self.name} (Tool Output)",
+                            tags=[f"{self.assistant.suit.name}", "tools", "workflow"],
+                        )
+                    ]
+                },
             )
         except Exception as e:
             syslog.error("Error when invoking agent_executor:\n\n", e)
@@ -146,12 +164,24 @@ class Node:
         """
         Function to summarize understanding from documents
         """
-        template = self._suit.execute_hook("build_prompt_from_docs", default=DOC_PROMPT, assistant=self.assistant)
+        template = self._suit.execute_hook(
+            HookOptions.BUILD_PROMPT_FROM_DOCS, default=DOC_PROMPT, assistant=self.assistant
+        )
         prompt = PromptTemplate.from_template(template)
 
         chain = prompt | self.llm
 
-        res = chain.invoke(input=agent_input, config=self.assistant.config)
+        res = chain.invoke(
+            input=agent_input,
+            config={
+                "callbacks": [
+                    AISyncHandler(
+                        trace_name=f"Node: {self.name} (Summarize Documents)",
+                        tags=[f"{self.assistant.suit.name}", "document summarization", "workflow"],
+                    )
+                ]
+            },
+        )
         if isinstance(res, str):
             return res
 
@@ -220,7 +250,7 @@ class Node:
         input = state["input"].model_dump()
         # Embed input
         self.vectorized_input = self._suit.execute_hook(
-            "embed_input", input=state["input"], assistant=self.assistant, default=[0] * 768
+            HookOptions.EMBED_INPUT, input=state["input"], assistant=self.assistant, default=[0] * 768
         )
 
         # Optimize Chat History
@@ -236,6 +266,8 @@ class Node:
 
         input["tool_output"] = tool_output_res
         input["document_memory"] = document_output_res
+
+        self.input = input
 
         return input
 
@@ -256,22 +288,31 @@ class Node:
     @staticmethod
     @stopwatch(prefix="node_running")
     async def invoke(state, **kwargs):
-        cur_node = kwargs["cur_node"]
-        assistant = cur_node.assistant
-        syslog.info(f"Invoking node: {cur_node.name}")
-        syslog.info(f"Using model {cur_node.llm.model if hasattr(cur_node.llm, 'model') else cur_node.llm.model_name}")
-        input = await cur_node.setup_input(state)
+        self = kwargs["cur_node"]
+        assistant = self.assistant
+        syslog.info(f"Invoking node: {self.name}")
+        syslog.info(f"Using model {self.llm.model if hasattr(self.llm, 'model') else self.llm.model_name}")
+        await self.setup_input(state)
 
-        syslog(input)
+        syslog(self.input)
 
-        missing_vars = cur_node.find_missing_var(input=input, prompt=cur_node.template)
+        missing_vars = self.find_missing_var(input=self.input, prompt=self.template)
 
         if len(missing_vars) > 0:
-            raise ValueError(f"Invalid prompt for node: {cur_node.name}\nReason: Missing variables {missing_vars}")
+            raise ValueError(f"Invalid prompt for node: {self.name}\nReason: Missing variables {missing_vars}")
 
         res = {}
         try:
-            ai_response = cur_node._chain.invoke(input, config=cur_node.assistant.config)
+            ai_response = self._chain.invoke(
+                self.input,
+                config={
+                    "callbacks": [
+                        AISyncHandler(
+                            trace_name=f"Node: {self.name} (Chain Invoke)", tags=[f"{assistant.suit.name}", "workflow"]
+                        )
+                    ]
+                },
+            )
             # syslog.info(ai_response)
             if isinstance(ai_response, str):
                 res["agent_output"] = ai_response

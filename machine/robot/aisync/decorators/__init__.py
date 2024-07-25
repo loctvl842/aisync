@@ -1,5 +1,5 @@
 from .action import SuitAction, action
-from .hook import SuitHook, hook
+from .hook import HookOptions, SuitHook, hook
 from .tool import tool
 from .workflow import SuitWorkflow, workflow
 
@@ -11,4 +11,5 @@ __all__ = [
     "tool",
     "SuitWorkflow",
     "workflow",
+    "HookOptions",
 ]

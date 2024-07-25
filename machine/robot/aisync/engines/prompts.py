@@ -176,3 +176,23 @@ Given the context and workers, who should act next?
 Human: {query}
 AI:
 """
+
+
+DEFAULT_BS_DETECTOR_SELF_REFLECTION_PROMPT = """
+    You are an expert at self-reflecting your own answers.
+    # Query: 
+    ```
+    {assistant_prompt}
+    ```
+    # Proposed Answer: 
+    ```
+    {answer}
+    ```
+    Are you really sure the proposed answer is
+    {top_choice}? Choose again: {choices}. 
+    # The output should strictly use the following template: 
+    ```
+    explanation: [insert analysis]
+    answer: [choose one option from among choices {choices}]
+    ```
+"""
