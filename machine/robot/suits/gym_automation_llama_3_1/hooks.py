@@ -15,7 +15,7 @@ def set_suit_llm(assistant, default) -> Union[str, tuple[str, dict]]:
 
     model_name = "LLMChatOllama"
     model_config = {
-        "model": "llama3.1:8b",
+        "model": "llama3.1:latest",
         "num_ctx": 8192,
         "num_predict": 2048,
         "temperature": 0.7,
