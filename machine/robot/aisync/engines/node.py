@@ -239,7 +239,7 @@ class Node:
                 vectorized_input=vectorized_input,
                 document_name=self.document_names,
                 query=query,
-                reranker=self.assistant.reranker,
+                assistant=self.assistant,
             )
             document_memory = await self.execute_documents(agent_input={"query": query, "document": doc})
             document_memory_output = f"## Document Knowledge Output: `{document_memory}`"
