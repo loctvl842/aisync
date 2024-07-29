@@ -32,6 +32,12 @@ def set_suit_embedder(assistant, default) -> Union[str, tuple[str, dict]]:
 
 
 @hook
+def set_suit_reranker(assistant, default) -> Union[str, tuple[str, dict]]:
+    reranker_name = "RerankerLLM"
+    return reranker_name
+
+
+@hook
 def set_suit_splitter(assistant, default) -> Union[str, tuple[str, dict]]:
     """
     Set the splitter for processing documents

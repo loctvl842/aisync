@@ -150,3 +150,9 @@ def get_path_to_doc(default):
         except Exception as e:
             syslog.error(f"An unexpected error occurred: {str(e)}")
     return filter_path
+
+
+@hook
+def set_suit_reranker(assistant, default) -> Union[str, tuple[str, dict]]:
+    reranker_name = "RerankerLLM"
+    return reranker_name

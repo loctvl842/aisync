@@ -26,6 +26,7 @@ class HookOptions(Enum):
     SET_SUIT_EMBEDDER = "set_suit_embedder"
     SET_SUIT_LLM = "set_suit_llm"
     SET_SUIT_SPLITTER = "set_suit_splitter"
+    SET_SUIT_RERANKER = "set_suit_reranker"
     SHOULD_CUSTOMIZE_NODE_LLM = "should_customize_node_llm"
 
 
