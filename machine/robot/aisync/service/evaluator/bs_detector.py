@@ -3,10 +3,10 @@ from typing import TYPE_CHECKING, List, Literal, Optional
 import numpy as np
 from langchain_core.embeddings import Embeddings
 from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-import core.utils as utils
+import core.utils as ut
 from core.logger import syslog
 from core.utils.decorators import stopwatch
 
@@ -87,14 +87,19 @@ class BSDetector:
             return o_i
 
         # parallel sampling
-        sampling_group = await utils.parallel_do([(node, i) for i in range(self.k)], single_sample)
+        sampling_group = await ut.parallel_do([(node, i) for i in range(self.k)], single_sample)
         return np.mean(sampling_group)
 
     @stopwatch(prefix="self_reflection")
     def self_reflection(self, node: "Node", original_answer: str) -> float:
         # TODO: create a separate llm for self reflection
         self.llm.temperature = 0.1
-        prompt = PromptTemplate.from_template(DEFAULT_BS_DETECTOR_SELF_REFLECTION_PROMPT)
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", DEFAULT_BS_DETECTOR_SELF_REFLECTION_PROMPT),
+                ("human", "{assistant_prompt}"),
+            ]
+        )
         self_reflection_chain = prompt | self.llm
         assistant_prompt = node.get_prompt().format(**node.input)
         reflection = self_reflection_chain.invoke(
@@ -124,14 +129,18 @@ class BSDetector:
             )
         syslog.info(f"Choice: {choice}")
         syslog.info(f"Reflection: {reflection}")
-        return utils.dig(BSDetector.self_reflection_threshold, f"{choice}", 0.3)
+        return ut.dig(BSDetector.self_reflection_threshold, f"{choice}", 0.3)
 
     @stopwatch(prefix="overall_confidence_estimate")
     async def overall_confidence_estimate(self, node: "Node", original_ans: str) -> float:
-        observed_consistency = await self.observed_consistency(node, original_ans)
-        self_reflection = self.self_reflection(node, original_ans)
-        syslog.info(f"observed_consistency: {observed_consistency}, self_reflection: {self_reflection}")
-        return self.beta * observed_consistency + (1 - self.beta) * self_reflection
+        try:
+            observed_consistency = await self.observed_consistency(node, original_ans)
+            self_reflection = self.self_reflection(node, original_ans)
+            syslog.info(f"observed_consistency: {observed_consistency}, self_reflection: {self_reflection}")
+            return self.beta * observed_consistency + (1 - self.beta) * self_reflection
+        except Exception as e:
+            syslog.error(f"Error while estimating overall confidence: {e}")
+        return -1.0
 
     async def evaluate(self, node: "Node", original_ans: str) -> None:
         confidence_score = await self.overall_confidence_estimate(node, original_ans)

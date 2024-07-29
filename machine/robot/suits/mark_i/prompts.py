@@ -37,17 +37,8 @@ def build_prompt_suffix(default: str, assistant):
 
 
 @hook
-def build_prompt_from_docs(assistant):
+def build_prompt_from_docs(assistant, default):
     """
-    You can custom your own long-term memory prompt here.
-
-    `long_term_prompt` mission is to define the structure of a long-term memory.
+    You can custom your own doc prompt here.
     """
-    DOC_PROMPT = """
-    Answer the following query: `{input}`.
-    Ignore all document knowledge that are not relevant to the query.
-    Use the following document knowledge to answer the query to the best of your ability:
-
-    {document}
-    """
-    return DOC_PROMPT
+    return default

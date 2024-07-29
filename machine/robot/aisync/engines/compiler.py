@@ -1,12 +1,11 @@
 import functools
-from tracemalloc import start
-from typing import TYPE_CHECKING, Any, Callable, Dict, TypedDict
+from typing import TYPE_CHECKING, Any, Callable, TypedDict
 
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import StateGraph
 from pydantic import BaseModel, Field
 
-import core.utils as utils
+import core.utils as ut
 from core.logger import syslog
 from core.settings import settings
 
@@ -149,7 +148,7 @@ class Compiler:
                 if settings.ENV == "development" and not has_printed:
                     await handle_chunk("🤖: ")
                 has_printed = True
-                data = utils.dig(event, "data.chunk.agent_output", "")
+                data = ut.dig(event, "data.chunk.agent_output", "")
                 await handle_chunk(data)
 
     def wrapper_choose_agent(self, main_node: "Node", assistant: "Assistant") -> Callable:
@@ -162,9 +161,17 @@ class Compiler:
             for node in all_next_agents:
                 agents_conditions += f"- {node.name}: {node.conditional_prompt}\n"
             agent_names.append("node_core")
-            prompt = PromptTemplate.from_template(DEFAULT_CHOOSE_AGENT_PROMPT)
+
+            prompt = ChatPromptTemplate.from_messages(
+                [
+                    ("system", DEFAULT_CHOOSE_AGENT_PROMPT),
+                    ("placeholder", "{buffer_memory}"),
+                    ("human", "{query}"),
+                    ("ai", "{agent_output}"),
+                ]
+            )
+
             iterations = 5
-            flag = False
             error_log = ""
             from ..service import AISyncHandler
 
@@ -190,14 +197,16 @@ class Compiler:
                     },
                 )
 
+                content = res if isinstance(res, str) else res.content
+
+                if "FINISH" in content:
+                    return "__end__"
+
                 for name in agent_names:
-                    content = res if isinstance(res, str) else res.content
                     if name in content:
                         return name
 
-                if flag is False:
-                    content = res if isinstance(res, str) else res.content
-                    error_log += f"Invalid output. please only choose one of the following agents {agent_names}. But you chose {content}\n"
+                error_log += f"Invalid output. please only choose one of the following agents {agent_names}. But you chose {content}\n"
                 iterations -= 1
             syslog.warning("Jump to node_core after failing to find a next node")
             return "node_core"

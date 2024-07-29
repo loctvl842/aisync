@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from tokencost import count_string_tokens
 
@@ -14,17 +14,17 @@ class BufferMemory(dict):
     def __call__(self) -> str:
         return self.format_buffer_memory()
 
-    def format_buffer_memory(self, assistant: "Assistant") -> str:
+    def format_buffer_memory(self, assistant: "Assistant") -> List[tuple]:
         # Default to show memory_size most recent messages
         token_limit = assistant.max_token
         model_name = assistant.llm.model if hasattr(assistant.llm, "model") else assistant.llm.model_name
 
         if token_limit <= 0:
-            return ""
+            return []
 
         # Add more messages until token limit is reached
         index = len(self["buffer_memory"]) - 1
-        buffer_memory = []
+        buffer_memory: List[tuple] = []
         tot_token = 0
         while index >= 0:
             msg = self["buffer_memory"][index]
@@ -34,9 +34,9 @@ class BufferMemory(dict):
             if tot_token > token_limit:
                 break
             index -= 1
-            buffer_memory.append(cur_chat_str)
+            buffer_memory.append((msg["sender"], msg["message"]))
         buffer_memory.reverse()
-        return "\n".join(buffer_memory)
+        return buffer_memory
 
     def format_buffer_memory_no_token(self) -> str:
         return "\n".join([f"{msg['sender']}: {msg['message']}" for msg in self["buffer_memory"]])

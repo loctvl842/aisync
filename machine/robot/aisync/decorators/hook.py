@@ -11,7 +11,7 @@ class SuitHook:
 
 
 class HookOptions(Enum):
-    BUILD_FORMAT_INSTRUCTIONS = "build_format_instructions"
+    BUILD_PROMPT_TOOL_CALLING = "build_prompt_tool_calling"
     BUILD_PROMPT_FROM_DOCS = "build_prompt_from_docs"
     BUILD_PROMPT_PREFIX = "build_prompt_prefix"
     BUILD_PROMPT_SUFFIX = "build_prompt_suffix"

@@ -23,7 +23,7 @@ def set_suit_embedder(assistant, default):
 
 
 @hook
-def build_format_instructions(default: str, assistant):
+def build_prompt_tool_calling(default: str, assistant):
     """
     You can custom your own format instructions here.
 
