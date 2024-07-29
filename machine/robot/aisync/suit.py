@@ -136,7 +136,7 @@ class Suit:
                 syslog.error(f"Error when executing plugin hook `{self.name}::{hook_name}`: {e}")
                 traceback.print_exc()
                 return default
-        syslog.error(f"Hook `{hook_name}` not found")
+        syslog.warning(f"Hook `{hook_name}` not found")
         return default
 
     def execute_workflow(self, *args, **kwargs) -> Any:

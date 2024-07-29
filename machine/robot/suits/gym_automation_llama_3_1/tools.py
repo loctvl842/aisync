@@ -30,7 +30,7 @@ from ...aisync import tool
 
 
 @tool
-def none_of_the_above(tool_input: Optional[Dict] = None, **kwargs):
+def none_of_the_above(tool_input: Optional[Any] = None, **kwargs):
     """
     Use this tool if none of the above tools help.
     Input is always None.

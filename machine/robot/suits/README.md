@@ -15,7 +15,7 @@ There are many more suits, each with its own unique capabilities and designation
 - `Node`: this is a fundamental unit of operation in AISync. One node corresponds to one prompt + LLM to complete a task
 
 ### Currently available `hooks` in AISync:
-- `build_format_instructions`: configure prompt to use your prompt for using tools.
+- `build_prompt_tool_calling`: configure prompt to use your prompt for using tools.
   - Make sure you have the following 3 parameters in your prompt: `{query}`, `{tools}`, `{allowed_tools}`.
   -  (Or you can just use the default prompt)
 - `build_prompt_prefix`: configure prompt prefix for node_core

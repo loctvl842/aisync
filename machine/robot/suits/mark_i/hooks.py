@@ -42,7 +42,7 @@ def set_suit_splitter(assistant, default) -> Union[str, tuple[str, dict]]:
 
 
 @hook
-def build_format_instructions(default: str, assistant):
+def build_prompt_tool_calling(default: str, assistant):
     """
     You can custom your own format instructions here.
 

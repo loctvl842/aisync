@@ -147,8 +147,8 @@ class Jarvis(Assistant):
         await self.evaluator.evaluate(node=self.compiler.all_nodes["node_core"], original_ans=output)
 
         # Save to chat memory
-        self.buffer_memory.save_message(sender="Human", message=input)
-        self.buffer_memory.save_message(sender="AI", message=output)
+        self.buffer_memory.save_message(sender="human", message=input)
+        self.buffer_memory.save_message(sender="ai", message=output)
 
         # Save to database
         await self.save_to_db(customized_input, output)
@@ -195,8 +195,8 @@ class Jarvis(Assistant):
         output = await consumer  # Wait for consumer to finish
 
         # Save to chat memory
-        self.buffer_memory.save_message(sender="Human", message=input)
-        self.buffer_memory.save_message(sender="AI", message=output)
+        self.buffer_memory.save_message(sender="human", message=input)
+        self.buffer_memory.save_message(sender="ai", message=output)
 
         # Save to database
         await self.save_to_db(customized_input, output)
