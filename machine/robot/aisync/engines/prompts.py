@@ -22,36 +22,47 @@ class ActionPromptTemplate(StringPromptTemplate):
         return self.template.format(**kwargs)
 
 
-FORMAT_INSTRUCTIONS = """Answer the following question: `{query}`.
+DEFAULT_TOOL_CALLING_PROMPT = """
+    You are an expert in using tools to answer inquiries.
+    When you have a final answer to say to human, you MUST use the format:
 
-TOOLS:
-------
+    ```
+    I used the following tool: [tool_name]
+    Its purpose is: [tool_description]
+    My answer is: [answer]
+    ```
+"""
 
-You have access to the following tools:
-{tools}
+# FORMAT_INSTRUCTIONS = """Answer the following question: `{query}`.
 
-To use a tool, you MUST use the following formats:
+# TOOLS:
+# ------
 
-```
-Action: the action to take, should be one of [{allowed_tools}]
-Action Input: the input to the action
-Observation: the result of the action
-```
+# You have access to the following tools:
+# {tools}
 
-When you have a final answer to say to the Human, you MUST use the format:
+# To use a tool, you MUST use the following formats:
 
-```
-I used the following tool: [tool_name]
-Its purpose is: [tool_description]
-My answer is: [answer]
-```
+# ```
+# Action: the action to take, should be one of [{allowed_tools}]
+# Action Input: the input to the action
+# Observation: the result of the action
+# ```
 
-Begin!
-## Previous conversation history:
+# When you have a final answer to say to the Human, you MUST use the format:
 
-{buffer_memory}
-Question: {query}
-{agent_scratchpad}"""
+# ```
+# I used the following tool: [tool_name]
+# Its purpose is: [tool_description]
+# My answer is: [answer]
+# ```
+
+# Begin!
+# ## Previous conversation history:
+
+# {buffer_memory}
+# Question: {query}
+# {agent_scratchpad}"""
 
 
 DEFAULT_PROMPT_PREFIX = """# Character
@@ -68,10 +79,6 @@ Your answer to Human should be focused on the following context:
 DEFAULT_PROMPT_SUFFIX = """Begin!
 
 # Context:
-
-## Buffer Memory:
-
-{buffer_memory}
 
 {document_memory}
 
@@ -93,8 +100,6 @@ Begin!
 
 # Context:
 
-{buffer_memory}
-
 {document_memory}
 
 {tool_output}
@@ -114,9 +119,8 @@ Begin!
 Question: {input}"""
 
 DOC_PROMPT = """
-    This is the context: `{query}`.
-    Ignore all document knowledge that are not relevant to the context.
-    Output any relevant information that might be relevant to the context using the following document knowledge:
+    Ignore all document knowledge that are not relevant to the query.
+    Use the following document knowledge to answer the query to the best of your ability:
 
     {document}
     """
@@ -155,8 +159,7 @@ You are a supervisor tasked with managing a conversation between the
 
 following workers:  {all_agent_names}. Given the following user request,
 respond with the worker to act next. Each worker will perform a
-task and respond with their results and status. When finished,
-respond with FINISH.
+task and respond with their results and status. If the current worker can definitely answer the query, respond FINISH
 
 Given the context and workers, who should act next?
 
@@ -164,31 +167,25 @@ Given the context and workers, who should act next?
 
 {conditions}
 
-- node_core: Used when the current agent output is sufficient to answer user's query
-
-# Context
-
-{buffer_memory}
-
-{agent_output}
-
-# Current conversation:
-Human: {query}
-AI:
+- node_core: Used when the current agent output is sufficient to answer user's query but needs more refinement.
 """
 
+# # Context
+
+# {buffer_memory}
+
+# {agent_output}
+
+# # Current conversation:
+# Human: {query}
+# AI:
 
 DEFAULT_BS_DETECTOR_SELF_REFLECTION_PROMPT = """
     You are an expert at self-reflecting your own answers.
-    # Query: 
-    ```
-    {assistant_prompt}
-    ```
-    # Proposed Answer: 
-    ```
-    {answer}
-    ```
-    Are you really sure the proposed answer is
+
+    Your proposed answer is {answer}.
+    
+    Are you really sure your proposed answer is
     {top_choice}? Choose again: {choices}. 
     # The output should strictly use the following template: 
     ```

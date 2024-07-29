@@ -1,11 +1,12 @@
 import traceback
-from typing import TYPE_CHECKING, List, Optional, Sequence
+from typing import TYPE_CHECKING, List, Literal, Optional, Sequence, Union
 
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableSequence
 
+import core.utils as ut
 from core.logger import syslog
 from core.utils.decorators import stopwatch
 
@@ -13,19 +14,21 @@ from ..assistants.base.assistant import Assistant
 from ..decorators import HookOptions
 from ..service import AISyncHandler
 from . import prompts
-from .llm import get_llm_by_name
+from .llm import get_llm_object
 from .parser import ActionOutputParser
 from .prompts import (
     DEFAULT_AGENT_PROMPT_SUFFIX,
     DEFAULT_PROMPT_PREFIX,
     DEFAULT_PROMPT_SUFFIX,
+    DEFAULT_TOOL_CALLING_PROMPT,
     DOC_PROMPT,
-    FORMAT_INSTRUCTIONS,
     ActionPromptTemplate,
 )
 
 if TYPE_CHECKING:
     from ..assistants.base.assistant import Assistant
+
+import core.utils as ut
 
 
 class Node:
@@ -40,6 +43,11 @@ class Node:
         interrupt_before: Optional[List[str]] = [],
         next_nodes: Optional[List[str]] = [],
         llm_name: Optional[str] = "LLMChatOpenAI",
+        execution_components: Optional[List[Literal["tool", "persist_memory", "document_memory"]]] = [
+            "tool",
+            "persist_memory",
+            "document_memory",
+        ],
     ):
         self.name = name
         self.prompt_prefix = prompt_prefix
@@ -50,14 +58,7 @@ class Node:
         self.interrupt_before = interrupt_before
         self.next_nodes = next_nodes
         self.llm_name = llm_name
-
-    def change_llm(self, llm_name: str) -> None:
-        cfg_cls = get_llm_by_name(llm_name)
-        if cfg_cls is None:
-            cfg_cls = get_llm_by_name("LLMChatOpenAI")
-            syslog.error(f"LLM {llm_name} not found. Using LLMChatOpenAI instead.")
-        default_cfg = cfg_cls().model_dump()
-        self.llm = cfg_cls.get_llm(default_cfg)
+        self.execution_components = execution_components
 
     def activate(self, assistant: "Assistant", should_use_assistant_llm: Optional[bool] = False) -> None:
         self.assistant = assistant
@@ -65,13 +66,13 @@ class Node:
         if should_use_assistant_llm:
             self.llm = assistant.llm
         else:
-            self.change_llm(self.llm_name)
+            self.llm = get_llm_object(self.llm_name)
         self._chain = self._make_chain()
 
     def create_prompt(
         self,
         tools: Sequence[BaseTool],
-        format_instructions: str = FORMAT_INSTRUCTIONS,
+        format_instructions: str = DEFAULT_TOOL_CALLING_PROMPT,
         input_variables: Optional[List[str]] = None,
     ) -> ActionPromptTemplate:
         if input_variables is None:
@@ -101,9 +102,8 @@ class Node:
         self.set_template(prefix, suffix)
         if input_variables is None:
             input_variables = ["input", "buffer_memory", "document_memory", "tool_output"]
-        self.prompt = PromptTemplate(
-            template=self.template,
-            input_variables=input_variables,
+        self.prompt = ChatPromptTemplate.from_messages(
+            [("system", self.template), ("placeholder", "{buffer_memory}"), ("human", "{query}")]
         )
 
     def get_prompt(self):
@@ -117,33 +117,35 @@ class Node:
 
     async def execute_tools(self, agent_input, tools) -> dict:
         # Prompt
-        format_instructions = self._suit.execute_hook(
-            HookOptions.BUILD_FORMAT_INSTRUCTIONS, default=FORMAT_INSTRUCTIONS, assistant=self.assistant
+        tool_calling_prompt = self._suit.execute_hook(
+            HookOptions.BUILD_PROMPT_TOOL_CALLING, default=DEFAULT_TOOL_CALLING_PROMPT, assistant=self.assistant
         )
-        prompt = self.create_prompt(
-            tools=tools,
-            format_instructions=format_instructions,
+        prompt = ChatPromptTemplate.from_messages(
+            [("system", tool_calling_prompt), ("human", "{query}"), ("placeholder", "{agent_scratchpad}")]
         )
         # Agent
-        agent = None
-        if hasattr(self.llm, "bind_tools"):
-            agent = create_tool_calling_agent(
-                llm=self.llm,
-                prompt=prompt,
-                tools=tools,
-            )
-        else:
-            raise ValueError("This function requires a .bind_tools method be implemented on the LLM.")
+        agent = create_tool_calling_agent(
+            llm=self.llm,
+            prompt=prompt,
+            tools=tools,
+        )
+
         # Executor
         # Using return_intermediate_steps=True here because we want to see the intermediate steps of the agent.
         # We'll handle response in the talk chain.
         agent_executor = AgentExecutor.from_agent_and_tools(
-            agent=agent, tools=tools, return_intermediate_steps=True, handle_parsing_errors=True, verbose=False
+            agent=agent,
+            tools=tools,
+            return_intermediate_steps=True,
+            handle_parsing_errors=True,
+            verbose=False,
+            early_stopping_method="force",
+            max_iterations=5,
         )
         res = None
         try:
             # syslog.info(agent_input)
-            res = await agent_executor.ainvoke(
+            res = agent_executor.invoke(
                 input=agent_input,
                 config={
                     "callbacks": [
@@ -167,7 +169,13 @@ class Node:
         template = self._suit.execute_hook(
             HookOptions.BUILD_PROMPT_FROM_DOCS, default=DOC_PROMPT, assistant=self.assistant
         )
-        prompt = PromptTemplate.from_template(template)
+
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", template),
+                ("human", "{query}"),
+            ]
+        )
 
         chain = prompt | self.llm
 
@@ -188,7 +196,7 @@ class Node:
         return res.content
 
     @stopwatch(prefix="Using tools")
-    async def tool_output(self, input: dict, vectorized_input: List[float]) -> str:
+    async def tool_output(self, query: str, vectorized_input: List[float]) -> str:
         """
         Function to execute tools and format the output to put into final prompt
         """
@@ -202,7 +210,7 @@ class Node:
 
         if len(tools) > 0:
             try:
-                res = await self.execute_tools(agent_input=input, tools=tools)
+                res = await self.execute_tools(agent_input={"query": query}, tools=tools)
                 if res is None:
                     tool_result = ""
                 else:
@@ -214,11 +222,11 @@ class Node:
 
         return tool_result
 
-    async def persist_memory(self) -> str:
+    async def persist_memory(self, vectorized_input: List[float]) -> str:
         """
         Retrieve relevant persistent memory from past sessions
         """
-        lt_memory = await self.assistant.persist_memory.similarity_search(vectorized_input=self.vectorized_input)
+        lt_memory = await self.assistant.persist_memory.similarity_search(vectorized_input=vectorized_input)
         return lt_memory["persist_memory"]
 
     async def document_memory(self, vectorized_input: List[float], query: str) -> str:
@@ -230,6 +238,8 @@ class Node:
             doc = await self.assistant.document_memory.similarity_search(
                 vectorized_input=vectorized_input,
                 document_name=self.document_names,
+                query=query,
+                reranker=self.assistant.reranker,
             )
             document_memory = await self.execute_documents(agent_input={"query": query, "document": doc})
             document_memory_output = f"## Document Knowledge Output: `{document_memory}`"
@@ -239,15 +249,16 @@ class Node:
 
         return document_memory_output
 
-    def buffer_memory(self):
+    def buffer_memory(self) -> List[tuple]:
         """
         Retrieve buffer memory
         """
-        return f"## Buffer Memory:\n\n{self.assistant.buffer_memory.format_buffer_memory(self.assistant)}"
+        return self.assistant.buffer_memory.format_buffer_memory(self.assistant)
 
     @stopwatch(prefix="setup_input")
     async def setup_input(self, state: dict) -> dict:
         input = state["input"].model_dump()
+        query = input["query"]
         # Embed input
         self.vectorized_input = self._suit.execute_hook(
             HookOptions.EMBED_INPUT, input=state["input"], assistant=self.assistant, default=[0] * 768
@@ -256,16 +267,23 @@ class Node:
         # Optimize Chat History
         input["buffer_memory"] = self.buffer_memory()
 
-        import asyncio
+        async def single_task_execute(task: str, lock):
+            result = ""
+            if task == "tool":
+                result = await self.tool_output(query=query, vectorized_input=self.vectorized_input)
+            elif task == "document_memory":
+                result = await self.document_memory(vectorized_input=self.vectorized_input, query=query)
+            elif task == "persist_memory":
+                result = await self.persist_memory(vectorized_input=self.vectorized_input)
+            else:
+                raise ValueError("Invalid task execution")
 
-        tool_task = asyncio.create_task(self.tool_output(input, vectorized_input=self.vectorized_input))
-        document_task = asyncio.create_task(
-            self.document_memory(vectorized_input=self.vectorized_input, query=input["query"])
-        )
-        tool_output_res, document_output_res = await asyncio.gather(tool_task, document_task)
+            if task == "tool":
+                input["tool_output"] = result
+            else:
+                input[task] = result
 
-        input["tool_output"] = tool_output_res
-        input["document_memory"] = document_output_res
+        await ut.parallel_do(self.execution_components, single_task_execute)
 
         self.input = input
 
@@ -321,6 +339,6 @@ class Node:
         except Exception as e:
             syslog.error(f"Error when invoking node: {e}")
             traceback.print_exc()
-            res["agent_output"] = "Failed to execute\n"
+            res["agent_output"] = f"{ut.dig(e.body, "error.message", f'{e}')}"
         # assistant.buffer_memory.save_message(cur_node.name, res["agent_output"])
         return res

@@ -1,5 +1,5 @@
+from asyncio import iscoroutinefunction
 from typing import TYPE_CHECKING, List
-from uuid import uuid4
 
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import select
@@ -22,12 +22,11 @@ from core.utils.decorators import stopwatch
 
 
 class DocumentMemory:
-    def __init__(self, config: dict = None, embedder=None):
+    def __init__(self, config: dict = None):
         self.document_loader = UniversalLoader()
         self.vectorstore = None
         self.config = config or {}
         self.splitted_documents = []
-        self.embedder = embedder
         self.similarity_metrics = getattr(Vector.comparator_factory, "l2_distance")
 
     def set_similarity_metrics(self, similarity_metrics: str) -> None:
@@ -56,7 +55,7 @@ class DocumentMemory:
         docs = assistant.splitter.split_documents(documents)
         all_content = [doc.page_content for doc in docs]
 
-        all_embeddings = self.embedder.embed_documents(texts=list(all_content))
+        all_embeddings = assistant.embedder.embed_documents(texts=list(all_content))
 
         for index, doc in enumerate(docs):
             key = f"{suit}_{file_name}_chunk{index}"
@@ -79,7 +78,6 @@ class DocumentMemory:
     async def add_docs(self) -> None:
         if len(self.splitted_documents) == 0:
             return
-        sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
         session = sessions[Dialect.PGVECTOR].session
 
         stmt = (
@@ -95,23 +93,37 @@ class DocumentMemory:
         self.splitted_documents = []
 
     # @Cache.cached(prefix="document", key_maker=DefaultKeyMaker(), ttl=60)
+    @SessionContext(dialect=Dialect.PGVECTOR)
+    @Transactional(dialect=Dialect.PGVECTOR)
     @stopwatch(prefix="document_sim_search")
-    async def similarity_search(self, vectorized_input: List[float], document_name: List[str], k: int = 3) -> str:
+    async def similarity_search(
+        self, vectorized_input: List[float], document_name: List[str], query: str, assistant: "Assistant", k: int = 3
+    ) -> str:
         await self.add_docs()
         res = "## Relevant knowledge:\n\n"
         # DB Session for similarity search
-        sessions[Dialect.PGVECTOR].set_session_context(str(uuid4()))
-        async with sessions[Dialect.PGVECTOR].session() as session:
-            # Top self._top_matches similarity search neighbors from input and output tables
-            doc_match = await session.scalars(
-                select(DocCollection)
-                .where(DocCollection.document_name.in_(document_name))
-                .order_by(self.similarity_metrics(DocCollection.embedding, vectorized_input))
-                .limit(k)
-            )
-            counter = 1
-            for doc in doc_match:
-                res += f"- Document {counter}: {doc.page_content}\n\n"
-                counter += 1
-            await session.commit()
+        session = sessions[Dialect.PGVECTOR].session
+        # Top self._top_matches similarity search neighbors from input and output tables
+        stmt = (
+            select(DocCollection)
+            .where(DocCollection.document_name.in_(document_name))
+            .order_by(self.similarity_metrics(DocCollection.embedding, vectorized_input))
+            .limit(k)
+        )
+
+        doc_match = await session.scalars(stmt)
+
+        doc_text = [doc.page_content for doc in doc_match]
+
+        ordered_doc = (
+            await assistant.reranker.rank(query, doc_text, return_documents=True)
+            if iscoroutinefunction(assistant.reranker.rank)
+            else assistant.reranker.rank(query, doc_text, return_documents=True)
+        )
+
+        counter = 1
+        for doc in ordered_doc:
+            syslog.info(doc)
+            res += f"- Document {counter}: {doc["text"]}\n\n"
+            counter += 1
         return res

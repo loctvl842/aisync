@@ -1,5 +1,5 @@
 import importlib
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from .configs.base import EmbedderConfig
 
@@ -35,3 +35,19 @@ def get_embedder_schemas():
         schemas[cfg_cls.__name__] = cfg_cls.model_json_schema()
 
     return schemas
+
+
+def get_embedder_object(embedder_config: Union[str, tuple[str, dict]], **kwargs):
+    embedder_name, embedder_schema = None, None
+    if isinstance(embedder_config, str):
+        embedder_name = embedder_config
+    elif isinstance(embedder_config, tuple):
+        embedder_name, embedder_schema = embedder_config
+
+    cfg_cls = get_embedder_by_name(embedder_name)
+    if cfg_cls is None:
+        raise ValueError(f"Embedder {embedder_name} not found. Using EmbedderOpenAI instead.")
+    if embedder_schema is None:
+        embedder_schema = cfg_cls().model_dump()
+
+    return cfg_cls.get_embedder(embedder_schema)

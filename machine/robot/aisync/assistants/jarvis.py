@@ -26,7 +26,7 @@ class Jarvis(Assistant):
         self.buffer_memory: BufferMemory = BufferMemory()
         self.manager: Manager = Manager()
         self.suit: Suit = self.manager.suits[suit]
-        self.customize_llm_and_embedder()
+        self.customize_core_components()
         self.set_max_token(token_limit, suit)
         self.init_cache()
 
@@ -69,23 +69,21 @@ class Jarvis(Assistant):
         # Remove tools from vectordb
         await self.tool_knowledge.remove_tools()
 
-    def customize_llm_and_embedder(self):
+    def customize_core_components(self):
         try:
-            Brain().change_llm(
-                self.suit.execute_hook(HookOptions.SET_SUIT_LLM, assistant=self, default="LLMChatOpenAI")
-            )
+            Brain().set_llm(self.suit.execute_hook(HookOptions.SET_SUIT_LLM, assistant=self, default="LLMChatOpenAI"))
         except ValueError as e:
             syslog.error(e)
 
         try:
-            Brain().change_embedder(
+            Brain().set_embedder(
                 self.suit.execute_hook(HookOptions.SET_SUIT_EMBEDDER, assistant=self, default="EmbedderOpenAI")
             )
         except ValueError as e:
             syslog.error(e)
 
         try:
-            Brain().change_splitter(
+            Brain().set_splitter(
                 self.suit.execute_hook(
                     HookOptions.SET_SUIT_SPLITTER, assistant=self, default="SplitterRecursiveCharacter"
                 )
@@ -93,7 +91,12 @@ class Jarvis(Assistant):
         except ValueError as e:
             syslog.error(e)
 
-        Brain().load_memory()
+        try:
+            Brain().set_reranker(
+                self.suit.execute_hook(HookOptions.SET_SUIT_RERANKER, assistant=self, default="RerankerCrossEncoder")
+            )
+        except ValueError as e:
+            syslog.error(e)
 
     def greet(self) -> str:
         return self.suit.execute_hook(
@@ -147,8 +150,8 @@ class Jarvis(Assistant):
         await self.evaluator.evaluate(node=self.compiler.all_nodes["node_core"], original_ans=output)
 
         # Save to chat memory
-        self.buffer_memory.save_message(sender="Human", message=input)
-        self.buffer_memory.save_message(sender="AI", message=output)
+        self.buffer_memory.save_message(sender="human", message=input)
+        self.buffer_memory.save_message(sender="ai", message=output)
 
         # Save to database
         await self.save_to_db(customized_input, output)
@@ -195,8 +198,8 @@ class Jarvis(Assistant):
         output = await consumer  # Wait for consumer to finish
 
         # Save to chat memory
-        self.buffer_memory.save_message(sender="Human", message=input)
-        self.buffer_memory.save_message(sender="AI", message=output)
+        self.buffer_memory.save_message(sender="human", message=input)
+        self.buffer_memory.save_message(sender="ai", message=output)
 
         # Save to database
         await self.save_to_db(customized_input, output)
@@ -228,6 +231,10 @@ class Jarvis(Assistant):
     @property
     def splitter(self):
         return Brain().splitter
+
+    @property
+    def reranker(self):
+        return Brain().reranker
 
     def compile(self):
         self.compiler.activate(self)

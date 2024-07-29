@@ -1,5 +1,5 @@
 import importlib
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from .configs.base import LLMConfig
 
@@ -36,3 +36,19 @@ def get_llm_schemas():
         schemas[cfg_cls.__name__] = cfg_cls.model_json_schema()
 
     return schemas
+
+
+def get_llm_object(llm_config: Union[str, tuple[str, dict]], **kwargs):
+    llm_name, llm_schema = None, None
+    if isinstance(llm_config, str):
+        llm_name = llm_config
+    elif isinstance(llm_config, tuple):
+        llm_name, llm_schema = llm_config
+
+    cfg_cls = get_llm_by_name(llm_name)
+    if cfg_cls is None:
+        raise ValueError(f"LLM {llm_name} not found. Using LLMChatOpenAI instead.")
+    if llm_schema is None:
+        llm_schema = cfg_cls().model_dump()
+
+    return cfg_cls.get_llm(llm_schema)

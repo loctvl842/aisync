@@ -32,6 +32,12 @@ def set_suit_embedder(assistant, default) -> Union[str, tuple[str, dict]]:
 
 
 @hook
+def set_suit_reranker(assistant, default) -> Union[str, tuple[str, dict]]:
+    reranker_name = "RerankerLLM"
+    return reranker_name
+
+
+@hook
 def set_suit_splitter(assistant, default) -> Union[str, tuple[str, dict]]:
     """
     Set the splitter for processing documents
@@ -42,7 +48,7 @@ def set_suit_splitter(assistant, default) -> Union[str, tuple[str, dict]]:
 
 
 @hook
-def build_format_instructions(default: str, assistant):
+def build_prompt_tool_calling(default: str, assistant):
     """
     You can custom your own format instructions here.
 

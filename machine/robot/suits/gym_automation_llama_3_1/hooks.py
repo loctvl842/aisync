@@ -16,11 +16,11 @@ def set_suit_llm(assistant, default) -> Union[str, tuple[str, dict]]:
     model_name = "LLMChatOllama"
     model_config = {
         "model": "llama3.1:latest",
-        "num_ctx": 8192,
+        "num_ctx": 16384,
         "num_predict": 2048,
         "temperature": 0.7,
     }
-    # return model_name, model_config
+    # return model_name
     return model_name, model_config
 
 
@@ -43,15 +43,6 @@ def set_suit_splitter(assistant, default) -> Union[str, tuple[str, dict]]:
     """
     model_name = "SplitterSemantic"
     return model_name
-
-
-@hook
-def build_format_instructions(default: str, assistant):
-    """
-    You can custom your own format instructions here.
-
-    """
-    return default
 
 
 @hook
@@ -159,3 +150,9 @@ def get_path_to_doc(default):
         except Exception as e:
             syslog.error(f"An unexpected error occurred: {str(e)}")
     return filter_path
+
+
+@hook
+def set_suit_reranker(assistant, default) -> Union[str, tuple[str, dict]]:
+    reranker_name = "RerankerLLM"
+    return reranker_name

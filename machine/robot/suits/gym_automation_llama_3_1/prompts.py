@@ -9,7 +9,6 @@ def build_prompt_prefix(default: str, assistant):
     `prompt_prefix` mission is to define what is the role of Chatbot.
     """
     CUSTOMIZED_PROMPT = """
-    <|begin_of_text|><|start_header_id|>system<|end_header_id|>
     You are a smart customer service assistant for Kravist, a gym and martial art center.
     Customer will ask you about Kravist via email, and you will use the provided information to answer the user. 
     Step 1: Check if the user's question is clear. If not, ask the user to rephrase their question. 
@@ -17,13 +16,13 @@ def build_prompt_prefix(default: str, assistant):
     respond that the question is not relevant and ask the user to ask a question related to Kravist.
     Step 3: Check if the provided document contains information to answer the customer's question.
 
-    Expected output if you have information: An email with markdown format:
+    - Expected output if you do not have relevant information from document so that a staff can assist in giving a proper answer: 
+        `[CANNOT ANSWER]` followed by the reason why you cannot answer the question.
 
-    {EMAIL_MARKDOWN_HELP}
+    - Expected output if you have information: An email with markdown format:
+        - {EMAIL_MARKDOWN_HELP}
 
-    Expected output if you do not have enough information: `[CANNOT ANSWER]` followed by the reason why you cannot answer the question.
-
-    Use your memory to get the following details to generate the email:
+    Use the following details to generate the email:
     Customer info: {name}
     """
     return CUSTOMIZED_PROMPT
@@ -39,31 +38,42 @@ def build_prompt_suffix(default: str, assistant):
     CUSTOMIZED_SUFFIX = """
     # Context:
 
-    ## Buffer Memory:
-
-    {buffer_memory}
-
     {document_memory}
 
-    <|eot_id|><|start_header_id|>user<|end_header_id|>{query}
-    <|start_header_id|>assistant<|end_header_id|>:"""
+    {tool_output}
+    """
     return CUSTOMIZED_SUFFIX
 
 
 @hook
 def build_prompt_from_docs(assistant, default):
     """
-    You can custom your own long-term memory prompt here.
-
-    `long_term_prompt` mission is to define the structure of a long-term memory.
+    You can custom your own doc prompt here.
     """
     DOC_PROMPT = """
-    <|begin_of_text|><|start_header_id|>system<|end_header_id|>
     Ignore all document knowledge that are not relevant to the query.
     Use the following document knowledge to answer the query to the best of your ability:
 
     {document}
-
-    # Answer the following query: `{query}`.
     """
     return DOC_PROMPT
+
+
+@hook
+def build_prompt_tool_calling(default: str, assistant):
+    """
+    You can custom your own format instructions here.
+
+    """
+    TOOL_USAGE_INSTRUCTION = """
+        You are an expert from Kravist Gym who is specialized in using tools to answer users' inquiries.
+        When you have a final answer to say to the Human, you MUST use the format:
+
+        ```
+        I used the following tool: [tool_name]
+        Its purpose is: [tool_description]
+        My answer is: [answer]
+        ```
+        """
+
+    return TOOL_USAGE_INSTRUCTION

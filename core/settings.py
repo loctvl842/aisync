@@ -45,6 +45,10 @@ class AnthropicAISettings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
 
 
+class HuggingFaceSettings(BaseSettings):
+    TOKENIZERS_PARALLELISM: bool = False
+
+
 class Settings(
     CoreSettings,
     PostgresSettings,
@@ -54,6 +58,7 @@ class Settings(
     OpenAISettings,
     GoogleAISettings,
     AnthropicAISettings,
+    HuggingFaceSettings,
 ): ...
 
 
