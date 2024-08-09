@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain.text_splitter import CharacterTextSplitter
 
-from .base import SplitterConfig
+from .base import AisyncSplitter
 
 
-class SplitterCharacter(SplitterConfig):
+class SplitterCharacter(AisyncSplitter):
     _pyclass: Type = CharacterTextSplitter
 
     chunk_size: int = 500

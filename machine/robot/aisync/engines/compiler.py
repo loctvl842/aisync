@@ -11,6 +11,7 @@ from core.settings import settings
 
 from ..decorators import HookOptions
 from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT, DEFAULT_PROMPT_PREFIX, DEFAULT_PROMPT_SUFFIX
+# from ..engines.brain import Brain
 
 if TYPE_CHECKING:
     from ..assistants.base.assistant import Assistant
@@ -136,7 +137,7 @@ class Compiler:
             return await self.compiled_graph.ainvoke(input)
         except Exception as e:
             syslog.error(f"The following error has occured while invoking graph:\n{e}")
-            return {"agent_output": f"An error has occured"}
+            return {"agent_output": f"An error has occured: {e}"}
 
     async def stream(self, input: State, handle_chunk):
         has_printed = False

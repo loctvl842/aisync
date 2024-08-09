@@ -13,7 +13,7 @@ def set_suit_llm(assistant, default) -> Union[str, tuple[str, dict]]:
     Change the model_name to the llm model of your choice.
     """
 
-    model_name = "LLMChatOllama"
+    model_name = "AscLLMChatOllama"
     model_config = {
         "model": "llama3.1:latest",
         "num_ctx": 16384,

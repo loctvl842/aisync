@@ -60,7 +60,7 @@ class Brain:
         """
         Load Agents
         """
-        self.compiler: Compiler = Compiler()
+        self.compiler = Compiler()
 
     def set_llm(self, llm_config: Union[str, tuple[str, dict]]) -> None:
         self.llm = get_llm_object(llm_config)

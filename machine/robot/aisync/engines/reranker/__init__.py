@@ -1,10 +1,10 @@
 import importlib
 from typing import List, Optional, Union
 
-from .configs.base import RerankerConfig
+from .configs.base import AisyncReranker
 
 
-def get_allowed_rerankers() -> List[RerankerConfig]:
+def get_allowed_rerankers() -> List[AisyncReranker]:
     default_allowed_rerankers = []
 
     package_path = "machine.robot.aisync.engines.reranker.configs"
@@ -12,7 +12,7 @@ def get_allowed_rerankers() -> List[RerankerConfig]:
     module = importlib.import_module(package_path)
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
-        if hasattr(attr, "__bases__") and RerankerConfig in attr.__bases__:
+        if hasattr(attr, "__bases__") and AisyncReranker in attr.__bases__:
             default_allowed_rerankers.append(attr)
 
     # TODO: Allow using hook to custom allowed rerankers
@@ -20,7 +20,7 @@ def get_allowed_rerankers() -> List[RerankerConfig]:
     return default_allowed_rerankers
 
 
-def get_reranker_by_name(reranker_config_name: str) -> Optional[RerankerConfig]:
+def get_reranker_by_name(reranker_config_name: str) -> Optional[AisyncReranker]:
     rerankers = get_allowed_rerankers()
     for reranker in rerankers:
         if reranker.__name__ == reranker_config_name:

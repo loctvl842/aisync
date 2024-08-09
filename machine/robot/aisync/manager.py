@@ -1,6 +1,6 @@
 import glob
 import os
-from typing import TYPE_CHECKING, List
+from typing import List
 
 from core.logger import syslog
 from core.utils.decorators import singleton
@@ -16,7 +16,7 @@ class Manager:
         self.active_suits = []
         self.suits = self.find_suits()
 
-    def find_suits(self) -> List["Suit"]:
+    def find_suits(self) -> dict[str, "Suit"]:
         """
         Find all suits in the specified path
 

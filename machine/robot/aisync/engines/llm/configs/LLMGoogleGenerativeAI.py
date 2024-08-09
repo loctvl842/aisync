@@ -3,10 +3,10 @@ from typing import Dict, Type
 
 from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 
-from .base import LLMConfig
+from .base import AisyncLLM
 
 
-class LLMGoogleGenerativeAI(LLMConfig):
+class LLMGoogleGenerativeAI(AisyncLLM):
     _pyclass: Type = GoogleGenerativeAI
 
     model: str = "gemini-pro"

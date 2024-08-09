@@ -1,4 +1,3 @@
-from enum import Enum
 from functools import cmp_to_key
 from typing import List, Literal, Optional, Type
 
@@ -8,7 +7,7 @@ import core.utils as ut
 
 from ....service import AISyncHandler
 from ...llm import get_llm_object
-from .base import RerankerConfig
+from .base import AisyncReranker
 
 
 class LLMReranker:
@@ -63,7 +62,7 @@ class LLMReranker:
             for j in range(i + 1, len(documents))
         ]
 
-        results = [dict() for i in range(len(documents))]
+        results = [dict() for _ in range(len(documents))]
         for i in range(len(documents)):
             results[i]["corpus_id"] = i
             results[i]["text"] = documents[i]
@@ -105,7 +104,7 @@ class LLMReranker:
         return sorted_results[:top_k]
 
     def sort_based_reranking(self, query: str, documents: List[str], top_k: Optional[int] = 3, batch_size: int = 32):
-        results = [dict() for i in range(len(documents))]
+        results = [dict() for _ in range(len(documents))]
         for i in range(len(documents)):
             results[i]["corpus_id"] = i
             results[i]["text"] = documents[i]
@@ -136,7 +135,7 @@ class LLMReranker:
         return sorted_results[:top_k]
 
     def window_based_reranking(self, query: str, documents: List[str], top_k: Optional[int] = 3, batch_size: int = 32):
-        results = [dict() for i in range(len(documents))]
+        results = [dict() for _ in range(len(documents))]
         for i in range(len(documents)):
             results[i]["corpus_id"] = i
             results[i]["text"] = documents[i]
@@ -182,7 +181,7 @@ class LLMReranker:
         return rank_function(query, documents, top_k, batch_size)
 
 
-class RerankerLLM(RerankerConfig):
+class RerankerLLM(AisyncReranker):
     _pyclass: Type = LLMReranker
 
     llm_name: Literal["LLMChatOllama", "LLMChatAnthropic", "LLMChatOpenAI", "LLMChatGoogleGenerativeAI"] = (

@@ -1,10 +1,10 @@
 import importlib
 from typing import List, Optional, Union
 
-from .configs.base import LLMConfig
+from .configs.base import AisyncLLM
 
 
-def get_allowed_language_models() -> List[LLMConfig]:
+def get_allowed_language_models() -> List[AisyncLLM]:
     default_allowed_llms = []
 
     package_path = "machine.robot.aisync.engines.llm.configs"
@@ -12,7 +12,7 @@ def get_allowed_language_models() -> List[LLMConfig]:
     module = importlib.import_module(package_path)
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
-        if hasattr(attr, "__bases__") and LLMConfig in attr.__bases__:
+        if hasattr(attr, "__bases__") and AisyncLLM in attr.__bases__:
             default_allowed_llms.append(attr)
 
     # TODO: Allow using hook to custom allowed llms
@@ -20,7 +20,7 @@ def get_allowed_language_models() -> List[LLMConfig]:
     return default_allowed_llms
 
 
-def get_llm_by_name(llm_config_name: str) -> Optional[LLMConfig]:
+def get_asc_llm_by_name(llm_config_name: str) -> Optional[AisyncLLM]:
     llms = get_allowed_language_models()
     for llm in llms:
         if llm.__name__ == llm_config_name:
@@ -45,9 +45,9 @@ def get_llm_object(llm_config: Union[str, tuple[str, dict]], **kwargs):
     elif isinstance(llm_config, tuple):
         llm_name, llm_schema = llm_config
 
-    cfg_cls = get_llm_by_name(llm_name)
+    cfg_cls = get_asc_llm_by_name(llm_name)
     if cfg_cls is None:
-        raise ValueError(f"LLM {llm_name} not found. Using LLMChatOpenAI instead.")
+        raise ValueError(f"LLM {llm_name} not found. Using AscLLMChatOpenAI instead.")
     if llm_schema is None:
         llm_schema = cfg_cls().model_dump()
 

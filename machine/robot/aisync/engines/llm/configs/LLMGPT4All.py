@@ -7,7 +7,7 @@ from langchain_core.runnables import RunnableConfig
 
 from core.logger import syslog
 
-from .base import LLMConfig
+from .base import AisyncLLM
 
 
 class CustomizedGPT4All(GPT4All):
@@ -23,7 +23,7 @@ class CustomizedGPT4All(GPT4All):
             # syslog.info(f"\nProcessing Input Stage: {str_request}\n")
             res = JsonOutputParser().parse(str_request)
             if res is None:
-                return f"Invalid input. Please try again.\n {e}", False
+                return "Invalid input. Please try again", False
             return res, True
         except Exception as e:
             return f"Invalid input. Please try again.\n {e}", False
@@ -98,7 +98,7 @@ class CustomizedGPT4All(GPT4All):
         return self.invoke_tool(tool_specs)
 
 
-class LLMGPT4All(LLMConfig):
+class LLMGPT4All(AisyncLLM):
     _pyclass: Type = CustomizedGPT4All
 
     model: str = "../gpt4all/mistral-7b-openorca.gguf2.Q4_0.gguf"

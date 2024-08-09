@@ -12,7 +12,7 @@ from langchain_openai import OpenAIEmbeddings
 from core.logger import syslog
 
 from ....utils import cosine_distance, l1_distance, l2_distance, max_inner_product
-from .base import SplitterConfig
+from .base import AisyncSplitter
 
 
 def combine_sentences(sentences: List[dict], buffer_size: int = 1) -> List[dict]:
@@ -312,7 +312,7 @@ class SemanticTextSplitter(BaseDocumentTransformer):
         return self.split_documents(list(documents))
 
 
-class SplitterSemantic(SplitterConfig):
+class SplitterSemantic(AisyncSplitter):
     _pyclass: Type = SemanticTextSplitter
 
     buffer_size: int = 1

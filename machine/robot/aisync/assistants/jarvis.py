@@ -25,7 +25,7 @@ class Jarvis(Assistant):
         super().__init__()
         self.buffer_memory: BufferMemory = BufferMemory()
         self.manager: Manager = Manager()
-        self.suit: Suit = self.manager.suits[suit]
+        self.suit = self.manager.suits[suit]
         self.customize_core_components()
         self.set_max_token(token_limit, suit)
         self.init_cache()
@@ -75,28 +75,28 @@ class Jarvis(Assistant):
         except ValueError as e:
             syslog.error(e)
 
-        try:
-            Brain().set_embedder(
-                self.suit.execute_hook(HookOptions.SET_SUIT_EMBEDDER, assistant=self, default="EmbedderOpenAI")
-            )
-        except ValueError as e:
-            syslog.error(e)
+        # try:
+        Brain().set_embedder(
+            self.suit.execute_hook(HookOptions.SET_SUIT_EMBEDDER, assistant=self, default="EmbedderOpenAI")
+        )
+        # except ValueError as e:
+        #     syslog.error(e)
 
-        try:
-            Brain().set_splitter(
-                self.suit.execute_hook(
-                    HookOptions.SET_SUIT_SPLITTER, assistant=self, default="SplitterRecursiveCharacter"
-                )
+        # try:
+        Brain().set_splitter(
+            self.suit.execute_hook(
+                HookOptions.SET_SUIT_SPLITTER.value, assistant=self, default="SplitterRecursiveCharacter"
             )
-        except ValueError as e:
-            syslog.error(e)
+        )
+        # except ValueError as e:
+        #     syslog.error(e)
 
-        try:
-            Brain().set_reranker(
-                self.suit.execute_hook(HookOptions.SET_SUIT_RERANKER, assistant=self, default="RerankerCrossEncoder")
-            )
-        except ValueError as e:
-            syslog.error(e)
+        # try:
+        Brain().set_reranker(
+            self.suit.execute_hook(HookOptions.SET_SUIT_RERANKER.value, assistant=self, default="RerankerCrossEncoder")
+        )
+        # except ValueError as e:
+        #     syslog.error(e)
 
     def greet(self) -> str:
         return self.suit.execute_hook(
@@ -123,6 +123,7 @@ class Jarvis(Assistant):
 
     def load_tools(self, suit) -> None:
         tools = list(self.manager.suits[suit].tools.values())
+        print(tools)
         for tool in tools:
             if hasattr(tool, "set_assistant"):
                 tool.set_assistant(self)

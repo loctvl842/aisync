@@ -12,7 +12,7 @@ def set_suit_llm(assistant, default):
     Change the model_name to the llm model of your choice.
     """
 
-    model_name = "LLMChatOpenAI"
+    model_name = "AscLLMChatOpenAI"
     return model_name
 
 
@@ -45,6 +45,14 @@ def embed_input(input: AISyncInput, assistant, default):
 
 
 @hook
+def should_customize_node_llm(default) -> bool:
+    """
+    Choose to use assistant llm or node's llm
+    """
+    return True
+
+
+@hook
 def embed_output(output: str, assistant, default):
     """
     You can embed assistant's output here for similarity search
@@ -54,20 +62,31 @@ def embed_output(output: str, assistant, default):
 
 
 @hook
-def set_greeting_message(assistant, default):
+def set_document_similarity_search_metric(default):
     """
-    You can custom your own greeting message here.
-
+    Set the metric for similarity search of document memory
+    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
     """
-    message = (
-        "Good day! "
-        "I am a consultant representing Rockship,"
-        " dedicated to simplifying your journey by providing tailored solutions. "
-        "My expertise lies in understanding your unique needs and guiding you towards the most suitable options. "
-        "Please feel free to share your requirements, and I will try my best to assist you."
-    )
+    return "l2_distance"
 
-    return message
+
+@hook
+def set_persist_memory_similarity_search_metric(default):
+    """
+    Set the metric for similarity search of persist memory
+    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
+    """
+    return "l2_distance"
+
+
+# @hook
+# def set_greeting_message(assistant):
+#     """
+#     You can custom your own greeting message here.
+
+#     """
+
+#     return message
 
 
 @hook
@@ -97,28 +116,30 @@ def get_path_to_doc(default):
 
 
 @hook
-def set_document_similarity_search_metric(default):
-    """
-    Set the metric for similarity search of document memory
-    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
-    """
-    return "l2_distance"
-
-
-@hook
-def set_persist_memory_similarity_search_metric(default):
-    """
-    Set the metric for similarity search of persist memory
-    Should be one of l2_distance, max_inner_product, cosine_distance, l1_distance
-    """
-    return "l2_distance"
-
-
-@hook
 def customized_input(query: str, assistant, default):
     """
     You can customize the input here
 
     """
+    EMAIL_MARKDOWN_HELP = """
+    Please use markdown format for the email content. Use **bold** or *italic* or both for highlight
+    important content like names, service... ensure that each section are seperated
+    by double newlines, and most IMPORTANTLY with the sign section, the complimentary closings part, name part, and position part
+    must be separated by a double space like this "  ". Example:
 
-    return AISyncInput(query=query)
+    Best regards,
+    Fravist SG
+
+    Your message STRICTLY follow the rules below:
+    - Language: English
+    - Tone: formal, friendly, and witty
+    - Word limit: 50 to 120 words
+    - Do not make up any information that is not provided in the context.
+    - No subject line is needed.
+    """
+
+    class MyInput(AISyncInput):
+        name: str
+        EMAIL_MARKDOWN_HELP: str
+
+    return MyInput(query=query, name="Nhan", EMAIL_MARKDOWN_HELP=EMAIL_MARKDOWN_HELP)

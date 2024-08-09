@@ -8,7 +8,7 @@ def set_suit_llm(assistant, default):
     Change the model_name to the llm model of your choice.
     """
 
-    model_name = "LLMGPT4All"
+    model_name = "AscLLMGPT4All"
     return model_name
 
 

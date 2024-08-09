@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-from .base import EmbedderConfig
+from .base import AscEmbedderConfig
 
 
-class EmbedderGoogleGenerativeAI(EmbedderConfig):
+class EmbedderGoogleGenerativeAI(AscEmbedderConfig):
     _pyclass: Type = GoogleGenerativeAIEmbeddings
 
     model: str = "models/embedding-001"

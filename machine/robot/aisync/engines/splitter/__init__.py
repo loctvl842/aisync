@@ -1,10 +1,10 @@
 import importlib
 from typing import List, Optional, Union
 
-from .configs.base import SplitterConfig
+from .configs.base import AisyncSplitter
 
 
-def get_allowed_splitters() -> List[SplitterConfig]:
+def get_allowed_splitters() -> List[AisyncSplitter]:
     default_allowed_splitters = []
 
     package_path = "machine.robot.aisync.engines.splitter.configs"
@@ -12,7 +12,7 @@ def get_allowed_splitters() -> List[SplitterConfig]:
     module = importlib.import_module(package_path)
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
-        if hasattr(attr, "__bases__") and SplitterConfig in attr.__bases__:
+        if hasattr(attr, "__bases__") and AisyncSplitter in attr.__bases__:
             default_allowed_splitters.append(attr)
 
     # TODO: Allow using hook to custom allowed llms
@@ -20,7 +20,7 @@ def get_allowed_splitters() -> List[SplitterConfig]:
     return default_allowed_splitters
 
 
-def get_splitter_by_name(splitter_config_name: str) -> Optional[SplitterConfig]:
+def get_splitter_by_name(splitter_config_name: str) -> Optional[AisyncSplitter]:
     splitters = get_allowed_splitters()
     for splitter in splitters:
         if splitter.__name__ == splitter_config_name:

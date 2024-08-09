@@ -2,8 +2,8 @@ from typing import Type
 
 from langchain_google_vertexai import VertexAIEmbeddings
 
-from .base import EmbedderConfig
+from .base import AscEmbedderConfig
 
 
-class EmbedderGoogleVertexAI(EmbedderConfig):
+class EmbedderGoogleVertexAI(AscEmbedderConfig):
     _pyclass: Type = VertexAIEmbeddings

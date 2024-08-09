@@ -1,17 +1,17 @@
 import importlib
 from typing import List, Optional, Union
 
-from .configs.base import EmbedderConfig
+from .configs.base import AscEmbedderConfig
 
 
-def get_allowed_embedder_models() -> List[EmbedderConfig]:
+def get_allowed_embedder_models() -> List[AscEmbedderConfig]:
     default_allowed_embedders = []
     package_path = "machine.robot.aisync.engines.embedder.configs"
 
     module = importlib.import_module(package_path)
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
-        if hasattr(attr, "__bases__") and EmbedderConfig in attr.__bases__:
+        if hasattr(attr, "__bases__") and AscEmbedderConfig in attr.__bases__:
             default_allowed_embedders.append(attr)
 
     # TODO: Allow using hook to custom allowed llms
@@ -19,7 +19,7 @@ def get_allowed_embedder_models() -> List[EmbedderConfig]:
     return default_allowed_embedders
 
 
-def get_embedder_by_name(embedder_config_name: str) -> Optional[EmbedderConfig]:
+def get_embedder_by_name(embedder_config_name: str) -> Optional[AscEmbedderConfig]:
     embedders = get_allowed_embedder_models()
     for embedder in embedders:
         if embedder.__name__ == embedder_config_name:

@@ -2,10 +2,10 @@ from typing import Type
 
 from sentence_transformers import CrossEncoder
 
-from .base import RerankerConfig
+from .base import AisyncReranker
 
 
-class RerankerCrossEncoder(RerankerConfig):
+class RerankerCrossEncoder(AisyncReranker):
     _pyclass: Type = CrossEncoder
 
     model_name: str = "cross-encoder/ms-marco-MiniLM-L-2-v2"

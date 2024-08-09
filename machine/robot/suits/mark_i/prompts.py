@@ -23,7 +23,7 @@ def build_prompt_prefix(default: str, assistant):
     Use your memory to get the following details to generate the email:
     Customer info: {name}
     """
-    return CUSTOMIZED_PROMPT
+    return default
 
 
 @hook
