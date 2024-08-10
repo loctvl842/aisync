@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain_google_vertexai import ChatVertexAI
 
-from .base import AisyncLLM
+from .base import AISyncLLM
 
 
-class LLMGoogleVertexAI(AisyncLLM):
+class LLMGoogleVertexAI(AISyncLLM):
     _pyclass: Type = ChatVertexAI
 
     model_name: str = "gemini-pro"

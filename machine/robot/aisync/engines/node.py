@@ -1,5 +1,5 @@
 import traceback
-from typing import TYPE_CHECKING, List, Literal, Optional, Sequence, Union
+from typing import TYPE_CHECKING, List, Literal, Optional, Sequence
 
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.agents.tools import BaseTool
@@ -19,7 +19,6 @@ from .parser import ActionOutputParser
 from .prompts import (
     DEFAULT_AGENT_PROMPT_SUFFIX,
     DEFAULT_PROMPT_PREFIX,
-    DEFAULT_PROMPT_SUFFIX,
     DEFAULT_TOOL_CALLING_PROMPT,
     DOC_PROMPT,
     ActionPromptTemplate,
@@ -27,8 +26,6 @@ from .prompts import (
 
 if TYPE_CHECKING:
     from ..assistants.base.assistant import Assistant
-
-import core.utils as ut
 
 
 class Node:
@@ -138,7 +135,7 @@ class Node:
             tools=tools,
             return_intermediate_steps=True,
             handle_parsing_errors=True,
-            verbose=False,
+            verbose=True,
             early_stopping_method="force",
             max_iterations=5,
         )

@@ -3,7 +3,7 @@ import importlib
 import os
 import traceback
 from inspect import getmembers
-from typing import Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from langchain.agents.tools import BaseTool
 
@@ -11,6 +11,9 @@ from core.logger import syslog
 
 from .decorators import HookOptions, SuitAction, SuitHook, SuitWorkflow
 from .utils import get_suit_name
+
+if TYPE_CHECKING:
+    from .assistants.base import Assistant
 
 
 class Suit:
@@ -20,7 +23,7 @@ class Suit:
         self._path = path_to_suit
         self._name = get_suit_name(path_to_suit)
         self._actions = {}
-        self._hooks = {}
+        self._hooks: dict[HookOptions, SuitHook] = {}
         self._tools = {}
         self._workflow = {}
         self._nodes = {}
@@ -67,16 +70,12 @@ class Suit:
             try:
                 suit_module = importlib.import_module(module_name)
                 # find actions
-                new_actions = {
-                    action_fn[0]: action_fn[1] for action_fn in getmembers(suit_module, self._is_suit_action)
-                }
+                new_actions = {action_fn[0]: action_fn[1] for action_fn in getmembers(suit_module, self._is_suit_action)}
                 duplicate_actions = set(actions.keys()) & set(new_actions.keys())
                 if duplicate_actions:
                     syslog.warning(f"Duplicate action detected: {duplicate_actions}")
                 # find hooks
-                new_hooks = {
-                    HookOptions(hook_fn[0]): hook_fn[1] for hook_fn in getmembers(suit_module, self._is_suit_hook)
-                }
+                new_hooks = {hook_fn[0]: hook_fn[1] for hook_fn in getmembers(suit_module, self._is_suit_hook)}
                 duplicate_hooks = set(hooks.keys()) & set(new_hooks.keys())
                 if duplicate_hooks:
                     syslog.warning(f"Duplicate hook detected: {duplicate_hooks}")
@@ -87,9 +86,7 @@ class Suit:
                     syslog.warning(f"Duplicate tool detected: {duplicate_tools}")
 
                 # find workflow
-                new_workflow = {
-                    workflow_fn[0]: workflow_fn[1] for workflow_fn in getmembers(suit_module, self._is_suit_workflow)
-                }
+                new_workflow = {workflow_fn[0]: workflow_fn[1] for workflow_fn in getmembers(suit_module, self._is_suit_workflow)}
                 duplicate_workflow = set(workflow.keys()) & set(new_workflow.keys())
                 if duplicate_workflow:
                     syslog.warning(f"Duplicate workflow detected: {duplicate_workflow}")
@@ -126,17 +123,30 @@ class Suit:
             return self._actions[action_name].call(*args, **kwargs)
         syslog.error(f"Action {action_name} not found")
 
-    def execute_hook(self, hook_name: HookOptions, *args, **kwargs) -> Any:
-        default = kwargs.get("default", None)
-        if hook_name in self._hooks:
+    def execute_hook(self, hook: HookOptions, *args, assistant: Optional["Assistant"] = None, **kwargs) -> Any:
+        """
+        Execute a hook with the given arguments
+
+        :param hook: Hook enum to execute
+        :param *args: Arguments to pass to the hook
+        :param **kwargs: Keyword arguments to pass to the hook
+        :return: The result of the hook execution, or the default value if the hook is not found or an error occurs.
+        """
+        default: Any = kwargs.get("default", None)
+
+        # Should every hooks have assistant?
+        if hook.value in self._hooks:
             try:
-                syslog.debug(f"Executing plugin hook `{self.name}::{hook_name}`")
-                return self._hooks[hook_name].call(*args, **kwargs)
+                syslog.debug(f"Executing plugin hook `{self.name}::{hook}`")
+                if assistant is not None:
+                    return self._hooks[hook.value].call(*args, assistant=assistant, **kwargs)
+                else:
+                    return self._hooks[hook.value].call(*args, **kwargs)
             except Exception as e:
-                syslog.error(f"Error when executing plugin hook `{self.name}::{hook_name}`: {e}")
+                syslog.error(f"Error when executing plugin hook `{self.name}::{hook}`: {e}")
                 traceback.print_exc()
                 return default
-        syslog.warning(f"Hook `{hook_name}` not found")
+        # syslog.warning(f"Hook `{hook}` not found")
         return default
 
     def execute_workflow(self, *args, **kwargs) -> Any:

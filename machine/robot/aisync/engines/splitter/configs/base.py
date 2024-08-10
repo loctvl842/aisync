@@ -3,7 +3,7 @@ from typing import Type
 from pydantic import BaseModel, ConfigDict
 
 
-class AisyncSplitter(BaseModel):
+class AISyncSplitter(BaseModel):
     _pyclass: Type
     model_config = ConfigDict(protected_namespaces=())
 

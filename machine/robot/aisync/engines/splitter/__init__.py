@@ -1,64 +1,84 @@
 import importlib
 from typing import List, Optional, Union
 
-from .configs.base import AisyncSplitter
+from .configs.base import AISyncSplitter
 
 
-def get_allowed_splitters() -> List[AisyncSplitter]:
-    default_allowed_splitters = []
+def list_supported_splitter_models() -> List[AISyncSplitter]:
+    """List of all supported AISync splitters from a package
 
-    package_path = "machine.robot.aisync.engines.splitter.configs"
+    This function dynamically imports the module containing splitter configurations,
+    identifies all classes that inherit from the base `AISyncSplitter` class,
+    and returns them as a list of supported splitters.
 
-    module = importlib.import_module(package_path)
+    :return: A list of classes representing the supported splitters in AISync.
+    """
+    supported_splitters = []
+    module = importlib.import_module(name=".configs", package=__package__)
+
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
-        if hasattr(attr, "__bases__") and AisyncSplitter in attr.__bases__:
-            default_allowed_splitters.append(attr)
+        if hasattr(attr, "__bases__") and AISyncSplitter in attr.__bases__:
+            supported_splitters.append(attr)
 
-    # TODO: Allow using hook to custom allowed llms
-
-    return default_allowed_splitters
+    return supported_splitters
 
 
-def get_splitter_by_name(splitter_config_name: str) -> Optional[AisyncSplitter]:
-    splitters = get_allowed_splitters()
+def get_splitter_cls(cls_name: str) -> Optional[AISyncSplitter]:
+    """Get AISyncSplitter by its class name
+
+    :param cls_name: The classname of AISyncSplitter(e.g. "SplitterCharacter", …)
+    :return: The corresponding AISyncSplitter class if found; otherwise, `None`.
+    """
+    splitters = list_supported_splitter_models()
     for splitter in splitters:
-        if splitter.__name__ == splitter_config_name:
+        if splitter.__name__ == cls_name:
             return splitter
     return None
 
 
 def get_splitter_schemas():
+    """Retrieve JSON schemas for all supported AISync Splitter configurations.
+
+    This function iterates over all language models supported by AISync,
+    extracts their respective JSON schemas, and returns a dictionary
+    where each key is the class name of the Splitter, and the value is its schema.
+
+    :return: A dictionary mapping the class names of supported AISync Splitters
+             to their corresponding JSON schemas.
+    """
     schemas = {}
 
-    splitters = get_allowed_splitters()
+    splitters = list_supported_splitter_models()
     for cfg_cls in splitters:
         schemas[cfg_cls.__name__] = cfg_cls.model_json_schema()
 
     return schemas
 
 
-def get_splitter_object(splitter_config: Union[str, tuple[str, dict]], **kwargs):
-    embedder = kwargs.get("embedder", None)
-    splitter_name, splitter_schema = None, None
+def get_splitter_object(splitter_cls_name: Union[str, tuple[str, dict]], **kwargs):
+    """
+    Get Splitter object by its class name (e.g. "SplitterCharacter",…)
 
-    current_splitter = None
+    :param splitter_cls_name: Either a string representing the class name of the Splitter (e.g., "SplitterCharacter")
+                    or a tuple containing the class name and a configuration dictionary.
+    :return: Splitter object (e.g. SplitterCharacter, …)
+    """
+    splitter_config = None
+    if not isinstance(splitter_cls_name, str):
+        splitter_cls_name, splitter_config = splitter_cls_name
 
-    if isinstance(splitter_config, str):
-        splitter_name = splitter_config
-    elif isinstance(splitter_config, tuple):
-        splitter_name, splitter_schema = splitter_config
+    splitter_cls = get_splitter_cls(splitter_cls_name)
+    if splitter_cls is None:
+        raise ValueError(f"Splitter {splitter_cls_name} not found. Using SplitterCharacter instead.")
 
-    cfg_cls = get_splitter_by_name(splitter_name)
-    if cfg_cls is None:
-        raise ValueError(f"Splitter {splitter_name} not found. Using SplitterCharacter instead.")
+    splitter_config = splitter_config or splitter_cls().model_dump()
+    splitter_obj = splitter_cls.get_splitter(splitter_config)
 
-    if splitter_schema is None:
-        splitter_schema = cfg_cls().model_dump()
-    current_splitter = cfg_cls.get_splitter(splitter_schema)
-    if splitter_name == "SplitterSemantic":
+    if splitter_cls_name == "SplitterSemantic":
+        embedder = kwargs.get("embedder", None)
         if embedder is None:
             raise ValueError("Embedder is required for SplitterSemantic")
-        current_splitter.set_embedder(embedder)
+        splitter_obj.set_embedder(embedder)
 
-    return current_splitter
+    return splitter_obj

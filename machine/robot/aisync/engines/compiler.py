@@ -11,10 +11,9 @@ from core.settings import settings
 
 from ..decorators import HookOptions
 from .prompts import DEFAULT_CHOOSE_AGENT_PROMPT, DEFAULT_PROMPT_PREFIX, DEFAULT_PROMPT_SUFFIX
-# from ..engines.brain import Brain
 
 if TYPE_CHECKING:
-    from ..assistants.base.assistant import Assistant
+    from ..assistants.base import Assistant
     from .node import Node
 
 
@@ -36,7 +35,7 @@ class Compiler:
         self.state_type = None  # Placeholder for state datatype
         self.compiled_graph = None  # Not compiled yet
         self.state_graph = None  # No graph setup yet
-        self.all_nodes = {}
+        self.all_nodes: dict[str, "Node"] = {}
 
     def setup_node_core(self, assistant: "Assistant") -> None:
         """
@@ -49,12 +48,8 @@ class Compiler:
         self.node_core = NodeCore(
             name="node_core",
             document_names=docs,
-            prompt_prefix=assistant.suit.execute_hook(
-                HookOptions.BUILD_PROMPT_PREFIX, default=DEFAULT_PROMPT_PREFIX, assistant=assistant
-            ),
-            prompt_suffix=assistant.suit.execute_hook(
-                HookOptions.BUILD_PROMPT_SUFFIX, default=DEFAULT_PROMPT_SUFFIX, assistant=assistant
-            ),
+            prompt_prefix=assistant.suit.execute_hook(HookOptions.BUILD_PROMPT_PREFIX, default=DEFAULT_PROMPT_PREFIX, assistant=assistant),
+            prompt_suffix=assistant.suit.execute_hook(HookOptions.BUILD_PROMPT_SUFFIX, default=DEFAULT_PROMPT_SUFFIX, assistant=assistant),
             tools=assistant.suit.tools.keys(),
         )
         self.node_core.activate(assistant, True)

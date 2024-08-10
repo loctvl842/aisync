@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain_community.llms.ollama import Ollama
 
-from .base import AisyncLLM
+from .base import AISyncLLM
 
 
-class LLMOllama(AisyncLLM):
+class LLMOllama(AISyncLLM):
     _pyclass: Type = Ollama
 
     model: str = "llama3"

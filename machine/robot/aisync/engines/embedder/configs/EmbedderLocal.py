@@ -2,7 +2,7 @@ from typing import List, Type
 
 from sentence_transformers import SentenceTransformer
 
-from .base import AscEmbedderConfig
+from .base import AISyncEmbedder
 
 
 class CustomizedSentenceTransformer(SentenceTransformer):
@@ -13,7 +13,7 @@ class CustomizedSentenceTransformer(SentenceTransformer):
         return self.encode(sentences=texts)
 
 
-class EmbedderLocal(AscEmbedderConfig):
+class EmbedderLocal(AISyncEmbedder):
     _pyclass: Type = CustomizedSentenceTransformer
 
     model_name_or_path: str = "BAAI/bge-base-en-v1.5"

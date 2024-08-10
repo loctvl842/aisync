@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from .base import AisyncSplitter
+from .base import AISyncSplitter
 
 
-class SplitterRecursiveCharacter(AisyncSplitter):
+class SplitterRecursiveCharacter(AISyncSplitter):
     _pyclass: Type = RecursiveCharacterTextSplitter
 
     chunk_size: int = 500

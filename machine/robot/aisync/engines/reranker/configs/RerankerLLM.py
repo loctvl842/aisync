@@ -7,7 +7,7 @@ import core.utils as ut
 
 from ....service import AISyncHandler
 from ...llm import get_llm_object
-from .base import AisyncReranker
+from .base import AISyncReranker
 
 
 class LLMReranker:
@@ -181,7 +181,7 @@ class LLMReranker:
         return rank_function(query, documents, top_k, batch_size)
 
 
-class RerankerLLM(AisyncReranker):
+class RerankerLLM(AISyncReranker):
     _pyclass: Type = LLMReranker
 
     llm_name: Literal["LLMChatOllama", "LLMChatAnthropic", "LLMChatOpenAI", "LLMChatGoogleGenerativeAI"] = (

@@ -7,7 +7,7 @@ from langchain_core.runnables import RunnableConfig
 
 from core.logger import syslog
 
-from .base import AisyncLLM
+from .base import AISyncLLM
 
 
 class CustomizedGPT4All(GPT4All):
@@ -98,7 +98,7 @@ class CustomizedGPT4All(GPT4All):
         return self.invoke_tool(tool_specs)
 
 
-class LLMGPT4All(AisyncLLM):
+class LLMGPT4All(AISyncLLM):
     _pyclass: Type = CustomizedGPT4All
 
     model: str = "../gpt4all/mistral-7b-openorca.gguf2.Q4_0.gguf"

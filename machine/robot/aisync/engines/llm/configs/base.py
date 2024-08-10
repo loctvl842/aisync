@@ -3,7 +3,7 @@ from typing import Type
 from pydantic import BaseModel, ConfigDict
 
 
-class AisyncLLM(BaseModel):
+class AISyncLLM(BaseModel):
     _pyclass: Type
     model_config = ConfigDict(protected_namespaces=())
 

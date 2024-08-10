@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain_anthropic import ChatAnthropic
 
-from .base import AisyncLLM
+from .base import AISyncLLM
 
 
-class LLMChatAnthropic(AisyncLLM):
+class LLMChatAnthropic(AISyncLLM):
     _pyclass: Type = ChatAnthropic
 
     model: str = "claude-3-haiku-20240307"

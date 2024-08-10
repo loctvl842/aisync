@@ -2,10 +2,10 @@ from typing import Type
 
 from langchain_openai import ChatOpenAI
 
-from .base import AisyncLLM
+from .base import AISyncLLM
 
 
-class LLMChatOpenAI(AisyncLLM):
+class LLMChatOpenAI(AISyncLLM):
     _pyclass: Type = ChatOpenAI
 
     model: str = "gpt-4o-mini"

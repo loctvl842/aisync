@@ -3,10 +3,10 @@ from typing import Dict, Type
 
 from langchain_google_genai import ChatGoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 
-from .base import AisyncLLM
+from .base import AISyncLLM
 
 
-class LLMChatGoogleGenerativeAI(AisyncLLM):
+class LLMChatGoogleGenerativeAI(AISyncLLM):
     _pyclass: Type = ChatGoogleGenerativeAI
 
     model: str = "gemini-1.5-flash"

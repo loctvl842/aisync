@@ -1,3 +1,8 @@
-from machine.robot.aisync.engines.llm import get_asc_llm_by_name, get_llm_object
+from core.utils.decorators import stopwatch
+from machine.robot.aisync.engines.llm import get_llm_cls, get_llm_object, list_supported_llm_models
 
-print(get_llm_object("AscLLMChatOpenAI"))
+@stopwatch()
+def test():
+    print(list_supported_llm_models())
+
+test()

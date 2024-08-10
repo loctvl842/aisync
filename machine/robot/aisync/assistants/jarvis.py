@@ -2,11 +2,10 @@ import asyncio
 from typing import TYPE_CHECKING, Callable
 
 from core.cache import Cache, DefaultKeyMaker, RedisBackend
-from core.logger import syslog
 
 from ..decorators import HookOptions
 from ..engines.brain import Brain
-from ..engines.compiler import AISyncInput
+from ..engines.compiler import AISyncInput, Compiler
 from ..engines.memory import BufferMemory
 from ..manager import Manager
 from ..service import BSDetector
@@ -25,8 +24,12 @@ class Jarvis(Assistant):
         super().__init__()
         self.buffer_memory: BufferMemory = BufferMemory()
         self.manager: Manager = Manager()
+
         self.suit = self.manager.suits[suit]
-        self.customize_core_components()
+
+        self.brain = Brain(self)
+        self.compiler = Compiler()
+
         self.set_max_token(token_limit, suit)
         self.init_cache()
 
@@ -69,35 +72,6 @@ class Jarvis(Assistant):
         # Remove tools from vectordb
         await self.tool_knowledge.remove_tools()
 
-    def customize_core_components(self):
-        try:
-            Brain().set_llm(self.suit.execute_hook(HookOptions.SET_SUIT_LLM, assistant=self, default="LLMChatOpenAI"))
-        except ValueError as e:
-            syslog.error(e)
-
-        # try:
-        Brain().set_embedder(
-            self.suit.execute_hook(HookOptions.SET_SUIT_EMBEDDER, assistant=self, default="EmbedderOpenAI")
-        )
-        # except ValueError as e:
-        #     syslog.error(e)
-
-        # try:
-        Brain().set_splitter(
-            self.suit.execute_hook(
-                HookOptions.SET_SUIT_SPLITTER.value, assistant=self, default="SplitterRecursiveCharacter"
-            )
-        )
-        # except ValueError as e:
-        #     syslog.error(e)
-
-        # try:
-        Brain().set_reranker(
-            self.suit.execute_hook(HookOptions.SET_SUIT_RERANKER.value, assistant=self, default="RerankerCrossEncoder")
-        )
-        # except ValueError as e:
-        #     syslog.error(e)
-
     def greet(self) -> str:
         return self.suit.execute_hook(
             HookOptions.SET_GREETING_MESSAGE,
@@ -123,7 +97,6 @@ class Jarvis(Assistant):
 
     def load_tools(self, suit) -> None:
         tools = list(self.manager.suits[suit].tools.values())
-        print(tools)
         for tool in tools:
             if hasattr(tool, "set_assistant"):
                 tool.set_assistant(self)
@@ -226,10 +199,6 @@ class Jarvis(Assistant):
         return Brain().tool_knowledge
 
     @property
-    def compiler(self):
-        return Brain().compiler
-
-    @property
     def splitter(self):
         return Brain().splitter
 
@@ -239,5 +208,5 @@ class Jarvis(Assistant):
 
     def compile(self):
         self.compiler.activate(self)
-        self.suit.execute_workflow(assistant=self)
         self.compiler.compile()
+        self.suit.execute_workflow(assistant=self)

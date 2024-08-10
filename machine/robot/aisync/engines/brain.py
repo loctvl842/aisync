@@ -1,14 +1,16 @@
-from typing import Union
+from typing import TYPE_CHECKING, Optional, Union
 
 from core.utils.decorators import singleton
 
-from ..manager import Manager
-from .compiler import Compiler
+from ..decorators.hook import HookOptions
 from .embedder import get_embedder_object
 from .llm import get_llm_object
 from .memory import DocumentMemory, PersistMemory, ToolKnowledge
 from .reranker import get_reranker_object
 from .splitter import get_splitter_object
+
+if TYPE_CHECKING:
+    from ..assistants.base import Assistant
 
 
 @singleton
@@ -17,34 +19,25 @@ class Brain:
     Brain loads the configuration and the modules.
     """
 
-    def __init__(self):
-        self.manager = Manager()
-
+    def __init__(self, assistant: Optional["Assistant"] = None):
         # Load LLM & Embedder
-        self.load_natural_language()
+        self.load_natural_language(assistant)
 
         # Load Memories
         self.load_memory()
 
-        # Load Agents
-        self.load_agent()
-
-    def load_natural_language(self):
+    def load_natural_language(self, assistant: Optional["Assistant"] = None) -> None:
         """
         Load LLM & Embedder
         """
-        self.set_llm("LLMChatOpenAI")
 
-        self.set_embedder("EmbedderOpenAI")
+        def load(hook_option: HookOptions, default: str) -> Union[str, tuple[str, dict]]:
+            return assistant.suit.execute_hook(hook_option, assistant=assistant, default=default) if assistant else default
 
-        # cfg_cls = get_splitter_by_name("SplitterCharacter")
-        # if cfg_cls is None:
-        #     raise ValueError("Splitter not found")
-        # default_cfg = cfg_cls().model_dump()
-        # self.splitter = cfg_cls.get_splitter(default_cfg)
-        self.set_splitter("SplitterCharacter")
-
-        self.set_reranker("RerankerCrossEncoder")
+        self.set_llm(load(HookOptions.SET_SUIT_LLM, default="LLMChatOpenAI"))
+        self.set_embedder(load(HookOptions.SET_SUIT_EMBEDDER, default="EmbedderOpenAI"))
+        self.set_splitter(load(HookOptions.SET_SUIT_SPLITTER, default="SplitterRecursiveCharacter"))
+        self.set_reranker(load(HookOptions.SET_SUIT_RERANKER, default="RerankerCrossEncoder"))
 
     def load_memory(self) -> None:
         """
@@ -56,21 +49,15 @@ class Brain:
 
         self.tool_knowledge: ToolKnowledge = ToolKnowledge()
 
-    def load_agent(self) -> None:
-        """
-        Load Agents
-        """
-        self.compiler = Compiler()
+    def set_llm(self, llm_cls_name: Union[str, tuple[str, dict]]) -> None:
+        self.llm = get_llm_object(llm_cls_name)
 
-    def set_llm(self, llm_config: Union[str, tuple[str, dict]]) -> None:
-        self.llm = get_llm_object(llm_config)
+    def set_embedder(self, embedder_cls_name: Union[str, tuple[str, dict]]) -> None:
+        self.embedder = get_embedder_object(embedder_cls_name)
 
-    def set_embedder(self, embedder_config: Union[str, tuple[str, dict]]) -> None:
-        self.embedder = get_embedder_object(embedder_config)
-
-    def set_splitter(self, splitter_config: Union[str, tuple[str, dict]]) -> None:
+    def set_splitter(self, splitter_cls_name: Union[str, tuple[str, dict]]) -> None:
         # Assume that it's being run after change_embedder so that an embedder can be set in case SemanticChunking is used
-        self.splitter = get_splitter_object(splitter_config, embedder=self.embedder)
+        self.splitter = get_splitter_object(splitter_cls_name, embedder=self.embedder)
 
-    def set_reranker(self, reranker_config: Union[str, tuple[str, dict]]) -> None:
-        self.reranker = get_reranker_object(reranker_config)
+    def set_reranker(self, reranker_cls_name: Union[str, tuple[str, dict]]) -> None:
+        self.reranker = get_reranker_object(reranker_cls_name)

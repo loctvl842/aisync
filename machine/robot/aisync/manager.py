@@ -1,6 +1,5 @@
 import glob
 import os
-from typing import List
 
 from core.logger import syslog
 from core.utils.decorators import singleton

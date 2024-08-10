@@ -1,9 +1,14 @@
 from abc import ABC, abstractmethod
-from typing import Callable, Optional
+from typing import TYPE_CHECKING, Callable, Optional
 
 from langchain_core.runnables import RunnableConfig
 
 from ...service import AISyncHandler
+
+if TYPE_CHECKING:
+    from ...engines.brain import Brain
+    from ...engines.compiler import Compiler
+    from ...suit import Suit
 
 
 class Assistant(ABC):
@@ -11,6 +16,11 @@ class Assistant(ABC):
     version: str = "0.1"
     year: int = 2024
     config: Optional[RunnableConfig] = None
+
+    # Assistant
+    brain: "Brain"
+    compiler: "Compiler"
+    suit: "Suit"
 
     def __init__(self, config: Optional[RunnableConfig] = None):
         if config is not None:

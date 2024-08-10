@@ -2,7 +2,7 @@ from typing import List, Type
 
 from gpt4all import Embed4All
 
-from .base import AscEmbedderConfig
+from .base import AISyncEmbedder
 
 
 class GP4ALLEmbedder(Embed4All):
@@ -26,7 +26,7 @@ class GP4ALLEmbedder(Embed4All):
         return [list(map(float, e)) for e in embeddings]
 
 
-class EmbedderGPT4All(AscEmbedderConfig):
+class EmbedderGPT4All(AISyncEmbedder):
     _pyclass: Type = GP4ALLEmbedder
 
     model_name: str = "nomic-embed-text-v1.5.f16.gguf"
