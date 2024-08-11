@@ -1,6 +1,8 @@
 import importlib
 from typing import List, Optional, Union
 
+import core.utils as ut
+
 from .configs.base import AISyncReranker
 
 
@@ -72,5 +74,5 @@ def get_reranker_object(reranker_cls_name: Union[str, tuple[str, dict]]):
     if reranker_cls is None:
         raise ValueError(f"Reranker {reranker_cls_name} not found. Using RerankerCrossEncoder instead.")
 
-    reranker_config = reranker_config or reranker_cls().model_dump()
+    reranker_config = ut.dict_deep_extend(reranker_cls().model_dump(), reranker_config)
     return reranker_cls.get_reranker(reranker_config)

@@ -1,6 +1,8 @@
 import importlib
 from typing import List, Optional, Union
 
+import core.utils as ut
+
 from .configs.base import AISyncSplitter
 
 
@@ -72,7 +74,7 @@ def get_splitter_object(splitter_cls_name: Union[str, tuple[str, dict]], **kwarg
     if splitter_cls is None:
         raise ValueError(f"Splitter {splitter_cls_name} not found. Using SplitterCharacter instead.")
 
-    splitter_config = splitter_config or splitter_cls().model_dump()
+    splitter_config = ut.dict_deep_extend(splitter_cls().model_dump(), splitter_config or {})
     splitter_obj = splitter_cls.get_splitter(splitter_config)
 
     if splitter_cls_name == "SplitterSemantic":

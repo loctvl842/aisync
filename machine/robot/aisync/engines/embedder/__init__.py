@@ -1,6 +1,8 @@
 import importlib
 from typing import List, Optional, Union
 
+import core.utils as ut
+
 from .configs.base import AISyncEmbedder
 
 
@@ -72,5 +74,5 @@ def get_embedder_object(embedder_cls_name: Union[str, tuple[str, dict]]):
     if embedder_cls is None:
         raise ValueError(f"Embedder {embedder_cls_name} not found. Using EmbedderOpenAI instead.")
 
-    embedder_config = embedder_config or embedder_cls().model_dump()
+    embedder_config = ut.dict_deep_extend(embedder_cls().model_dump(), embedder_config or {})
     return embedder_cls.get_embedder(embedder_config)

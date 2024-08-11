@@ -16,7 +16,7 @@ def dict_deep_extend(*dicts):
                     result[key] = merge_2_dicts(value, result[key])
             return result
         else:
-            return b if a is None else a
+            return a if b is None else b
 
     merged = {}
     for d in dicts:

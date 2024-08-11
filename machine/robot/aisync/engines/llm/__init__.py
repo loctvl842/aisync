@@ -1,6 +1,8 @@
 import importlib
 from typing import List, Optional, Union
 
+import core.utils as ut
+
 from .configs.base import AISyncLLM
 
 
@@ -72,5 +74,5 @@ def get_llm_object(llm_cls_name: Union[str, tuple[str, dict]]):
     if llm_cls is None:
         raise ValueError(f"LLM {llm_cls_name} not found. Using LLMChatOpenAI instead.")
 
-    llm_config = llm_config or llm_cls().model_dump()
+    llm_config = ut.dict_deep_extend(llm_cls().model_dump(), llm_config or {})
     return llm_cls.get_llm(llm_config)

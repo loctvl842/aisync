@@ -180,31 +180,31 @@ class Jarvis(Assistant):
 
     @property
     def llm(self):
-        return Brain().llm
+        return self.brain.llm
 
     @property
     def persist_memory(self):
-        return Brain().persist_memory
+        return self.brain.persist_memory
 
     @property
     def document_memory(self):
-        return Brain().document_memory
+        return self.brain.document_memory
 
     @property
     def embedder(self):
-        return Brain().embedder
+        return self.brain.embedder
 
     @property
     def tool_knowledge(self):
-        return Brain().tool_knowledge
+        return self.brain.tool_knowledge
 
     @property
     def splitter(self):
-        return Brain().splitter
+        return self.brain.splitter
 
     @property
     def reranker(self):
-        return Brain().reranker
+        return self.brain.reranker
 
     def compile(self):
         self.compiler.activate(self)
