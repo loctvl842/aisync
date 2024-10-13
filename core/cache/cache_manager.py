@@ -1,5 +1,3 @@
-import asyncio
-import inspect
 from functools import wraps
 from typing import Callable, TypeVar
 
@@ -44,28 +42,18 @@ class CacheManager:
     def cached(self, prefix: str = None, ttl: int = 60, key_maker: BaseKeyMaker = None):
         def _cached(fn):
             @wraps(fn)
-            def __cached(*args, **kwargs):
+            async def __cached(*args, **kwargs):
                 be = self.backend
                 km = key_maker or self.key_maker
+
                 if not be or not km:
                     raise ValueError("Backend or KeyMaker not initialized")
 
-                if inspect.iscoroutinefunction(fn):
+                key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
 
-                    async def async_cached():
-                        key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
-                        response = await self.attempt(key, ttl, fn, *args, **kwargs)
-                        return response
+                response = await self.attempt(key, ttl, fn, *args, **kwargs)
 
-                    return async_cached()
-                else:
-
-                    async def sync_wrapper():
-                        key = await km.make(fn=fn, prefix=prefix, args=args, kwargs=kwargs)
-                        response = await self.attempt(key, ttl, fn, *args, **kwargs)
-                        return response
-
-                    return asyncio.run(sync_wrapper())
+                return response
 
             return __cached
 

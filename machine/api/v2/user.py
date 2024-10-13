@@ -23,7 +23,7 @@ async def create(
 async def list(
     user_controller: UserController = Depends(InternalProvider().get_user_controller),
 ):
-    users = await user_controller.get_all()
+    users = await user_controller.get_many()
     return users
 
 
@@ -32,4 +32,4 @@ async def delete(
     id: int,
     user_controller: UserController = Depends(InternalProvider().get_user_controller),
 ):
-    return await user_controller.delete_many(where_=[User.id == id])
+    return await user_controller.delete(where_=[User.id == id])

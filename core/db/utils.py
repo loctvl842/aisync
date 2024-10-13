@@ -1,26 +1,38 @@
-from functools import wraps
+import asyncio
+from contextlib import asynccontextmanager
+from typing import TypeVar
 from uuid import uuid4
 
-from core.db import sessions
+from .session import Base, DBSessionKeeper
 
-from .session import Dialect
+ModelType = TypeVar("ModelType", bound=Base)
 
 
-class SessionContext:
-    def __init__(self, dialect: Dialect):
-        self.dialect = dialect
+@asynccontextmanager
+async def session_context(db_session: DBSessionKeeper):
+    """An asynchronous context manager that provides a transactional scope
+    for database operations.
 
-    def __call__(self, fn):
-        @wraps(fn)
-        async def _session_context(*args, **kwargs):
-            session_id = str(uuid4())
-            context = sessions[self.dialect].set_session_context(session_id=session_id)
-            try:
-                return await fn(*args, **kwargs)
-            except Exception as e:
-                raise e
-            finally:
-                await sessions[self.dialect].session.remove()
-                sessions[self.dialect].reset_session_context(context=context)
+    Args:
+        db_session (DBSession): The database session object that manages
+        session lifecycle and transaction handling.
+    """
+    context = db_session.set_session_context(str(uuid4()))
 
-        return _session_context
+    session_generator = db_session.get_session()
+    session = None
+    try:
+        async for session in session_generator:
+            yield session
+    except asyncio.CancelledError:
+        if session is not None:
+            await session.rollback()
+        raise
+    except Exception:
+        if session is not None:
+            await session.rollback()
+        raise
+    finally:
+        if session is not None:
+            await session.remove()
+        db_session.reset_session_context(context)

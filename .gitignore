@@ -34,11 +34,3 @@ venv.bak/
 *.csv
 *.json
 *.db
-
-# Ignore test files
-*.test
-test_*
-*.png
-
-# Ignore GPT4All models
-gpt4all

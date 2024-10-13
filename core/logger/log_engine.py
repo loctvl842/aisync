@@ -1,7 +1,7 @@
 import inspect
 import logging
 import sys
-from typing import Any, List
+from typing import Any
 
 from loguru import logger
 
@@ -9,6 +9,7 @@ import core.utils as ut
 from core.settings import settings
 
 
+@ut.singleton
 class LogEngine:
     def __init__(self) -> None:
         self._logger = logger
@@ -83,7 +84,7 @@ class LogEngine:
         }
         return level_map.get(str(level.upper()), 1)
 
-    def log(self, level="DEBUG", *items: List[Any]) -> None:
+    def log(self, level="DEBUG", *items: Any) -> None:
         if not settings.DEBUG or self._get_level(level) < self._get_level(self.log_level):
             return
         self._logger.remove()
@@ -105,25 +106,25 @@ class LogEngine:
         message = " ".join([str(i) for i in items])
         self._logger.bind(**context).log(level, message)
 
-    def __call__(self, *items: List[Any]) -> None:
+    def __call__(self, *items: Any) -> None:
         self.log("DEBUG", *items)
 
-    def info(self, *items: List[Any]) -> None:
+    def info(self, *items: Any) -> None:
         self.log("INFO", *items)
 
-    def error(self, *items: List[Any]) -> None:
+    def error(self, *items: Any) -> None:
         self.log("ERROR", *items)
 
-    def warning(self, *items: List[Any]) -> None:
+    def warning(self, *items: Any) -> None:
         self.log("WARNING", *items)
 
-    def debug(self, *items: List[Any]) -> None:
+    def debug(self, *items: Any) -> None:
         self.log("DEBUG", *items)
 
-    def critical(self, *items: List[Any]) -> None:
+    def critical(self, *items: Any) -> None:
         self.log("CRITICAL", *items)
 
-    def exception(self, *items: List[Any]) -> None:
+    def exception(self, *items: Any) -> None:
         self.log("EXCEPTION", *items)
 
     def _configure_sqlalchemy(self):
@@ -152,7 +153,7 @@ class LogEngine:
 
             Reference: https://docs.sqlalchemy.org/en/20/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute
             """
-            self.debug("Executing SQL:\n", "```sql\n", f"{statement}", "\n```\nParameters:\n", f"{parameters}")
+            self.info("Executing SQL:\n", "```sql\n", f"{statement}", "\n```\nParameters:\n", f"{parameters}")
 
         @event.listens_for(Engine, "after_cursor_execute")
         def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):

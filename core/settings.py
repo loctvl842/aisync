@@ -1,7 +1,6 @@
 import os
 from typing import Literal
 
-from dotenv import find_dotenv, load_dotenv
 from pydantic_settings import BaseSettings
 
 
@@ -9,56 +8,29 @@ class CoreSettings(BaseSettings):
     ENV: Literal["development", "production"] = "development"
     DEBUG: bool = True
     APP_HOST: str = "0.0.0.0"
-    APP_PORT: int = 5000
-    LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+    APP_PORT: int = 8080
+    LOG_LEVEL: Literal["DEBUG", "INFO", "WARN", "ERROR", "FATAL"] = "DEBUG"
 
 
-class PostgresSettings(BaseSettings):
-    SQLALCHEMY_POSTGRES_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5432/aisync"
+class TestSettings(BaseSettings):
+    PYTEST: bool = False
+    PYTEST_UNIT: bool = False
 
 
-class PGVectorSettings(BaseSettings):
-    # SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5431/aisync"
-    # Change your PGVECTOR URI here
-    SQLALCHEMY_PGVECTOR_URI: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/aisync"
+class DatabaseSettings(BaseSettings):
+    SQLALCHEMY_POSTGRES_URI: str = "postgresql+asyncpg://postgres:thangcho@127.0.0.1:5432/fastapi_seed"
+    SQLALCHEMY_ECHO: bool = False
 
 
 class RedisSettings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"
 
 
-class LangfuseSettings(BaseSettings):
-    LANGFUSE_PUBLIC_KEY: str = "pk-lf-***"
-    LANGFUSE_SECRET_KEY: str = "sk-lf-***"
-    LANGFUSE_HOST: str = "https://cloud.langfuse.com/"
-
-
-class OpenAISettings(BaseSettings):
-    OPENAI_API_KEY: str = "sk-proj-1234567890abcdef1234567890abcdef"
-
-
-class GoogleAISettings(BaseSettings):
-    GOOGLE_API_KEY: str = "AIza1234567890abcdef1234567890abcdef"
-
-
-class AnthropicAISettings(BaseSettings):
-    ANTHROPIC_API_KEY: str = ""
-
-
-class HuggingFaceSettings(BaseSettings):
-    TOKENIZERS_PARALLELISM: bool = False
-
-
 class Settings(
     CoreSettings,
-    PostgresSettings,
-    PGVectorSettings,
+    TestSettings,
+    DatabaseSettings,
     RedisSettings,
-    LangfuseSettings,
-    OpenAISettings,
-    GoogleAISettings,
-    AnthropicAISettings,
-    HuggingFaceSettings,
 ): ...
 
 
@@ -70,14 +42,10 @@ class ProductionSettings(Settings):
 
 
 def get_settings() -> Settings:
-    # Some LLMs require environment variables to be set.
-    load_dotenv(find_dotenv())
-
-    source = {"_env_file": ".env", "_env_file_encoding": "utf-8"}
     env = os.getenv("ENV", "development")
     setting_types = {
-        "development": DevelopmentSettings(**source),
-        "production": ProductionSettings(**source),
+        "development": DevelopmentSettings(),
+        "production": ProductionSettings(),
     }
     return setting_types[env]
 
