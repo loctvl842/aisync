@@ -18,7 +18,7 @@ class TestSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    SQLALCHEMY_POSTGRES_URI: str = "postgresql+asyncpg://postgres:thangcho@127.0.0.1:5432/fastapi_seed"
+    SQLALCHEMY_POSTGRES_URI: str = "postgresql+asyncpg://postgres:thangcho@127.0.0.1:5432/aisync"
     SQLALCHEMY_ECHO: bool = False
 
 
@@ -26,12 +26,18 @@ class RedisSettings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"
 
 
+class OpenAISettings(BaseSettings):
+    OPENAI_API_KEY: str = "sk-proj-1234567890abcdef1234567890abcdef"
+
+
 class Settings(
     CoreSettings,
     TestSettings,
     DatabaseSettings,
     RedisSettings,
-): ...
+    OpenAISettings,
+):
+    model_config = {"extra": "allow"}
 
 
 class DevelopmentSettings(Settings): ...
@@ -42,10 +48,11 @@ class ProductionSettings(Settings):
 
 
 def get_settings() -> Settings:
+    kwargs = {"_env_file": ".env"}
     env = os.getenv("ENV", "development")
     setting_types = {
-        "development": DevelopmentSettings(),
-        "production": ProductionSettings(),
+        "development": DevelopmentSettings(**kwargs),
+        "production": ProductionSettings(**kwargs),
     }
     return setting_types[env]
 

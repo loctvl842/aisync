@@ -45,7 +45,9 @@ async def upsert(
     if bulk:
         if not isinstance(body, List):
             raise BadRequestException("Body must be a list when bulk is True")
-        created_users = await user_controller.upsert_many(index_elements=["id"], attributes_list=[user.model_dump() for user in body])
+        created_users = await user_controller.upsert_many(
+            index_elements=["id"], attributes_list=[user.model_dump() for user in body]
+        )
         return created_users
     else:
         if isinstance(body, List):
