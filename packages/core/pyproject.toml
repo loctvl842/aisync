@@ -1,0 +1,28 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "aisync"
+version = "0.1.0"
+description = "AISync"
+authors = ["loctvl842 <loclepnvx@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "aisync" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain = "^0.3.7"
+langgraph = "^0.2.45"
+pydantic-settings = "^2.6.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+ruff = "^0.7.2"
+
+[tool.ruff]
+line-length = 120
+extend-include = ["*.ipynb"]
+
+[tool.black]
+line-length = 120

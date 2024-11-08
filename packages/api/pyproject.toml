@@ -1,0 +1,15 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "aisync-api"
+version = "0.1.0"
+description = ""
+authors = ["loctvl842 <loclepnvx@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "aisync_api" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aisync = { path = "../core", develop = true }
