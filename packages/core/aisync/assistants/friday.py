@@ -1,7 +1,7 @@
 import time
 from typing import Generator, Union
 
-from .base import Assistant
+from aisync.assistants.base import Assistant
 
 
 class Friday(Assistant):

@@ -27,7 +27,7 @@ class Assistant(ABC):
             # Remove tools from vectordb
             print("Exiting gracefully.")
 
-    def __console_respond(self, response: str, *, streaming: bool = False) -> None:
+    def __console_respond(self, response: str | Generator[str, None, None], *, streaming: bool = False) -> None:
         print("🤖: ", end="", flush=True)
         if not streaming:
             print(response, "\n")
@@ -39,29 +39,21 @@ class Assistant(ABC):
             print("\n")
 
     @abstractmethod
-    def greet(
-        self, *, streaming: bool = False
-    ) -> Union[str, Generator[str, None, None]]:
+    def greet(self, *, streaming: bool = False) -> Union[str, Generator[str, None, None]]:
         """
         Greet user
         """
 
     @abstractmethod
-    async def agreet(
-        self, *, streaming: bool = False
-    ) -> Union[str, Generator[str, None, None]]:
+    async def agreet(self, *, streaming: bool = False) -> Union[str, Generator[str, None, None]]:
         return self.greet()
 
     @abstractmethod
-    def respond(
-        self, input: str, *, streaming: bool = False
-    ) -> Union[str, Generator[str, None, None]]:
+    def respond(self, input: str, *, streaming: bool = False) -> Union[str, Generator[str, None, None]]:
         """
         Respond to user input
         """
 
     @abstractmethod
-    async def arespond(
-        self, input: str, *, streaming: bool = False
-    ) -> Union[str, Generator[str, None, None]]:
+    async def arespond(self, input: str, *, streaming: bool = False) -> Union[str, Generator[str, None, None]]:
         return self.respond(input, streaming=streaming)

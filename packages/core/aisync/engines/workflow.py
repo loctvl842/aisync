@@ -18,12 +18,10 @@ from langgraph.graph import StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import All, StreamMode
 
-from ..log import log
-
-# from langgraph.graph.message import add_messages
+from aisync.log import log
 
 if TYPE_CHECKING:
-    from ..suit import Suit
+    from aisync.suit import Suit
 
 
 def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, str]]) -> list[tuple[str, str]]:

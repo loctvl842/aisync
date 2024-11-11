@@ -2,7 +2,7 @@ from typing import Type
 
 from langchain_openai import ChatOpenAI
 
-from .base import AISyncLLM
+from aisync.engines.llms.base import AISyncLLM
 
 
 class LLMChatOpenAI(AISyncLLM):

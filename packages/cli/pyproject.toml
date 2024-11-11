@@ -13,3 +13,7 @@ packages = [{ include = "aisync_cli" }]
 [tool.poetry.dependencies]
 python = "^3.12"
 aisync = { path = "../core", develop = true }
+click = "^8.1.7"
+
+[tool.poetry.scripts]
+aisync = "aisync_cli.cli:main"

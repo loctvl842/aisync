@@ -849,7 +849,6 @@ class PGVector:
             nested_clause = self._build_jsonpath_query(nested_conditions)
 
             jsonpath_query = f"$.{jsonpath_field} ? ({nested_clause})"
-            print(jsonpath_query)
 
             return func.jsonb_path_exists(
                 self.Embedding.cmetadata,

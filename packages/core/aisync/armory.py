@@ -1,19 +1,20 @@
 import glob
 import os
+from pathlib import Path
 from typing import TYPE_CHECKING
 
-from .log import log
-from .utils import get_suits_path
+from aisync.log import log
+from aisync.utils import get_suits_base_path
 
 if TYPE_CHECKING:
-    from .suit import Suit
+    from aisync.suit import Suit
 
 
 class Armory:
     """A place where suits (or armor) are stored and maintained."""
 
     def __init__(self) -> None:
-        self.suits_path = get_suits_path()
+        self.suits_path = get_suits_base_path()
         self.active_suits = []
         self.suits = self.find_suits()
 
@@ -26,7 +27,10 @@ class Armory:
             {'mark_i': '/path/to/mark_i', 'mark_ii': '/path/to/mark_ii'}
         """
 
-        all_suit_folders = [folder for folder in glob.glob(f"{self.suits_path}/*") if os.path.isdir(folder)]
+        assert Path(self.suits_path).exists(), f"Path '{self.suits_path}' does not exist."
+
+        all_suit_folders: list[str] = [folder for folder in glob.glob(f"{self.suits_path}/*") if os.path.isdir(folder)]
+
         suits: dict[str, "Suit"] = {}
         for suit_folder in all_suit_folders:
             suit = self.load_suit(suit_folder)

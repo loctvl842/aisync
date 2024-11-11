@@ -1,6 +1,6 @@
-from .graph import Graph, graph
-from .hook import Hook, hook
-from .node import Node, node
+from aisync.decorators.graph import Graph, graph
+from aisync.decorators.hook import Hook, hook
+from aisync.decorators.node import Node, node
 
 __all__ = [
     "Hook",

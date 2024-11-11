@@ -1,21 +1,23 @@
 import glob
 import importlib
 import os
+import sys
 import traceback
 from inspect import getmembers
+from pathlib import Path
 from typing import Any
 
-from .decorators import Graph, Hook, Node
-from .decorators.hook import SupportedHook
-from .log import log
-from .utils import get_suit_name
+from aisync.decorators import Graph, Hook, Node
+from aisync.decorators.hook import SupportedHook
+from aisync.log import log
+from aisync.utils import get_project_root, get_suit_name
 
 
 class Suit:
-    def __init__(self, path_to_suit):
-        if not os.path.exists(path_to_suit) or not os.path.isdir(path_to_suit):
+    def __init__(self, path_to_suit: str):
+        self._path = Path(path_to_suit)
+        if not self._path.exists() or not self._path.is_dir():
             raise ValueError(f"Path '{path_to_suit}' does not exist or is not a directory.")
-        self._path = path_to_suit
         self._name = get_suit_name(path_to_suit)
         self._hooks: dict[SupportedHook, Hook] = {}
         self._nodes: dict[str, Node] = {}
@@ -34,44 +36,51 @@ class Suit:
         return isinstance(member, Graph)
 
     def _get_decorated_fn(self):
-        source_files = self._get_source_files()
         hooks = {}
         nodes = {}
         graphs = {}
-        for source_file in source_files:
-            file_name = os.path.splitext(source_file)[0]
-            module_name = file_name.replace(os.sep, ".")
-            try:
-                suit_module = importlib.import_module(module_name)
 
-                # find hooks
-                new_hooks = {hook_fn[0]: hook_fn[1] for hook_fn in getmembers(suit_module, self._is_hook)}
-                duplicate_hooks = set(hooks.keys()) & set(new_hooks.keys())
-                if duplicate_hooks:
-                    log.warning(f"Duplicate hook detected: {duplicate_hooks}")
-                hooks.update(new_hooks)
+        project_path = get_project_root()
 
-                # find nodes
-                new_nodes = {node_fn[0]: node_fn[1] for node_fn in getmembers(suit_module, self._is_node)}
-                duplicate_nodes = set(self._nodes.keys()) & set(new_nodes.keys())
-                if duplicate_nodes:
-                    log.warning(f"Duplicate node detected: {duplicate_nodes}")
-                nodes.update(new_nodes)
+        pattern = os.path.join(self._path, "**/*.py")
+        py_files = glob.glob(pattern, recursive=True)
 
-                # find graph
-                new_graphs = {graph_fn[0]: graph_fn[1] for graph_fn in getmembers(suit_module, self._is_graph)}
-                duplicate_graphs = set(graphs.keys()) & set(new_graphs.keys())
-                if duplicate_graphs:
-                    log.warning(f"Duplicate graph detected: {duplicate_graphs}")
-                graphs.update(new_graphs)
+        sys.path.insert(0, project_path)
+        try:
+            for py_file in py_files:
+                abs_path = Path(py_file).resolve()
+                relative_path = abs_path.relative_to(project_path)  # aisync/suits/mark_i/nodes.py
+                file_stem = os.path.splitext(relative_path)[0]  # aisync/suits/mark_i/nodes
+                module_path = file_stem.replace(os.sep, ".")
+                try:
+                    suit_module = importlib.import_module(module_path)
 
-            except Exception as e:
-                log.error(f"Failed to import {module_name}: {e}")
+                    # find hooks
+                    new_hooks = {hook_fn[0]: hook_fn[1] for hook_fn in getmembers(suit_module, self._is_hook)}
+                    self.update_registry(hooks, new_hooks, "hook")
+
+                    # find nodes
+                    new_nodes = {node_fn[0]: node_fn[1] for node_fn in getmembers(suit_module, self._is_node)}
+                    self.update_registry(nodes, new_nodes, "node")
+
+                    # find graph
+                    new_graphs = {graph_fn[0]: graph_fn[1] for graph_fn in getmembers(suit_module, self._is_graph)}
+                    self.update_registry(graphs, new_graphs, "graph")
+
+                except ModuleNotFoundError as e:
+                    log.error(f"Failed to import '{module_path}': {e}")
+                except Exception as e:
+                    log.error(f"Failed to import {module_path}: {e}")
+        finally:
+            sys.path.pop(0)
         return hooks, nodes, graphs
 
-    def _get_source_files(self):
-        source_file_paths = os.path.join(self._path, "**/*.py")
-        return glob.glob(source_file_paths, recursive=True)
+    def update_registry(self, registry: dict, new_items: dict, item_type: str):
+        """Update the registry with new items and check for duplicates."""
+        duplicate_items = set(registry.keys()) & set(new_items.keys())
+        if duplicate_items:
+            log.warning(f"Duplicate {item_type} detected: {duplicate_items}")
+        registry.update(new_items)
 
     def activate(self):
         self._hooks, self._nodes, self._graphs = self._get_decorated_fn()

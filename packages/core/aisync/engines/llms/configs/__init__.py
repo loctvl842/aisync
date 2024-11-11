@@ -1,4 +1,4 @@
-from .LLMChatOpenAI import LLMChatOpenAI
+from aisync.engines.llms.configs.LLMChatOpenAI import LLMChatOpenAI
 
 __all__ = [
     "LLMChatOpenAI",

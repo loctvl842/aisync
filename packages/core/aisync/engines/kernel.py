@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING, Union
 
-from .llms import get_llm_object
+from aisync.engines.llms import get_llm_object
 
 if TYPE_CHECKING:
-    from ..decorators.hook import SupportedHook
-    from ..suit import Suit
+    from aisync.decorators.hook import SupportedHook
+    from aisync.suit import Suit
 
 
 class Kernel:
@@ -14,7 +14,7 @@ class Kernel:
 
     @property
     def supported_hook(self) -> "SupportedHook":
-        from ..decorators import SupportedHook
+        from aisync.decorators.hook import SupportedHook
 
         return SupportedHook
 

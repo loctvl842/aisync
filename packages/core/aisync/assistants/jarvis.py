@@ -1,15 +1,13 @@
 from typing import TYPE_CHECKING, Generator, Union
 
-from ..armory import Armory
-from ..decorators.hook import SupportedHook
-from ..engines.chain import Chain
-from ..engines.memory import BufferMemory
-from ..engines.workflow import TChunk, Workflow
-from .base import Assistant
+from aisync.armory import Armory
+from aisync.assistants.base import Assistant
+from aisync.decorators.hook import SupportedHook
+from aisync.engines.memory import BufferMemory
+from aisync.engines.workflow import TChunk, Workflow
 
 if TYPE_CHECKING:
-    from ..schemas import Message
-    from ..suit import Suit
+    from aisync.suit import Suit
 
 
 class Jarvis(Assistant):
@@ -23,7 +21,6 @@ class Jarvis(Assistant):
             raise ValueError(f"Suit {suit} not found in armory")
         suit_ = self.armory.suits[suit]
         self._suit = suit_
-        self.chain: Chain = Chain(suit_, self)
         self.workflow: Workflow = Workflow(suit_)
 
     def greet(self, *, streaming: bool = False) -> str:
@@ -57,11 +54,6 @@ class Jarvis(Assistant):
 
     async def arespond(self, input: str, *, streaming: bool = False) -> Union[str, Generator[str, None, None]]:
         return self.respond(input)
-
-    def _streaming(self, response: Generator["Message", None, None]) -> Generator[str, None, None]:
-        for chunk in response:
-            for char in chunk.content:
-                yield char
 
     @property
     def suit(self) -> "Suit":

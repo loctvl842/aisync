@@ -4,8 +4,8 @@ from typing import Any
 
 from loguru import logger
 
-from .env import env
-from .utils import singleton
+from aisync.env import env
+from aisync.utils import singleton
 
 
 @singleton

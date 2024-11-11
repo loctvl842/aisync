@@ -14,3 +14,9 @@ python = "^3.12"
 aisync = { path = 'packages/core', develop = true }
 aisync-cli = { path = "packages/cli", develop = true }
 aisync-api = { path = "packages/api", develop = true }
+
+[tool.poetry.group.format.dependencies]
+black = "^24.10.0"
+
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.7.2"

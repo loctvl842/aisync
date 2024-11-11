@@ -13,12 +13,11 @@ packages = [{ include = "aisync" }]
 [tool.poetry.dependencies]
 python = "^3.12"
 langchain = "^0.3.7"
-langgraph = "^0.2.45"
+langgraph = "^0.2.39"
 pydantic-settings = "^2.6.1"
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.10.0"
-ruff = "^0.7.2"
+loguru = "^0.7.2"
+tokencost = "^0.1.16"
+langchain-openai = "^0.2.6"
 
 [tool.ruff]
 line-length = 120
