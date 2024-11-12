@@ -69,8 +69,13 @@ class Suit:
 
                 except ModuleNotFoundError as e:
                     log.error(f"Failed to import '{module_path}': {e}")
+                    raise e
                 except Exception as e:
                     log.error(f"Failed to import {module_path}: {e}")
+                    traceback.print_exc()
+                    raise e
+        except Exception as e:
+            raise e
         finally:
             sys.path.pop(0)
         return hooks, nodes, graphs
@@ -101,7 +106,6 @@ class Suit:
                 log.error(f"Error when executing plugin hook `{self.name}::{hook}`: {e}")
                 traceback.print_exc()
                 return default
-        # syslog.warning(f"Hook `{hook}` not found")
         return default
 
     @property

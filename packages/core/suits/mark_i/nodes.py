@@ -4,8 +4,6 @@ from typing import Annotated, TypedDict
 from langchain_openai import ChatOpenAI
 
 from aisync.decorators import node
-from aisync.decorators.graph import graph
-from aisync.decorators.hook import hook
 from aisync.engines.workflow import State
 
 
@@ -13,19 +11,6 @@ def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, 
     """Function to add a new message to the messages list."""
     messages.extend(new_messages)
     return messages
-
-
-@hook
-def before_read_message(input: str):
-    return {"messages": [("human", input)]}
-
-
-@hook
-def before_send_message(message):
-    if message[1]["langgraph_node"] == "king":
-        return message[0].content
-    # return message['messages'][-1][1].content
-    # return message
 
 
 llm = ChatOpenAI(model="gpt-3.5-turbo")
@@ -80,16 +65,3 @@ def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
         ]
     )
     return {"messages": [("ai", king_decision)]}
-
-
-@graph
-def main():
-    return """
-graph TD
-    START --> A
-    A --> gpt35
-    A --> gpt4omini
-    gpt35 --> king
-    gpt4omini --> king
-    king --> END
-    """
