@@ -40,4 +40,5 @@ def get_suit_name(path_to_suit: str) -> str:
     """
     Returns the name of the suit.
     """
-    return Path(path_to_suit).name
+    path = Path(path_to_suit)
+    return path.name if path.is_dir() else path.stem

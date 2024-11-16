@@ -16,7 +16,7 @@ from aisync.utils import get_project_root, get_suit_name
 class Suit:
     def __init__(self, path_to_suit: str):
         self._path = Path(path_to_suit)
-        if not self._path.exists() or not self._path.is_dir():
+        if not self._path.exists():
             raise ValueError(f"Path '{path_to_suit}' does not exist or is not a directory.")
         self._name = get_suit_name(path_to_suit)
         self._hooks: dict[SupportedHook, Hook] = {}
@@ -42,8 +42,11 @@ class Suit:
 
         project_path = get_project_root()
 
-        pattern = os.path.join(self._path, "**/*.py")
-        py_files = glob.glob(pattern, recursive=True)
+        if self._path.is_dir():
+            pattern = os.path.join(self._path, "**/*.py")
+            py_files = glob.glob(pattern, recursive=True)
+        else:
+            py_files = [str(self._path)]
 
         sys.path.insert(0, project_path)
         try:
