@@ -7,9 +7,13 @@ name = "aisync-api"
 version = "0.1.0"
 description = ""
 authors = ["loctvl842 <loclepnvx@gmail.com>"]
-readme = "README.md"
+# readme = "README.md"
 packages = [{ include = "aisync_api" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 aisync = { path = "../core", develop = true }
+fastapi = "^0.115.5"
+uvicorn = "^0.32.1"
+toml = "^0.10.2"
+jinja2 = "^3.1.4"

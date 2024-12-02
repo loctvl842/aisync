@@ -18,3 +18,5 @@ def get_settings() -> Settings:
 
 
 env = get_settings()
+
+__all__ = ["env"]

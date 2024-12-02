@@ -30,7 +30,7 @@ class Armory:
         assert Path(self.suits_path).exists(), f"Path '{self.suits_path}' does not exist."
 
         all_suit_folders: list[str] = [folder for folder in glob.glob(f"{self.suits_path}/*") if os.path.isdir(folder)]
-        all_suit_folders.append('/home/loc/Documents/Work/Rockship/repositories/loctvl842/aisync/packages/core/suits/mark_ii.py')
+        # all_suit_folders.append('/home/loc/Documents/Work/Rockship/repositories/loctvl842/aisync/packages/core/suits/mark_ii.py')
 
         suits: dict[str, "Suit"] = {}
         for suit_folder in all_suit_folders:
