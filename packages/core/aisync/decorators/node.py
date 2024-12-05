@@ -1,36 +1,10 @@
 from functools import wraps
-from typing import Any, Callable, Optional, ParamSpec, TypeVar, Union, get_type_hints, overload
+from typing import Any, Callable, Optional, ParamSpec, TypeVar, Union, overload
+
+from aisync.engines.graph import Node
 
 P = ParamSpec("P")
 R = TypeVar("R")
-
-
-class Node:
-    def __init__(self, name: str, call_fn: Callable[P, R], llm: Optional[Any] = None):
-        self.call = call_fn
-        self.llm = llm
-        self.name = name
-
-    def __repr__(self) -> str:
-        return f"<{self.__class__.__name__} {self.name}>"
-
-    @property
-    def action(self) -> Callable[..., R]:
-        """Wraps `self.call`, injects `llm` if available, and modifies type hints to exclude `llm`."""
-        original_type_hints = get_type_hints(self.call)
-        adjusted_type_hints = {k: v for k, v in original_type_hints.items() if k != "llm"}
-
-        @wraps(self.call)
-        def action(*args: P.args, **kwargs: P.kwargs) -> R:
-            if self.llm is not None:
-                kwargs["llm"] = self.llm
-            return self.call(*args, **kwargs)
-
-        action.__annotations__ = adjusted_type_hints
-        return action
-
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> R:
-        return self.action(*args, **kwargs)
 
 
 @overload

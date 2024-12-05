@@ -4,7 +4,7 @@ from aisync.armory import Armory
 from aisync.assistants.base import Assistant
 from aisync.decorators.hook import SupportedHook
 from aisync.engines.memory import BufferMemory
-from aisync.engines.workflow import TChunk, Workflow
+from aisync.engines.workflow import TChunk
 
 if TYPE_CHECKING:
     from aisync.suit import Suit
@@ -21,7 +21,8 @@ class Jarvis(Assistant):
             raise ValueError(f"Suit {suit} not found in armory")
         suit_ = self.armory.suits[suit]
         self._suit = suit_
-        self.workflow: Workflow = Workflow(suit_)
+        self.workflow = list(suit_.graphs.values())[0]
+        self.workflow.compile()
 
     def greet(self, *, streaming: bool = False) -> str:
         response = f"Hello, I am {self.__class__.__name__}. How can I help you today?"

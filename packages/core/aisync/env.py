@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings
 class AISyncSettings(BaseSettings):
     AISYNC_DEBUG: Optional[bool] = True
     AISYNC_LOG_LEVEL: Literal["DEBUG", "INFO", "WARN", "ERROR", "FATAL"] = "DEBUG"
+    OPENAI_API_KEY: Optional[str] = None
 
 
 class Settings(AISyncSettings):

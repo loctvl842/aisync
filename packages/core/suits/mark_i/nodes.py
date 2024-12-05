@@ -1,16 +1,24 @@
-# import os
+import os
 from typing import Annotated, TypedDict
 
 from langchain_openai import ChatOpenAI
 
 from aisync.decorators import node
-from aisync.engines.workflow import State
+
+# from aisync.engines.workflow import State
+from aisync.engines.graph import State
+from aisync.env import env
+from aisync.log import log
 
 
 def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, str]]) -> list[tuple[str, str]]:
     """Function to add a new message to the messages list."""
     messages.extend(new_messages)
     return messages
+
+
+# Set OPENAI_API_KEY in your environment
+os.environ["OPENAI_API_KEY"] = env.OPENAI_API_KEY
 
 
 llm = ChatOpenAI(model="gpt-3.5-turbo")
@@ -65,3 +73,9 @@ def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
         ]
     )
     return {"messages": [("ai", king_decision)]}
+
+
+graph = node_1 >> (helper1 & helper2) >> king
+
+if __name__ == "__main__":
+    log(f"Mermaid:\n```\n{graph.to_mermaid()}\n```")
