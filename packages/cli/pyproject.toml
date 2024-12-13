@@ -7,13 +7,15 @@ name = "aisync-cli"
 version = "0.1.0"
 description = ""
 authors = ["loctvl842 <loclepnvx@gmail.com>"]
-# readme = "README.md"
+readme = "README.md"
 packages = [{ include = "aisync_cli" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 aisync = { path = "../core", develop = true }
 click = "^8.1.7"
+websockets = "^14.1"
+fastapi = "^0.115.6"
 
 [tool.poetry.scripts]
 aisync = "aisync_cli.cli:main"

@@ -12,8 +12,24 @@ header {
   background-color: #fff;
   padding: 20px;
   display: flex;
-  justify-content: center;
+  align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-item {
+  display: flex;
+  align-items: center;
+  margin: 5px 0px 5px 15px;
+  padding: 10px 20px;
+  color: #fff;
+  background-image: linear-gradient(to right, #a37be7, #70a5ff);
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .logo {

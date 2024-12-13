@@ -349,7 +349,7 @@ class Graph:
                             )
                     elif isinstance(edge, Node):
                         # Regular edge represented with -->
-                        lines.append(f"    {node.name}[{node.alias}] --> {edge.name}[{node.alias}]")
+                        lines.append(f"    {node.name}[{node.alias}] --> {edge.name}[{edge.alias}]")
         return "\n".join(lines)
 
     def __rshift__(self, other: Union[Node, Graph, Branch, ConditionalBranchAction]) -> Graph:

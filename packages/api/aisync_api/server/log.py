@@ -2,15 +2,19 @@ import inspect
 import sys
 from typing import Any
 
+from aisync.env import env
 from loguru import logger
 
-from aisync.env import env
-from aisync.utils import singleton
 
-
-@singleton
 class LogEngine:
-    def __init__(self) -> None:
+    def __init__(self, service: str) -> None:
+        """
+        Initialize the logger.
+
+        Args:
+            service (str): The name of the service.
+        """
+        self.service = service
         self._logger = logger
         self.setup()
         self.log_level = env.AISYNC_LOG_LEVEL
@@ -94,12 +98,14 @@ class LogEngine:
         }
         log_format = (
             "<green>[{time:YYYY-MM-DD HH:mm:ss.SSS}]</green> "
-            "<level>[AISync] {level: <6}</level> "
+            f"<level>[{self.service}] {level: <6}</level> "
             "<cyan>{extra[original_name]}.{extra[original_class]}.{extra[original_caller]}::"
             "{extra[original_line]}</cyan>  "
             ">>> <level>{message}</level>"
         )
-        self._logger.add(sys.stdout, colorize=True, format=log_format, backtrace=True, diagnose=True)
+        self._logger.add(
+            sys.stdout, colorize=True, format=log_format, backtrace=True, diagnose=True
+        )
         message = " ".join([str(i) for i in items])
         self._logger.bind(**context).log(level, message)
 
@@ -125,4 +131,4 @@ class LogEngine:
         self.log("EXCEPTION", *items)
 
 
-log = LogEngine()
+log = LogEngine("AISync API")

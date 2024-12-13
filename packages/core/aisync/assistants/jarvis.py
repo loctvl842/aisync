@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING, Generator, Union
 from aisync.armory import Armory
 from aisync.assistants.base import Assistant
 from aisync.decorators.hook import SupportedHook
+from aisync.engines.graph import TChunk
 from aisync.engines.memory import BufferMemory
-from aisync.engines.workflow import TChunk
 
 if TYPE_CHECKING:
     from aisync.suit import Suit

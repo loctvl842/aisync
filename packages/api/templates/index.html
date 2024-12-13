@@ -11,10 +11,16 @@
   </head>
   <body>
     <!-- Header Section -->
-    <header>
+    <header class="header-container">
       <a href="/" title="Refresh Page">
         <img src="{{root_path}}/static/favicon.svg" alt="{{ project_name }} Logo" class="logo" />
       </a>
+      {% for sub_app in sub_apps %}
+      <a class="header-item" href="{{ sub_app.root_path }}">
+        <i class="fas fa-layer-group" style="color: #17a2b8; margin-right: 10px"></i>
+        {{ sub_app.title }}
+      </a>
+      {% endfor %}
     </header>
 
     <!-- Main Content Container -->

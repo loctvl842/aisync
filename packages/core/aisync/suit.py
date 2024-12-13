@@ -57,7 +57,13 @@ class Suit:
                 file_stem = os.path.splitext(relative_path)[0]  # aisync/suits/mark_i/nodes
                 module_path = file_stem.replace(os.sep, ".")
                 try:
-                    suit_module = importlib.import_module(module_path)
+                    # suit_module = importlib.import_module(module_path)
+                    if module_path in sys.modules:
+                        # Reload the module if it exists
+                        suit_module = importlib.reload(sys.modules[module_path])
+                    else:
+                        # Import it for the first time
+                        suit_module = importlib.import_module(module_path)
 
                     # find hooks
                     new_hooks = {hook_fn[0]: hook_fn[1] for hook_fn in getmembers(suit_module, self._is_hook)}
@@ -111,6 +117,10 @@ class Suit:
                 traceback.print_exc()
                 return default
         return default
+
+    @property
+    def path(self):
+        return self._path
 
     @property
     def name(self):
