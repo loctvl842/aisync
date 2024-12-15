@@ -3,7 +3,8 @@ import enum
 from pathlib import Path
 from typing import Callable, Literal, Optional, Set, TypedDict, Union
 
-from aisync_api.server.log import LogEngine
+import pathspec
+from aisync.log import LogEngine
 from watchfiles import Change, awatch
 from watchfiles.main import FileChange
 
@@ -36,10 +37,51 @@ class FileWatcher:
         self.recursive = recursive
         self.log = LogEngine(self.__class__.__name__)
         self.file_extensions = file_extensions
+        self.gitignore_spec = self._load_gitignore()
         self._stop_event = asyncio.Event()
 
         if not self.watch_path.exists():
             raise ValueError(f"Watch path does not exist: {self.watch_path}")
+
+    def _load_gitignore(self) -> pathspec.PathSpec:
+        """
+        Load .gitignore patterns from the watch directory and its parents.
+        Returns a PathSpec object that can be used to match paths.
+        """
+        patterns = [
+            "**/__pycache__/",
+            "**/*.pyc",
+            "**/*.pyo",
+            "**/*.pyd",
+        ]
+
+        def read_gitignore(path: Path) -> list[str]:
+            if not path.exists():
+                return []
+            with open(path, "r") as f:
+                return [
+                    line.strip()
+                    for line in f
+                    if line.strip() and not line.startswith("#")
+                ]
+
+        # Look for .gitignore from current to root folder (which contains .git)
+        current_dir = self.watch_path
+        while True:
+            if (current_dir / ".git").exists():
+                patterns.extend(read_gitignore(current_dir / ".gitignore"))
+                break
+            gitignore_path = current_dir / ".gitignore"
+            patterns.extend(read_gitignore(gitignore_path))
+
+            if current_dir == Path("/"):
+                # Reached system root
+                break
+            current_dir = current_dir.parent
+
+        return pathspec.PathSpec.from_lines(
+            pathspec.patterns.GitWildMatchPattern, patterns
+        )
 
     async def start_watching(self) -> None:
         """Start watching the file system for changes"""
@@ -48,7 +90,7 @@ class FileWatcher:
         try:
             async for changes in awatch(
                 self.watch_path,
-                watch_filter=None,
+                watch_filter=self._should_watch_path,
                 recursive=self.recursive,
                 stop_event=self._stop_event,
             ):
@@ -60,6 +102,17 @@ class FileWatcher:
     async def stop(self):
         """Gracefully stop the watcher"""
         self._stop_event.set()
+
+    def _should_watch_path(self, change: Change, path: str) -> bool:
+        """
+        Determine if a path should be watched based on .gitignore rules.
+        Returns False for ignored paths.
+        """
+        try:
+            rel_path = Path(path).relative_to(self.watch_path)
+            return not self.gitignore_spec.match_file(str(rel_path))
+        except ValueError:
+            return False
 
     async def _handle_changes(self, changes: Set[FileChange]):
         """

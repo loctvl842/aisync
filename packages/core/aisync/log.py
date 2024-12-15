@@ -10,7 +10,14 @@ from aisync.utils import singleton
 
 @singleton
 class LogEngine:
-    def __init__(self) -> None:
+    def __init__(self, service: str) -> None:
+        """
+        Initialize the logger.
+
+        Args:
+            service (str): The name of the service.
+        """
+        self.service = service
         self._logger = logger
         self.setup()
         self.log_level = env.AISYNC_LOG_LEVEL
@@ -81,7 +88,7 @@ class LogEngine:
         }
         return level_map.get(str(level.upper()), 1)
 
-    def log(self, level="DEBUG", *items: Any) -> None:
+    def log(self, level="DEBUG", *items: Any, full_path: bool = False) -> None:
         if self._get_level(level) < self._get_level(self.log_level):
             return
         self._logger.remove()
@@ -92,10 +99,11 @@ class LogEngine:
             "original_class": caller_info["classname"],
             "original_caller": caller_info["caller"],
         }
+        path = "{extra[original_name]}.{extra[original_class]}.{extra[original_caller]}" if full_path else "{extra[original_caller]}"
         log_format = (
             "<green>[{time:YYYY-MM-DD HH:mm:ss.SSS}]</green> "
-            "<level>[AISync] {level: <6}</level> "
-            "<cyan>{extra[original_name]}.{extra[original_class]}.{extra[original_caller]}::"
+            f"<level>[{self.service}] {level: <6}</level> "
+            f"<cyan>{path}::"
             "{extra[original_line]}</cyan>  "
             ">>> <level>{message}</level>"
         )
@@ -123,6 +131,3 @@ class LogEngine:
 
     def exception(self, *items: Any) -> None:
         self.log("EXCEPTION", *items)
-
-
-log = LogEngine()

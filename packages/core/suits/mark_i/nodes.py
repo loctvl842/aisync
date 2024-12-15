@@ -4,9 +4,11 @@ from typing import Annotated, TypedDict
 from langchain_openai import ChatOpenAI
 
 from aisync.decorators import node
-from aisync.engines.graph import State
+from aisync.engines.graph.definitions import State
 from aisync.env import env
-from aisync.log import log
+from aisync.log import LogEngine
+
+log = LogEngine("mark_i")
 
 
 def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, str]]) -> list[tuple[str, str]]:
@@ -72,9 +74,9 @@ def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
     )
     return {"messages": [("ai", king_decision)]}
 
+
 def classify():
     pass
-
 
 graph = node_1 >> (helper1 & helper2) >> king
 

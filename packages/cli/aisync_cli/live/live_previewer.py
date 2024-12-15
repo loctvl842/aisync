@@ -9,11 +9,9 @@ from typing import Set
 
 import uvicorn
 from aisync.assistants.base import Assistant
-from aisync.notification.in_memory import (
-    InMemoryNotification,
-    NotificationChannel,
-    NotificationMessage,
-)
+from aisync.log import LogEngine
+from aisync.signalers.base import Channel, Signal
+from aisync.signalers.in_memory import InMemorySignaler
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -21,7 +19,6 @@ from fastapi.templating import Jinja2Templates
 
 from aisync_cli.live.watcher import FileWatcher
 from aisync_cli.live.watcher.file_watcher import ChangeInfo
-from aisync_cli.log import LogEngine
 
 CURRENT_FOLDER = Path(__file__).resolve().parent
 
@@ -44,13 +41,13 @@ class LivePreviewer:
         self.app = self._create_app()
         self.log = LogEngine(self.__class__.__name__)
         self.should_exit = threading.Event()
-        self.notification_hub = InMemoryNotification()
+        self.signaler = InMemorySignaler()
         self.server_thread = None
         self.running_server = None
 
     @property
-    def channel(self) -> NotificationChannel:
-        return NotificationChannel.FILE_CHANGED
+    def channel(self) -> Channel:
+        return Channel.FILE_CHANGED
 
     def _create_app(self):
         """Create and configure lifespan for FastAPI"""
@@ -60,19 +57,15 @@ class LivePreviewer:
             self.background_tasks: Set[asyncio.Task] = set()
 
             async def callback(change_info: ChangeInfo):
+                """Handles fiel change notifications"""
+
                 try:
-                    print('caicalon', self.channel.value)
-                    # async with websockets.connect(
-                    #     # f"ws://{self.host}/{self.port}/ws/{self.channel.value}/publish"
-                    #     f"ws://localhost:8402/ws/{self.channel.value}/publish"
-                    # ) as wst:
-                    #     await wst.send("reload")
-                    await self.notification_hub.publish(
+                    await self.signaler.apublish(
                         channel=self.channel,
-                        message=NotificationMessage(
+                        message=Signal(
                             id=f"{uuid.uuid4()}",
                             channel=self.channel,
-                            content="reload",
+                            content=change_info,
                             timestamp=datetime.now(),
                         ),
                     )
@@ -102,12 +95,16 @@ class LivePreviewer:
                 if self.background_tasks:
                     try:
                         await asyncio.wait_for(
-                            asyncio.gather(*self.background_tasks, return_exceptions=True),
+                            asyncio.gather(
+                                *self.background_tasks, return_exceptions=True
+                            ),
                             timeout=5.0,
                         )
                         self.log.info("All background tasks completed")
                     except asyncio.TimeoutError:
-                        self.log.warning("Some background tasks took too long to complete")
+                        self.log.warning(
+                            "Some background tasks took too long to complete"
+                        )
                     except Exception as e:
                         self.log.error(f"Error during task shutting down: {e}")
 
@@ -159,7 +156,7 @@ class LivePreviewer:
         async def subscribe(websocket: WebSocket, channel: str):
             await websocket.accept()
 
-            async def callback(notification: NotificationMessage):
+            async def callback(notification: Signal):
                 try:
                     await websocket.send_json(
                         {
@@ -174,14 +171,14 @@ class LivePreviewer:
                     return False
                 return True
 
-            await self.notification_hub.subscribe(
-                    channel=self.channel, callback=callback
-                    )
+            await self.signaler.asubscribe(
+                channel=self.channel, callback=callback
+            )
             try:
                 while True:
                     await websocket.receive_text()
             except WebSocketDisconnect:
-                await self.notification_hub.unsubscribe(callback=callback)
+                await self.signaler.aunsubscribe(callback=callback)
 
         @self.app.websocket("/ws/{channel}/publish")
         async def publish(websocket: WebSocket, channel: str):
@@ -192,9 +189,9 @@ class LivePreviewer:
                     action = await websocket.receive_text()
                     if action == "reload":
                         # Then broadcast to other websockets
-                        await self.notification_hub.publish(
+                        await self.signaler.apublish(
                             channel=self.channel,
-                            message=NotificationMessage(
+                            message=Signal(
                                 id=f"{id(websocket)}",
                                 channel=self.channel,
                                 content=action,
@@ -207,7 +204,7 @@ class LivePreviewer:
     async def run_server(self):
         """Launch FastAPI server for live previewing in a separate thread"""
 
-        await self.notification_hub.connect()
+        await self.signaler.aconnect()
         self._init_routes()
         config = uvicorn.Config(
             self.app,
@@ -226,7 +223,7 @@ class LivePreviewer:
         self.server_thread = thread
 
     async def shutdown(self):
-        await self.notification_hub.disconnect()
+        await self.signaler.adisconnect()
         if self.running_server:
             self.running_server.should_exit = True
             self.should_exit.set()

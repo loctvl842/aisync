@@ -1,13 +1,52 @@
 import time
 from abc import ABC, abstractmethod
-from typing import Generator, Union
+from typing import TYPE_CHECKING, Generator, Optional, Union
+
+from aisync.armory import Armory
+from aisync.engines.memory import BufferMemory
+
+if TYPE_CHECKING:
+    from aisync.suit import Suit
 
 
 class Assistant(ABC):
     name: str = "Assistant"
 
-    def __init__(self):
-        pass
+    def __init__(self, suit: str = "mark_i", graph: Optional[str] = None):
+        self.buffer_memory: BufferMemory = BufferMemory()
+        self.armory: Armory = Armory()
+        if suit not in self.armory.suits:
+            raise ValueError(f"Suit {suit} not found in armory")
+        suit_ = self.armory.suits[suit]
+        self._suit = suit_
+
+        available_graphs = suit_.graphs
+        if not available_graphs:
+            raise ValueError(f"No graphs found in suit {suit}")
+        if len(available_graphs) > 1:
+            if graph is None:
+                print("Available graphs:")
+                for idx, graph_name in enumerate(available_graphs.keys(), 1):
+                    print(f"{idx}. {graph_name}")
+
+                while True:
+                    graph_input = input("Please select a graph by name: ").strip()
+                    if graph_input in available_graphs:
+                        self.graph = available_graphs[graph_input]
+                        break
+                    print(f"Invalid graph name. Available graphs: {', '.join(available_graphs.keys())}")
+
+            else:
+                if graph not in available_graphs:
+                    raise ValueError(
+                        f"Graph {graph} not found in suit {suit}. Available graphs: {', '.join(available_graphs.keys())}"
+                    )
+                self.graph = available_graphs[graph]
+        else:
+            # Then just choose the only one available
+            self.graph = list(suit_.graphs.values())[0]
+
+        self.graph.compile()
 
     def start(self, streaming=False) -> None:
         try:
@@ -57,3 +96,7 @@ class Assistant(ABC):
     @abstractmethod
     async def arespond(self, input: str, *, streaming: bool = False) -> Union[str, Generator[str, None, None]]:
         return self.respond(input, streaming=streaming)
+
+    @property
+    def suit(self) -> "Suit":
+        return self._suit

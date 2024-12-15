@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from aisync.log import log
+from aisync.log import LogEngine
 from aisync.utils import get_suits_base_path
 
 if TYPE_CHECKING:
@@ -14,6 +14,7 @@ class Armory:
     """A place where suits (or armor) are stored and maintained."""
 
     def __init__(self) -> None:
+        self.log = LogEngine(self.__class__.__name__)
         self.suits_path = get_suits_base_path()
         self.active_suits = []
         self.suits = self.find_suits()
@@ -36,12 +37,12 @@ class Armory:
         for suit_folder in all_suit_folders:
             suit = self.load_suit(suit_folder)
             suits[suit.name] = suit
-            log.info(f"Loaded suit: {suit.name}")
+            self.log.info(f"Loaded suit: {suit.name}")
 
             # Activate the suit
             suits[suit.name].activate()
             self.active_suits.append(suit.name)
-            log.info(f"Activated suit: {suit.name}")
+            self.log.info(f"Activated suit: {suit.name}")
         return suits
 
     def load_suit(self, path_to_suit: str) -> "Suit":
@@ -54,4 +55,4 @@ class Armory:
             suit = Suit(path_to_suit)
             return suit
         except Exception as e:
-            log.error(f"Failed to load plugin: {e}")
+            self.log.error(f"Failed to load plugin: {e}")

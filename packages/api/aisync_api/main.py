@@ -1,17 +1,12 @@
-import asyncio
-import traceback
 from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
-from watchfiles import awatch
-from websockets import connect
 
 from aisync_api.env import env
 from aisync_api.routes import main, tool
 from aisync_api.server.config import AppConfigurer
 from aisync_api.server.constants import SUITS_DIR
-from aisync_api.server.log import log
 
 
 @asynccontextmanager
@@ -20,37 +15,7 @@ async def main_lifespan(app: FastAPI):
 
 
 async def tool_lifespan(app: FastAPI):
-    async def awatching(stop_event: asyncio.Event):
-        log.info(f"Starting watcher on directory: {SUITS_DIR}")
-        try:
-            async for changes in awatch(SUITS_DIR):
-                if stop_event.is_set():
-                    break
-                log.info(f"Changes detected: {changes}")
-            async with connect("ws://localhost:8080/api/v1/ws") as ws:
-                    await ws.send("reload:suits")
-        except asyncio.CancelledError:
-            log.info("Watcher task cancelled.")
-        except Exception as e:
-            log.error(f"Error in watcher task: {e}")
-            traceback.print_exc()
-        finally:
-            log.info("Asynchronous watcher has been stopped.")
-
-    stop_event = asyncio.Event()
-    watcher_task = asyncio.create_task(awatching(stop_event))
-
     yield
-
-    stop_event.set()
-    watcher_task.cancel()
-
-    try:
-        await watcher_task
-    except asyncio.CancelledError:
-        log.info("Watcher task successfully cancelled.")
-    except Exception as e:
-        log.error(f"Error while cancelling watcher task: {e}")
 
 
 def setup_applications() -> list[FastAPI]:

@@ -10,12 +10,13 @@ from typing import Any
 from aisync.decorators import Hook
 from aisync.decorators.hook import SupportedHook
 from aisync.engines.graph import Graph, Node
-from aisync.log import log
+from aisync.log import LogEngine
 from aisync.utils import get_project_root, get_suit_name
 
 
 class Suit:
     def __init__(self, path_to_suit: str):
+        self.log = LogEngine(self.__class__.__name__)
         self._path = Path(path_to_suit)
         if not self._path.exists():
             raise ValueError(f"Path '{path_to_suit}' does not exist or is not a directory.")
@@ -78,10 +79,10 @@ class Suit:
                     self.update_registry(graphs, new_graphs, "graph")
 
                 except ModuleNotFoundError as e:
-                    log.error(f"Failed to import '{module_path}': {e}")
+                    self.log.error(f"Failed to import '{module_path}': {e}")
                     raise e
                 except Exception as e:
-                    log.error(f"Failed to import {module_path}: {e}")
+                    self.log.error(f"Failed to import {module_path}: {e}")
                     traceback.print_exc()
                     raise e
         except Exception as e:
@@ -94,7 +95,7 @@ class Suit:
         """Update the registry with new items and check for duplicates."""
         duplicate_items = set(registry.keys()) & set(new_items.keys())
         if duplicate_items:
-            log.warning(f"Duplicate {item_type} detected: {duplicate_items}")
+            self.log.warning(f"Duplicate {item_type} detected: {duplicate_items}")
         registry.update(new_items)
 
     def activate(self):
@@ -113,7 +114,7 @@ class Suit:
             try:
                 return self._hooks[hook].call(*args, **kwargs)
             except Exception as e:
-                log.error(f"Error when executing plugin hook `{self.name}::{hook}`: {e}")
+                self.log.error(f"Error when executing plugin hook `{self.name}::{hook}`: {e}")
                 traceback.print_exc()
                 return default
         return default

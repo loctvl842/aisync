@@ -2,6 +2,7 @@ from functools import wraps
 from typing import Any, Callable, Optional, ParamSpec, TypeVar, Union, overload
 
 from aisync.engines.graph import Node
+from aisync.engines.graph.definitions import _Node
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -42,7 +43,7 @@ def node(
     def decorator(call_fn: Callable[P, R]) -> Node:
         node_name = name if name else call_fn.__name__
 
-        node_instance = Node(node_name, call_fn, llm=llm)
+        node_instance = _Node(node_name, call_fn, llm=llm)
 
         # Use @wraps to copy metadata from call_fn to node_instance
         wraps(call_fn)(node_instance)
