@@ -65,5 +65,5 @@ if __name__ == "__main__":
         host=env.API_HOST,
         port=env.API_PORT,
         reload=env.API_DEBUG,
-        reload_excludes=[SUITS_DIR],
+        # reload_excludes=[SUITS_DIR],
     )

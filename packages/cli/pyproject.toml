@@ -22,4 +22,4 @@ dependencies = [
 ]
 
 [project.scripts]
-aisync = "aisync_cli.cli:main"
+aisync = "aisync_cli.run:main"
