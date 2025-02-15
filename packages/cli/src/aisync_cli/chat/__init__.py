@@ -1,4 +1,4 @@
-from aisync_cli.chat.cli import chat
+from aisync_cli.chat.run import chat
 
 
 __all__ = ["chat"]

@@ -1,4 +1,4 @@
-from aisync_cli.live.cli import live
+from aisync_cli.live.run import live
 
 
 __all__ = ["live"]
