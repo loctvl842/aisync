@@ -1,37 +1,12 @@
-[tool.poetry]
-name = "aisync"
-version = "0.1.0"
-description = "aisync is a backend service for my portfolio which will mainly focus on AI development"
-authors = ["loctvl842 <loclepnvx@gmail.com>"]
-license = "MIT"
+[project]
+name = "aisync-monorepo"
+version = "0.0.1"
+description = "AISync mono-repo"
+authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
 
-[tool.ruff]
-line-length = 120
+[tool.uv.sources]
+aisync = { workspace = true }
 
-[tool.black]
-line-length = 120
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
-ruff = "^0.4.4"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-fastapi = "^0.111.0"
-pydantic-settings = "^2.2.1"
-toml = "^0.10.2"
-loguru = "^0.7.2"
-sqlalchemy = "^2.0.30"
-alembic = "^1.13.1"
-asyncpg = "^0.29.0"
-redis = "^5.0.4"
-langchain = "^0.1.20"
-langchain-openai = "^0.1.6"
-langchain-google-genai = "^1.0.3"
-langchain-google-vertexai = "^1.0.4"
-langfuse = "^2.31.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv.workspace]
+members = ["packages/*"]

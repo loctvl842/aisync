@@ -1,73 +1,53 @@
-FROM python:3.11-slim as build
+ARG POETRY_HOME=/opt/poetry
+
+### Builder
+FROM python:3.12-slim as builder
+
+ARG POETRY_HOME
+ARG POETRY_VERSION=1.8.3
+
+RUN python3 -m venv ${POETRY_HOME} && \
+    $POETRY_HOME/bin/pip install --upgrade pip && \
+    $POETRY_HOME/bin/pip install poetry==${POETRY_VERSION} \
+    echo "Poetry version:" && $POETRY_HOME/bin/poetry --version
+
+
+### Dependencies
+FROM builder as dependencies
+
+ARG POETRY_HOME
 
 ENV PIP_DEFAULT_TIMEOUT=100 \
-  # Allow statements and log messages to immediately appear
-  PYTHONUNBUFFERED=1 \
-  # disable a pip version check to reduce run-time & log-spam
-  PIP_DISABLE_PIP_VERSION_CHECK=1 \
-  # cache is useless in docker image, so disable to reduce image size
-  PIP_NO_CACHE_DIR=1 \
-  POETRY_VERSION=1.3.2
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PATH="$POETRY_HOME/bin:$PATH" \
+    VIRTUAL_ENV="/app/.venv"
+
+WORKDIR /app
+COPY pyproject.toml poetry.lock poetry.toml ./
+COPY packages ./packages
+
+RUN poetry install --only main --no-interaction --no-ansi --no-root
+
+### Build
+FROM python:3.12-slim as build
 
 WORKDIR /app
 
-# Copy the project's dependency management files (pyproject.toml and poetry.lock)
-COPY pyproject.toml poetry.lock ./
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH" \
+    PYTHONUNBUFFERED=1
 
-# Set environment variables for Poetry
-ENV POETRY_VERSION=1.8.3 \
-  POETRY_HOME="/opt/poetry"
+COPY --from=dependencies /app/.venv /app/.venv
+COPY packages ./packages
 
-# Add Poetry bin directory to PATH
-ENV PATH="$POETRY_HOME/bin:$PATH"
-
-# Install system dependencies for installing Poetry
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  curl \
-  build-essential \
-  && rm -rf /var/lib/apt/lists/*
-
-# Install Poetry using official installer script
-# Ref: https://python-poetry.org/docs/#installing-with-the-official-installer
-RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Install dependencies defined in pyproject.toml
-# --only main: Only install `tool.poetry.dependencies` in pyproject.toml, ignoring dev dependencies
-# --no-interaction: Disable interactive prompts during dependency installation
-# --no-ansi: Disable ANSI output to ensure plain text output for better readability
-# --no-root: Do not install the root package as a dependency (useful for containerized environments)
-RUN poetry install --only main --no-interaction --no-ansi --no-root \
-  && poetry export -f requirements.txt -o requirements.txt
-
-### Production image
-FROM python:3.11-slim as production
-
-WORKDIR /app
-
-COPY --from=build /app/requirements.txt .
-
-RUN set -ex \
-  # Create a non-root user
-  && addgroup --system --gid 1001 appgroup \
-  && adduser --system --uid 1001 --gid 1001 --no-create-home appuser \
-  # Upgrade the package
-  && apt-get update \
-  && apt-get upgrade -y \
-  # Install dependencies
-  && pip install -r requirements.txt \
-  # Clean up
-  && apt-get autoremove -y \
-  && apt-get clean -y \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /root/.cache
-
-# Copy the rest of the project files to the working directory
-COPY . .
-
-# Expose port 5000 for external access
-EXPOSE 5000
-
-# Run the application
-CMD ["python", "main.py"]
+RUN addgroup --system appgroup && \
+    adduser --system --group appuser && \
+    chown -R appuser:appgroup /app
 
 USER appuser
+
+EXPOSE 8080
+
+CMD ["python", "-m", "packages.api.aisync_api.main"]

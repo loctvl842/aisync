@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui;
+      }
+      .container {
+        display: flex;
+        height: 100vh;
+        gap: 16px;
+        padding: 16px;
+        background: #f8f9fa;
+      }
+      .panel {
+        flex: 1;
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        overflow: auto;
+      }
+      .code {
+        font-family: monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: pre;
+        background: #f1f5f9;
+        border-radius: 8px;
+        padding: 16px;
+        height: 100%;
+        overflow: auto;
+      }
+      #graph {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="status" class="disconnected">WebSocket: Disconnected</div>
+    <div class="container">
+      <div class="panel">
+        <pre class="code" id="editor" contenteditable="true" spellcheck="false">{{code}}</pre>
+      </div>
+      <div class="panel"><div id="graph"></div></div>
+    </div>
+    <script>
+      let ws = null;
+      let reconnectAttempts = 0;
+      const maxReconnectAttempts = 5;
+      const graphDiv = document.getElementById("graph");
+      const editor = document.getElementById("editor");
+
+      function connectWebSocket() {
+        if (reconnectAttempts >= maxReconnectAttempts) {
+          document.getElementById("status").textContent = "WebSocket: Max reconnection attempts reached";
+          return;
+        }
+
+        ws = new WebSocket(`ws://${window.location.host}/api/v1/ws/file_changes`);
+        ws.onopen = () => {
+          document.getElementById("status").textContent = "WebSocket: Connected";
+          document.getElementById("status").className = "connected";
+          reconnectAttempts = 0;
+          reload()
+        };
+
+        ws.onmessage = (event) => {
+          if (event.data === "reload") {
+            reload();
+          }
+        };
+
+        ws.onclose = () => {
+          document.getElementById("status").textContent = "WebSocket: Disconnected";
+          document.getElementById("status").className = "disconnected";
+
+          // Attempt to reconnect after a delay
+          setTimeout(() => {
+            reconnectAttempts++;
+            connectWebSocket();
+          }, 3000);
+        };
+
+        ws.onerror = (error) => {
+          console.error("WebSocket error:", error);
+        };
+      }
+      function reload() {
+        fetch("/api/v1/projects/{{suit}}/reload")
+          .then((res) => res.json())
+          .then((data) => {
+            editor.textContent = data.code;
+            mermaid.render("graphDiv", editor.textContent).then((result) => {
+              graphDiv.innerHTML = result.svg;
+            });
+          });
+      }
+      connectWebSocket();
+      window.onbeforeunload = () => {
+        if (ws) {
+          ws.close();
+        }
+      };
+    </script>
+  </body>
+</html>
