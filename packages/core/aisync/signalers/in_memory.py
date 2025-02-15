@@ -1,6 +1,5 @@
 import asyncio
 import threading
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from typing import Dict, Set
 
@@ -11,16 +10,16 @@ from aisync.signalers.base import BaseSignaler, Channel, Signal, SignalCallback
 class InMemorySignaler(BaseSignaler[Channel]):
     """In-memory implementation of the notification service."""
 
+    _lock = asyncio.Lock()
+    _thread_lock = threading.Lock()
+    _loop = None
+
     def __init__(self):
         self.log = LogEngine(self.__class__.__name__)
         self.channels: Dict[Channel, Set[SignalCallback]] = {channel: set() for channel in Channel}
         self.subscribers: Dict[SignalCallback, Set[Channel]] = {}
-        self._lock = asyncio.Lock()
-        self._thread_lock = threading.Lock()
         self.message_history: Dict[Channel, list[Signal]] = {channel: [] for channel in Channel}
         self.history_limit = 10
-        self._loop = None
-        self._executor = ThreadPoolExecutor()
 
     def _ensure_loop(self):
         """Ensure we have an event loop for async operations."""

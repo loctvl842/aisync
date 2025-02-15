@@ -7,6 +7,8 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.runnables.base import RunnableLike
 from langgraph.types import All, StreamMode
 
+from aisync.signalers.base import BaseSignaler
+
 GraphInput = TypeVar("GraphInput", bound=Union[Dict[str, Any], Any])
 """Type variable for the initial input to the graph"""
 
@@ -96,6 +98,8 @@ class Graph(abc.ABC):
     - Provides hooks for input preprocessing and output post-processing.
     - Can visualize the graph structure using Mermaid diagram syntax.
     """
+
+    signaler: BaseSignaler
 
     @abc.abstractmethod
     def compile(self): ...

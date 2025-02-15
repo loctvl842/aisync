@@ -11,7 +11,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-aisync = { path = 'packages/core', develop = true }
+aisync = { path = "packages/core", develop = true }
+aisync-dev = { path = "packages/dev", develop = true }
 aisync-cli = { path = "packages/cli", develop = true }
 aisync-api = { path = "packages/api", develop = true }
 

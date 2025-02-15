@@ -1,3 +1,6 @@
+import asyncio
+import threading
+import time
 from typing import Type
 
 import click
@@ -5,13 +8,10 @@ from aisync.assistants.actions import get_assistants
 from aisync.assistants.base import Assistant
 from dotenv import find_dotenv, load_dotenv
 
-
-@click.group()
-def chat():
-    pass
+from aisync_cli.live.live_previewer import LivePreviewer
 
 
-@chat.command()
+@click.command(name="chat")
 @click.option("--name", help="Name of the AI to activate. E.g Jarvis")
 @click.option(
     "--streaming",
@@ -19,8 +19,14 @@ def chat():
     is_flag=True,
     default=False,
 )
+@click.option(
+    "--monitor",
+    help="Monitoring chat flow execution",
+    is_flag=True,
+    default=False,
+)
 @click.option("--suit", help="Name of the suit to activate", default="mark_i")
-def activate(name: str, streaming: bool, suit: str):
+def chat(name: str, streaming: bool, monitor: bool, suit: str):
     """
     Run command aisync chat activate --name Jarvis --streaming
     """
@@ -60,6 +66,42 @@ def activate(name: str, streaming: bool, suit: str):
 
     assistant = ai_class(suit=suit)
     # syslog.info(f"{assistant.name} is online.")
+    chat_thread = threading.Thread(target=assistant.start, args=(streaming,))
+    chat_thread.start()
+
+    if monitor:
+        previewer = LivePreviewer(assistant=assistant, suit=suit)
+
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(previewer.run_server())
+
+        try:
+            while not (
+                previewer.should_exit.is_set() and assistant.should_exit.is_set()
+            ):
+                time.sleep(0.1)
+        except KeyboardInterrupt:
+            print("\nShutting down server...")
+        finally:
+            assistant.should_exit.set()
+            previewer.should_exit.set()
+
+            chat_thread.join()
+            previewer.server_thread.join()
+
+            loop.run_until_complete(previewer.shutdown())
+            loop.close()
+    else:
+        try:
+            while not assistant.should_exit.is_set():
+                time.sleep(0.1)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            assistant.should_exit.set()
+            chat_thread.join()
+
     assistant.start(streaming=streaming)
 
 

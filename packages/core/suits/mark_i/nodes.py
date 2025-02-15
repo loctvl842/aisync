@@ -1,12 +1,12 @@
 import os
 from typing import Annotated, TypedDict
 
-from langchain_openai import ChatOpenAI
-
 from aisync.decorators import node
 from aisync.engines.graph.definitions import State
 from aisync.env import env
 from aisync.log import LogEngine
+from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
+from langchain_openai import ChatOpenAI
 
 log = LogEngine("mark_i")
 
@@ -29,7 +29,7 @@ class Node1Output(TypedDict):
     messages: list
 
 
-@node("A")
+@node("Input")
 def node_1(state: State) -> Node1Output:
     output = {"private_data": "set by node_1", "messages": []}
     return output
@@ -40,17 +40,29 @@ class ChatbotOutput(TypedDict):
     messages: list
 
 
-@node(name="gpt35", llm=ChatOpenAI(model="gpt-3.5-turbo"))
+gg_llm = GoogleGenerativeAI(
+    model="gemini-pro",
+    google_api_key="***REMOVED***",
+    safety_setting={
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+    },
+)
+
+
+# @node(name="gpt35", llm=ChatOpenAI(model="gpt-3.5-turbo"))
+@node(name="gemini", llm=gg_llm)
 def helper1(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
-    system_message = "You are a coder and problem solver expert"
+    system_message = "You are a coder and problem solver expert, you explain your answer in your response"
     answer = llm.invoke([system_message] + state["messages"])
-    return {"answer": [{"who": "gpt-3.5-turbo", "content": answer.content}], "messages": []}
+    print("Gemini: ", answer)
+    return {"answer": [{"who": "gemini", "content": answer}], "messages": []}
 
 
 @node(name="gpt4omini", llm=ChatOpenAI(model="gpt-4o-mini"))
 def helper2(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
-    system_message = "You are a coder and problem solver expert"
+    system_message = "You are a coder and problem solver expert, you explain your answer in your response"
     answer = llm.invoke([system_message] + state["messages"])
+    print("GPT: ", answer.content)
     return {"answer": [{"who": "gpt-4o-mini", "content": answer.content}], "messages": []}
 
 
@@ -61,6 +73,11 @@ def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
         "You are a wise and knowledgeable coder and problem solver king who provides thoughtful answers to questions. "
         "You have 2 advisors, who offer their insights to assist you."
         "Consider their perspectives and advice, but ultimately provide your own well-reasoned response to the problem based on all context and advice. If you find their input helpful, feel free to acknowledge their contributions in your answer."
+        "Response with explaination inside tag <explaination> and give the final response in tag <response>"
+        "The response should follow this format:\n"
+        "<explaination>Your explaination for the final response after receiving advise from advisors and explain what advisors helped, and who is better</explaination>"
+        "\n"
+        "<reesponse>Your response</response>"
     )
     king_decision = llm.invoke(
         [
@@ -77,6 +94,7 @@ def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
 
 def classify():
     pass
+
 
 graph = node_1 >> (helper1 & helper2) >> king
 

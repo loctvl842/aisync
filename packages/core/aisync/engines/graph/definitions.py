@@ -34,8 +34,6 @@ from aisync.engines.graph.base import (
     Graph,
     GraphOutput,
     Node,
-    P,
-    R,
     ChainStartCallback,
     GraphInput,
     StreamChunk,
@@ -523,19 +521,20 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
         def __init__(self, name: str, call_fn: Callable, llm: Optional[Any] = None):
             self.name = call_fn.__name__
             self.alias = name
+            self.signaler = signaler
             self.llm = llm
             self.call = call_fn
             self.edges: list[Union[Node, ConditionalBranchAction]] = []
 
         @property
-        def action(self) -> Callable[..., R]:
+        def action(self):
             """Wraps `self.call`, injects `llm` if available, and modifies type hints to exclude `llm`."""
             original_type_hints = get_type_hints(self.call)
             adjusted_type_hints = {k: v for k, v in original_type_hints.items() if k != "llm"}
 
             @wraps(self.call)
-            def action(*args: P.args, **kwargs: P.kwargs) -> R:
-                signaler.publish(
+            def action(*args, **kwargs):
+                self.signaler.publish(
                     channel=Channel.NODE_EXECUTION,
                     message=Signal(
                         id=f"{uuid.uuid4()}",

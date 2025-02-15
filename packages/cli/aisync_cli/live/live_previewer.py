@@ -7,11 +7,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Set
 
+from aisync.signalers.enums import Channel
 import uvicorn
 from aisync.assistants.base import Assistant
 from aisync.log import LogEngine
-from aisync.signalers.base import Channel, Signal
-from aisync.signalers.in_memory import InMemorySignaler
+from aisync.signalers.base import Signal
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -26,6 +26,10 @@ CURRENT_FOLDER = Path(__file__).resolve().parent
 class LivePreviewer:
     """Serve FastAPI app for live previewing"""
 
+    should_exit = threading.Event()
+    server_thread = None
+    running_server = None
+
     def __init__(
         self,
         *,
@@ -34,16 +38,13 @@ class LivePreviewer:
         assistant: Assistant,
         suit: str,
     ):
+        self.log = LogEngine(self.__class__.__name__)
         self.host = host
         self.port = port
         self.assistant = assistant
         self.suit = suit
         self.app = self._create_app()
-        self.log = LogEngine(self.__class__.__name__)
-        self.should_exit = threading.Event()
-        self.signaler = InMemorySignaler()
-        self.server_thread = None
-        self.running_server = None
+        self.signaler = self.assistant.graph.signaler
 
     @property
     def channel(self) -> Channel:
@@ -137,7 +138,6 @@ class LivePreviewer:
             graph = list(self.assistant.suit.graphs.values())[0]
             context = {
                 "code": graph.to_mermaid(),
-                "subscribe_url": f"ws://{self.host}:{self.port}/ws/{self.channel.value}/subscribe",
                 "suit": self.suit,
                 "root_path": self.app.root_path,
             }
@@ -171,35 +171,12 @@ class LivePreviewer:
                     return False
                 return True
 
-            await self.signaler.asubscribe(
-                channel=self.channel, callback=callback
-            )
+            await self.signaler.asubscribe(channel=Channel(channel), callback=callback)
             try:
                 while True:
                     await websocket.receive_text()
             except WebSocketDisconnect:
                 await self.signaler.aunsubscribe(callback=callback)
-
-        @self.app.websocket("/ws/{channel}/publish")
-        async def publish(websocket: WebSocket, channel: str):
-            await websocket.accept()
-
-            try:
-                while True:
-                    action = await websocket.receive_text()
-                    if action == "reload":
-                        # Then broadcast to other websockets
-                        await self.signaler.apublish(
-                            channel=self.channel,
-                            message=Signal(
-                                id=f"{id(websocket)}",
-                                channel=self.channel,
-                                content=action,
-                                timestamp=datetime.now(),
-                            ),
-                        )
-            except WebSocketDisconnect:
-                pass
 
     async def run_server(self):
         """Launch FastAPI server for live previewing in a separate thread"""

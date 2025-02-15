@@ -3,19 +3,15 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "aisync-cli"
+name = "aisync-dev"
 version = "0.1.0"
-description = "AISync CLI"
+description = "AISync Dev"
 authors = ["loctvl842 <loclepnvx@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "aisync_cli" }]
+packages = [{ include = "aisync_dev" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 aisync = { path = "../core", develop = true }
-click = "^8.1.7"
-websockets = "^14.1"
 fastapi = "^0.115.6"
-
-[tool.poetry.scripts]
-aisync = "aisync_cli.cli:main"
+websockets = "^14.1"

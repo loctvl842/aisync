@@ -1,3 +1,4 @@
+import threading
 import time
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generator, Optional, Union
@@ -11,6 +12,7 @@ if TYPE_CHECKING:
 
 class Assistant(ABC):
     name: str = "Assistant"
+    should_exit = threading.Event()
 
     def __init__(self, suit: str = "mark_i", graph: Optional[str] = None):
         self.buffer_memory: BufferMemory = BufferMemory()
@@ -50,19 +52,19 @@ class Assistant(ABC):
 
     def start(self, streaming=False) -> None:
         try:
-            stop = False
             self.__console_respond(self.greet(streaming=streaming), streaming=streaming)
-            while not stop:
+            while not self.should_exit.is_set():
                 print("👨: ", end="", flush=True)
                 user_input = input()
                 if user_input == "":
                     continue
                 if (user_input == "\\exit") or (user_input == "\\quit"):
-                    stop = True
+                    self.should_exit.set()
                 else:
                     assistant_response = self.respond(user_input, streaming=streaming)
                     self.__console_respond(assistant_response, streaming=streaming)
         except KeyboardInterrupt:
+            self.should_exit.set()
             # Remove tools from vectordb
             print("Exiting gracefully.")
 
