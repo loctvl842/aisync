@@ -1,12 +1,13 @@
 import os
 from typing import Annotated, TypedDict
 
+from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
+from langchain_openai import ChatOpenAI
+
 from aisync.decorators import node
 from aisync.engines.graph.definitions import State
 from aisync.env import env
 from aisync.log import LogEngine
-from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
-from langchain_openai import ChatOpenAI
 
 log = LogEngine("mark_i")
 

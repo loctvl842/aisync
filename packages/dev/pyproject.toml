@@ -1,17 +1,19 @@
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
+[tool.hatch.build.targets.wheel]
+packages = ["src/aisync_dev"]
+
+[project]
 name = "aisync-dev"
-version = "0.1.0"
+version = "0.0.1"
 description = "AISync Dev"
-authors = ["loctvl842 <loclepnvx@gmail.com>"]
+authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
-packages = [{ include = "aisync_dev" }]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-aisync = { path = "../core", develop = true }
-fastapi = "^0.115.6"
-websockets = "^14.1"
+dependencies = [
+  "aisync",           # local package (AISync Core)
+  "fastapi>=0.115.6",
+  "uvicorn>=0.34.0",
+  "websockets>=14.1",
+]

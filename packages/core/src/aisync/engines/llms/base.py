@@ -1,9 +1,8 @@
 import importlib
 from typing import List, Optional, Type, Union
 
-from pydantic import BaseModel, ConfigDict
-
 from aisync.utils import dict_deep_extend
+from pydantic import BaseModel, ConfigDict
 
 
 class AISyncLLM(BaseModel):

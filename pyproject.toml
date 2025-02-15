@@ -1,23 +1,12 @@
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry]
-name = "aisync-mono-repo"
+[project]
+name = "aisync-monorepo"
 version = "0.0.1"
 description = "AISync mono-repo"
-authors = ["loctvl842 <loclepnvx@gmail.com>"]
+authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.12"
-aisync = { path = "packages/core", develop = true }
-aisync-dev = { path = "packages/dev", develop = true }
-aisync-cli = { path = "packages/cli", develop = true }
-aisync-api = { path = "packages/api", develop = true }
+[tool.uv.sources]
+aisync = { workspace = true }
 
-[tool.poetry.group.format.dependencies]
-black = "^24.10.0"
-
-[tool.poetry.group.lint.dependencies]
-ruff = "^0.7.2"
+[tool.uv.workspace]
+members = ["packages/*"]

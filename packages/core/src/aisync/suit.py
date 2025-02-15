@@ -43,6 +43,7 @@ class Suit:
         graphs = {}
 
         project_path = get_project_root()
+        assert project_path is not None
 
         if self._path.is_dir():
             pattern = os.path.join(self._path, "**/*.py")
@@ -50,7 +51,8 @@ class Suit:
         else:
             py_files = [str(self._path)]
 
-        sys.path.insert(0, project_path)
+        # Add the suits directory to the system path
+        sys.path.insert(0, str(project_path))
         try:
             for py_file in py_files:
                 abs_path = Path(py_file).resolve()
@@ -83,7 +85,7 @@ class Suit:
                     raise e
                 except Exception as e:
                     self.log.error(f"Failed to import {module_path}: {e}")
-                    traceback.print_exc()
+                    self.log.error(traceback.format_exc())
                     raise e
         except Exception as e:
             raise e
@@ -115,7 +117,7 @@ class Suit:
                 return self._hooks[hook].call(*args, **kwargs)
             except Exception as e:
                 self.log.error(f"Error when executing plugin hook `{self.name}::{hook}`: {e}")
-                traceback.print_exc()
+                self.log.error(traceback.format_exc())
                 return default
         return default
 

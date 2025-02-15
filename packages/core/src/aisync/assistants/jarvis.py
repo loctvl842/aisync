@@ -5,7 +5,7 @@ from aisync.decorators.hook import SupportedHook
 from aisync.engines.graph.base import ChainStartCallback
 
 if TYPE_CHECKING:
-    from aisync.suit import Suit
+    from suit import Suit
 
 
 class Jarvis(Assistant):

@@ -1,5 +1,6 @@
 import glob
 import os
+import traceback
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -30,20 +31,25 @@ class Armory:
 
         assert Path(self.suits_path).exists(), f"Path '{self.suits_path}' does not exist."
 
-        all_suit_folders: list[str] = [folder for folder in glob.glob(f"{self.suits_path}/*") if os.path.isdir(folder)]
-        # all_suit_folders.append('/home/loc/Documents/Work/Rockship/repositories/loctvl842/aisync/packages/core/suits/mark_ii.py')
+        try:
+            all_suit_folders: list[str] = [folder for folder in glob.glob(f"{self.suits_path}/*") if os.path.isdir(folder)]
+            # all_suit_folders.append('/home/loc/Documents/Work/Rockship/repositories/loctvl842/aisync/packages/core/suits/mark_ii.py')
 
-        suits: dict[str, "Suit"] = {}
-        for suit_folder in all_suit_folders:
-            suit = self.load_suit(suit_folder)
-            suits[suit.name] = suit
-            self.log.info(f"Loaded suit: {suit.name}")
+            suits: dict[str, "Suit"] = {}
+            for suit_folder in all_suit_folders:
+                suit = self.load_suit(suit_folder)
+                suits[suit.name] = suit
+                self.log.info(f"Loaded suit: {suit.name}")
 
-            # Activate the suit
-            suits[suit.name].activate()
-            self.active_suits.append(suit.name)
-            self.log.info(f"Activated suit: {suit.name}")
-        return suits
+                # Activate the suit
+                suits[suit.name].activate()
+                self.active_suits.append(suit.name)
+                self.log.info(f"Activated suit: {suit.name}")
+            return suits
+        except Exception as e:
+            self.log.error(f"Error loading suits: {e}")
+            self.log.error(traceback.format_exc())
+            return {}
 
     def load_suit(self, path_to_suit: str) -> "Suit":
         """

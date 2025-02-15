@@ -7,11 +7,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Set
 
-from aisync.signalers.enums import Channel
 import uvicorn
 from aisync.assistants.base import Assistant
 from aisync.log import LogEngine
 from aisync.signalers.base import Signal
+from aisync.signalers.enums import Channel
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -72,7 +72,7 @@ class LivePreviewer:
                     )
                 except Exception as e:
                     self.log.error(f"Error while reloading: {e}")
-                    traceback.print_exc()
+                    self.log.error(traceback.format_exc())
                     return False
 
             file_watcher = FileWatcher(

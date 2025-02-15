@@ -2,10 +2,9 @@ import inspect
 import sys
 from typing import Any
 
-from loguru import logger
-
 from aisync.env import env
 from aisync.utils import singleton
+from loguru import logger
 
 
 @singleton

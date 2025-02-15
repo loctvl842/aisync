@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, List
 from tokencost import count_string_tokens
 
 if TYPE_CHECKING:
-    from aisync.assistants.base import Assistant
+    from core.assistants.base import Assistant
 
 
 class BufferMemory(dict):

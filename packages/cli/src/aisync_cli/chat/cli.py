@@ -7,7 +7,6 @@ import click
 from aisync.assistants.actions import get_assistants
 from aisync.assistants.base import Assistant
 from dotenv import find_dotenv, load_dotenv
-
 from aisync_cli.live.live_previewer import LivePreviewer
 
 
