@@ -1,13 +1,12 @@
+from loguru import logger
+
 import inspect
 import sys
 from typing import Any
 
 from aisync.env import env
-from aisync.utils import singleton
-from loguru import logger
 
 
-@singleton
 class LogEngine:
     def __init__(self, service: str) -> None:
         """

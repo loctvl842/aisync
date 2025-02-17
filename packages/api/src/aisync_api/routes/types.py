@@ -35,6 +35,4 @@ class Error(BaseModel):
     error: ErrorInfo
 
     def __init__(self, error_code: int, message: str, detail: Optional[Any] = None):
-        super().__init__(
-            error=ErrorInfo(error_code=error_code, message=message, detail=detail)
-        )
+        super().__init__(error=ErrorInfo(error_code=error_code, message=message, detail=detail))

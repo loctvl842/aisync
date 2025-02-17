@@ -1,6 +1,6 @@
 """FastAPI application initialization and configuration module.
 
-This module provides utility functions for setting up a FastAPI application with 
+This module provides utility functions for setting up a FastAPI application with
 documentation, error handlers, and middleware. It includes functionality for Swagger UI,
 ReDoc, custom error handling, and CORS configuration.
 """
@@ -18,8 +18,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from aisync_api.routes.types import Error
-from aisync_api.server.constants import STATIC_DIR, TEMPLATES_DIR
-from aisync_api.server.exceptions import APIException
+from .constants import STATIC_DIR, TEMPLATES_DIR
+from .exceptions import APIException
+from .middlewares import MetricMiddleware
 
 
 class AppConfigurer:
@@ -104,9 +105,7 @@ class AppConfigurer:
                 with open(pyproject_path, "r") as f:
                     toml_data = toml.loads(f.read())
                 self._cached_authors = (
-                    toml_data.get("tool", {})
-                    .get("poetry", {})
-                    .get("authors", ["loctvl842 <loclepnvx@gmail.com>"])
+                    toml_data.get("tool", {}).get("poetry", {}).get("authors", ["loctvl842 <loclepnvx@gmail.com>"])
                 )
             else:
                 self._cached_authors = []
@@ -118,9 +117,7 @@ class AppConfigurer:
         @self.app.get("/")
         def root(request: Request):
             sub_apps = [
-                route.app
-                for route in self.app.routes
-                if isinstance(route, Mount) and isinstance(route.app, FastAPI)
+                route.app for route in self.app.routes if isinstance(route, Mount) and isinstance(route.app, FastAPI)
             ]
 
             context = {
@@ -130,9 +127,7 @@ class AppConfigurer:
                 "sub_apps": sub_apps,
             }
 
-            return self._templates.TemplateResponse(
-                "index.html", {"request": request, **context}
-            )
+            return self._templates.TemplateResponse("index.html", {"request": request, **context})
 
     def init_listeners(self) -> None:
         """Initialize error handlers for various exception types."""
@@ -144,9 +139,7 @@ class AppConfigurer:
         """Configure request and response validation error handlers."""
 
         @self.app.exception_handler(RequestValidationError)
-        async def request_validation_exception_handler(
-            request: Request, exc: RequestValidationError
-        ):
+        async def request_validation_exception_handler(request: Request, exc: RequestValidationError):
             return JSONResponse(
                 status_code=422,
                 content=Error(
@@ -157,9 +150,7 @@ class AppConfigurer:
             )
 
         @self.app.exception_handler(ResponseValidationError)
-        async def response_validation_exception_handler(
-            request: Request, exc: ResponseValidationError
-        ):
+        async def response_validation_exception_handler(request: Request, exc: ResponseValidationError):
             return JSONResponse(
                 status_code=422,
                 content=Error(
@@ -176,9 +167,9 @@ class AppConfigurer:
         async def custom_exception_handler(request: Request, exc: APIException):
             return JSONResponse(
                 status_code=exc.code,
-                content=Error(
-                    error_code=exc.error_code, message=exc.message, detail=exc.detail
-                ).model_dump(exclude_none=True),
+                content=Error(error_code=exc.error_code, message=exc.message, detail=exc.detail).model_dump(
+                    exclude_none=True
+                ),
                 headers=exc.headers,
             )
 
@@ -189,9 +180,7 @@ class AppConfigurer:
         async def exception_handler(request: Request, exc: Exception):
             return JSONResponse(
                 status_code=500,
-                content=Error(
-                    error_code=500, message="Internal Server Error"
-                ).model_dump(exclude_none=True),
+                content=Error(error_code=500, message="Internal Server Error").model_dump(exclude_none=True),
             )
 
     def init_middlewares(self) -> None:
@@ -203,3 +192,4 @@ class AppConfigurer:
             allow_methods=["*"],
             allow_headers=["*"],
         )
+        self.app.add_middleware(MetricMiddleware)

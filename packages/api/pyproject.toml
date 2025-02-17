@@ -9,13 +9,25 @@ packages = ["src/aisync_api"]
 name = "aisync-api"
 version = "0.0.1"
 description = ""
-authors = [{name = "loctvl842", email = "loclepnvx@gmail.com"}]
+authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
 dependencies = [
-  "aisync", # local package (AISync Core)
+  "aisync",                    # local package (AISync Core)
   "fastapi>=0.115.8",
   "uvicorn>=0.34.0",
   "toml>=0.10.2",
   "jinja2>=3.1.4",
   "websockets>=14.2",
+  "sqlalchemy>=2.0.38",
+  "prometheus-client>=0.21.1",
+  "asyncpg>=0.30.0",
+  "alembic>=1.14.1",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.6",
+]
+
+[tool.ruff]
+line-length = 120

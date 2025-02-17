@@ -1,12 +1,12 @@
-from contextlib import asynccontextmanager
-
-import uvicorn
 from fastapi import FastAPI
 
-from aisync_api.env import env
-from aisync_api.routes import main, tool
-from aisync_api.server.config import AppConfigurer
-from aisync_api.server.constants import SUITS_DIR
+import uvicorn
+from contextlib import asynccontextmanager
+from prometheus_client import make_asgi_app
+
+from .env import env
+from .routes import main, tool
+from .server.config import AppConfigurer
 
 
 @asynccontextmanager
@@ -46,6 +46,8 @@ def setup_applications() -> list[FastAPI]:
     tool_app.include_router(tool.router)
 
     main_app.mount("/tools", tool_app)
+    metric_app = make_asgi_app()
+    main_app.mount("/metrics", metric_app)
 
     # Configure all apps
     applications = [main_app, tool_app]

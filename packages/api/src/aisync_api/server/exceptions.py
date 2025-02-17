@@ -16,9 +16,7 @@ class APIException(Exception):
         super().__init__(self.message)
 
     def __repr__(self):
-        return (
-            f"{self.__class__.__name__}(message={self.message}, detail={self.detail})"
-        )
+        return f"{self.__class__.__name__}(message={self.message}, detail={self.detail})"
 
 
 class RateLimitException(APIException):
