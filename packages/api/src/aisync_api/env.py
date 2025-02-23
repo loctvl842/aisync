@@ -10,6 +10,15 @@ class APISettings(BaseSettings):
     API_CORS_ALLOWED_ORIGINS: list = ["*"]
 
 
+class AuthSettings(BaseModel):
+    AUTH_PASSWORD_SECRET: str = "secret-pass-xxx1234@$%23"
+    AUTH_ACCESS_TOKEN_SECRET: str = "secret-access-xxx1234@$%23"
+    AUTH_ACCESS_TOKEN_EXPIRY: float = 1.0  # days
+    AUTH_REFRESH_TOKEN_SECRET: str = "secret-refresh-xxx1234@$%23"
+    AUTH_REFRESH_TOKEN_EXPIRY: float = 30.0  # days
+    AUTH_ID_TOKEN_SECRET: str = "secret-id-xxx1234@$%23"
+
+
 class SQLAlchemySettings(BaseModel):
     SQLALCHEMY_DATABASE_URI: str = "postgresql://postgres:thangcho@localhost:5432/aisync"
     SQLALCHEMY_ECHO: bool = False
@@ -32,6 +41,7 @@ class SQLAlchemySettings(BaseModel):
 
 class Settings(
     APISettings,
+    AuthSettings,
     SQLAlchemySettings,
 ):
     model_config = {"extra": "allow"}

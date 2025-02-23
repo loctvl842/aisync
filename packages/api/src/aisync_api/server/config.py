@@ -5,9 +5,6 @@ documentation, error handlers, and middleware. It includes functionality for Swa
 ReDoc, custom error handling, and CORS configuration.
 """
 
-from pathlib import Path
-
-import toml
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,7 +14,12 @@ from fastapi.routing import Mount
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from aisync_api.routes.types import Error
+from sqlalchemy.exc import SQLAlchemyError
+
+import toml
+from pathlib import Path
+
+from ..types import Error
 from .constants import STATIC_DIR, TEMPLATES_DIR
 from .exceptions import APIException
 from .middlewares import MetricMiddleware
@@ -145,7 +147,7 @@ class AppConfigurer:
                 content=Error(
                     error_code=422,
                     message="Request validation failed",
-                    detail=exc.errors(),
+                    detail=str(exc),
                 ).model_dump(exclude_none=True),
             )
 
@@ -156,8 +158,32 @@ class AppConfigurer:
                 content=Error(
                     error_code=422,
                     message="Response validation failed",
-                    detail=exc.errors(),
+                    detail=str(exc),
                 ).model_dump(exclude_none=True),
+            )
+
+        @self.app.exception_handler(APIException)
+        async def custom_exception_handler(request: Request, exc: APIException):
+            return JSONResponse(
+                status_code=exc.code,
+                content=Error(error_code=exc.error_code, message=exc.message, detail=exc.detail).model_dump(
+                    exclude_none=True
+                ),
+                headers=exc.headers,
+            )
+
+        @self.app.exception_handler(SQLAlchemyError)
+        async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
+            return JSONResponse(
+                status_code=400,
+                content=Error(error_code=400, message=str(exc)).model_dump(exclude_none=True),
+            )
+
+        @self.app.exception_handler(Exception)
+        async def exception_handler(request: Request, exc: Exception):
+            return JSONResponse(
+                status_code=500,
+                content=Error(error_code=500, message="Internal Server Error").model_dump(exclude_none=True),
             )
 
     def _setup_api_exception_handler(self) -> None:

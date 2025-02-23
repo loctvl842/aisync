@@ -4,6 +4,8 @@ import uvicorn
 from contextlib import asynccontextmanager
 from prometheus_client import make_asgi_app
 
+from aisync_api.server.constants import ROOT_DIR
+
 from .env import env
 from .routes import main, tool
 from .server.config import AppConfigurer
@@ -67,5 +69,5 @@ if __name__ == "__main__":
         host=env.API_HOST,
         port=env.API_PORT,
         reload=env.API_DEBUG,
-        # reload_excludes=[SUITS_DIR],
+        reload_includes=[ROOT_DIR],
     )

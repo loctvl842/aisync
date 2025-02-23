@@ -34,3 +34,6 @@ venv.bak/
 *.csv
 *.json
 *.db
+
+# Ruff
+**/.ruff_cache/

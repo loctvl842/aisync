@@ -1,6 +1,6 @@
 """Database configuration."""
 
-from sqlalchemy import util
+from sqlalchemy import text, util
 from sqlalchemy import AsyncAdaptedQueuePool, Engine, NullPool, event, exc
 from sqlalchemy.engine.interfaces import _CoreAnyExecuteParams
 from sqlalchemy.ext.asyncio import (
@@ -11,22 +11,43 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm._typing import OrmExecuteOptionsParameter
 from sqlalchemy.orm.session import _BindArguments
-from sqlalchemy.sql import Select
+from sqlalchemy.sql.base import Executable
+
+from prometheus_client import Counter, Gauge, Histogram
 
 import asyncio
 import enum
+import logging
 import time
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from typing import Any, AsyncGenerator, Dict, Optional, Set, Type, Union
-from aisync.log import LogEngine
-from prometheus_client import Counter, Gauge, Histogram
-from sqlalchemy.sql.base import Executable
 
-from aisync_api.env import Settings, get_settings
+from aisync.log import LogEngine
+from aisync_api.env import Settings, get_settings, env
+from aisync_api.server.exceptions import SystemException
 
 
 logger = LogEngine("Database.config")
+
+log_level = logging.DEBUG if env.SQLALCHEMY_ECHO else logging.WARNING
+sqlalchemy_logger = logging.getLogger("sqlalchemy.engine")
+sqlalchemy_logger.setLevel(logging.INFO)
+
+
+class SQLAlchemyLogHandler(logging.Handler):
+    def __init__(self, engine_instance):
+        super().__init__()
+        self.engine_instance = engine_instance
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.engine_instance.debug(log_entry)
+
+
+handler = SQLAlchemyLogHandler(logger)
+sqlalchemy_logger.addHandler(handler)
+
 
 # Metrics
 DB_POOL_SIZE = Gauge(
@@ -86,7 +107,8 @@ class DatabaseHealthCheck:
 
         try:
             async with self.engine.connect() as conn:
-                await conn.execute(Select(1))
+                conn = await conn.execution_options(compiled_cache={})
+                await conn.execute(text("SELECT 1"))
                 self.last_check = current_time
                 return True
         except Exception as e:
@@ -105,7 +127,8 @@ class RetryingDatabaseSession(AsyncSession):
         bind: Optional[Union[AsyncEngine, Engine]] = None,
         *,
         retry_limit: int = 3,
-        retry_delay: float = 0.1,
+        retry_delay: float = 0.5,
+        role: DatabaseRole = DatabaseRole.WRITER,
         allowed_exceptions: Optional[Set[Type[Exception]]] = None,
         **kwargs: Any,
     ):
@@ -122,11 +145,14 @@ class RetryingDatabaseSession(AsyncSession):
         super().__init__(bind=bind, **kwargs)
         self.retry_limit = retry_limit
         self.retry_delay = retry_delay
+        self.role = role
         self.allowed_exceptions = allowed_exceptions or {
             exc.OperationalError,
             exc.InternalError,
             exc.DBAPIError,
             exc.TimeoutError,
+            exc.DisconnectionError,
+            exc.PendingRollbackError,
         }
 
     async def _execute_with_retry(
@@ -144,24 +170,38 @@ class RetryingDatabaseSession(AsyncSession):
                     operation_type=fn_name,
                     database=str(self.bind.url if self.bind else "unknown"),
                 ).time():
+                    retrying = attempt > 0
+                    if retrying and self.role == DatabaseRole.READER:
+                        await self.execute(text("SET TRANSACTION READ ONLY"))
                     original_method = getattr(super(), fn_name)
                     return await original_method(operation, *args, **kwargs)
             except Exception as e:
+                last_error = e
+
                 if not any(isinstance(e, exc) for exc in self.allowed_exceptions):
                     raise
+
+                logger.warning(f"Database error: {e}")
+
+                if isinstance(e, (exc.PendingRollbackError, exc.DBAPIError)):
+                    if self.in_transaction():
+                        logger.warning("Rolling back active transaction due to error.")
+                        await self.rollback()
+                    else:
+                        logger.warning("No active transaction found; skipping rollback.")
+
                 if attempt == self.retry_limit - 1:
                     logger.error(f"Max retries reached for database operation: {str(e)}")
                     DB_ERRORS.labels(
                         error_type="retry_exhausted",
                         database=str(self.bind.url if self.bind else "unknown"),
                     ).inc()
+                    if self.in_transaction():
+                        await self.rollback()
                     raise last_error
 
                 delay = self.retry_delay * (2**attempt)
-                logger.warning(
-                    f"Attempt {attempt + 1}/{self.retry_limit} failed for {fn_name}. "
-                    f"Retrying in {delay:.2f}s. Error: {str(e)}"
-                )
+                logger.warning(f"Retry {attempt + 1}/{self.retry_limit} in {delay:.2f}s due to {fn_name} failure: {e}")
                 await asyncio.sleep(delay)
 
     async def execute(
@@ -198,7 +238,6 @@ class DatabaseSessionManager:
         self.engines: Dict[DatabaseRole, AsyncEngine] = {}
         self.health_checks: Dict[DatabaseRole, DatabaseHealthCheck] = {}
         self._initialize_engines()
-        self._setup_session_factory()
 
     def _initialize_engines(self):
         """Initialize database engines for different roles."""
@@ -217,7 +256,9 @@ class DatabaseSessionManager:
     def _on_connect(self, role: DatabaseRole):
         def handler(dbapi_connection, connection_record):
             logger.info(f"New database connection established for {role}")
-            current_size = DB_POOL_SIZE.labels(database=self.config.uri, pool_type=role.value)._value.get() or 0
+            current_size = (
+                DB_POOL_SIZE.labels(database=self.config.uri, pool_type=role.value)._value.get() or 0
+            )  # .inc()
             DB_POOL_SIZE.labels(database=self.config.uri, pool_type=role.value).set(current_size + 1)
 
         return handler
@@ -234,7 +275,9 @@ class DatabaseSessionManager:
         """'checkin' event: When a connection is returned to the pool"""
 
         def handler(dbapi_connection, connection_record):
-            current_size = DB_POOL_SIZE.labels(database=self.config.uri, pool_type=role.value)._value.get() or 1
+            current_size = (
+                DB_POOL_SIZE.labels(database=self.config.uri, pool_type=role.value)._value.get() or 1
+            )  # .dec()
             DB_POOL_SIZE.labels(database=self.config.uri, pool_type=role.value).set(max(0, current_size - 1))
 
         return handler
@@ -247,27 +290,32 @@ class DatabaseSessionManager:
 
         return handler
 
-    def _setup_session_factory(self) -> None:
-        """Set up the session factory."""
-        self.session_factory = async_sessionmaker(
+    def session_factory(self, role: DatabaseRole = DatabaseRole.WRITER):
+        maker = async_sessionmaker(
             class_=RetryingDatabaseSession,
-            expire_on_commit=False,
+            expire_on_commit=False,  # to avoid unnecessary implicit IO in async (https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html#asyncio-concurrency)
             retry_limit=self.config.retry_limit,
             retry_delay=self.config.retry_delay,
+            role=role,
         )
+        return maker(bind=self.engines[role])
 
     @asynccontextmanager
     async def session(self, role: DatabaseRole = DatabaseRole.WRITER) -> AsyncGenerator[RetryingDatabaseSession, None]:
         """Get a database session with automatic cleanup."""
-        session = self.session_factory(bind=self.engines[role])
+        session = self.session_factory(role=role)
+        if role == DatabaseRole.READER:
+            await session.execute(text("SET TRANSACTION READ ONLY"))
         try:
             yield session
         except Exception as e:
             logger.error(f"Database session error: {str(e)}")
             DB_ERRORS.labels(error_type="session_error", database=self.config.uri).inc()
             await session.rollback()
-            raise
+            raise SystemException(message=str(e))
         finally:
+            if role == DatabaseRole.READER:
+                await session.rollback()
             await session.close()
 
     async def check_all_connections(self) -> Dict[DatabaseRole, bool]:
@@ -277,6 +325,7 @@ class DatabaseSessionManager:
     def _get_engine_args(self) -> Dict[str, Any]:
         """Get engine configuration arguments."""
         if self.testing:
+            # TODO: Mock DB interactions in tests. Use an in-memory database (sqlite+aiosqlite:///:memory:) for lightweight tests.
             return {"poolclass": NullPool, "echo": self.config.echo}
 
         return {
@@ -288,29 +337,3 @@ class DatabaseSessionManager:
             "pool_pre_ping": True,
             "echo": self.config.echo,
         }
-
-
-async def main():
-    config = DatabaseConfig(
-        uri="postgresql+asyncpg://postgres:thangcho@localhost:5432/test",
-        retry_limit=3,
-        retry_delay=0.1,
-        min_pool_size=5,
-        max_pool_size=20,
-    )
-
-    db_manager = DatabaseSessionManager(config)
-
-    async with db_manager.session() as session:
-        # Example query with retry
-        query = Select(2)
-        result = await session.execute(query)
-        print("vaicalon", result.scalar())
-
-    # Health check
-    # health_status = await db_manager.check_all_connections()
-    # print(f"Database health status: {health_status}")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

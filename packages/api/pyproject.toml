@@ -12,7 +12,7 @@ description = ""
 authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
 dependencies = [
-  "aisync",                    # local package (AISync Core)
+  "aisync", # local package (AISync Core)
   "fastapi>=0.115.8",
   "uvicorn>=0.34.0",
   "toml>=0.10.2",
@@ -22,6 +22,8 @@ dependencies = [
   "prometheus-client>=0.21.1",
   "asyncpg>=0.30.0",
   "alembic>=1.14.1",
+  "pyjwt>=2.10.1",
+  "itsdangerous>=2.2.0",
 ]
 
 [dependency-groups]
