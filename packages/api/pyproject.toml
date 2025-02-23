@@ -11,8 +11,9 @@ version = "0.0.1"
 description = ""
 authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
-  "aisync", # local package (AISync Core)
+  "aisync",                    # local package (AISync Core)
   "fastapi>=0.115.8",
   "uvicorn>=0.34.0",
   "toml>=0.10.2",
@@ -27,9 +28,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "ruff>=0.9.6",
-]
+dev = ["ruff>=0.9.6"]
 
 [tool.ruff]
 line-length = 120

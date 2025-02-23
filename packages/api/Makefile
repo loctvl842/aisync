@@ -37,6 +37,13 @@ options:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-22s\033[0m %s\n", $$1, $$2}' | sort
 
 
+### Development
+
+.PHONY: start
+start: ## Start the server
+	FASTAPI_ENV=development uv run python -m aisync_api.main
+
+
 ### Code quality
 
 .PHONY: fix-lint

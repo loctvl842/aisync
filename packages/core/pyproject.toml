@@ -11,6 +11,7 @@ version = "0.0.1"
 description = "AISync Core"
 authors = [{ name = "loctvl842", email = "loclepnvx@gmail.com" }]
 readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
   "langchain>=0.3.7",
   "langgraph>=0.2.39",

@@ -11,6 +11,7 @@ version = "0.0.1"
 description = "AISync CLI"
 authors = [{name = "loctvl842", email = "loclepnvx@gmail.com"}]
 readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
   "aisync", # local package (AISync Core)
   "click>=8.1.8",
