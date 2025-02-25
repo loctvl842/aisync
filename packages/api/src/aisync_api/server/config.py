@@ -48,7 +48,7 @@ class AppConfigurer:
         in a single call.
         """
         self.init_docs()
-        self.init_listeners()
+        self.init_exception_handler()
         self.init_middlewares()
 
     def init_docs(self) -> None:
@@ -131,15 +131,10 @@ class AppConfigurer:
 
             return self._templates.TemplateResponse("index.html", {"request": request, **context})
 
-    def init_listeners(self) -> None:
+    def init_exception_handler(self) -> None:
         """Initialize error handlers for various exception types."""
-        self._setup_validation_handlers()
-        self._setup_api_exception_handler()
-        self._setup_generic_exception_handler()
 
-    def _setup_validation_handlers(self) -> None:
-        """Configure request and response validation error handlers."""
-
+        # Validation
         @self.app.exception_handler(RequestValidationError)
         async def request_validation_exception_handler(request: Request, exc: RequestValidationError):
             return JSONResponse(
@@ -163,7 +158,7 @@ class AppConfigurer:
             )
 
         @self.app.exception_handler(APIException)
-        async def custom_exception_handler(request: Request, exc: APIException):
+        async def api_exception_handler(request: Request, exc: APIException):
             return JSONResponse(
                 status_code=exc.code,
                 content=Error(error_code=exc.error_code, message=exc.message, detail=exc.detail).model_dump(
@@ -178,29 +173,6 @@ class AppConfigurer:
                 status_code=400,
                 content=Error(error_code=400, message=str(exc)).model_dump(exclude_none=True),
             )
-
-        @self.app.exception_handler(Exception)
-        async def exception_handler(request: Request, exc: Exception):
-            return JSONResponse(
-                status_code=500,
-                content=Error(error_code=500, message="Internal Server Error").model_dump(exclude_none=True),
-            )
-
-    def _setup_api_exception_handler(self) -> None:
-        """Configure custom API exception handler."""
-
-        @self.app.exception_handler(APIException)
-        async def custom_exception_handler(request: Request, exc: APIException):
-            return JSONResponse(
-                status_code=exc.code,
-                content=Error(error_code=exc.error_code, message=exc.message, detail=exc.detail).model_dump(
-                    exclude_none=True
-                ),
-                headers=exc.headers,
-            )
-
-    def _setup_generic_exception_handler(self) -> None:
-        """Configure generic exception handler for unhandled errors."""
 
         @self.app.exception_handler(Exception)
         async def exception_handler(request: Request, exc: Exception):
