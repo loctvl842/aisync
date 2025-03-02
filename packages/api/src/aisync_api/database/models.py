@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import UUID, ForeignKey, String
+from sqlalchemy import UUID, ForeignKey, String, UniqueConstraint
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.orm import DeclarativeBase
@@ -74,6 +74,8 @@ class TblUserRole(Base):
     user: Mapped[TblUser] = relationship("TblUser", back_populates="user_roles")
     role: Mapped[TblRole] = relationship("TblRole", back_populates="user_roles")
     team: Mapped[TblTeam] = relationship("TblTeam", back_populates="user_roles")
+
+    __table_args__ = (UniqueConstraint("user_id", "team_id", name="uq_user_team"),)
 
 
 class TblPermission(Base):

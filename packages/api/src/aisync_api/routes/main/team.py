@@ -74,7 +74,7 @@ async def create_team(
 
 
 @router.get("/{team_id}/members")
-async def get_team(
+async def get_team_members(
     team_id: UUID,
     user: Annotated[TblUser, Depends(authenticate)],
     session: Annotated[AsyncSession, Depends(get_db_session())],
@@ -95,7 +95,4 @@ async def get_team(
         }
         for user, role in result.all()
     ]
-    return users
-    # roles = await user.awaitable_attrs.roles
-    # print('vaicalon', roles)
-    # return user
+    return Ok(data=users)
