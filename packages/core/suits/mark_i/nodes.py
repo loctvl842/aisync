@@ -47,8 +47,6 @@ deepseek = ChatOpenAI(
     model="deepseek/deepseek-chat",
 )
 
-print("vaicalon", env.DEEPSEEK_API_KEY)
-
 
 @node(name="gemini", llm=gemini)
 def helper1(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:

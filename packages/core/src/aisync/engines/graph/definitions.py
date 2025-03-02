@@ -20,7 +20,11 @@ from typing import (
     overload,
 )
 
-import aisync.utils as ut
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END, START, StateGraph
+from langgraph.graph.state import CompiledStateGraph
+from langgraph.types import All, StreamMode
+
 from aisync.engines.graph.base import (
     Branch,
     ChainEndCallback,
@@ -35,10 +39,6 @@ from aisync.engines.graph.base import (
 )
 from aisync.log import LogEngine
 from aisync.signalers import Channel, InMemorySignaler, Signal
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import END, START, StateGraph
-from langgraph.graph.state import CompiledStateGraph
-from langgraph.types import All, StreamMode
 
 
 def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, str]]) -> list[tuple[str, str]]:
@@ -64,18 +64,18 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
     ConditionalBranchAction = Tuple["_ConditionalBranch", Callable[..., list[str]]]
 
     class _Graph(Graph):
-        def __init__(self, *nodes: Node):
+        def __init__(self, *nodes: _Node):
             self.log = LogEngine(self.__class__.__name__)
             if not nodes:
                 nodes = []
-            self.nodes: dict[str, Node] = {}
+            self.nodes: dict[str, _Node] = {}
             for node in nodes:
-                self.nodes = ut.dict_deep_extend(self.nodes, node.all())
+                self.nodes = self.nodes | node.all()
 
             self._app: CompiledStateGraph = None
             self.signaler = signaler
 
-        def get_source(self) -> list[Node]:
+        def get_source(self) -> list[_Node]:
             """
             Identify source nodes (nodes with no incoming edges)
 
@@ -97,7 +97,7 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             source_nodes = all_nodes - nodes_with_incoming_edges
             return list(source_nodes)
 
-        def get_sink(self) -> list[Node]:
+        def get_sink(self) -> list[_Node]:
             """
             Identify sink nodes (nodes with no outgoing edges)
 
@@ -339,8 +339,8 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
                                 raise TypeError(f"Unknown edge type: {edge}")
                 self.log.info("Graph execution completed.")
 
-        def execute_node(self, node: Node):
-            print(f"Executing Node: {node.name}")
+        def execute_node(self, node: _Node):
+            self.log.info(f"Executing Node: {node.name}")
             return node.call()
 
         def to_mermaid(self, direction: Literal["TD", "LR", "BT", "RL"] = "TD") -> str:
@@ -374,18 +374,18 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             return "\n".join(lines)
 
         @overload
-        def __rshift__(self, other: Node) -> "Graph": ...
+        def __rshift__(self, other: _Node) -> _Graph: ...
 
         @overload
-        def __rshift__(self, other: "Graph") -> "Graph": ...
+        def __rshift__(self, other: _Graph) -> _Graph: ...
 
         @overload
-        def __rshift__(self, other: _Branch) -> "Graph": ...
+        def __rshift__(self, other: _Branch) -> _Graph: ...
 
         @overload
-        def __rshift__(self, other: ConditionalBranchAction) -> "Graph": ...
+        def __rshift__(self, other: ConditionalBranchAction) -> _Graph: ...
 
-        def __rshift__(self, other: Union[Node, Graph, _Branch, ConditionalBranchAction]) -> Graph:
+        def __rshift__(self, other: Union[_Node, _Graph, _Branch, ConditionalBranchAction]) -> _Graph:
             if isinstance(other, _Node):
                 # Graph >> Node
                 sink_nodes = self.get_sink()
@@ -444,33 +444,33 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             return repr_str.strip()
 
     class _SubGraph(_Graph):
-        def __init__(self, node: Node, graph: Graph):
+        def __init__(self, node: _Node, graph: _Graph):
             self.starter = node
             self.parent = graph
             super().__init__(*node.all().values())
 
-        def __rshift__(self, other: Union[Node, Graph]):
+        def __rshift__(self, other: Union[_Node, _Graph]):
             if isinstance(other, _Node):
-                self.parent.nodes = ut.dict_deep_extend(self.parent.nodes, other.all())
+                self.parent.nodes = self.parent.nodes | other.all()
             elif isinstance(other, _Graph):
-                self.parent.nodes = ut.dict_deep_extend(self.parent.nodes, other.nodes)
+                self.parent.nodes = self.parent.nodes | other.nodes
             else:
                 raise ValueError("Right operand must be a Node or Graph")
             return self.starter >> other
 
     class _Branch(Branch):
-        def __init__(self, *nodes: Node):
+        def __init__(self, *nodes: _Node):
             if not nodes:
                 nodes = []
-            self.nodes: dict[str, Node] = {node.name: node for node in nodes}
+            self.nodes: dict[str, _Node] = {node.name: node for node in nodes}
 
         @overload
-        def __rshift__(self, other: Node) -> Graph: ...
+        def __rshift__(self, other: _Node) -> _Graph: ...
 
         @overload
         def __rshift__(self, other: Graph) -> Graph: ...
 
-        def __rshift__(self, other: Union[Node, Graph]) -> Graph:
+        def __rshift__(self, other: Union[_Node, _Graph]) -> Graph:
             if isinstance(other, _Node):
                 # Branch >> Node
                 for node in self.nodes.values():
@@ -488,7 +488,7 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             else:
                 raise ValueError("Invalid right shift operator")
 
-        def __and__(self, other: Union[Node, _Branch]) -> _Branch:
+        def __and__(self, other: Union[_Node, _Branch]) -> _Branch:
             if isinstance(other, _Node):
                 # Branch & Node
                 return _Branch(*self.nodes.values(), other)
@@ -502,12 +502,12 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             return f"Branch({', '.join(self.nodes.keys())})"
 
     class _ConditionalBranch(ConditionalBranch):
-        def __init__(self, *nodes: Node):
+        def __init__(self, *nodes: _Node):
             if not nodes:
                 nodes = []
-            self.nodes: dict[str, Node] = {node.name: node for node in nodes}
+            self.nodes: dict[str, _Node] = {node.name: node for node in nodes}
 
-        def __or__(self, other: Union[Node, _ConditionalBranch]) -> _ConditionalBranch:
+        def __or__(self, other: Union[_Node, _ConditionalBranch]) -> _ConditionalBranch:
             if isinstance(other, _Node):
                 # ConditionalBranch | Node
                 return _ConditionalBranch(*self.nodes.values(), other)
@@ -524,7 +524,7 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             self.signaler = signaler
             self.llm = llm
             self.call = call_fn
-            self.edges: list[Union[Node, ConditionalBranchAction]] = []
+            self.edges: list[Union[_Node, ConditionalBranchAction]] = []
 
         @property
         def action(self):
@@ -550,7 +550,7 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             action.__annotations__ = adjusted_type_hints
             return action
 
-        def all(self, visited: Optional[set[str]] = None) -> dict[str, Node]:
+        def all(self, visited: Optional[set[str]] = None) -> dict[str, _Node]:
             """
             Recursively gather all connected nodes, avoiding infinite recursion in cyclic graphs.
 
@@ -571,27 +571,27 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
 
             for edge in self.edges:
                 if isinstance(edge, _Node):
-                    nodes = ut.dict_deep_extend(nodes, edge.all(visited))
+                    nodes = nodes | edge.all(visited)
                 elif isinstance(edge, tuple):
                     branch, _ = edge
                     for node in branch.nodes.values():
-                        nodes = ut.dict_deep_extend(nodes, node.all(visited))
+                        nodes = nodes | node.all(visited)
 
             return nodes
 
         @overload
-        def __rshift__(self, other: Node) -> Graph: ...
+        def __rshift__(self, other: _Node) -> _Graph: ...
 
         @overload
-        def __rshift__(self, other: Graph) -> Graph: ...
+        def __rshift__(self, other: _Graph) -> _Graph: ...
 
         @overload
-        def __rshift__(self, other: _Branch) -> Graph: ...
+        def __rshift__(self, other: _Branch) -> _Graph: ...
 
         @overload
-        def __rshift__(self, other: ConditionalBranchAction) -> Graph: ...
+        def __rshift__(self, other: ConditionalBranchAction) -> _Graph: ...
 
-        def __rshift__(self, other: Union[Node, Graph, _Branch, ConditionalBranchAction]) -> Graph:
+        def __rshift__(self, other: Union[_Node, _Graph, _Branch, ConditionalBranchAction]) -> Graph:
             if isinstance(other, _Node):
                 # Node >> Node
                 self.edges.append(other)
@@ -614,12 +614,12 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
                 raise ValueError("Invalid right shift operator")
 
         @overload
-        def __and__(self, other: Node) -> _Branch: ...
+        def __and__(self, other: _Node) -> _Branch: ...
 
         @overload
         def __and__(self, other: _Branch) -> _Branch: ...
 
-        def __and__(self, other: Union[Node, _Branch]) -> _Branch:
+        def __and__(self, other: Union[_Node, _Branch]) -> _Branch:
             if isinstance(other, _Node):
                 # Node & Node
                 return _Branch(self, other)
@@ -629,7 +629,7 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
             else:
                 raise ValueError("Invalid and operator")
 
-        def __or__(self, other: Union[Node, _ConditionalBranch]) -> _ConditionalBranch:
+        def __or__(self, other: Union[_Node, _ConditionalBranch]) -> _ConditionalBranch:
             if isinstance(other, _Node):
                 # Node | Node
                 return _ConditionalBranch(self, other)
@@ -656,10 +656,13 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
     return _classes
 
 
-__Graph, __Node = _create_graph_classes()
+__GeneratedGraph, __GeneratedNode = _create_graph_classes()
 
 
-class _Graph(__Graph): ...
+class RuntimeGraph(__GeneratedGraph, Graph): ...
 
 
-class _Node(__Node): ...
+class RuntimeNode(__GeneratedNode, Node): ...
+
+
+__all__ = ["RuntimeGraph", "RuntimeNode"]

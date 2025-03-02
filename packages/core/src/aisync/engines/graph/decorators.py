@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Any, Callable, Optional, ParamSpec, TypeVar, Union, overload
 
 from .base import Node, Hook
-from .definitions import _Node
+from .definitions import RuntimeNode
 
 
 P = ParamSpec("P")
@@ -49,7 +49,7 @@ def node(
     def decorator(call_fn: Callable[P, R]) -> Node:
         node_name = name if name else call_fn.__name__
 
-        node_instance = _Node(node_name, call_fn, llm=llm)
+        node_instance = RuntimeNode(node_name, call_fn, llm=llm)
 
         # Use @wraps to copy metadata from call_fn to node_instance
         wraps(call_fn)(node_instance)
