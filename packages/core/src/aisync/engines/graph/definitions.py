@@ -120,14 +120,14 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
 
             while queue:
                 current_node = queue.popleft()
-                for edge in current_node.edges:
-                    if isinstance(edge, _Node) and edge.name not in compiled:
-                        langgraph_builder.add_node(edge.alias, edge.action, metadata={})
-                        compiled.add(edge.name)
-                        langgraph_builder.add_edge(current_node.alias, edge.alias)
-                        queue.append(edge)
-                    elif isinstance(edge, tuple):
-                        cond_branch, cond_fn = edge
+                for node in current_node.edges:
+                    if isinstance(node, _Node) and node.name not in compiled:
+                        langgraph_builder.add_node(node.alias, node.action, metadata={})
+                        compiled.add(node.name)
+                        langgraph_builder.add_edge(current_node.alias, node.alias)
+                        queue.append(node)
+                    elif isinstance(node, tuple):
+                        cond_branch, cond_fn = node
                         path_map = {}
                         for node in cond_branch.nodes.values():
                             if node.name not in compiled:

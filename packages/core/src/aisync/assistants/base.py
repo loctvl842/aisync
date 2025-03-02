@@ -19,10 +19,9 @@ class Assistant(ABC):
         self.armory: Armory = Armory()
         if suit not in self.armory.suits:
             raise ValueError(f"Suit {suit} not found in armory")
-        suit_ = self.armory.suits[suit]
-        self._suit = suit_
+        self._suit = self.armory.activate(suit)
 
-        available_graphs = suit_.graphs
+        available_graphs = self._suit.graphs
         if not available_graphs:
             raise ValueError(f"No graphs found in suit {suit}")
         if len(available_graphs) > 1:
@@ -46,7 +45,7 @@ class Assistant(ABC):
                 self.graph = available_graphs[graph]
         else:
             # Then just choose the only one available
-            self.graph = list(suit_.graphs.values())[0]
+            self.graph = list(self._suit.graphs.values())[0]
 
         self.graph.compile()
 

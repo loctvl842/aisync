@@ -1,24 +1,105 @@
+from typing import Annotated, TypedDict
+
+from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 from langchain_openai import ChatOpenAI
 
 from aisync.engines.graph import hook, node
-from aisync.engines.workflow import State
+from aisync.engines.graph.definitions import State
+from aisync.env import env
+from aisync.log import LogEngine
 
+log = LogEngine("mark_ii")
 
-def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, str]]) -> list[tuple[str, str]]:
-    """Function to add a new message to the messages list."""
-    return messages + new_messages
 
 @hook
 def before_read_message(input: str):
     return {"messages": [("human", input)]}
 
+
 @hook
 def before_send_message(message):
-    if message[1]["langgraph_node"] == "bot":
+    if message[1]["langgraph_node"] == "king":
         return message[0].content
 
 
-@node(name="bot", llm=ChatOpenAI(model="gpt-3.5-turbo"))
-def chatbot(state: State, llm: ChatOpenAI) -> State:
-    respond = llm.invoke(state["messages"])
-    return {"messages": [respond]}
+def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Function to add a new message to the messages list."""
+    messages.extend(new_messages)
+    return messages
+
+
+class Node1Output(TypedDict):
+    private_data: str
+    messages: list
+
+
+@node("Input")
+def node_1(state: State) -> Node1Output:
+    output = {"private_data": "set by node_1", "messages": []}
+    return output
+
+
+class ChatbotOutput(TypedDict):
+    answer: Annotated[list[dict], add_messages]
+    messages: list
+
+
+gemini = GoogleGenerativeAI(
+    model="gemini-pro",
+    google_api_key=env.GOOGLE_API_KEY,
+    safety_setting={
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+    },
+)
+
+deepseek = ChatOpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=env.DEEPSEEK_API_KEY,
+    model="deepseek/deepseek-chat",
+)
+
+
+@node(name="gemini", llm=gemini)
+def helper1(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
+    system_message = "You are a coder and problem solver expert, you explain your answer in your response"
+    answer = llm.invoke([system_message] + state["messages"])
+    print("Gemini: ", answer)
+    return {"answer": [{"who": "gemini", "content": answer}], "messages": []}
+
+
+@node(name="deepseek", llm=deepseek)
+def helper2(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
+    system_message = "You are a coder and problem solver expert, you explain your answer in your response"
+    answer = llm.invoke([system_message] + state["messages"])
+    print("GPT: ", answer.content)
+    return {"answer": [{"who": "deepseek", "content": answer.content}], "messages": []}
+
+
+@node(llm=deepseek)
+def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
+    ai_conversations = "\n".join(f"{a['who']}: {a['content']}" for a in state["answer"])
+    system_message = (
+        "You are a wise and knowledgeable coder and problem solver king who provides thoughtful answers to questions. "
+        "You have 2 advisors, who offer their insights to assist you."
+        "Consider their perspectives and advice, but ultimately provide your own well-reasoned response to the problem based on all context and advice. If you find their input helpful, feel free to acknowledge their contributions in your answer."
+        "Response with explaination inside tag <explaination> and give the final response in tag <response>"
+        "The response should follow this format:\n"
+        "<explaination>Your explaination for the final response after receiving advise from advisors and explain what advisors helped, and who is better</explaination>"
+        "\n"
+        "<reesponse>Your response</response>"
+    )
+    king_decision = llm.invoke(
+        [
+            ("system", system_message),
+            state["messages"][-1],
+            ("ai", ai_conversations),
+        ]
+    )
+    return {"messages": [("ai", king_decision)]}
+
+
+def classify():
+    pass
+
+
+graph = helper2 >> king

@@ -7,6 +7,7 @@ from aisync.engines.graph import node
 from aisync.engines.graph.definitions import State
 from aisync.log import LogEngine
 from aisync.env import env
+from aisync.utils import obj_to_ref, ref_to_obj
 
 log = LogEngine("mark_i")
 
@@ -97,3 +98,11 @@ graph = helper2 >> king
 
 if __name__ == "__main__":
     log(f"Mermaid:\n```\n{graph.to_mermaid()}\n```")
+    ref = obj_to_ref(helper2.action)
+    print(ref)
+    obj = ref_to_obj(ref)
+    # print(obj)
+    # print(type(obj))
+    # print(isinstance(obj, Node))
+    obj.action()
+

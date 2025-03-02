@@ -32,19 +32,15 @@ class Armory:
         assert Path(self.suits_path).exists(), f"Path '{self.suits_path}' does not exist."
 
         try:
-            all_suit_folders: list[str] = [folder for folder in glob.glob(f"{self.suits_path}/*") if os.path.isdir(folder)]
-            # all_suit_folders.append('/home/loc/Documents/Work/Rockship/repositories/loctvl842/aisync/packages/core/suits/mark_ii.py')
+            all_suit_paths: list[str] = [
+                path for path in glob.glob(f"{self.suits_path}/*") if os.path.isdir(path) or path.endswith(".py")
+            ]
 
             suits: dict[str, "Suit"] = {}
-            for suit_folder in all_suit_folders:
-                suit = self.load_suit(suit_folder)
+            for path_to_suit in all_suit_paths:
+                suit = self.load_suit(path_to_suit)
                 suits[suit.name] = suit
                 self.log.info(f"Loaded suit: {suit.name}")
-
-                # Activate the suit
-                suits[suit.name].activate()
-                self.active_suits.append(suit.name)
-                self.log.info(f"Activated suit: {suit.name}")
             return suits
         except Exception as e:
             self.log.error(f"Error loading suits: {e}")
@@ -62,3 +58,10 @@ class Armory:
             return suit
         except Exception as e:
             self.log.error(f"Failed to load plugin: {e}")
+
+    def activate(self, suit_name: str) -> "Suit":
+        # Activate the suit
+        self.suits[suit_name].activate()
+        self.active_suits.append(suit_name)
+        self.log.info(f"Activated suit: {suit_name}")
+        return self.suits[suit_name]
