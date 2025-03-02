@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 
-from aisync.decorators import graph, hook, node
+from aisync.engines.graph import hook, node
 from aisync.engines.workflow import State
 
 
@@ -22,12 +22,3 @@ def before_send_message(message):
 def chatbot(state: State, llm: ChatOpenAI) -> State:
     respond = llm.invoke(state["messages"])
     return {"messages": [respond]}
-
-
-@graph
-def main():
-    return """
-graph TD
-    START --> bot
-    bot --> END
-"""

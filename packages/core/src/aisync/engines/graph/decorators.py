@@ -1,11 +1,17 @@
 from functools import wraps
 from typing import Any, Callable, Optional, ParamSpec, TypeVar, Union, overload
 
-from aisync.engines.graph import Node
-from aisync.engines.graph.definitions import _Node
+from .base import Node, Hook
+from .definitions import _Node
+
 
 P = ParamSpec("P")
 R = TypeVar("R")
+
+
+"""
+# Nodes
+"""
 
 
 @overload
@@ -54,4 +60,53 @@ def node(
         return decorator(func)
 
     # called as @node(...)
+    return decorator
+
+
+"""
+# Hooks
+"""
+
+
+@overload
+def hook(func: Callable[P, R]) -> Hook: ...
+
+
+@overload
+def hook(name: str) -> Callable[[Callable[P, R]], Hook]: ...
+
+
+@overload
+def hook(*, name: Optional[str] = None) -> Callable[[Callable[P, R]], Hook]: ...
+
+
+def hook(
+    func: Optional[Callable[P, R]] = None,
+    *,
+    name: Optional[str] = None,
+) -> Union[Hook, Callable[[Callable[P, R]], Hook]]:
+    """
+    A decorator to convert a function into a Hook instance.
+
+    Can be used in multiple ways:
+
+    - @hook
+    - @hook("custom_name")
+    - @hook(name="custom_name")
+    """
+    if isinstance(func, str):
+        name = func
+        func = None
+
+    def decorator(call_fn: Callable[P, R]) -> Hook:
+        hook_instance = Hook(call_fn)
+        hook_instance.name = name if name else call_fn.__name__
+        wraps(call_fn)(hook_instance)  # Copy metadata
+        return hook_instance
+
+    if func is not None:
+        # Called as @hook
+        return decorator(func)
+
+    # Called as @hook(...)
     return decorator

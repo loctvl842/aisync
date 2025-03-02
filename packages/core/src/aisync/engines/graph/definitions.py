@@ -46,6 +46,7 @@ def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, 
     return messages + new_messages
 
 
+# TODO: Remove this
 class State(TypedDict):
     messages: Annotated[list[tuple[str, str]], add_messages]
 
@@ -658,7 +659,7 @@ def _create_graph_classes() -> Tuple[Graph, Node]:
 __Graph, __Node = _create_graph_classes()
 
 
-class _Graph(__Graph, Graph): ...
+class _Graph(__Graph): ...
 
 
-class _Node(__Node, Node): ...
+class _Node(__Node): ...

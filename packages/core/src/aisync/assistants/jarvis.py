@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Generator, Union
 
 from aisync.assistants.base import Assistant
-from aisync.decorators.hook import SupportedHook
+from aisync.engines.graph import SupportedHook
 from aisync.engines.graph.base import ChainStartCallback
 
 if TYPE_CHECKING:
@@ -21,7 +21,9 @@ class Jarvis(Assistant):
     async def agreet(self, *, streaming: bool = False) -> str:
         return self.greet()
 
-    def respond(self, input: str, *, streaming: bool = False) -> Union[ChainStartCallback, Generator[ChainStartCallback, None, None]]:
+    def respond(
+        self, input: str, *, streaming: bool = False
+    ) -> Union[ChainStartCallback, Generator[ChainStartCallback, None, None]]:
         self.buffer_memory.save_pending_message(input)
 
         def on_chain_start(input):

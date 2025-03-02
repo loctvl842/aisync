@@ -1,13 +1,12 @@
-import os
 from typing import Annotated, TypedDict
 
 from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 from langchain_openai import ChatOpenAI
 
-from aisync.decorators import node
+from aisync.engines.graph import node
 from aisync.engines.graph.definitions import State
-from aisync.env import env
 from aisync.log import LogEngine
+from aisync.env import env
 
 log = LogEngine("mark_i")
 
@@ -16,13 +15,6 @@ def add_messages(messages: list[tuple[str, str]], new_messages: list[tuple[str, 
     """Function to add a new message to the messages list."""
     messages.extend(new_messages)
     return messages
-
-
-# Set OPENAI_API_KEY in your environment
-
-
-os.environ["OPENAI_API_KEY"] = env.OPENAI_API_KEY
-llm = ChatOpenAI(model="gpt-3.5-turbo")
 
 
 class Node1Output(TypedDict):
@@ -41,17 +33,24 @@ class ChatbotOutput(TypedDict):
     messages: list
 
 
-gg_llm = GoogleGenerativeAI(
+gemini = GoogleGenerativeAI(
     model="gemini-pro",
-    google_api_key="***REMOVED***",
+    google_api_key=env.GOOGLE_API_KEY,
     safety_setting={
         HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
     },
 )
 
+deepseek = ChatOpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=env.DEEPSEEK_API_KEY,
+    model="deepseek/deepseek-chat",
+)
 
-# @node(name="gpt35", llm=ChatOpenAI(model="gpt-3.5-turbo"))
-@node(name="gemini", llm=gg_llm)
+print("vaicalon", env.DEEPSEEK_API_KEY)
+
+
+@node(name="gemini", llm=gemini)
 def helper1(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
     system_message = "You are a coder and problem solver expert, you explain your answer in your response"
     answer = llm.invoke([system_message] + state["messages"])
@@ -59,15 +58,15 @@ def helper1(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
     return {"answer": [{"who": "gemini", "content": answer}], "messages": []}
 
 
-@node(name="gpt4omini", llm=ChatOpenAI(model="gpt-4o-mini"))
+@node(name="deepseek", llm=deepseek)
 def helper2(state: Node1Output, llm: ChatOpenAI) -> ChatbotOutput:
     system_message = "You are a coder and problem solver expert, you explain your answer in your response"
     answer = llm.invoke([system_message] + state["messages"])
     print("GPT: ", answer.content)
-    return {"answer": [{"who": "gpt-4o-mini", "content": answer.content}], "messages": []}
+    return {"answer": [{"who": "deepseek", "content": answer.content}], "messages": []}
 
 
-@node(llm=ChatOpenAI(model="gpt-4o-mini"))
+@node(llm=deepseek)
 def king(state: ChatbotOutput, llm: ChatOpenAI) -> State:
     ai_conversations = "\n".join(f"{a['who']}: {a['content']}" for a in state["answer"])
     system_message = (
@@ -94,7 +93,8 @@ def classify():
     pass
 
 
-graph = node_1 >> (helper1 & helper2) >> king
+# graph = node_1 >> (helper1 & helper2) >> king
+graph = helper2 >> king
 
 
 if __name__ == "__main__":

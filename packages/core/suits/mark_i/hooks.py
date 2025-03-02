@@ -1,4 +1,4 @@
-from aisync.decorators import hook
+from aisync.engines.graph import hook
 
 
 @hook

@@ -7,9 +7,7 @@ from inspect import getmembers
 from pathlib import Path
 from typing import Any
 
-from aisync.decorators import Hook
-from aisync.decorators.hook import SupportedHook
-from aisync.engines.graph import Graph, Node
+from aisync.engines.graph import Graph, Hook, Node, SupportedHook
 from aisync.log import LogEngine
 from aisync.utils import get_project_root, get_suit_name
 

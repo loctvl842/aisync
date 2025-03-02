@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import abc
+import enum
 from typing import Any, Callable, Dict, Iterator, Literal, Optional, Sequence, Tuple, TypeVar, Union, overload
 
 from langchain_core.runnables import RunnableConfig
@@ -8,6 +9,9 @@ from langchain_core.runnables.base import RunnableLike
 from langgraph.types import All, StreamMode
 
 from aisync.signalers.base import BaseSignaler
+
+
+## Graph
 
 GraphInput = TypeVar("GraphInput", bound=Union[Dict[str, Any], Any])
 """Type variable for the initial input to the graph"""
@@ -219,3 +223,24 @@ class ConditionalBranch(abc.ABC):
 
     @abc.abstractmethod
     def __or__(self, other: Union[Node, ConditionalBranch]) -> ConditionalBranch: ...
+
+
+# Hooks
+
+class Hook:
+    def __init__(self, call_fn: Callable):
+        self.call = call_fn
+        self.name = call_fn.__name__
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} {self.name}>"
+
+    def __call__(self, *args, **kwargs):
+        return self.call(*args, **kwargs)
+
+
+class SupportedHook(str, enum.Enum):
+    BEFORE_READ_MESSAGE = "before_read_message"
+    BEFORE_SEND_MESSAGE = "before_send_message"
+    SYSTEM_PROMPT = "build_system_prompt"
+    SUIT_LLM = "set_suit_llm"

@@ -1,6 +1,6 @@
-from typing import Literal, Optional
-
 from pydantic_settings import BaseSettings
+
+from typing import Literal, Optional
 
 
 class AISyncSettings(BaseSettings):
@@ -8,14 +8,13 @@ class AISyncSettings(BaseSettings):
     AISYNC_LOG_LEVEL: Literal["DEBUG", "INFO", "WARN", "ERROR", "FATAL"] = "DEBUG"
 
 
-class OpenAISettings(BaseSettings):
+class LLMSettings(BaseSettings):
     OPENAI_API_KEY: Optional[str] = None
+    GOOGLE_API_KEY: Optional[str] = None
+    DEEPSEEK_API_KEY: Optional[str] = None
 
 
-class Settings(
-    AISyncSettings,
-    OpenAISettings,
-):
+class Settings(AISyncSettings, LLMSettings):
     model_config = {"extra": "allow"}
 
 
