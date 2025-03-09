@@ -9,11 +9,16 @@ from typing import Any
 
 from aisync.engines.graph import Graph, Hook, Node, SupportedHook
 from aisync.log import LogEngine
-from aisync.utils import get_project_root, get_suit_name
+from aisync.utils import get_suit_name
 
 
 class Suit:
     def __init__(self, path_to_suit: str):
+        """Initialize the Suit class.
+
+        Args:
+            path_to_suit (str): The absolute path to the suit directory. E.g. /home/user/.aisync/suits/mark_i
+        """
         self.log = LogEngine(self.__class__.__name__)
         self._path = Path(path_to_suit)
         if not self._path.exists():
@@ -40,21 +45,20 @@ class Suit:
         nodes = {}
         graphs = {}
 
-        project_path = get_project_root()
-        assert project_path is not None
-
         if self._path.is_dir():
             pattern = os.path.join(self._path, "**/*.py")
             py_files = glob.glob(pattern, recursive=True)
         else:
             py_files = [str(self._path)]
 
+        home_dir = os.path.expanduser("~")
+        registry_dir = os.path.join(home_dir, ".aisync")
         # Add the suits directory to the system path
-        sys.path.insert(0, str(project_path))
+        sys.path.insert(0, str(registry_dir))
         try:
             for py_file in py_files:
                 abs_path = Path(py_file).resolve()
-                relative_path = abs_path.relative_to(project_path)  # aisync/suits/mark_i/nodes.py
+                relative_path = abs_path.relative_to(registry_dir)  # aisync/suits/mark_i/nodes.py
                 file_stem = os.path.splitext(relative_path)[0]  # aisync/suits/mark_i/nodes
                 module_path = file_stem.replace(os.sep, ".")
                 try:

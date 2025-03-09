@@ -1,83 +1,7 @@
-from functools import partial, wraps
-from inspect import isbuiltin, isclass, isfunction, ismethod
+import os
+from functools import wraps
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, TypeVar, Union
-
-
-def get_callable_name(func):
-    """
-    Returns the best available display name for the given function/callable.
-
-    :rtype: str
-
-    """
-    if ismethod(func):
-        self = func.__self__
-        cls = self if isclass(self) else type(self)
-        return f"{cls.__qualname__}.{func.__name__}"
-    elif isclass(func) or isfunction(func) or isbuiltin(func):
-        return func.__qualname__
-    elif hasattr(func, "__call__") and callable(func.__call__):
-        # instance of a class with a __call__ method
-        return type(func).__qualname__
-
-    raise TypeError(f"Unable to determine a name for {func!r} -- maybe it is not a callable?")
-
-
-def obj_to_ref(obj):
-    """
-    Returns the path to the given callable.
-
-    :rtype: str
-    :raises TypeError: if the given object is not callable
-    :raises ValueError: if the given object is a :class:`~functools.partial`, lambda or a nested
-        function
-
-    """
-    if isinstance(obj, partial):
-        raise ValueError("Cannot create a reference to a partial()")
-
-    name = get_callable_name(obj)
-    if "<lambda>" in name:
-        raise ValueError("Cannot create a reference to a lambda")
-    if "<locals>" in name:
-        raise ValueError("Cannot create a reference to a nested function")
-
-    if ismethod(obj):
-        module = obj.__self__.__module__
-    else:
-        module = obj.__module__
-
-    return f"{module}:{name}"
-
-
-def ref_to_obj(ref):
-    """
-    Returns the object pointed to by ``ref``.
-
-    :type ref: str
-
-    """
-    if not isinstance(ref, str):
-        raise TypeError("References must be strings")
-    if ":" not in ref:
-        raise ValueError("Invalid reference")
-
-    modulename, rest = ref.split(":", 1)
-    try:
-        obj = __import__(modulename, fromlist=[rest])
-    except ImportError as exc:
-        raise LookupError(f"Error resolving reference {ref}: could not import module") from exc
-
-    try:
-        for name in rest.split("."):
-            obj = getattr(obj, name)
-        return obj
-    except Exception:
-        raise LookupError(f"Error resolving reference {ref}: error looking up object")
-
-
-# Suit
 
 
 def get_project_root(
@@ -104,14 +28,12 @@ def get_project_root(
     return None
 
 
-def get_suits_base_path() -> Path:
+def get_registry_dir() -> str:
     """
-    Returns the path to the plugins folder.
+    Returns the path to the registry directory.
     """
-    project_root = get_project_root()
-    if project_root is None:
-        raise FileNotFoundError("Could not find project root directory.")
-    return project_root / "suits"
+    home_dir = os.path.expanduser("~")
+    return os.path.join(home_dir, ".aisync")
 
 
 def get_suit_name(path_to_suit: str) -> str:
