@@ -11,3 +11,6 @@ aisync = { workspace = true }
 
 [tool.uv.workspace]
 members = ["packages/*"]
+
+[tool.setuptools]
+packages = ["aisync_cli"]

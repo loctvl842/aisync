@@ -23,7 +23,7 @@ async def create_project(
     body: CreateProjectRequest,
     session: Annotated[AsyncSession, Depends(get_db_session())],
     user: Annotated[TblUser, Depends(authenticate)],
-    restrict_access: Annotated[bool, Depends(Permission())],
+    # restrict_access: Annotated[bool, Depends(Permission())],
 ):
     stmt = insert(TblProject).values(name=body.name, user_id=user.id).returning(TblProject)
     result = await session.execute(stmt)

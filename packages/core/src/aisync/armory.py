@@ -28,7 +28,7 @@ class SuitMetadata(BaseModel):
     author: str
     github_url: Optional[str] = None
     dependencies: List[str] = []
-    entry_point: str = "main"
+    branch: str = "main"
 
 
 class Armory:
