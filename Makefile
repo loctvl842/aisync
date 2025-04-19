@@ -43,5 +43,9 @@ options:
 api:  ## Run a command in packages/api/Makefile (Usage: make api <command>)
 	@$(MAKE) --no-print-directory -C packages/api $(filter-out $@, $(MAKECMDGOALS))
 
+.PHONY: core
+core:  ## Run a command in packages/core/Makefile (Usage: make core <command>)
+	@$(MAKE) --no-print-directory -C packages/core $(filter-out $@, $(MAKECMDGOALS))
+
 %:
 	@:
